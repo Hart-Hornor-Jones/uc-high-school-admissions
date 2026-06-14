@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>UC admissions vs. high-school academic indicators — interactive explorer</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<style>
+  :root{
+    --ink:#1a1a1a; --muted:#5c6470; --line:#e2e6ec; --bg:#ffffff; --card:#fbfcfe;
+    --accent:#2b6cb0; --warm:#e34a33; --cool:#2166ac; --lcff:#d7642a; --nonlcff:#2e74b5;
+    --shadow:0 1px 3px rgba(20,30,50,.07),0 6px 24px rgba(20,30,50,.06);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;color:var(--ink);background:var(--bg);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1200px;margin:0 auto;padding:22px 20px 60px;}
+  header h1{font-size:23px;margin:0 0 4px;letter-spacing:-.01em;}
+  header p.sub{margin:0;color:var(--muted);max-width:780px;}
+  .controls{display:flex;flex-wrap:wrap;gap:12px 16px;align-items:flex-end;
+    margin:18px 0 14px;padding:14px 16px;background:var(--card);border:1px solid var(--line);
+    border-radius:12px;box-shadow:var(--shadow);}
+  .ctl{display:flex;flex-direction:column;gap:5px;}
+  .ctl.hide{display:none;}
+  .ctl.grow{flex:1;min-width:200px;}
+  .ctl label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);}
+  select,input[type=text]{font:inherit;padding:7px 9px;border:1px solid #cfd6e0;border-radius:8px;
+    background:#fff;color:var(--ink);min-width:140px;}
+  input[type=text]{min-width:190px;}
+  .seg{display:inline-flex;border:1px solid #cfd6e0;border-radius:8px;overflow:hidden;}
+  .seg button{font:inherit;font-weight:600;border:0;background:#fff;color:var(--muted);padding:7px 14px;cursor:pointer;}
+  .seg button.on{background:var(--accent);color:#fff;}
+  .rangewrap{display:flex;align-items:center;gap:8px;}
+  input[type=range]{width:120px;}
+  .rangeval{font-variant-numeric:tabular-nums;font-weight:600;min-width:28px;}
+  .layout{display:grid;grid-template-columns:1fr 340px;gap:18px;align-items:start;}
+  @media (max-width:880px){.layout{grid-template-columns:1fr;}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);}
+  .chartcard{padding:8px 8px 4px;position:relative;min-height:520px;}
+  .chartcard .plot-title{font-size:13px;font-weight:600;padding:8px 10px 0;color:var(--ink);}
+  .chartcard .plot-sub{font-size:12px;color:var(--muted);padding:0 10px 6px;}
+  svg{display:block;width:100%;height:auto;}
+  .axis path,.axis line{stroke:#cdd4de;}
+  .axis text{fill:var(--muted);font-size:11px;}
+  .gridline{stroke:#eef1f5;}
+  .avgline{stroke:#888;stroke-dasharray:5 4;stroke-width:1;}
+  .avglabel{fill:#777;font-size:10.5px;}
+  .fitline{stroke:#111;stroke-width:1.6;opacity:.75;}
+  .dot{stroke:#2b2f36;stroke-width:.4;cursor:pointer;}
+  .dot.lowconf{stroke:#aab2bf;stroke-width:1.3;stroke-dasharray:2.5 1.5;}
+  .dot.dim{opacity:.08 !important;}
+  .dot.match{stroke:#000;stroke-width:1.6;}
+  .dot.sel{stroke:#000;stroke-width:2.4;}
+  .side .card{padding:14px 15px;margin-bottom:16px;}
+  .stat-headline{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-weight:600;margin:0 0 8px;}
+  .bigr{font-size:30px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1;}
+  .bigr .lbl{font-size:12px;font-weight:500;color:var(--muted);margin-left:6px;}
+  .statline{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:4px 0;border-top:1px dashed var(--line);}
+  .statline:first-of-type{border-top:0;}
+  .statline .k{color:var(--muted);} .statline .v{font-weight:600;font-variant-numeric:tabular-nums;}
+  .interp{font-size:12.5px;color:var(--muted);margin-top:8px;}
+  .legend{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:12px;color:var(--muted);padding:6px 12px 10px;}
+  .legend .grad{height:10px;width:120px;border-radius:5px;border:1px solid #ccc;}
+  .legend .sw{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:4px;vertical-align:-1px;border:1px solid #2b2f36;}
+  .legend .sz{display:inline-flex;align-items:center;gap:6px;}
+  .profile h3{margin:0 0 2px;font-size:16px;}
+  .profile .ploc{color:var(--muted);font-size:12.5px;margin-bottom:8px;}
+  .badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;}
+  .badge.lcff{background:#fbe6d8;color:#9c3a12;} .badge.non{background:#e1ecf7;color:#1c4e80;}
+  .badge.na{background:#edf0f4;color:#5c6470;}
+  .ptable{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px;}
+  .ptable td{padding:4px 0;border-top:1px solid var(--line);}
+  .ptable td.k{color:var(--muted);} .ptable td.v{text-align:right;font-weight:600;font-variant-numeric:tabular-nums;}
+  .ptable tr.sec td{border-top:2px solid #d8deea;color:#333;font-weight:600;padding-top:7px;}
+  .ptable tr.lowconf td{opacity:.62;}
+  .rbasis{font-size:10.5px;color:var(--muted);font-weight:400;font-variant-numeric:tabular-nums;margin-top:1px;line-height:1.35;}
+  .rcap{font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-size:10.5px;}
+  .spark{margin-top:10px;}
+  .spark .sl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-weight:600;}
+  .empty{color:var(--muted);font-size:13px;padding:20px 4px;text-align:center;}
+  .tooltip{position:fixed;pointer-events:none;background:#11151c;color:#fff;font-size:12px;
+    padding:8px 10px;border-radius:8px;max-width:250px;opacity:0;transition:opacity .08s;z-index:50;box-shadow:0 6px 20px rgba(0,0,0,.3);}
+  .tooltip b{color:#fff;} .tooltip .tl{color:#aeb6c2;}
+  details.notes{margin-top:22px;border:1px solid var(--line);border-radius:12px;background:var(--card);padding:0 16px;}
+  details.notes summary{cursor:pointer;font-weight:600;padding:13px 0;}
+  details.notes div{padding:0 0 14px;color:#3a4150;font-size:13.5px;}
+  details.notes li{margin:5px 0;}
+  footer{margin-top:26px;color:var(--muted);font-size:12px;line-height:1.6;border-top:1px solid var(--line);padding-top:14px;}
+  a{color:var(--accent);}
+  /* outlier checkbox */
+  .chk{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--ink);font-weight:500;
+    padding:7px 9px;border:1px solid #cfd6e0;border-radius:8px;background:#fff;cursor:pointer;white-space:nowrap;}
+  .chk input{margin:0;cursor:pointer;}
+  /* focus mode (hide panels) */
+  .focusbtn{float:right;font:inherit;font-weight:600;font-size:12px;border:1px solid #cfd6e0;background:#fff;
+    color:var(--accent);padding:6px 12px;border-radius:8px;cursor:pointer;margin-left:12px;}
+  .focusbtn:hover{background:#f0f5fb;}
+  body.focus .controls{display:none;}
+  body.focus .side{display:none;}
+  body.focus .layout{grid-template-columns:1fr;}
+  body.focus .chartcard{min-height:600px;}
+  /* zoom affordances */
+  #chart{cursor:grab;} #chart:active{cursor:grabbing;}
+  .zoomhint{position:absolute;right:12px;top:10px;font-size:11px;color:var(--muted);background:rgba(255,255,255,.82);
+    border:1px solid var(--line);border-radius:7px;padding:3px 8px;pointer-events:none;}
+  .zoomhint b{font-weight:600;color:var(--ink);}
+  /* ---- small screens (phones) ---- */
+  @media (max-width:700px){
+    .wrap{padding:12px 10px 40px;}
+    header h1{font-size:19px;}
+    header p.sub{font-size:13px;}
+    .controls{gap:8px 10px;padding:10px 12px;margin:12px 0 12px;}
+    .ctl{flex:1 1 calc(50% - 10px);min-width:0;}
+    .ctl.grow{flex:1 1 100%;min-width:0;}
+    .ctl select,.ctl input[type=text]{width:100%;min-width:0;font-size:16px;} /* 16px stops iOS zoom-on-focus */
+    .seg{display:flex;} .seg button{flex:1;padding:7px 6px;}
+    .rangewrap{width:100%;} input[type=range]{flex:1;width:auto;}
+    .chk{width:100%;justify-content:flex-start;}
+    .chartcard{min-height:0;padding:6px 2px 2px;}
+    .zoomhint{display:none;}
+    .focusbtn{padding:5px 9px;font-size:11px;}
+    .legend{font-size:11px;gap:4px 10px;padding:6px 8px 8px;}
+    .side .card{padding:12px 12px;}
+    .bigr{font-size:25px;}
+    details.notes{padding:0 12px;}
+    body.focus .chartcard{min-height:0;}
+  }
+  /* touch devices: one finger scrolls the page over the chart; two fingers (or wheel) zoom/pan it */
+  @media (pointer:coarse){
+    #chart{touch-action:pan-y;cursor:default;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <button id="focusBtn" class="focusbtn" title="Hide the control bar and side panels for a clean, full-width view">Focus mode</button>
+    <h1>UC admissions &amp; high-school academic indicators</h1>
+    <p class="sub">Each dot is a California high school. Compare any UC campus, any admission year or
+    pooled period, and any indicator &mdash; academic strength (CAASPP, A&ndash;G), poverty, or the
+    admissions funnel itself (apply&nbsp;&rarr;&nbsp;admit&nbsp;&rarr;&nbsp;enroll, against several denominators)
+    &mdash; and now what becomes of each school's entrants at UC: first-year retention and 4-/5-/6-year graduation.
+    Search a school or click a dot for its full profile.</p>
+  </header>
+
+  <div class="controls">
+    <div class="ctl"><label for="campus">Campus</label><select id="campus"></select></div>
+    <div class="ctl"><label for="period">Year / period</label><select id="period"></select></div>
+    <div class="ctl"><label>View</label>
+      <div class="seg" id="view"><button data-v="scatter" class="on">Scatter</button><button data-v="strip">Strip</button></div>
+    </div>
+    <div class="ctl" id="ctlA"><label for="metricA" id="labelA">X-axis (merit / context)</label><select id="metricA"></select></div>
+    <div class="ctl" id="ctlB"><label for="metricB" id="labelB">Y-axis (outcome rate)</label><select id="metricB"></select></div>
+    <div class="ctl"><label for="colorby">Color by</label>
+      <select id="colorby">
+        <option value="upp">Poverty (UPP %)</option>
+        <option value="lcff">LCFF+ status</option>
+        <option value="none">Single color</option>
+      </select>
+    </div>
+    <div class="ctl"><label for="minapps">Min applicants</label>
+      <div class="rangewrap"><input type="range" id="minapps" min="10" max="200" step="5" value="30" /><span class="rangeval" id="minappsval">30</span></div>
+    </div>
+    <div class="ctl"><label for="dropout">Outliers</label>
+      <label class="chk"><input type="checkbox" id="dropout" /> <span>Drop (1.5&times;IQR)</span></label>
+    </div>
+    <div class="ctl grow"><label for="search">Search for a high school</label>
+      <input type="text" id="search" list="schoollist" placeholder="e.g. Berkeley High, University High &mdash; Irvine&hellip;" />
+      <datalist id="schoollist"></datalist>
+    </div>
+  </div>
+
+  <div class="layout">
+    <div>
+      <div class="card chartcard">
+        <div class="plot-title" id="plotTitle"></div>
+        <div class="plot-sub" id="plotSub"></div>
+        <div class="zoomhint" id="zoomhint"><b>scroll</b> zoom · <b>drag</b> pan · <b>dbl-click</b> reset</div>
+        <svg id="chart"></svg>
+        <div class="legend" id="legend"></div>
+      </div>
+    </div>
+    <div class="side">
+      <div class="card">
+        <p class="stat-headline" id="statCampus"></p>
+        <div><span class="bigr" id="bigr"></span></div>
+        <div class="interp" id="interp"></div>
+        <div class="statline"><span class="k">Schools shown</span><span class="v" id="sNshown"></span></div>
+        <div class="statline"><span class="k" id="kOverall">Overall</span><span class="v" id="sOverall"></span></div>
+        <div class="statline"><span class="k" id="kPooled" title="The pooled, enrollment/applicant-weighted rate (sum of numerators ÷ sum of denominators) — dominated by large schools; shown for reference, not the central tendency of the dots.">Student-weighted</span><span class="v" id="sPooled"></span></div>
+        <div class="statline"><span class="k">LCFF+ vs other (gap)</span><span class="v" id="sGap"></span></div>
+        <div class="spark" id="campusSpark">
+          <div class="sl" id="sparkLbl">Correlation over time</div>
+          <svg id="sparkSvg" height="94"></svg>
+        </div>
+      </div>
+      <div class="card profile" id="profile">
+        <div class="empty">Click a dot (or search a school) to see its full profile.</div>
+      </div>
+    </div>
+  </div>
+
+  <details class="notes">
+    <summary>How to read this &mdash; and important caveats</summary>
+    <div>
+      <ul>
+        <li><b>Dots</b> are California high schools. <b>Dot size</b> encodes the <i>denominator of the metric
+          you're viewing</i> &mdash; applicants for admit rate, admits for yield, A&ndash;G eligible for
+          per&ndash;eligible rates, grade&nbsp;9&ndash;12 enrollment for per&ndash;head rates, cohort for A&ndash;G
+          completion &mdash; so a bigger dot always means a larger base for that rate. Only schools at or above
+          <b>Min applicants</b> are shown (a fixed sample floor, kept on applicants whatever the size metric).
+          Scale ranges are padded by the largest dot radius so whole dots stay inside the frame.</li>
+        <li><b>Reading the rates.</b> All <b>outcome rates are shown as proportions</b> (an admit rate reads
+          0.241, a yield 0.45) so the eight funnel ratios share one scale; the academic/context measures
+          (CAASPP, A&ndash;G completion, UPP, ELWR) stay as the percentages they natively are. The <b>admit rate
+          is to the selected campus only</b> (admits&div;applicants there), <i>not</i> a UC system&ndash;wide rate.</li>
+        <li><b>&ldquo;Mean across schools&rdquo;</b> (the dashed line and headline figure) is the <i>arithmetic
+          mean of the per&ndash;school rates</i> &mdash; the central tendency of the dots, which is what this tool
+          measures. The separate <b>Student&ndash;weighted</b> figure is the pooled
+          &Sigma;numerator&div;&Sigma;denominator rate, dominated by large schools and shown only for reference;
+          the LCFF+ gap is likewise a difference of school&ndash;level means.</li>
+        <li><b>Year / period.</b> Pooled periods sum the funnel across their years; single years show one cycle.
+          Every rate is computed as a <i>ratio of sums</i> over years where both numerator and denominator are
+          observed, so it is comparable across periods of different length.</li>
+        <li><b>Explore the cloud.</b> <b>Scroll</b> to zoom, <b>drag</b> to pan, <b>double&ndash;click</b> to reset
+          &mdash; handy for spreading piled&ndash;up dots enough to click one. <b>Focus mode</b> (top&ndash;right)
+          hides the control bar and side panels for a clean, full&ndash;width view. You can divide any funnel stage
+          by A&ndash;G&nbsp;eligible or by grade&nbsp;9&ndash;12 enrollment via the metric menu.</li>
+        <li><b>Drop outliers.</b> Ticking the box removes, <i>for the current view</i>, any school flagged by the
+          standard <b>Tukey 1.5&times;IQR</b> rule on either plotted axis (the single metric in strip view). Dropped
+          points leave the chart, the correlation <i>r</i>, the trend line, the mean and the LCFF+ gap; the number
+          removed is reported. Because the headline mean is outlier&ndash;sensitive, this is the intended way to set
+          extremes aside.</li>
+        <li><b>Base counts.</b> A selected school's profile lists the raw denominators behind its rates
+          &mdash; A&ndash;G eligible, grade&nbsp;9&ndash;12 enrollment and graduating cohort &mdash; and every rate
+          row also shows its own numerator&nbsp;&div;&nbsp;denominator.</li>
+        <li><b>Cross-universe ratios.</b> Applicant/admit/enrollee counts come from UC (CEEB); &ldquo;eligible&rdquo;
+          (A&ndash;G completers) and enrollment come from CDE (CDS). Ratios mixing them are school-level indicators,
+          not exact per-student rates.</li>
+        <li><b>Self-selection.</b> A negative merit&ndash;admit correlation does not by itself prove a school-level
+          penalty; the over-time view and within-LCFF+ comparisons are the checks against it.</li>
+        <li><b>Suppression &amp; reliability.</b> UC masks small admit/enroll cells; at Berkeley ~a third of
+          applicant schools have suppressed admits. When the numerator is masked in the years carrying most of a
+          school's applicants or admits, a pooled rate would otherwise collapse onto a small surviving year (e.g.
+          an apparent 1.00 yield, or a 0.50 admit rate from 3&nbsp;of&nbsp;6 in one year while 31 applied over the
+          period). Such rates are marked <b>low-confidence</b>: drawn as hollow dashed dots, excluded from the
+          headline <i>r</i>, the mean and the LCFF+ gap, and shown in a school's profile as their actual
+          numerator&nbsp;÷&nbsp;denominator with the number of suppressed years.</li>
+        <li><b>Strip position.</b> In the strip view each dot sits exactly at its value on the axis; only vertical
+          spacing is used to separate overlapping schools, so a dot's horizontal position always matches the
+          number in its profile.</li>
+        <li><b>Newcomer schools.</b> A few schools for recently arrived immigrant students (e.g. Oakland
+          International) show ~0% CAASPP proficiency while still posting A–G completers — students meet graduation
+          requirements while acquiring English. That 0% is real data (it may round from a small masked
+          percentage), not a missing value.</li>
+        <li><b>Impossible denominators.</b> A handful of schools have a corrupted grade&nbsp;9–12 enrollment far
+          smaller than their applicant count (e.g. Wheatland). Rows where a funnel count exceeds total enrollment
+          are dropped from the &ldquo;÷ enrollment&rdquo; metrics rather than plotted as &gt;1.</li>
+        <li><b>Capacity dynamic.</b> High-admit inland campuses (Merced, Riverside, Santa Cruz) show a <i>positive</i>
+          merit&ndash;admit correlation &mdash; they admit most qualified applicants &mdash; so read them differently.</li>
+        <li><b>ELWR met at entry.</b> The writing&ndash;requirement figure is the share of a school's UC
+          <i>enrollees</i> who satisfied the Entry Level Writing Requirement <i>at entry</i> &mdash; via the AWPE
+          exam or other qualifying methods (AP/IB/SAT/ACT/transferable course) &mdash; i.e. who did <i>not</i> need
+          first&ndash;year remedial writing. It is <b>not</b> &ldquo;ever met&rdquo;: enrollees only
+          (self&ndash;selected, small N), latest year per school, indicative only.</li>
+        <li><b>SAT / ACT.</b> Where available a profile shows the school's UC&ndash;enrollee average SAT reading
+          (EBRW, 200&ndash;800) and ACT (writing&ndash;section takers, 1&ndash;36) for the latest year on record.
+          These exist only for ~2006&ndash;2020 (none after 2020), are enrollee&ndash;only, small, self&ndash;selected
+          samples &mdash; context, never a merit axis. SAT &ldquo;writing&rdquo; appears only on its old 200&ndash;800
+          section scale, as the post&ndash;2016 essay is not comparable.</li>
+        <li><b>Applicant &amp; admit GPA.</b> The two GPA axes are UC's own recalculated <i>weighted, honors&ndash;capped</i>
+          high&ndash;school GPA (sophomore&ndash;junior A&ndash;G coursework &mdash; the figure UC uses in admissions),
+          averaged over the selected period. <b>Applicant GPA</b> gauges the strength of a school's UC applicant pool: an
+          applicant&ndash;specific merit axis, distinct from CAASPP (which covers all grade&ndash;11 students). <b>Admit GPA</b>
+          is the average among <i>admitted</i> students &mdash; the GPA bar UC actually accepted &mdash; and is partly
+          downstream of the admit decision (a more selective campus shows a higher bar), so read it as a level UC set, not a
+          pure measure of school strength. A profile also shows enrollee GPA and the <b>admit&minus;applicant gap</b> (how far
+          above the pool the admitted students sat). Admit GPA is blank wherever UC suppresses a school's admits.</li>
+        <li><b>UC graduation rates by high school.</b> From UC's freshman-outcomes dashboard: for each
+          school and fall entry cohort, the share of its UC freshman entrants (all nine campuses pooled) who
+          persisted one year and who graduated within 4, 5 or 6 years. A cohort appears only when the school
+          sent <b>&ge;10</b> entrants; rates are integer percents; 6-yr rates are mature through entry 2019,
+          4-yr through 2021, retention through 2024. Two ways to use them, matching two hypotheses:
+          (1)&nbsp;as a <i>merit axis</i> &mdash; <b>UC 6-yr grad (prior cohorts)</b> pools, N-weighted, the five
+          cohorts entering 6&ndash;10 years <i>before</i> the selected period: the most recent rates fully
+          observable &mdash; and knowable to admissions readers &mdash; by decision time. If graduation reveals
+          something fixed about a school's students, it is a merit proxy; if readers calibrate on prior
+          graduates, it is the very signal they act on. The over-time panel shows the correlation re-anchored
+          year by year. (2)&nbsp;as an <i>outcome</i> &mdash; the retention/graduation rates of the period's own
+          entrants (e.g. vs CAASPP: does school-level merit predict success after enrollment?). The
+          same-period rates are also offered on the X-axis: though measured after admission, a cohort's
+          eventual completion can be read as an indicator of merit already present when it applied.
+          <b>Scope.</b> The two roles use different series. As <i>X-axis indicators</i>, grad metrics
+          pool the school's entrants to <i>any</i> UC campus (richest coverage; a school-level trait), so a
+          school can carry one even when its admits or enrollees to the selected campus are zero or
+          suppressed. As <i>Y-axis outcomes</i>, retention/graduation are <b>campus-specific</b> &mdash;
+          entrants to the selected campus only &mdash; since an outcome of this campus's admissions should
+          use this campus's students. The per-campus dashboard series reports a school-year only when
+          &ge;10 students entered that campus, so campus-specific outcomes show far fewer (and larger)
+          schools. Profiles show both blocks with their entrant counts, and funnel counts suppressed in
+          every year display as &ldquo;&mdash;&rdquo; rather than a false 0. Dot size for
+          grad metrics is the entrant-cohort N. Campus filter does not change the All-UC grad series; a
+          profile additionally shows the campus-specific 6-yr rate where reported.</li>
+      </ul>
+    </div>
+  </details>
+
+  <footer id="footer"></footer>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+<script src="data.js"></script>
+<script>
+(function(){
+  "use strict";
+  const D = window.UCDATA;
+  if(!D){ document.querySelector('.wrap').innerHTML =
+    '<p style="color:#b00">Could not load <code>data.js</code>. If you opened this file directly, '+
+    'serve the folder over HTTP (e.g. <code>python3 -m http.server</code>) or view it on GitHub Pages.</p>'; return; }
+
+  // panel row layout: [year,A,D,E,C,Gc,H,ela,math,upp,Gp,agpa,dgpa,egpa]
+  const IX = {year:0,A:1,D:2,E:3,C:4,G:5,H:6,ela:7,math:8,upp:9,Gp:10,agpa:11,dgpa:12,egpa:13};
+  const METRICS = D.metrics, MByKey = Object.fromEntries(METRICS.map(m=>[m.key,m]));
+  // X axis offers merit/context metrics plus outcome metrics flagged xaxis (the same-period UC
+  // retention/graduation rates: later outcomes read as indicators of merit present at application).
+  const X_KEYS = METRICS.filter(m=>m.role==='merit'||m.role==='context'||m.xaxis).map(m=>m.key);
+  const Y_KEYS = METRICS.filter(m=>m.role==='outcome').map(m=>m.key);
+  const ALL_KEYS = METRICS.map(m=>m.key);
+  const periodByKey = Object.fromEntries(D.periods.map(p=>[p.key,p]));
+
+  const state = { campus:0, period:D.defaultPeriod, view:'scatter',
+                  xMetric:'avg', yMetric:'admit_rate', stripMetric:'admit_rate',
+                  colorby:'upp', minApps:30, dropOut:false, sel:null, query:'' };
+
+  const $ = id=>document.getElementById(id);
+  const tooltip = $('tooltip'), svg = d3.select('#chart'), fmtN = d3.format(',');
+
+  D.campuses.forEach((c,i)=>{ const o=document.createElement('option'); o.value=i; o.textContent=c; $('campus').appendChild(o); });
+  D.periods.forEach(p=>{ const o=document.createElement('option'); o.value=p.key; o.textContent=p.label; $('period').appendChild(o); });
+  $('campus').value=state.campus; $('period').value=state.period;
+
+  function meanIdx(rows,idx){ let s=0,n=0; for(const r of rows){ if(r[idx]!=null){s+=r[idx];n++;} } return n?s/n:null; }
+  // jsum: ratio-of-sums over years where BOTH numerator and denominator are observed (the published,
+  // period-length-robust convention). Returns {sn,sd,cov}.
+  //   cov = share of the OBSERVED denominator mass that falls in years where the numerator is ALSO
+  //   observed. UC masks small admit/enroll cells, so when the numerator is suppressed in the years
+  //   carrying most of the base, the pooled rate collapses onto a biased remnant (e.g. yield 100%,
+  //   admit 50%). A low cov flags exactly that. Rows where a funnel count exceeds grade 9-12
+  //   enrollment (logically impossible — a corrupted H) are dropped from the headcount denominator.
+  function jsum(rows,num,den){ let sn=0,sd=0,ok=false,denAll=0,denOK=false;
+    for(const r of rows){ const a=r[IX[num]],b=r[IX[den]]; if(b==null) continue;
+      if(den==='H'&&a!=null&&a>b) continue;
+      denAll+=b; denOK=true; if(a!=null){ sn+=a; sd+=b; ok=true; } }
+    return (ok&&sd>0)?{sn,sd,cov:(denOK&&denAll>0)?sd/denAll:1}:null; }
+  // ---------- UC graduation rates by source high school (UC Info Center) ----------
+  // D.grad[ceeb] (all campuses pooled) and D.gradC["ci|ceeb"] rows: [entry_year, N, ret1, g4, g5, g6]
+  // (integer percents; a cohort is shown only when the school sent >=10 entrants that fall).
+  // A grad metric carries m.grad={col,win[,src]}; src 'campus' pools the per-campus series (entrants
+  // to the SELECTED campus only — Y-axis outcomes), otherwise the all-UC series (X-axis indicators).
+  // Its value is the N-WEIGHTED mean over an entry-year window:
+  //   win 'same'  -> the selected period's years (the cohorts admitted then; mature cols only)
+  //   win 'prior' -> the 5 cohorts entering 6-10 years before the period starts — the most recent
+  //                  6-yr rates fully observable (and knowable to admissions readers) by decision time.
+  const GRIX={r1:2,g4:3,g5:4,g6:5};
+  function gradWinYears(win,refYear){
+    if(win==='same') return refYear!=null?[refYear]:periodByKey[state.period].years;
+    const y0=refYear!=null?refYear:Math.min(...periodByKey[state.period].years);
+    const a=[]; for(let y=y0-10;y<=y0-6;y++) a.push(y); return a; }
+  function gradAgg(ceeb,m,years){
+    const rows=ceeb&&(m.grad.src==='campus'?D.gradC[state.campus+'|'+ceeb]:D.grad[ceeb]); if(!rows) return null;
+    const ys=new Set(years), ci=GRIX[m.grad.col]; let sv=0,sw=0;
+    for(const r of rows){ if(ys.has(r[0])&&r[ci]!=null&&r[1]){ sv+=r[ci]*r[1]; sw+=r[1]; } }
+    return sw?{val:sv/sw,n:sw}:null; }
+  function gradVal(ceeb,m){ const a=gradAgg(ceeb,m,gradWinYears(m.grad.win)); return a?a.val:null; }
+  function gradN(ceeb,m){ const a=gradAgg(ceeb,m,gradWinYears(m.grad.win)); return a?a.n:null; }
+  // window note for titles ("UC grad cohorts: entered 2013–2017")
+  function gradNote(){ for(const k of arguments){ const m=MByKey[k];
+    if(m&&m.grad){ const ys=gradWinYears(m.grad.win);
+      return 'UC grad cohorts: entered '+Math.min(...ys)+'\u2013'+Math.max(...ys)
+        +(m.grad.src==='campus'?' (entrants to '+D.campuses[state.campus]+' only)':' (entrants to any UC campus)'); } } return null; }
+
+  function valOf(school, key){
+    const m=MByKey[key], rows=school.rows;
+    if(m.grad) return gradVal(school.ceeb,m);
+    if(key==='awpe') return school.awpe;
+    if(key==='avg'){ let s=0,n=0; for(const r of rows){ const e=r[IX.ela],t=r[IX.math];
+        if(e!=null&&t!=null){s+=(e+t)/2;n++;} else if(e!=null){s+=e;n++;} else if(t!=null){s+=t;n++;} } return n?s/n:null; }
+    if(key==='ela')  return meanIdx(rows,IX.ela);
+    if(key==='math') return meanIdx(rows,IX.math);
+    if(key==='upp')  return meanIdx(rows,IX.upp);
+    if(key==='app_gpa') return meanIdx(rows,IX.agpa);
+    if(key==='adm_gpa') return meanIdx(rows,IX.dgpa);
+    if(m.num&&m.den){ const s=jsum(rows,m.num,m.den); if(!s) return null; return m.fmt==='pct'?100*s.sn/s.sd:s.sn/s.sd; }
+    return null;
+  }
+  const COV_MIN=0.5;  // reliability gate: a pooled funnel rate needs >=50% of its denominator mass in
+                      // years where the numerator is also observed (see jsum cov). Tunable in one place.
+  // Full breakdown for a num/den metric: the sums that made the rate, its coverage/reliability, and how
+  // many contributing years had the numerator suppressed — so the profile can show a self-consistent rate.
+  function rateInfo(school,key){ const m=MByKey[key]; if(!(m&&m.num&&m.den)) return null;
+    const rows=school.rows, s=jsum(rows,m.num,m.den); if(!s) return null;
+    let supp=0,obs=0; for(const r of rows){ const a=r[IX[m.num]],b=r[IX[m.den]];
+      if(b==null) continue; if(m.den==='H'&&a!=null&&a>b) continue; if(a!=null) obs++; else supp++; }
+    return {sn:s.sn,sd:s.sd,cov:s.cov,reliable:s.cov>=COV_MIN,supp,obs,
+            val:m.fmt==='pct'?100*s.sn/s.sd:s.sn/s.sd}; }
+  // A value is "reliable" unless it is a suppression-collapsed funnel rate (non-rate metrics always pass).
+  function reliable(school,key){ const m=MByKey[key]; if(!(m&&m.num&&m.den)) return true;
+    const ri=rateInfo(school,key); return ri?ri.reliable:true; }
+  const NUMLBL={A:'applicants',D:'admits',E:'enrollees',G:'A–G completers'},
+        DENLBL={A:'applicants',D:'admits',E:'enrollees',Gp:'A–G eligible',H:'gr 9–12 enrollment',C:'cohort'};
+  function rateRow(s,k){ const m=MByKey[k], ri=rateInfo(s,k);
+    if(!ri) return `<tr><td class="k">${m.label}</td><td class="v">—</td></tr>`;
+    const basis=`${fmtN(ri.sn)} ÷ ${fmtN(ri.sd)}`;
+    const note=ri.supp>0?` · ${NUMLBL[m.num]||m.num} suppressed ${ri.supp}/${ri.supp+ri.obs} yr${ri.reliable?'':' — low confidence'}`:'';
+    return `<tr${ri.reliable?'':' class="lowconf"'}><td class="k">${m.label}`+
+      `<div class="rbasis">${basis}${note}</div></td><td class="v">${fmtVal(ri.val,k)}</td></tr>`; }
+  function fmtVal(v,key){ if(v==null) return '—'; const m=MByKey[key];
+    return m.fmt==='pct'? v.toFixed(1)+'%' : (m.fmt==='gpa'? v.toFixed(2) : v.toFixed(3)); }
+
+  // ---------- denominators, dot-size basis, central tendency, outliers, zoom ----------
+  const DEN_IDX={A:IX.A,D:IX.D,E:IX.E,Gp:IX.Gp,H:IX.H,C:IX.C};
+  function sumIdx(rows,idx){ let s=0,seen=false; for(const r of rows){ if(r[idx]!=null){ s+=r[idx]; seen=true; } } return seen?s:null; }
+  // the count a metric's rate divides by (its denominator), summed over the selected period
+  function denomCount(school,key){ const m=MByKey[key]; if(!(m&&m.den)) return null; return sumIdx(school.rows,DEN_IDX[m.den]); }
+  // dot-size basis = that denominator (applicants for admit rate, admits for yield, A–G eligible for
+  // per-eligible rates, gr 9–12 enrollment for per-head, cohort for A–G completion); else applicants
+  function sizeBasis(school,key){ const m=MByKey[key];
+    if(m&&m.grad){ const n=gradN(school.ceeb,m); if(n) return n; }
+    const d=denomCount(school,key); return (d!=null&&d>0)?d:(school.apps||0); }
+  function sizeLabelFor(key){ const m=MByKey[key];
+    if(m&&m.grad) return m.grad.src==='campus'?'entrants to this campus':'UC entrant cohort (any campus)';
+    return (m&&m.den)?(DENLBL[m.den]||'applicants'):'applicants'; }
+
+  // arithmetic mean of per-school values = central tendency of the dots (what each dot measures)
+  function schoolMean(arr,key){ const v=arr.map(s=>valOf(s,key)).filter(x=>x!=null); return v.length?d3.mean(v):null; }
+  // pooled / student-weighted rate (Σnumerator ÷ Σdenominator) — large-school-dominated; reference only
+  function pooledVal(arr,key){ const m=MByKey[key];
+    if(m.grad){ let sv=0,sw=0; for(const s of arr){ const a=gradAgg(s.ceeb,m,gradWinYears(m.grad.win)); if(a){ sv+=a.val*a.n; sw+=a.n; } } return sw?sv/sw:null; }
+    return arr.length?valOf({rows:[].concat(...arr.map(s=>s.rows)),awpe:null},key):null; }
+
+  // Tukey fences: outlier if < Q1−1.5·IQR or > Q3+1.5·IQR (the standard rule). Needs >=4 points.
+  function tukeyBounds(vals){ const v=vals.filter(x=>x!=null).slice().sort(d3.ascending); if(v.length<4) return null;
+    const q1=d3.quantileSorted(v,.25), q3=d3.quantileSorted(v,.75), iqr=q3-q1; return [q1-1.5*iqr,q3+1.5*iqr]; }
+  function isOut(v,b){ return !!b && (v<b[0]||v>b[1]); }
+  // scatter analysis set: pairs with both metrics; reliability on both; Tukey outliers on EITHER axis
+  // (computed over the reliable points). keep = reliable & not-dropped. Pure/deterministic so the chart
+  // and the sidebar derive identical sets.
+  function analysisXY(arr,xk,yk){
+    const pts=arr.map(s=>({s,x:valOf(s,xk),y:valOf(s,yk)})).filter(d=>d.x!=null&&d.y!=null);
+    pts.forEach(d=>{ d.rel=reliable(d.s,xk)&&reliable(d.s,yk); });
+    const used=pts.filter(d=>d.rel);
+    const bx=tukeyBounds(used.map(d=>d.x)), by=tukeyBounds(used.map(d=>d.y));
+    pts.forEach(d=>{ d.out=d.rel&&(isOut(d.x,bx)||isOut(d.y,by)); });
+    const keep=used.filter(d=>!(state.dropOut&&d.out));
+    return {pts,used,keep,low:pts.length-used.length,dropped:pts.filter(d=>d.out).length}; }
+  // single-metric analysis set (strip view, and the central tendency of one metric)
+  function analysisOne(arr,key){
+    const pts=arr.map(s=>({s,v:valOf(s,key)})).filter(d=>d.v!=null);
+    pts.forEach(d=>{ d.rel=reliable(d.s,key); });
+    const used=pts.filter(d=>d.rel); const b=tukeyBounds(used.map(d=>d.v));
+    pts.forEach(d=>{ d.out=d.rel&&isOut(d.v,b); });
+    const keep=used.filter(d=>!(state.dropOut&&d.out));
+    return {pts,used,keep,low:pts.length-used.length,dropped:pts.filter(d=>d.out).length}; }
+
+  // shared zoom behavior; each render installs a `zoomApply(transform)` closure to redraw at that zoom
+  let zoomApply=null;
+  const zoomBehavior=d3.zoom().scaleExtent([1,12])
+    .filter(ev=> ev.type==='wheel' ? !ev.button
+      : (ev.type.startsWith('touch') ? (ev.touches && ev.touches.length>=2)   // two-finger pinch/pan only
+      : !ev.button))
+    .on('zoom',ev=>{ if(zoomApply) zoomApply(ev.transform); });
+  function installZoom(w,h,m){
+    zoomBehavior.extent([[m.left,m.top],[w-m.right,h-m.bottom]]).translateExtent([[m.left,m.top],[w-m.right,h-m.bottom]]);
+    svg.call(zoomBehavior).on('dblclick.zoom',null)
+       .on('dblclick',()=>svg.transition().duration(250).call(zoomBehavior.transform,d3.zoomIdentity));
+    svg.property('__zoom',d3.zoomIdentity); }  // reset stored transform each render
+
+  let cache={};
+  function schools(){
+    const ck=state.campus+'|'+state.period;
+    if(cache[ck]) return cache[ck];
+    const years=new Set(periodByKey[state.period].years);
+    const pre=state.campus+'|', arr=[];
+    for(const k in D.panel){ if(k.lastIndexOf(pre,0)!==0) continue;
+      const ceeb=k.slice(pre.length);
+      const rows=D.panel[k].filter(r=>years.has(r[IX.year]));
+      if(!rows.length) continue;
+      let apps=0; for(const r of rows){ if(r[IX.A]!=null) apps+=r[IX.A]; }
+      const upp=meanIdx(rows,IX.upp);
+      const md=D.meta[ceeb]||["","","",""], aw=D.awpe[ceeb]||[null,null];
+      arr.push({ceeb,rows,apps,upp,lcff:(upp!=null&&upp>=75)?1:0,
+                name:md[0],city:md[1],county:md[2],cds:md[3],awpe:aw[0],awpe_y:aw[1]});
+    }
+    cache[ck]=arr; return arr;
+  }
+  function shown(){ return schools().filter(s=>s.apps>=state.minApps); }
+
+  const uppColor=d3.scaleLinear().domain([0,50,100]).range(['#2166ac','#f4e08a','#b2182b']).clamp(true);
+  function dotColor(s){ if(state.colorby==='upp') return s.upp==null?'#bbb':uppColor(s.upp);
+    // LCFF+ status is derived from UPP, so when UPP is missing (e.g. 2015–2016) the status is unknown,
+    // not "non-LCFF+": color it gray, exactly as the UPP view does.
+    if(state.colorby==='lcff') return s.upp==null?'#bbb':(s.lcff?'var(--lcff)':'var(--nonlcff)'); return '#3b7fc4'; }
+
+  function pearson(pts){ pts=pts.filter(p=>p[0]!=null&&p[1]!=null); const n=pts.length; if(n<3) return {r:null,n};
+    const mx=d3.mean(pts,p=>p[0]),my=d3.mean(pts,p=>p[1]); let sxy=0,sxx=0,syy=0;
+    pts.forEach(p=>{const dx=p[0]-mx,dy=p[1]-my;sxy+=dx*dy;sxx+=dx*dx;syy+=dy*dy;});
+    return (!sxx||!syy)?{r:null,n}:{r:sxy/Math.sqrt(sxx*syy),n}; }
+  function ols(pts){ pts=pts.filter(p=>p[0]!=null&&p[1]!=null); const n=pts.length; if(n<3) return null;
+    const mx=d3.mean(pts,p=>p[0]),my=d3.mean(pts,p=>p[1]); let sxy=0,sxx=0;
+    pts.forEach(p=>{const dx=p[0]-mx;sxy+=dx*(p[1]-my);sxx+=dx*dx;}); return sxx?{b:sxy/sxx,a:my-(sxy/sxx)*mx}:null; }
+
+  function fill(sel,keys,val){ sel.innerHTML=''; keys.forEach(k=>{const o=document.createElement('option');o.value=k;o.textContent=MByKey[k].label;sel.appendChild(o);}); sel.value=val; }
+  function rebuildMetricSelects(){
+    if(state.view==='scatter'){
+      $('ctlB').classList.remove('hide'); $('labelA').textContent='X-axis (merit / context)'; $('labelB').textContent='Y-axis (outcome rate)';
+      fill($('metricA'),X_KEYS,state.xMetric); fill($('metricB'),Y_KEYS,state.yMetric);
+    } else {
+      $('ctlB').classList.add('hide'); $('labelA').textContent='Metric';
+      fill($('metricA'),ALL_KEYS,state.stripMetric);
+    }
+  }
+  const searchIndex = new Map();                       // disambiguated label -> school (rebuilt per campus/period)
+  function schoolLabel(s){ const city=(s.city&&s.city.trim())?s.city.trim():'—'; return s.name+' — '+city; }
+  function rebuildDatalist(){ const dl=$('schoollist'); dl.innerHTML=''; searchIndex.clear();
+    const list=schools().filter(s=>s.name).slice()
+      .sort((a,b)=> a.name<b.name?-1 : a.name>b.name?1 : (a.city||'').localeCompare(b.city||''));
+    const base=new Map(); list.forEach(s=>{ const b=schoolLabel(s); base.set(b,(base.get(b)||0)+1); });
+    list.forEach(s=>{ let label=schoolLabel(s);
+      if(base.get(label)>1 || searchIndex.has(label)) label+=' (CEEB '+s.ceeb+')';   // same name+city -> add CEEB
+      searchIndex.set(label,s);
+      const o=document.createElement('option'); o.value=label; dl.appendChild(o); }); }
+
+  function dims(){ const small=window.innerWidth<=700;
+    const w=Math.max(300,document.querySelector('.chartcard').clientWidth-(small?6:16));
+    const h=small?Math.max(340,Math.min(520,Math.round(window.innerHeight*.6))):520;
+    return {w,h,m:{top:14,right:small?12:18,bottom:48,left:small?46:60}}; }
+  function periodLabel(){ return periodByKey[state.period].label; }
+
+  function render(){ rebuildMetricSelects(); state.view==='scatter'?renderScatter():renderStrip(); renderStats(); renderLegend(); }
+  // empty-state message, word-wrapped to the frame (a single <text> clips at the svg edge)
+  function emptyMsg(w,h,msg){ const maxc=Math.max(24,Math.floor((w-70)/7));
+    const words=msg.split(' '), lines=[]; let cur='';
+    for(const wd of words){ if(cur && (cur+' '+wd).length>maxc){ lines.push(cur); cur=wd; } else cur=cur?cur+' '+wd:wd; }
+    if(cur) lines.push(cur);
+    const t=svg.append('text').attr('text-anchor','middle').attr('fill','#999').attr('font-size',13);
+    lines.forEach((ln,i)=>t.append('tspan').attr('x',w/2).attr('y',h/2+(i-(lines.length-1)/2)*19).text(ln)); }
+  function axisFmt(key){ const m=MByKey[key]; return v=> m.fmt==='pct'? v+'%' : v; }
+
+  function renderScatter(){
+    const {w,h,m}=dims(); svg.attr('width',w).attr('height',h).selectAll('*').remove();
+    const xk=state.xMetric, yk=state.yMetric;
+    const A=analysisXY(shown(),xk,yk);
+    const drawn=A.pts.filter(d=>!(state.dropOut&&d.out));   // hide dropped outliers; low-conf stay (hollow)
+    const keep=A.keep;                                       // reliable & non-dropped → fit, mean, stats
+    $('plotTitle').textContent=`${D.campuses[state.campus]} · ${periodLabel()}: ${MByKey[yk].short} vs. ${MByKey[xk].short}`;
+    $('plotSub').textContent=`${drawn.length} schools · size = ${sizeLabelFor(yk)} · dashed = mean of school rates`
+      +(state.dropOut&&A.dropped?` · ${A.dropped} outlier${A.dropped>1?'s':''} hidden`:'')
+      +(gradNote(xk,yk)?` · ${gradNote(xk,yk)}`:'');
+    if(!drawn.length){ emptyMsg(w,h,(MByKey[xk].grad||MByKey[yk].grad)?'No mature graduation cohorts in this selection — 6-yr rates exist through entry 2019, 4-yr through 2021 (try the 2016–2019 preset).':'No schools with both metrics in this selection.'); return; }
+    // dot size encodes the active denominator (yk's denominator); reserve max radius so dots stay in-frame
+    const bvals=drawn.map(d=>sizeBasis(d.s,yk)), bmin=d3.min(bvals), bmax=d3.max(bvals)||1;
+    const r=d3.scaleSqrt().domain([bmin===bmax?0:bmin,bmax]).range([3,20]); const RMAX=22;
+    const x=d3.scaleLinear().domain(d3.extent(drawn,d=>d.x)).nice().range([m.left+RMAX,w-m.right-RMAX]);
+    const ymax=d3.max(drawn,d=>d.y)||1;
+    const y=d3.scaleLinear().domain([0,ymax]).range([h-m.bottom-RMAX,m.top+RMAX]);
+    const g=svg.append('g');
+    svg.append('defs').append('clipPath').attr('id','plotclip').append('rect')
+      .attr('x',m.left).attr('y',m.top).attr('width',Math.max(0,w-m.right-m.left)).attr('height',Math.max(0,h-m.bottom-m.top));
+    const gx=g.append('g').attr('class','axis').attr('transform',`translate(0,${h-m.bottom})`).call(d3.axisBottom(x).ticks(8).tickFormat(axisFmt(xk)));
+    const gy=g.append('g').attr('class','axis').attr('transform',`translate(${m.left},0)`).call(d3.axisLeft(y).ticks(7).tickFormat(axisFmt(yk)));
+    g.append('text').attr('x',(m.left+w-m.right)/2).attr('y',h-8).attr('text-anchor','middle').attr('fill','var(--muted)').attr('font-size',12).text(MByKey[xk].label);
+    g.append('text').attr('transform','rotate(-90)').attr('x',-(m.top+h-m.bottom)/2).attr('y',15).attr('text-anchor','middle').attr('fill','var(--muted)').attr('font-size',12).text(MByKey[yk].label);
+    const plot=g.append('g').attr('clip-path','url(#plotclip)');   // zoom/pan content clipped to the frame
+    const gGrid=plot.append('g');
+    function drawGrid(sc){ gGrid.selectAll('line').data(sc.ticks(7)).join('line')
+      .attr('class','gridline').attr('x1',m.left).attr('x2',w-m.right).attr('y1',d=>sc(d)).attr('y2',d=>sc(d)); }
+    drawGrid(y);
+    // central tendency of the dots = mean of school rates (recomputed when outliers are dropped)
+    const meanY=keep.length?d3.mean(keep,d=>d.y):null; let ovLine=null,ovTxt=null;
+    if(meanY!=null && meanY>=y.domain()[0] && meanY<=y.domain()[1]){
+      ovLine=plot.append('line').attr('class','avgline').attr('x1',m.left).attr('x2',w-m.right).attr('y1',y(meanY)).attr('y2',y(meanY));
+      ovTxt=plot.append('text').attr('class','avglabel').attr('x',w-m.right).attr('y',y(meanY)-4).attr('text-anchor','end').text(`mean ${fmtVal(meanY,yk)}`);
+    }
+    const fit=ols(keep.map(d=>[d.x,d.y])); const xd=x.domain(); let fitSel=null;   // trend uses kept points only
+    if(fit){ fitSel=plot.append('line').attr('class','fitline').attr('x1',x(xd[0])).attr('y1',y(fit.a+fit.b*xd[0])).attr('x2',x(xd[1])).attr('y2',y(fit.a+fit.b*xd[1])); }
+    const dots=plot.append('g').selectAll('circle').data(drawn,d=>d.s.ceeb).join('circle')
+      .attr('class',d=>'dot'+(d.rel?'':' lowconf')).attr('cx',d=>x(d.x)).attr('cy',d=>y(d.y)).attr('r',d=>r(sizeBasis(d.s,yk)))
+      .attr('fill',d=>d.rel?dotColor(d.s):'#fff').attr('fill-opacity',d=>d.rel?.82:.95)
+      .on('mousemove',(e,d)=>showTip(e,d.s)).on('mouseleave',hideTip).on('click',(e,d)=>select(d.s));
+    applyHighlight(dots,d=>d.s);
+    zoomApply=(t)=>{ const zx=t.rescaleX(x),zy=t.rescaleY(y);
+      gx.call(d3.axisBottom(zx).ticks(8).tickFormat(axisFmt(xk)));
+      gy.call(d3.axisLeft(zy).ticks(7).tickFormat(axisFmt(yk)));
+      drawGrid(zy); dots.attr('cx',d=>zx(d.x)).attr('cy',d=>zy(d.y));
+      if(fitSel) fitSel.attr('x1',zx(xd[0])).attr('y1',zy(fit.a+fit.b*xd[0])).attr('x2',zx(xd[1])).attr('y2',zy(fit.a+fit.b*xd[1]));
+      if(ovLine){ ovLine.attr('y1',zy(meanY)).attr('y2',zy(meanY)); ovTxt.attr('y',zy(meanY)-4); } };
+    installZoom(w,h,m);
+  }
+
+  function renderStrip(){
+    const {w,h,m}=dims(); svg.attr('width',w).attr('height',h).selectAll('*').remove();
+    const mk=state.stripMetric;
+    const A=analysisOne(shown(),mk);
+    const drawn=A.pts.filter(d=>!(state.dropOut&&d.out)); const keep=A.keep;
+    $('plotTitle').textContent=`${D.campuses[state.campus]} · ${periodLabel()}: schools by ${MByKey[mk].short}`;
+    $('plotSub').textContent=`${drawn.length} schools · size = ${sizeLabelFor(mk)} · each dot is one high school`
+      +(state.dropOut&&A.dropped?` · ${A.dropped} outlier${A.dropped>1?'s':''} hidden`:'')
+      +(gradNote(mk)?` · ${gradNote(mk)}`:'');
+    if(!drawn.length){ emptyMsg(w,h,MByKey[mk].grad?'No mature graduation cohorts in this selection — 6-yr rates exist through entry 2019, 4-yr through 2021 (try the 2016–2019 preset).':'No schools with this metric in this selection.'); return; }
+    const bvals=drawn.map(d=>sizeBasis(d.s,mk)), bmin=d3.min(bvals), bmax=d3.max(bvals)||1;
+    const r=d3.scaleSqrt().domain([bmin===bmax?0:bmin,bmax]).range([3,18]); const RMAX=20;
+    const x=d3.scaleLinear().domain(d3.extent(drawn,d=>d.v)).nice().range([m.left+RMAX,w-m.right-RMAX]);
+    const cy=(m.top+h-m.bottom)/2, g=svg.append('g');
+    svg.append('defs').append('clipPath').attr('id','plotclip').append('rect')
+      .attr('x',m.left).attr('y',m.top).attr('width',Math.max(0,w-m.right-m.left)).attr('height',Math.max(0,h-m.bottom-m.top));
+    const gx=g.append('g').attr('class','axis').attr('transform',`translate(0,${h-m.bottom})`).call(d3.axisBottom(x).ticks(9).tickFormat(axisFmt(mk)));
+    g.append('text').attr('x',(m.left+w-m.right)/2).attr('y',h-8).attr('text-anchor','middle').attr('fill','var(--muted)').attr('font-size',12).text(MByKey[mk].label);
+    const plot=g.append('g').attr('clip-path','url(#plotclip)');
+    const meanV=keep.length?d3.mean(keep,d=>d.v):null; let ovLine=null,ovTxt=null;   // mean of school rates
+    if(meanV!=null){ ovLine=plot.append('line').attr('class','avgline').attr('x1',x(meanV)).attr('x2',x(meanV)).attr('y1',m.top).attr('y2',h-m.bottom);
+      ovTxt=plot.append('text').attr('class','avglabel').attr('x',x(meanV)+4).attr('y',m.top+10).text(`mean ${fmtVal(meanV,mk)}`); }
+    // cx is always the true value on the axis; the simulation resolves overlaps only vertically, so a
+    // dot's horizontal position always equals the number shown in the sidebar.
+    drawn.forEach(d=>{ d.fx=x(d.v); d.y=cy; d._r=r(sizeBasis(d.s,mk)); });
+    const sim=d3.forceSimulation(drawn).force('y',d3.forceY(cy).strength(.06))
+      .force('collide',d3.forceCollide(d=>d._r+1).strength(.9)).stop();
+    for(let i=0;i<200;i++) sim.tick();
+    drawn.forEach(d=>{ d.y=Math.max(m.top+d._r,Math.min(h-m.bottom-d._r,d.y)); });
+    const dots=plot.append('g').selectAll('circle').data(drawn,d=>d.s.ceeb).join('circle')
+      .attr('class',d=>'dot'+(d.rel?'':' lowconf')).attr('cx',d=>x(d.v)).attr('cy',d=>d.y).attr('r',d=>d._r)
+      .attr('fill',d=>d.rel?dotColor(d.s):'#fff').attr('fill-opacity',d=>d.rel?.82:.95)
+      .on('mousemove',(e,d)=>showTip(e,d.s)).on('mouseleave',hideTip).on('click',(e,d)=>select(d.s));
+    applyHighlight(dots,d=>d.s);
+    zoomApply=(t)=>{ const zx=t.rescaleX(x);
+      gx.call(d3.axisBottom(zx).ticks(9).tickFormat(axisFmt(mk)));
+      dots.attr('cx',d=>zx(d.v));
+      if(ovLine){ ovLine.attr('x1',zx(meanV)).attr('x2',zx(meanV)); ovTxt.attr('x',zx(meanV)+4); } };
+    installZoom(w,h,m);
+  }
+
+  function applyHighlight(dots,acc){ const q=state.query.trim().toLowerCase();
+    dots.classed('dim',false).classed('match',false).classed('sel',false);
+    if(q.length>=2){ dots.classed('dim',d=>!acc(d).name.toLowerCase().includes(q)); dots.classed('match',d=>acc(d).name.toLowerCase().includes(q)); }
+    if(state.sel) dots.classed('sel',d=>acc(d).ceeb===state.sel.ceeb); }
+
+  function renderStats(){
+    const cname=D.campuses[state.campus];
+    $('statCampus').textContent=`${cname} · ${periodLabel()}`;
+    const data=shown();
+    const isScatter=state.view==='scatter';
+    const ok = isScatter? state.yMetric : state.stripMetric;
+    const xk = isScatter? state.xMetric : (MByKey[state.stripMetric].role==='outcome'?'avg':state.stripMetric);
+    const yk = isScatter? state.yMetric : (MByKey[state.stripMetric].role==='outcome'?state.stripMetric:'admit_rate');
+    const P=analysisXY(data,xk,yk);                              // pair set for the correlation
+    const {r,n}=pearson(P.keep.map(d=>[d.x,d.y]));
+    const ex=[]; if(P.low) ex.push(`${fmtN(P.low)} low-confidence`); if(state.dropOut&&P.dropped) ex.push(`${fmtN(P.dropped)} outlier${P.dropped>1?'s':''}`);
+    const exTxt=ex.length?`; ${ex.join(' + ')} excluded`:'';
+    $('bigr').innerHTML=(r==null?'—':(r>=0?'+':'')+r.toFixed(2))+`<span class="lbl">r (${MByKey[yk].short} vs ${MByKey[xk].short}, n=${n}${exTxt})</span>`;
+    let txt='';
+    if(r!=null){ const strg=Math.abs(r)<.1?'essentially no':Math.abs(r)<.25?'a weak':Math.abs(r)<.45?'a moderate':'a strong';
+      const dir=r<0?'negative':'positive'; let plain='';
+      if(MByKey[xk].role==='merit') plain=r<0?' — higher-scoring schools fare worse on this outcome here.':' — higher-scoring schools fare better on this outcome here.';
+      else if(xk==='upp') plain=r>0?' — higher-poverty schools fare better on this outcome here.':' — higher-poverty schools fare worse on this outcome here.';
+      txt=`${strg} ${dir} relationship${plain}`; }
+    $('interp').textContent=txt;
+    $('sNshown').textContent=fmtN(data.length);
+    // central tendency of the displayed metric = MEAN of school rates (same population the chart draws)
+    const okKeep = isScatter ? P.keep : analysisOne(data,ok).keep;
+    const meanOk = okKeep.length ? d3.mean(okKeep, d=> isScatter? d.y : d.v) : null;
+    const okSchools = okKeep.map(d=>d.s);
+    const pooledOk = pooledVal(okSchools, ok);                   // student-weighted, for reference
+    $('kOverall').textContent='Mean across schools — '+MByKey[ok].short.toLowerCase();
+    $('sOverall').textContent = meanOk==null?'—':fmtVal(meanOk,ok);
+    $('sPooled').textContent = pooledOk==null?'—':fmtVal(pooledOk,ok);
+    const lc=okSchools.filter(s=>s.lcff).map(s=>valOf(s,ok)).filter(v=>v!=null), nc=okSchools.filter(s=>s.upp!=null&&!s.lcff).map(s=>valOf(s,ok)).filter(v=>v!=null);
+    if(lc.length&&nc.length){ const gap=d3.mean(lc)-d3.mean(nc); const mm=MByKey[ok];
+      $('sGap').textContent=(gap>=0?'+':'')+(mm.fmt==='pct'?gap.toFixed(1)+' pts':gap.toFixed(3)); } else $('sGap').textContent='—';
+    renderSpark(xk,yk);
+  }
+
+  // per-year value for the over-time correlation: grad metrics re-anchor their entry-year
+  // window to each display year (win 'same' -> that year's cohort; 'prior' -> years -10..-6).
+  function valOfAt(sObj,key,yr){ const m=MByKey[key];
+    if(m.grad){ const a=gradAgg(sObj.ceeb,m,gradWinYears(m.grad.win,yr)); return a?a.val:null; }
+    return valOf(sObj,key); }
+  function renderSpark(xk,yk){
+    $('sparkLbl').textContent=`r( ${MByKey[yk].short} vs ${MByKey[xk].short} ) over time`;
+    const pre=state.campus+'|'; const byYear={};
+    for(const k in D.panel){ if(k.lastIndexOf(pre,0)!==0) continue;
+      const ceeb=k.slice(pre.length), aw=(D.awpe[ceeb]||[null,null])[0];
+      for(const row of D.panel[k]){ const yr=row[IX.year];
+        if(row[IX.A]==null||row[IX.A]<state.minApps) continue;
+        const sObj={rows:[row],awpe:aw,ceeb};
+        const xv=valOfAt(sObj,xk,yr), yv=valOfAt(sObj,yk,yr);
+        if(xv==null||yv==null) continue; (byYear[yr]=byYear[yr]||[]).push([xv,yv]); } }
+    const ser=Object.keys(byYear).map(y=>+y).sort((a,b)=>a-b).map(y=>{const pr=pearson(byYear[y]); return {y,r:pr.r,n:pr.n};}).filter(d=>d.r!=null&&d.n>=5);
+    const s=d3.select('#sparkSvg'); s.selectAll('*').remove();
+    const W=document.querySelector('.spark').clientWidth||300,H=94,pad=16,padTop=20,padBot=20; s.attr('width',W).attr('height',H);
+    if(ser.length<2){ s.append('text').attr('x',8).attr('y',40).attr('fill','#999').attr('font-size',12).text('not enough data for this pair'); return; }
+    const x=d3.scaleLinear().domain(d3.extent(ser,d=>d.y)).range([pad,W-pad]);
+    const yd=[d3.min([-.1,d3.min(ser,d=>d.r)]),d3.max([.1,d3.max(ser,d=>d.r)])];
+    const y=d3.scaleLinear().domain(yd).range([H-padBot,padTop]);   // extra top/bottom room for labels
+    s.append('line').attr('x1',pad).attr('x2',W-pad).attr('y1',y(0)).attr('y2',y(0)).attr('stroke','#ccc').attr('stroke-dasharray','3 3');
+    s.append('path').datum(ser).attr('fill','none').attr('stroke','var(--accent)').attr('stroke-width',1.8).attr('d',d3.line().x(d=>x(d.y)).y(d=>y(d.r)));
+    s.selectAll('circle.sp').data(ser).join('circle').attr('class','sp').attr('r',2.2).attr('cx',d=>x(d.y)).attr('cy',d=>y(d.r)).attr('fill','var(--accent)');
+    [ser[0],ser[ser.length-1]].forEach((d,i)=>{ const ly=d.r>0?Math.max(10,y(d.r)-6):Math.min(H-4,y(d.r)+13);  // clamp inside the box
+      s.append('text').attr('x',i?Math.min(W-2,x(d.y)):Math.max(2,x(d.y))).attr('y',ly).attr('text-anchor',i?'end':'start')
+      .attr('font-size',10).attr('fill','#555').attr('font-variant-numeric','tabular-nums').text(`${d.y}: ${(d.r>=0?'+':'')+d.r.toFixed(2)}`); });
+  }
+
+  function renderLegend(){ const L=$('legend');
+    const sk=state.view==='scatter'?state.yMetric:state.stripMetric;
+    if(state.colorby==='upp') L.innerHTML=`<span><b>Color:</b> poverty (UPP)</span><span style="display:inline-flex;align-items:center;gap:6px">0%<span class="grad" style="background:linear-gradient(90deg,#2166ac,#f4e08a,#b2182b)"></span>100%</span>`;
+    else if(state.colorby==='lcff') L.innerHTML=`<span><b>Color:</b></span><span><span class="sw" style="background:var(--lcff)"></span>LCFF+ (UPP≥75%)</span><span><span class="sw" style="background:var(--nonlcff)"></span>other</span><span><span class="sw" style="background:#bbb"></span>no UPP data</span>`;
+    else L.innerHTML=`<span><b>Color:</b> single</span>`;
+    L.innerHTML+=`<span class="sz"><b>Size:</b> ${sizeLabelFor(sk)} <span class="sw" style="width:7px;height:7px;background:#888;border:0"></span>&rarr;<span class="sw" style="width:14px;height:14px;background:#888;border:0"></span></span>`;
+    L.innerHTML+=`<span class="sz"><span style="display:inline-block;width:11px;height:11px;border-radius:50%;border:1.5px dashed #aab2bf;background:#fff;vertical-align:-1px"></span> low-confidence rate (suppressed cells; excluded from <i>r</i>)</span>`;
+    if(state.dropOut) L.innerHTML+=`<span class="sz" style="color:#9c3a12"><b>Outliers hidden</b> (Tukey 1.5&times;IQR, per view)</span>`;
+  }
+
+  // tooltip value: grad metrics carry their any-campus entrant-cohort N (the rate's true base,
+  // independent of this campus's funnel); funnel rates keep the low-confidence tag.
+  function tipVal(s,k){ const m=MByKey[k]; let h=`<b>${fmtVal(valOf(s,k),k)}</b>`;
+    if(m.grad){ const n=gradN(s.ceeb,m);
+      if(n) h+=` <span class="tl">· ${m.grad.src==='campus'?'this-campus':'any-campus'} cohort ${fmtN(n)}</span>`; }
+    else if(!reliable(s,k)) h+=' <span class="tl">(low conf.)</span>';
+    return h; }
+  function showTip(e,s){ const mk=state.view==='scatter'?state.yMetric:state.stripMetric, xk=state.view==='scatter'?state.xMetric:null;
+    tooltip.style.opacity=1; tooltip.style.left=Math.min(window.innerWidth-260,e.clientX+14)+'px'; tooltip.style.top=(e.clientY+14)+'px';
+    let html=`<b>${s.name}</b><br><span class="tl">${s.city||''}</span><br><span class="tl">${MByKey[mk].short}:</span> ${tipVal(s,mk)}<br>`;
+    if(xk) html+=`<span class="tl">${MByKey[xk].short}:</span> ${tipVal(s,xk)}<br>`;
+    html+=`<span class="tl">Applicants:</span> ${fmtN(s.apps||0)} · ${s.upp==null?'LCFF+ n/a':(s.lcff?'LCFF+':'non-LCFF+')}`; tooltip.innerHTML=html; }
+  function hideTip(){ tooltip.style.opacity=0; }
+
+  function select(s){ state.sel=s; renderProfile(s);
+    svg.selectAll('circle.dot').classed('sel',d=>!!d&&!!d.s&&d.s.ceeb===s.ceeb);   // keep zoom on click
+    if(window.innerWidth<=880) $('profile').scrollIntoView({behavior:'smooth',block:'nearest'}); }
+  // pooled (N-weighted) grad figure over ALL cohorts a column is mature for, with its basis
+  function gradPoolAll(rows,ci){ if(!rows) return null; let sv=0,sw=0,y0=null,y1=null;
+    for(const r of rows){ if(r[ci]==null||!r[1]) continue; sv+=r[ci]*r[1]; sw+=r[1];
+      if(y0==null||r[0]<y0) y0=r[0]; if(y1==null||r[0]>y1) y1=r[0]; }
+    return sw?{val:sv/sw,n:sw,y0,y1}:null; }
+  function gradTr(lbl,a){ return `<tr><td class="k">${lbl}${a?`<div class="rbasis">cohorts ${a.y0}\u2013${a.y1} \u00b7 ${fmtN(a.n)} entrants</div>`:''}</td><td class="v">${a?a.val.toFixed(1)+'%':'\u2014'}</td></tr>`; }
+  function gradRowAll(s,col,lbl){ return gradTr(lbl,gradPoolAll(D.grad[s.ceeb],GRIX[col])); }
+  // the selected period's entrant cohorts (any campus) — the base behind a "this period's entrants"
+  // rate; explains how a school can carry one while its funnel to THIS campus reads 0 or suppressed
+  function gradPeriodRow(s){ const ys=new Set(periodByKey[state.period].years); let sw=0,y0=null,y1=null;
+    for(const r of (D.grad[s.ceeb]||[])){ if(!ys.has(r[0])||!r[1]) continue; sw+=r[1];
+      if(y0==null||r[0]<y0) y0=r[0]; if(y1==null||r[0]>y1) y1=r[0]; }
+    return `<tr><td class="k">UC entrants in selected period <span class="rcap">any campus</span>`+
+      `${sw?`<div class="rbasis">cohorts ${y0}${y1!==y0?'\u2013'+y1:''} \u00b7 reported only when \u226510 entrants</div>`:''}</td>`+
+      `<td class="v">${sw?fmtN(sw):'\u2014'}</td></tr>`; }
+  function gradRowCam(s,col,lbl){ return gradTr(lbl,gradPoolAll(D.gradC[state.campus+'|'+s.ceeb],GRIX[col])); }
+  function renderProfile(s){
+    const p=$('profile');
+    const row=(k,lbl)=>`<tr><td class="k">${lbl||MByKey[k].label}</td><td class="v">${fmtVal(valOf(s,k),k)}</td></tr>`;
+    const cnt=idx=>{ const v=sumIdx(s.rows,idx); return v==null?'—':fmtN(v); };
+    // funnel counts: sum the OBSERVED years only; if UC suppressed the cell in every year of the
+    // period, show an em-dash (suppressed, possibly nonzero) instead of a misleading 0.
+    const fcnt=idx=>{ const v=sumIdx(s.rows,idx);
+      return v==null?'<span title="Suppressed by UC in every year of the period — blank \u2260 0; the true count may be small but nonzero.">\u2014</span>':fmtN(v); };
+    const _ag=valOf(s,'app_gpa'), _dg=valOf(s,'adm_gpa'), _eg=meanIdx(s.rows,IX.egpa);
+    const gapTxt=(_ag!=null&&_dg!=null)?((_dg-_ag>=0?'+':'')+(_dg-_ag).toFixed(2)):'—';
+    const egTxt=(_eg==null?'—':_eg.toFixed(2));
+    // SAT/ACT: enrollee averages, latest available year (pre-2021 only). SAT reading is a clean 200–800
+    // EBRW score; SAT "writing" is shown only on its old 200–800 section scale (the post-2016 essay scale
+    // is not comparable); ACT is the 1–36 figure for writing-section takers.
+    const tst=D.tests[s.ceeb]; let testRows='';
+    if(tst){ const sr=tst[0],sw=tst[1],aw=tst[2],ty=tst[3]; const yy=ty?` <span class="rcap">(’${(''+ty).slice(2)})</span>`:'';
+      if(sr!=null) testRows+=`<tr><td class="k">Avg SAT reading — EBRW (enrollees)${yy}</td><td class="v">${Math.round(sr)}</td></tr>`;
+      if(sw!=null&&sw>100) testRows+=`<tr><td class="k">Avg SAT writing — old 200–800 section</td><td class="v">${Math.round(sw)}</td></tr>`;
+      if(aw!=null) testRows+=`<tr><td class="k">Avg ACT — writing-section takers (enrollees)${yy}</td><td class="v">${Math.round(aw)}</td></tr>`;
+    }
+    const awpeVal=s.awpe==null?'—':s.awpe.toFixed(1)+'%'+(s.awpe_y?` (’${(''+s.awpe_y).slice(2)})`:'');
+    p.innerHTML=`<h3>${s.name}</h3>`+
+      `<div class="ploc">${s.city||''}${s.county?', '+s.county+' County':''} · ${D.campuses[state.campus]} · ${periodLabel()} `+
+      `<span class="badge ${s.upp==null?'na':(s.lcff?'lcff':'non')}">${s.upp==null?'LCFF+ n/a':(s.lcff?'LCFF+':'non-LCFF+')}</span></div>`+
+      `<table class="ptable">`+
+      `<tr class="sec"><td>Funnel to this campus (summed over period) <span class="rcap">\u2014 = suppressed by UC in every year shown (blank \u2260 0)</span></td><td class="v"></td></tr>`+
+      `<tr><td class="k">Applicants</td><td class="v">${fcnt(IX.A)}</td></tr>`+
+      `<tr><td class="k">Admits</td><td class="v">${fcnt(IX.D)}</td></tr>`+
+      `<tr><td class="k">Enrollees</td><td class="v">${fcnt(IX.E)}</td></tr>`+
+      `<tr class="sec"><td>Base counts <span class="rcap">the denominators behind the rates below</span></td><td class="v"></td></tr>`+
+      `<tr><td class="k">A–G eligible <span class="rcap">(per-eligible base)</span></td><td class="v">${cnt(IX.Gp)}</td></tr>`+
+      `<tr><td class="k">Grade 9–12 enrollment <span class="rcap">(per-head base)</span></td><td class="v">${cnt(IX.H)}</td></tr>`+
+      `<tr><td class="k">Graduating cohort <span class="rcap">(A–G completion base)</span></td><td class="v">${cnt(IX.C)}</td></tr>`+
+      `<tr class="sec"><td>Outcome rates <span class="rcap">numerator ÷ denominator over years both are reported</span></td><td class="v"></td></tr>`+
+      rateRow(s,'admit_rate')+rateRow(s,'yield')+rateRow(s,'app_rate')+rateRow(s,'adm_per_elig')+rateRow(s,'enr_per_elig')+rateRow(s,'app_per_head')+rateRow(s,'adm_per_head')+rateRow(s,'enr_per_head')+
+      `<tr class="sec"><td>Applicant &amp; admit GPA <span class="rcap">UC weighted-capped, mean over period</span></td><td class="v"></td></tr>`+
+      row('app_gpa','Applicant GPA')+row('adm_gpa','Admit GPA')+
+      `<tr><td class="k">Enrollee GPA</td><td class="v">${egTxt}</td></tr>`+
+      `<tr><td class="k">Admit − applicant gap <span class="rcap">how far UC reached vs the pool</span></td><td class="v">${gapTxt}</td></tr>`+
+      `<tr class="sec"><td>Graduation at UC <span class="rcap">this school's UC freshman entrants \u00b7 ANY campus, pooled \u2014 a different base than the funnel above</span></td><td class="v"></td></tr>`+
+      gradPeriodRow(s)+
+      gradRowAll(s,'g6','6-yr graduation')+gradRowAll(s,'g4','4-yr graduation')+gradRowAll(s,'r1','1st-year retention')+
+      gradRowCam(s,'g6','6-yr graduation \u2014 entrants to '+D.campuses[state.campus]+' only')+
+      gradRowCam(s,'g4','4-yr graduation \u2014 entrants to '+D.campuses[state.campus]+' only')+
+      gradRowCam(s,'r1','1st-year retention \u2014 entrants to '+D.campuses[state.campus]+' only')+
+      `<tr class="sec"><td>Academic / context</td><td class="v"></td></tr>`+
+      row('avg')+row('ela')+row('math')+rateRow(s,'ag')+row('upp')+
+      `<tr><td class="k">ELWR met at entry — no remediation (enrollees)<div class="rbasis">met via AWPE exam or AP/IB/SAT/ACT/transferable course; not “ever met”</div></td><td class="v">${awpeVal}</td></tr>`+
+      testRows+
+      `</table>`+
+      `<div class="spark"><div class="sl">${MByKey[state.view==='scatter'?state.yMetric:state.stripMetric].short} over time</div><svg id="profSpark" height="96"></svg><div class="sl" id="profNote" style="font-weight:400;text-transform:none;letter-spacing:0"></div></div>`;
+    renderProfileSpark(s);
+  }
+  function renderProfileSpark(s){
+    const yk=state.view==='scatter'?state.yMetric:state.stripMetric;
+    const mG=MByKey[yk].grad; let pts, note='';
+    if(mG){ const ci=GRIX[mG.col];
+      const rowsG=(mG.src==='campus'?D.gradC[state.campus+'|'+s.ceeb]:D.grad[s.ceeb])||[];
+      pts=rowsG.filter(r=>r[ci]!=null&&r[1]).map(r=>[r[0],r[ci]]);
+      note='By fall entry cohort \u00b7 '+(mG.src==='campus'?'entrants to '+D.campuses[state.campus]+' only':'All-UC entrants from this school')+' (cohorts of \u226510).';
+    } else {
+      const key=state.campus+'|'+s.ceeb, full=(D.panel[key]||[]);
+      pts=full.map(r=>{ const v=valOf({rows:[r],awpe:s.awpe},yk); return v==null?null:[r[IX.year],v]; }).filter(Boolean);
+    }
+    const sv=d3.select('#profSpark'); sv.selectAll('*').remove();
+    const W=document.querySelector('#profile .spark').clientWidth||300,H=96,pad=24; sv.attr('width',W);
+    if(pts.length<2){ sv.attr('height',0); $('profNote').textContent='Not enough yearly data to chart this rate.'; return; }
+    $('profNote').textContent=note;
+    const x=d3.scaleLinear().domain(d3.extent(pts,p=>p[0])).range([pad,W-pad]);
+    const y=d3.scaleLinear().domain([0,(d3.max(pts,p=>p[1])||1)*1.1]).range([H-16,8]);
+    sv.append('g').attr('transform',`translate(0,${H-14})`).attr('class','axis').call(d3.axisBottom(x).ticks(5).tickFormat(d3.format('d')));
+    sv.append('path').datum(pts).attr('fill','none').attr('stroke','var(--accent)').attr('stroke-width',1.8).attr('d',d3.line().x(p=>x(p[0])).y(p=>y(p[1])));
+    const last=pts[pts.length-1];
+    sv.append('circle').attr('r',2.6).attr('cx',x(last[0])).attr('cy',y(last[1])).attr('fill','var(--accent)');
+    sv.append('text').attr('x',x(last[0])).attr('y',y(last[1])-6).attr('text-anchor','end').attr('font-size',10).attr('fill','#555').text(fmtVal(last[1],yk));
+  }
+
+  function onSearch(){ const raw=$('search').value; state.query=raw;
+    let s=searchIndex.get(raw.trim());                                   // exact pick from the (disambiguated) list
+    if(!s){ const q=raw.trim().toLowerCase();
+      const hits=schools().filter(x=>x.name&&x.name.toLowerCase()===q);
+      if(hits.length===1) s=hits[0]; }                                   // unique bare name typed -> resolve it
+    if(s){ state.query=''; select(s); render(); }  // exact pick -> render() re-applies the single sel highlight (survives the chart rebuild)
+    // (partial/ambiguous text falls through to render(), which name-highlights all matches as you type)
+    else render(); }
+
+  $('campus').onchange=()=>{ state.campus=+$('campus').value; state.sel=null; state.query=''; $('search').value='';
+    $('profile').innerHTML='<div class="empty">Click a dot (or search a school) to see its full profile.</div>'; rebuildDatalist(); render(); };
+  $('period').onchange=()=>{ state.period=$('period').value; state.sel=null; rebuildDatalist();
+    $('profile').innerHTML='<div class="empty">Click a dot (or search a school) to see its full profile.</div>'; render(); };
+  document.querySelectorAll('#view button').forEach(b=>b.onclick=()=>{ document.querySelectorAll('#view button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); state.view=b.dataset.v; render(); });
+  $('metricA').onchange=()=>{ if(state.view==='scatter') state.xMetric=$('metricA').value; else state.stripMetric=$('metricA').value; render(); };
+  $('metricB').onchange=()=>{ state.yMetric=$('metricB').value; render(); };
+  $('colorby').onchange=()=>{ state.colorby=$('colorby').value; render(); };
+  $('minapps').oninput=()=>{ state.minApps=+$('minapps').value; $('minappsval').textContent=state.minApps; render(); };
+  $('dropout').onchange=()=>{ state.dropOut=$('dropout').checked; render(); };
+  $('focusBtn').onclick=()=>{ const on=document.body.classList.toggle('focus');
+    $('focusBtn').textContent=on?'Exit focus mode':'Focus mode'; setTimeout(render,40); };  // re-render: chart width changed
+  $('search').oninput=onSearch; $('search').onchange=onSearch;
+  let rt; window.addEventListener('resize',()=>{ clearTimeout(rt); rt=setTimeout(render,180); });
+
+  $('footer').innerHTML=`Data: UC Information Center (admissions by source school, 1994–2025; freshman retention &amp; graduation rates by source high school, entry cohorts 1999–2024), California Dept. of Education `+
+    `(CAASPP grade-11 proficiency, A–G completion, CALPADS UPP &amp; enrollment) and UC ELWR/AWPE files. Built ${D.generated}. `+
+    `Visual design modeled on the SF Chronicle's UC explorer; independent project, not affiliated. Methodology &amp; full data in the repository.`;
+
+  rebuildMetricSelects(); rebuildDatalist(); render();
+})();
+</script>
+</body>
+</html>

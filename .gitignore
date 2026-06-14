@@ -1,0 +1,34 @@
+# Node / test harness (used only for headless QA, never part of the site)
+node_modules/
+package.json
+package-lock.json
+
+# Stale local build dir (site now lives at repo root)
+site/
+
+# Editor / OS / tool cruft
+.DS_Store
+Thumbs.db
+*.swp
+~$*
+.~lock.*#
+.Rhistory
+*.pkl
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Raw source dumps are NOT committed (≈12 GB; public — see README "Data sources").
+# Keep only the curated derived files under data/.
+
+# housekeeping
+__pycache__/
+*.pyc
+.Rhistory
+.RData
+PUSH_TO_GITHUB.*
+*_broken*/
+.git_broken*/
+_wtest
+.DS_Store
+Thumbs.db
