@@ -6,8 +6,7 @@ admission outcomes — across all nine undergraduate campuses, **by admission ye
 period**, and across the **full admissions funnel** (apply → admit → enroll) against several
 denominators.
 
-> ▶ **Live site:** `https://hart-hornor-jones.github.io/uc-high-school-merit/` — enable it in one click
-> after pushing (see [Enabling GitHub Pages](#enabling-github-pages)).
+> **Live site:** `https://hart-hornor-jones.github.io/uc-high-school-merit/`
 
 
 ---
@@ -182,15 +181,6 @@ python3 build/parse_grad_rates.py /path/to/ug_outcomes_freshman_grad_rates_by_hs
 
 **Preview the site locally:** `python3 -m http.server 8000`, then open http://localhost:8000
 (opening `index.html` directly also works — `data.js` is a plain script, not a fetch).
-
----
-
-## Enabling GitHub Pages
-
-1. Push this repository.
-2. **Settings → Pages → Source: “Deploy from a branch”**, **Branch `main`**, **Folder `/ (root)`**, **Save**.
-3. After ~1 minute the explorer is live at `https://hart-hornor-jones.github.io/uc-high-school-merit/`.
-4. Paste that URL into the "Live site" line above and commit.
 
 ---
 
