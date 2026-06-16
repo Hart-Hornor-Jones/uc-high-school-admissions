@@ -599,7 +599,7 @@
   }
 
   function renderStrip(){
-    const {w,h,m}=dims(); svg.attr('width',w).attr('height',h).selectAll('*').remove();
+    const dm=dims(), w=dm.w, m=dm.m, baseH=dm.h;
     const mk=state.stripMetric;
     const A=analysisOne(shown(),mk);
     const drawn=A.pts.filter(d=>!(state.dropOut&&d.out)); const keep=A.keep;
@@ -607,18 +607,32 @@
     $('plotSub').textContent=`${drawn.length} schools · size = ${sizeLabelFor(mk)} · each dot is one high school`
       +(state.dropOut&&A.dropped?` · ${A.dropped} outlier${A.dropped>1?'s':''} hidden`:'')
       +(gradNote(mk)?` · ${gradNote(mk)}`:'');
-    if(!drawn.length){ emptyMsg(w,h,MByKey[mk].grad?'No mature graduation cohorts in this selection — 6-yr rates exist through entry 2019, 4-yr through 2021 (try the 2016–2019 preset).':'No schools with this metric in this selection.'); return; }
-    const bvals=drawn.map(d=>sizeBasis(d.s,mk)), bmin=d3.min(bvals), bmax=d3.max(bvals)||1;
-    const r=d3.scaleSqrt().domain([bmin===bmax?0:bmin,bmax]).range([3,18]); const RMAX=20;
+    if(!drawn.length){ svg.attr('width',w).attr('height',baseH).selectAll('*').remove();
+      emptyMsg(w,baseH,MByKey[mk].grad?'No mature graduation cohorts in this selection — 6-yr rates exist through entry 2019, 4-yr through 2021 (try the 2016–2019 preset).':'No schools with this metric in this selection.'); return; }
+    const RMAX=20;
     const x=d3.scaleLinear().domain(d3.extent(drawn,d=>d.v)).nice().range([m.left+RMAX,w-m.right-RMAX]);
-    const cy=(m.top+h-m.bottom)/2, g=svg.append('g');
+    // Dot-size scale (design range). With ~1,000 schools the beeswarm can need far more vertical room
+    // than a fixed frame, so dots used to clamp and pile against the top/bottom edges (the "clipping").
+    // Fix: grow the row to fit the densest vertical column, capped; past the cap, shrink dots to fit.
+    const bvals=drawn.map(d=>sizeBasis(d.s,mk)), bmin=d3.min(bvals), bmax=d3.max(bvals)||1;
+    const rBase=d3.scaleSqrt().domain([bmin===bmax?0:bmin,bmax]).range([3,18]);
+    const rmed=d3.median(drawn,d=>rBase(sizeBasis(d.s,mk)))||6;
+    const xs=drawn.map(d=>x(d.v)).sort(d3.ascending);                              // → densest column
+    let dense=1; for(let i=0,j=0;i<xs.length;i++){ while(xs[i]-xs[j]>2*rmed+2) j++; if(i-j+1>dense) dense=i-j+1; }
+    const want=dense*(2*rmed+1.5);                                                 // px the column wants
+    const MAXH=Math.min(1200,Math.max(baseH,Math.round(window.innerHeight*1.4)));
+    const H=Math.round(Math.min(MAXH,Math.max(baseH,want+m.top+m.bottom)));
+    const avail=H-m.top-m.bottom, f=want>avail?Math.max(.45,avail/want):1;         // shrink dots if still tight
+    const r=v=>rBase(v)*f;
+    svg.attr('width',w).attr('height',H).selectAll('*').remove();
+    const cy=(m.top+H-m.bottom)/2, g=svg.append('g');
     svg.append('defs').append('clipPath').attr('id','plotclip').append('rect')
-      .attr('x',m.left).attr('y',m.top).attr('width',Math.max(0,w-m.right-m.left)).attr('height',Math.max(0,h-m.bottom-m.top));
-    const gx=g.append('g').attr('class','axis').attr('transform',`translate(0,${h-m.bottom})`).call(d3.axisBottom(x).ticks(9).tickFormat(axisFmt(mk)));
-    g.append('text').attr('x',(m.left+w-m.right)/2).attr('y',h-8).attr('text-anchor','middle').attr('fill','var(--muted)').attr('font-size',12).text(MByKey[mk].label);
+      .attr('x',m.left).attr('y',m.top).attr('width',Math.max(0,w-m.right-m.left)).attr('height',Math.max(0,H-m.top-m.bottom));
+    const gx=g.append('g').attr('class','axis').attr('transform',`translate(0,${H-m.bottom})`).call(d3.axisBottom(x).ticks(9).tickFormat(axisFmt(mk)));
+    g.append('text').attr('x',(m.left+w-m.right)/2).attr('y',H-8).attr('text-anchor','middle').attr('fill','var(--muted)').attr('font-size',12).text(MByKey[mk].label);
     const plot=g.append('g').attr('clip-path','url(#plotclip)');
     const meanV=keep.length?d3.mean(keep,d=>d.v):null; let ovLine=null,ovTxt=null;   // mean of school rates
-    if(meanV!=null){ ovLine=plot.append('line').attr('class','avgline').attr('x1',x(meanV)).attr('x2',x(meanV)).attr('y1',m.top).attr('y2',h-m.bottom);
+    if(meanV!=null){ ovLine=plot.append('line').attr('class','avgline').attr('x1',x(meanV)).attr('x2',x(meanV)).attr('y1',m.top).attr('y2',H-m.bottom);
       ovTxt=plot.append('text').attr('class','avglabel').attr('x',x(meanV)+4).attr('y',m.top+10).text(`mean ${fmtVal(meanV,mk)}`); }
     // cx is always the true value on the axis; the simulation resolves overlaps only vertically, so a
     // dot's horizontal position always equals the number shown in the sidebar.
@@ -626,7 +640,7 @@
     const sim=d3.forceSimulation(drawn).force('y',d3.forceY(cy).strength(.06))
       .force('collide',d3.forceCollide(d=>d._r+1).strength(.9)).stop();
     for(let i=0;i<200;i++) sim.tick();
-    drawn.forEach(d=>{ d.y=Math.max(m.top+d._r,Math.min(h-m.bottom-d._r,d.y)); });
+    drawn.forEach(d=>{ d.y=Math.max(m.top+d._r,Math.min(H-m.bottom-d._r,d.y)); });
     const dots=plot.append('g').selectAll('circle').data(drawn,d=>d.s.ceeb).join('circle')
       .attr('class',d=>'dot'+(d.rel?'':' lowconf')).attr('cx',d=>x(d.v)).attr('cy',d=>d.y).attr('r',d=>d._r)
       .attr('fill',d=>d.rel?dotColor(d.s):'#fff').attr('fill-opacity',d=>d.rel?.82:.95)
@@ -636,7 +650,7 @@
       gx.call(d3.axisBottom(zx).ticks(9).tickFormat(axisFmt(mk)));
       dots.attr('cx',d=>zx(d.v));
       if(ovLine){ ovLine.attr('x1',zx(meanV)).attr('x2',zx(meanV)); ovTxt.attr('x',zx(meanV)+4); } };
-    installZoom(w,h,m);
+    installZoom(w,H,m);
   }
 
   function applyHighlight(dots,acc){ const q=state.query.trim().toLowerCase();

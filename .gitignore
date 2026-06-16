@@ -24,11 +24,4 @@ __pycache__/
 # housekeeping
 __pycache__/
 *.pyc
-.Rhistory
-.RData
 PUSH_TO_GITHUB.*
-*_broken*/
-.git_broken*/
-_wtest
-.DS_Store
-Thumbs.db
