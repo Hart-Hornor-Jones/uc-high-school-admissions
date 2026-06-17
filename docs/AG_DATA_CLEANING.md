@@ -1,11 +1,11 @@
-# Data Cleaning: Implausible "Rate" Values in the UC-Merit Panel
+# Data Cleaning: Implausible "Rate" Values in the UC Admissions Panel
 **Date:** 2026-06-07 · **Scope:** every derived rate in `school_year_panel` and `panel_all9_by_year`
 
 ## TL;DR
 
-The implausible rates you spotted (Castro Valley admits-per-A-G-eligible = 3.17, etc.) are **not admissions data errors and not build errors.** They trace to a single corrupted input: the **"Met UC/CSU Grad Req's" (A-G eligible) count in CDE's raw ACGR files**, which for certain school-years collapses to a near-zero value while everything around it stays normal. The build ingested these faithfully (verified: 0 mismatches in 20,759 cells against an independent re-parse of the raw files), so the wrongness is in CDE's published source.
+The implausible rates that surface in the interactive site (e.g. Castro Valley admits-per-A-G-eligible = 3.17) are **not admissions data errors and not build errors.** They trace to a single corrupted input: the **"Met UC/CSU Grad Req's" (A-G eligible) count in CDE's raw ACGR files**, which for certain school-years collapses to a near-zero value while everything around it stays normal. The build ingested these faithfully (verified: 0 mismatches in 20,759 cells against an independent re-parse of the raw files), so the wrongness is in CDE's published source.
 
-The five cases you named are the visible tip. A systematic scan of all 25,114 A-G school-year cells found **1,220 corrupted-denominator cells** of which **only ~60 ever produced a rate > 1** — the other **~1,160 stayed below 1 and would pass any eyeball check while still corrupting any rate or correlation that uses them.** A further 7,003 cells have denominators too small (<10 eligible) to support a stable rate.
+These five cases are the visible tip. A systematic scan of all 25,114 A-G school-year cells found **1,220 corrupted-denominator cells** of which **only ~60 ever produced a rate > 1** — the other **~1,160 stayed below 1 and would pass any eyeball check while still corrupting any rate or correlation that uses them.** A further 7,003 cells have denominators too small (<10 eligible) to support a stable rate.
 
 **Everything else is clean.** No admits > applicants, no enrollees > admits, no out-of-range CAASPP / UPP / GPA, no negatives. The A-G denominator is the *only* systematic anomaly family.
 
@@ -13,11 +13,11 @@ After cleaning, impossible per-eligible rates fall from **61 → 0** (Berkeley+S
 
 ---
 
-## 1. The cases you flagged — confirmed and diagnosed
+## 1. The flagged cases — confirmed and diagnosed
 
 Each is a **correctly-matched school** (same CDS code, stable cohort across all years) with **one isolated year** where the A-G-eligible count craters. The fingerprint is unmistakable: a ~95% regular-diploma rate paired with a ~0–5% A-G rate — logically near-impossible, since A-G completers are a subset of diploma graduates.
 
-| School | Year | Cohort | A-G eligible (raw) | A-G eligible, adjacent yrs | Your rate | Diagnosis |
+| School | Year | Cohort | A-G eligible (raw) | A-G eligible, adjacent yrs | Observed rate | Diagnosis |
 |---|---|---|---|---|---|---|
 | Castro Valley High | 2024 | 677 | **6** | 479 ('23), 447 ('25) | 3.17 / 3.83 | one-year collapse |
 | William S. Hart High | 2024 | 436 | **8** | 256 ('22), 277 ('25) | 1.25 | one-year collapse |
@@ -25,13 +25,13 @@ Each is a **correctly-matched school** (same CDS code, stable cohort across all 
 | Santa Monica High | 2019 | 699 | **35** | 472 ('18), 473 ('20) | 1.51 / 1.46 | one-year collapse |
 | University Preparatory (Victor Valley) | 2018 | 178 | **13** | 32 ('17) → 88 ('19) → 167 ('24) | 1.00 | early under-report on a ramping charter |
 
-I confirmed each value is **literally present in the raw CDE file** (e.g., `acgr24.txt`, Castro Valley row: cohort 677, regular-diploma 654 = 96.6%, Met-UC/CSU = 6 = 0.9%, and every demographic subgroup sums to that 6). So the build did not mangle it; CDE published it.
+Each value is **literally present in the raw CDE file** (e.g., `acgr24.txt`, Castro Valley row: cohort 677, regular-diploma 654 = 96.6%, Met-UC/CSU = 6 = 0.9%, and every demographic subgroup sums to that 6). So the build did not mangle it; CDE published it.
 
 ---
 
 ## 2. Root cause
 
-CDE's "Met UC/CSU Grad Req's" indicator is built from **CALPADS course-completion records**. When a district's A-G course data fails to load for a school in a given submission window, CDE still publishes the school — with a normal cohort and diploma count, but a near-zero A-G count. This is a known class of CALPADS data-quality failure; the re-released file versions in your own folder (`acgr22-v3`, `acgr23-v2`) are CDE itself reissuing years to fix such problems.
+CDE's "Met UC/CSU Grad Req's" indicator is built from **CALPADS course-completion records**. When a district's A-G course data fails to load for a school in a given submission window, CDE still publishes the school — with a normal cohort and diploma count, but a near-zero A-G count. This is a known class of CALPADS data-quality failure; the re-released file versions (`acgr22-v3`, `acgr23-v2`) are CDE itself reissuing years to fix such problems.
 
 Two tells separate a **reporting error** from a **genuinely low-A-G school**:
 
@@ -44,7 +44,7 @@ This is why the errors **cluster by year for different schools** rather than bei
 
 ## 3. The systematic scan
 
-I re-parsed all nine raw ACGR files (recovering cohort, regular-diploma, and Met-UC/CSU per school), verified the parse against the build (0/20,759 mismatches), then classified every A-G school-year cell into a mutually-exclusive taxonomy.
+All nine raw ACGR files were re-parsed (recovering cohort, regular-diploma, and Met-UC/CSU per school) and verified against the build (0/20,759 mismatches); every A-G school-year cell was then classified into a mutually-exclusive taxonomy.
 
 | Class | Cells | What it is | Recommended action |
 |---|---:|---|---|
@@ -62,7 +62,7 @@ I re-parsed all nine raw ACGR files (recovering cohort, regular-diploma, and Met
 Of the **1,220 corrupted-denominator cells** (collapse + chronic), only **~60 ever produced a rate > 1**. The other **~1,160 (95%) kept their rate at or below 1** — because the campus happened to admit fewer students than the (already broken) denominator. Those are invisible to a "rate > 1" scan but are just as wrong, and they silently distort:
 
 - the per-eligible funnel rates the site exposes (D/elig, E/elig, A/elig);
-- the A-G completion rate when it's used as a **merit / context variable** (a school recorded at 0.9% A-G when it's truly ~70% is a massive false outlier in any scatter).
+- the A-G completion rate when it's used as an **academic / context variable** (a school recorded at 0.9% A-G when it's truly ~70% is a massive false outlier in any scatter).
 
 This is the real payoff of cleaning systematically rather than case-by-case.
 
@@ -86,7 +86,7 @@ The philosophy is research-grade and conservative: **suppress unreliable denomin
 
 - **Impute (79 cells):** isolated craters with a healthy year on each side — the school's own peer-median A-G rate × that year's cohort gives a tight estimate (Castro Valley 2024 → ~457; Lincoln-Sac 2019 → ~218; Santa Monica 2019 → ~453). Provided as `ag_met_clean`, flagged `impute_confidence = HIGH`.
 - **Suppress (1,141 cells):** collapses without two healthy neighbours (e.g., Hart 2024, University Prep 2018 ramp) and all chronic-zero schools. The per-eligible rate is set to NA; a peer-based `ag_met_estimate` is still provided for optional sensitivity analysis, but no value is committed to the data.
-- **Review (196 cells):** moderate dips left at their raw value with a flag, for your judgement.
+- **Review (196 cells):** moderate dips left at their raw value with a flag, for manual review.
 - **Floor (7,003 cells):** <10 eligible — the per-eligible rate is suppressed as numerically unstable, but the raw count is untouched.
 
 Every decision is auditable: the register carries the raw value, the cohort, the diploma rate, the peer-median rate, the estimate, and a one-line evidence string per cell.
@@ -104,7 +104,7 @@ Every decision is auditable: the register carries the raw value, the cohort, the
 
 The 6 residual cases in the all-9 panel all have ≥10 eligible and are flagged: five are MODERATE_DROP under-reports (e.g., University Preparatory 2017, 55 admits / 32 eligible = 1.72) and one is genuine mild flexibility (Village Academy 2024, 12 admits / 11 eligible = 1.09 — UC can admit a small number of non-A-G students via admission-by-exception). These are correctly *visible-and-flagged* rather than silently wrong.
 
-**Effect on findings — minimal, which is the reassuring result.** The published headline (admit rate vs **CAASPP %-met**) does not use A-G at all, so it is untouched. For the A-G-completion-as-merit relationship, cleaning barely moves the pooled 2023–25 correlations:
+**Effect on findings — minimal, which is the reassuring result.** The published headline (admit rate vs **CAASPP %-met**) does not use A-G at all, so it is untouched. For A-G completion used as an academic axis, cleaning barely moves the pooled 2023–25 correlations:
 
 | Campus | r(A-G completion, admit rate) raw → cleaned |
 |---|---|
@@ -113,28 +113,21 @@ The 6 residual cases in the all-9 panel all have ≥10 eligible and are flagged:
 | Santa Barbara | −0.506 → −0.506 |
 | Los Angeles | +0.178 → +0.173 |
 
-The pooled cross-section averages three years, so single-year collapses wash out. **Where cleaning matters most is single-year views and per-school funnel rates** — exactly the places the interactive site lets a reader land on one bad cell (e.g., Castro Valley 2024 alone), which is presumably how you found these.
+The pooled cross-section averages three years, so single-year collapses wash out. **Where cleaning matters most is single-year views and per-school funnel rates** — exactly the places the interactive site lets a reader land on one bad cell (e.g., Castro Valley 2024 alone).
 
 ---
 
-## 7. Deliverables
+## 7. Committed artifact
 
-All in `Data Cleaning 2026-06-07/`:
-
-- **`ag_eligibility_cleaned.csv`** — all 25,114 A-G cells with class, severity, recommended action, raw value, estimate, cleaned value, and evidence. The authoritative cleaned denominator.
-- **`anomaly_register_ag.csv`** — the 8,419 flagged cells only (same columns), sorted for review.
-- **`anomaly_register_panel.csv`** — the 429 panel rows with admits > eligible (the impossible-rate instances), each tagged with whether an A-G collapse explains it.
-- **`school_year_panel_CLEANED.csv`, `panel_all9_by_year_CLEANED.csv`** — your panels + `ag_met_clean`, `ag_denominator_reliable`, `ag_anomaly_class`, `admits_per_eligible_raw`, `admits_per_eligible_clean`. Drop-in for re-deriving rates.
-- **`ag_reparsed_school_totals.csv`** — the independent raw re-parse (cohort, diploma, met) used to verify the build and detect the errors.
-- **`scripts/`** — `ag_reparse.py`, `plausibility_scan.py`, `clean_ag.py`, `downstream_impact.py`. Fully reproducible; thresholds documented at the top of each.
+The authoritative cleaned denominator is committed as **`data/ag_eligibility_cleaned.csv`** — all 25,114 A-G school-year cells, each carrying `cohort`, `diploma_rate`, the raw count and rate (`ag_met_raw`, `ag_rate_raw`), the taxonomy (`anomaly_class`, `severity`, `recommended_action`), the peer-based estimate and cleaned value (`impute_confidence`, `ag_met_estimate`, `ag_met_clean`), a small-denominator flag (`low_denominator`), and a one-line `evidence` string. The site build consumes this file via `scripts/make_site_data.py`; the upstream A-G parse is `build/parse_ag.py`. Detection and cleaning thresholds are documented in sections 2 through 5 above and reproduce from the public ACGR releases.
 
 ### Suggested use
 
-1. In any per-eligible rate (D/elig, E/elig, A/elig), gate on `ag_denominator_reliable == 1`, or simply use `admits_per_eligible_clean` (already NA where unreliable).
-2. When A-G completion is used as a merit/context axis, drop or down-weight cells where `ag_anomaly_class != NONE`.
+1. Use `ag_met_clean` as the A-G-eligible denominator for any per-eligible rate (D/elig, E/elig, A/elig); it is NA wherever the cell was suppressed as unreliable, so a suppressed denominator yields no rate rather than a corrupted one. Avoid `ag_met_raw` as a rate denominator.
+2. When A-G completion is used as an academic/context axis, drop or down-weight cells where `anomaly_class != NONE`.
 3. The 196 MODERATE_DROP and the 6 residual >1 cases are the only items needing a human eye; everything else is resolved.
 
 ### Caveats
 
 - Imputed values (`impute_confidence = HIGH`) are model estimates, not CDE figures — fine for rate denominators and sensitivity checks, but cite as estimates.
-- The CALPADS-non-submission root cause is inferred from a strong internal fingerprint (diploma-vs-A-G divergence, isolation in time, identical values across every demographic rollup in the raw file, and CDE's own file re-releases). If you want belt-and-suspenders, CDE's ACGR "known issues" notes / DataQuest can corroborate specific districts.
+- The CALPADS-non-submission root cause is inferred from a strong internal fingerprint (diploma-vs-A-G divergence, isolation in time, identical values across every demographic rollup in the raw file, and CDE's own file re-releases). CDE's ACGR "known issues" notes / DataQuest can corroborate specific districts.

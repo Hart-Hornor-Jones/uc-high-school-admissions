@@ -3,7 +3,7 @@ output:
   word_document: default
   html_document: default
 ---
-# UC Merit Panel: Data Dictionary FULL
+# UC Admissions Panel: Data Dictionary FULL
 
 ---
 
@@ -13,7 +13,7 @@ Grain: **one row per high school × UC campus × year** (Berkeley & San Diego; 1
 | Column | Meaning |
 |---|---|
 | `ceeb` | 6-digit UC source-school (high-school) code |
-| `cds14` | 14-digit CDE County-District-School code (blank if I couldn't find a matched) |
+| `cds14` | 14-digit CDE County-District-School code (blank if unmatched) |
 | `campus` | `Berkeley` or `San Diego` |
 | `year` | UC admission cycle (1994–2025) |
 | `school_name`, `city`, `county` | From the UC source-school data |

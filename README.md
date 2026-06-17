@@ -19,17 +19,17 @@ selected period. You can:
 - **Pick a campus** (all nine UC undergraduate campuses).
 - **Pick a year or period** — individual admission years (2016–2025) or pooled presets
   (2023–2025, 2022–2025 test-blind, 2016–2019 pre-test-blind). Switch it just like campus.
-- **Switch views** — a *scatter* (a merit/context metric on x vs. an outcome rate on y, with a
+- **Switch views** — a *scatter* (an academic/context metric on x vs. an outcome rate on y, with a
   least-squares fit and a live Pearson *r*), or a Chronicle-style *strip/beeswarm*.
-- **Choose the X metric** (merit / context): CAASPP grade-11 proficiency (ELA / Math / average),
-  A–G completion, poverty (UPP %), or ELWR/AWPE writing.
+- **Choose the X metric** (academic / context): CAASPP grade-11 proficiency (ELA / Math / average),
+  A–G completion, unduplicated pupils (UPP %), or ELWR/AWPE writing.
 - **Choose the Y outcome rate** — the admissions funnel against several denominators:
   - **Admit rate** = admits ÷ applicants
   - **Enrollment yield** = enrollees ÷ admits
   - **Application rate** = applicants ÷ A–G eligible
   - **Admits ÷ eligible**, **Enrollees ÷ eligible**
   - **Applicants / Admits / Enrollees ÷ grade 9–12 enrollment** (the headcount denominator)
-- **Color** dots by poverty (UPP gradient) or LCFF+ status; **filter** by minimum applicants;
+- **Color** dots by unduplicated-pupil share (UPP gradient) or LCFF+ status; **filter** by minimum applicants;
   **search** any school; **click a dot** for a full profile (every metric + a sparkline of the
   selected rate over time). The campus panel shows how the selected relationship's correlation
   has evolved year by year.
@@ -71,7 +71,7 @@ between LCFF+ (UPP ≥ 75%) schools and the rest:
 The pattern is **not uniform**: negative at the selective coastal campuses, near zero at Irvine,
 and **positive** at the high-admit inland campuses (Merced, Riverside, Santa Cruz), which admit
 most qualified applicants (a capacity dynamic — read them differently). For Berkeley and San Diego
-the merit–admit correlation **flipped sign over the past decade** (Berkeley +0.27 in 2015 → −0.26
+the academic–admit correlation **flipped sign over the past decade** (Berkeley +0.27 in 2015 → −0.26
 in 2024; San Diego +0.16 → −0.55); because self-selection is roughly constant across eras, this
 time shift helps separate a possible school-level effect from static self-selection.
 
@@ -115,7 +115,7 @@ time shift helps separate a possible school-level effect from static self-select
 For a selected period, each rate is a **ratio of sums** over the years in which both its
 numerator and denominator are observed, e.g. admit rate = Σadmits ÷ Σapplicants. This makes
 rates comparable across periods of different length and handles UC's cell suppression per rate.
-Merit/context metrics (CAASPP, UPP) are averaged over available years; A–G completion is
+Academic/context metrics (CAASPP, UPP) are averaged over available years; A–G completion is
 Σeligible ÷ Σcohort. Applicant/admit/enrollee counts are UC (CEEB); "A–G eligible" and grade
 9–12 enrollment are CDE (CDS) — ratios mixing them are school-level indicators, not exact
 per-student rates.
@@ -147,7 +147,7 @@ compact **derived** datasets are included, under `data/`.
   https://caaspp-elpac.ets.org/caaspp/ResearchFileListSB
 - **CDE A–G / graduate completion** — UC/CSU "a–g" eligibility.
   https://www.cde.ca.gov/ds/ad/agcompletiondata.asp
-- **CDE CALPADS Unduplicated Pupil Percentage (UPP / LCFF+) & enrollment** — poverty share & headcount.
+- **CDE CALPADS Unduplicated Pupil Percentage (UPP / LCFF+) & enrollment** — unduplicated-pupil share & headcount.
 - **Ed-Data** — school context. https://www.ed-data.org/
 - **LAUSD Open Data** — district context. https://opendata.lausd.org/
 
@@ -197,12 +197,17 @@ python3 build/parse_grad_rates.py /path/to/ug_outcomes_freshman_grad_rates_by_hs
 
 ## Caveats — how to read the numbers
 
-- **Self-selection.** A negative merit–admit correlation does not by itself prove a school-level
-  penalty; the over-time view and within-LCFF+ comparisons are the checks against it.
+- **UPP & LCFF+.** The "UPP" color axis is the **Unduplicated Pupil Percentage** — the CALPADS/LCFF share of a
+  school's students who are low-income (free- or reduced-price-meal eligible), English learners, or foster youth,
+  counted once if in more than one category, and so broader than a household-poverty rate. **LCFF+** marks schools
+  where that share exceeds 75% of enrollment — the Local Control Funding Formula's high-need threshold for additional
+  support.
+- **Self-selection.** A negative academic–admit correlation need not, on its own, reflect a school-level
+  effect; the over-time view and within-LCFF+ comparisons are the checks against it.
 - **Suppression.** UC masks small admit/enroll cells; at Berkeley ~a third of applicant schools
   have suppressed admits, biasing its estimates toward zero. San Diego has more power.
-- **Capacity dynamic.** High-admit inland campuses show a *positive* merit–admit correlation
-  because they admit most qualified applicants — not a merit penalty.
+- **Capacity dynamic.** High-admit inland campuses show a *positive* academic–admit correlation
+  because they admit most qualified applicants — not a school-level effect.
 - **Cross-universe ratios.** Rates dividing UC counts by CDE counts (application rate, ÷eligible,
   ÷enrollment) are school-level indicators, not exact per-student rates.
 - **A–G source errors, cleaned.** CDE's A–G-eligible count is corrupted for some school-years

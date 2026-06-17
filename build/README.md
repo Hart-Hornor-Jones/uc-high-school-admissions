@@ -5,7 +5,7 @@ output:
   word_document: default
   html_document: default
 ---
-# UC Admissions × School-Merit — Build Scripts (documented)
+# UC Admissions × School Academic Indicators — Build Scripts (documented)
 
 This folder holds **documented copies** of the build scripts. The code is **byte-for-byte
 identical** to the originals in `build_scripts/` — only explanatory comments were added

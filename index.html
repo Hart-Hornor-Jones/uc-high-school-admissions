@@ -138,9 +138,9 @@
     <button id="focusBtn" class="focusbtn" title="Hide the control bar and side panels for a clean, full-width view">Focus mode</button>
     <h1>UC admissions &amp; high-school academic indicators</h1>
     <p class="sub">Each dot is a California high school. Compare any UC campus, any admission year or
-    pooled period, and any indicator &mdash; academic strength (CAASPP, A&ndash;G), poverty, or the
+    pooled period, and any indicator &mdash; academic strength (CAASPP, A&ndash;G), the unduplicated&ndash;pupil share (UPP), or the
     admissions funnel itself (apply&nbsp;&rarr;&nbsp;admit&nbsp;&rarr;&nbsp;enroll, against several denominators)
-    &mdash; and now what becomes of each school's entrants at UC: first-year retention and 4-/5-/6-year graduation.
+    &mdash; and what becomes of each school's entrants at UC: first-year retention and 4-/5-/6-year graduation.
     Search a school or click a dot for its full profile.</p>
   </header>
 
@@ -150,11 +150,11 @@
     <div class="ctl"><label>View</label>
       <div class="seg" id="view"><button data-v="scatter" class="on">Scatter</button><button data-v="strip">Strip</button></div>
     </div>
-    <div class="ctl" id="ctlA"><label for="metricA" id="labelA">X-axis (merit / context)</label><select id="metricA"></select></div>
+    <div class="ctl" id="ctlA"><label for="metricA" id="labelA">X-axis (academic / context)</label><select id="metricA"></select></div>
     <div class="ctl" id="ctlB"><label for="metricB" id="labelB">Y-axis (outcome rate)</label><select id="metricB"></select></div>
     <div class="ctl"><label for="colorby">Color by</label>
       <select id="colorby">
-        <option value="upp">Poverty (UPP %)</option>
+        <option value="upp">Unduplicated pupils (UPP %)</option>
         <option value="lcff">LCFF+ status</option>
         <option value="none">Single color</option>
       </select>
@@ -220,6 +220,11 @@
           measures. The separate <b>Student&ndash;weighted</b> figure is the pooled
           &Sigma;numerator&div;&Sigma;denominator rate, dominated by large schools and shown only for reference;
           the LCFF+ gap is likewise a difference of school&ndash;level means.</li>
+        <li><b>UPP &amp; LCFF+.</b> The axis labelled UPP is the <b>Unduplicated Pupil Percentage</b> &mdash; the
+          CALPADS/LCFF share of a school's students who are low&ndash;income (free&ndash; or reduced&ndash;price&ndash;meal
+          eligible), English learners, or foster youth, counted once if in more than one category, and so broader than a
+          household&ndash;poverty rate. <b>LCFF+</b> marks schools where that share exceeds 75% of enrollment &mdash; the
+          Local Control Funding Formula's high&ndash;need threshold for additional support.</li>
         <li><b>Year / period.</b> Pooled periods sum the funnel across their years; single years show one cycle.
           Every rate is computed as a <i>ratio of sums</i> over years where both numerator and denominator are
           observed, so it is comparable across periods of different length.</li>
@@ -238,8 +243,8 @@
         <li><b>Cross-universe ratios.</b> Applicant/admit/enrollee counts come from UC (CEEB); &ldquo;eligible&rdquo;
           (A&ndash;G completers) and enrollment come from CDE (CDS). Ratios mixing them are school-level indicators,
           not exact per-student rates.</li>
-        <li><b>Self-selection.</b> A negative merit&ndash;admit correlation does not by itself prove a school-level
-          penalty; the over-time view and within-LCFF+ comparisons are the checks against it.</li>
+        <li><b>Self-selection.</b> A negative academic&ndash;admit correlation need not, on its own, reflect a school-level
+          effect; the over-time view and within-LCFF+ comparisons are the checks against it.</li>
         <li><b>Suppression &amp; reliability.</b> UC masks small admit/enroll cells; at Berkeley ~a third of
           applicant schools have suppressed admits. When the numerator is masked in the years carrying most of a
           school's applicants or admits, a pooled rate would otherwise collapse onto a small surviving year (e.g.
@@ -258,7 +263,7 @@
           smaller than their applicant count (e.g. Wheatland). Rows where a funnel count exceeds total enrollment
           are dropped from the &ldquo;÷ enrollment&rdquo; metrics rather than plotted as &gt;1.</li>
         <li><b>Capacity dynamic.</b> High-admit inland campuses (Merced, Riverside, Santa Cruz) show a <i>positive</i>
-          merit&ndash;admit correlation &mdash; they admit most qualified applicants &mdash; so read them differently.</li>
+          academic&ndash;admit correlation &mdash; they admit most qualified applicants &mdash; so read them differently.</li>
         <li><b>ELWR met at entry.</b> The writing&ndash;requirement figure is the share of a school's UC
           <i>enrollees</i> who satisfied the Entry Level Writing Requirement <i>at entry</i> &mdash; via the AWPE
           exam or other qualifying methods (AP/IB/SAT/ACT/transferable course) &mdash; i.e. who did <i>not</i> need
@@ -267,12 +272,12 @@
         <li><b>SAT / ACT.</b> Where available a profile shows the school's UC&ndash;enrollee average SAT reading
           (EBRW, 200&ndash;800) and ACT (writing&ndash;section takers, 1&ndash;36) for the latest year on record.
           These exist only for ~2006&ndash;2020 (none after 2020), are enrollee&ndash;only, small, self&ndash;selected
-          samples &mdash; context, never a merit axis. SAT &ldquo;writing&rdquo; appears only on its old 200&ndash;800
+          samples &mdash; context, never an academic axis. SAT &ldquo;writing&rdquo; appears only on its old 200&ndash;800
           section scale, as the post&ndash;2016 essay is not comparable.</li>
         <li><b>Applicant &amp; admit GPA.</b> The two GPA axes are UC's own recalculated <i>weighted, honors&ndash;capped</i>
           high&ndash;school GPA (sophomore&ndash;junior A&ndash;G coursework &mdash; the figure UC uses in admissions),
           averaged over the selected period. <b>Applicant GPA</b> gauges the strength of a school's UC applicant pool: an
-          applicant&ndash;specific merit axis, distinct from CAASPP (which covers all grade&ndash;11 students). <b>Admit GPA</b>
+          applicant&ndash;specific measure, distinct from CAASPP (which covers all grade&ndash;11 students). <b>Admit GPA</b>
           is the average among <i>admitted</i> students &mdash; the GPA bar UC actually accepted &mdash; and is partly
           downstream of the admit decision (a more selective campus shows a higher bar), so read it as a level UC set, not a
           pure measure of school strength. A profile also shows enrollee GPA and the <b>admit&minus;applicant gap</b> (how far
@@ -282,15 +287,15 @@
           persisted one year and who graduated within 4, 5 or 6 years. A cohort appears only when the school
           sent <b>&ge;10</b> entrants; rates are integer percents; 6-yr rates are mature through entry 2019,
           4-yr through 2021, retention through 2024. Two ways to use them, matching two hypotheses:
-          (1)&nbsp;as a <i>merit axis</i> &mdash; <b>UC 6-yr grad (prior cohorts)</b> pools, N-weighted, the five
+          (1)&nbsp;as an <i>academic axis</i> &mdash; <b>UC 6-yr grad (prior cohorts)</b> pools, N-weighted, the five
           cohorts entering 6&ndash;10 years <i>before</i> the selected period: the most recent rates fully
           observable &mdash; and knowable to admissions readers &mdash; by decision time. If graduation reveals
-          something fixed about a school's students, it is a merit proxy; if readers calibrate on prior
+          something fixed about a school's students, it is an academic proxy; if readers calibrate on prior
           graduates, it is the very signal they act on. The over-time panel shows the correlation re-anchored
           year by year. (2)&nbsp;as an <i>outcome</i> &mdash; the retention/graduation rates of the period's own
-          entrants (e.g. vs CAASPP: does school-level merit predict success after enrollment?). The
+          entrants (e.g. vs CAASPP: does school-level academic strength predict success after enrollment?). The
           same-period rates are also offered on the X-axis: though measured after admission, a cohort's
-          eventual completion can be read as an indicator of merit already present when it applied.
+          eventual completion can be read as an indicator of academic strength already present when it applied.
           <b>Scope.</b> The two roles use different series. As <i>X-axis indicators</i>, grad metrics
           pool the school's entrants to <i>any</i> UC campus (richest coverage; a school-level trait), so a
           school can carry one even when its admits or enrollees to the selected campus are zero or
@@ -322,21 +327,21 @@
   // panel row layout: [year,A,D,E,C,Gc,H,ela,math,upp,Gp,agpa,dgpa,egpa]
   const IX = {year:0,A:1,D:2,E:3,C:4,G:5,H:6,ela:7,math:8,upp:9,Gp:10,agpa:11,dgpa:12,egpa:13};
   const METRICS = D.metrics, MByKey = Object.fromEntries(METRICS.map(m=>[m.key,m]));
-  // X axis offers merit/context metrics plus outcome metrics flagged xaxis (the same-period UC
-  // retention/graduation rates: later outcomes read as indicators of merit present at application).
+  // X axis offers academic/context metrics plus outcome metrics flagged xaxis (the same-period UC
+  // retention/graduation rates: later outcomes read as indicators of academic strength present at application).
   const X_KEYS = METRICS.filter(m=>m.role==='merit'||m.role==='context'||m.xaxis).map(m=>m.key);
   const Y_KEYS = METRICS.filter(m=>m.role==='outcome').map(m=>m.key);
   const ALL_KEYS = METRICS.map(m=>m.key);
   const periodByKey = Object.fromEntries(D.periods.map(p=>[p.key,p]));
   // CAASPP (Smarter Balanced) was not administered in 2020 (cancelled) or 2021 (~25% tested), so the
-  // academic merit axis is blank for those years while every other variable is present. Detect that case
+  // academic axis is blank for those years while every other variable is present. Detect that case
   // so a CAASPP view explains itself instead of showing an empty chart.
   const NO_CAASPP_YEARS = new Set([2021,2022]);
   const isCaasppKey = k => k==='avg'||k==='ela'||k==='math';
   function caasppMissingForPeriod(){ const ys=periodByKey[state.period].years; return ys.length>0 && ys.every(y=>NO_CAASPP_YEARS.has(y)); }
   function caasppMsg(){ const ys=periodByKey[state.period].years, y21=ys.includes(2021), y22=ys.includes(2022);
     const lead='The CAASPP shown for a class is from when those students were in 11th grade — the test they took the spring before applying to college. ';
-    const tail=' Admissions, GPA, A–G completion, poverty and graduation are all available — switch the axis to one of those, or pick another year.';
+    const tail=' Admissions, GPA, A–G completion, UPP and graduation are all available — switch the axis to one of those, or pick another year.';
     if(y21&&!y22) return lead+'The class entering in 2021 took it in spring 2020, which California cancelled (COVID), so there are no scores to plot.'+tail;
     if(y22&&!y21) return lead+'The class entering in 2022 took it in spring 2021, when only about a quarter of California students were tested, so it is excluded here as non-representative.'+tail;
     return lead+'The classes entering in 2021 and 2022 took theirs in spring 2020 (cancelled by COVID) and spring 2021 (only about a quarter of students tested, excluded as non-representative).'+tail; }
@@ -525,7 +530,7 @@
   function fill(sel,keys,val){ sel.innerHTML=''; keys.forEach(k=>{const o=document.createElement('option');o.value=k;o.textContent=MByKey[k].label;sel.appendChild(o);}); sel.value=val; }
   function rebuildMetricSelects(){
     if(state.view==='scatter'){
-      $('ctlB').classList.remove('hide'); $('labelA').textContent='X-axis (merit / context)'; $('labelB').textContent='Y-axis (outcome rate)';
+      $('ctlB').classList.remove('hide'); $('labelA').textContent='X-axis (academic / context)'; $('labelB').textContent='Y-axis (outcome rate)';
       fill($('metricA'),X_KEYS,state.xMetric); fill($('metricB'),Y_KEYS,state.yMetric);
     } else {
       $('ctlB').classList.add('hide'); $('labelA').textContent='Metric';
@@ -686,8 +691,8 @@
     let txt='';
     if(r!=null){ const strg=Math.abs(r)<.1?'essentially no':Math.abs(r)<.25?'a weak':Math.abs(r)<.45?'a moderate':'a strong';
       const dir=r<0?'negative':'positive'; let plain='';
-      if(MByKey[xk].role==='merit') plain=r<0?' — higher-scoring schools fare worse on this outcome here.':' — higher-scoring schools fare better on this outcome here.';
-      else if(xk==='upp') plain=r>0?' — higher-poverty schools fare better on this outcome here.':' — higher-poverty schools fare worse on this outcome here.';
+      if(MByKey[xk].role==='merit') plain=r<0?' — higher-scoring schools have a lower rate on this outcome here.':' — higher-scoring schools have a higher rate on this outcome here.';
+      else if(xk==='upp') plain=r>0?' — higher-UPP schools have a higher rate on this outcome here.':' — higher-UPP schools have a lower rate on this outcome here.';
       txt=`${strg} ${dir} relationship${plain}`; }
     $('interp').textContent=txt;
     $('sNshown').textContent=fmtN(data.length);
@@ -737,7 +742,7 @@
 
   function renderLegend(){ const L=$('legend');
     const sk=state.view==='scatter'?state.yMetric:state.stripMetric;
-    if(state.colorby==='upp') L.innerHTML=`<span><b>Color:</b> poverty (UPP)</span><span style="display:inline-flex;align-items:center;gap:6px">0%<span class="grad" style="background:linear-gradient(90deg,#2166ac,#f4e08a,#b2182b)"></span>100%</span>`;
+    if(state.colorby==='upp') L.innerHTML=`<span><b>Color:</b> unduplicated pupils (UPP)</span><span style="display:inline-flex;align-items:center;gap:6px">0%<span class="grad" style="background:linear-gradient(90deg,#2166ac,#f4e08a,#b2182b)"></span>100%</span>`;
     else if(state.colorby==='lcff') L.innerHTML=`<span><b>Color:</b></span><span><span class="sw" style="background:var(--lcff)"></span>LCFF+ (UPP≥75%)</span><span><span class="sw" style="background:var(--nonlcff)"></span>other</span><span><span class="sw" style="background:#bbb"></span>no UPP data</span>`;
     else L.innerHTML=`<span><b>Color:</b> single</span>`;
     L.innerHTML+=`<span class="sz"><b>Size:</b> ${sizeLabelFor(sk)} <span class="sw" style="width:7px;height:7px;background:#888;border:0"></span>&rarr;<span class="sw" style="width:14px;height:14px;background:#888;border:0"></span></span>`;
