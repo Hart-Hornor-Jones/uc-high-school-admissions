@@ -335,11 +335,11 @@
   const isCaasppKey = k => k==='avg'||k==='ela'||k==='math';
   function caasppMissingForPeriod(){ const ys=periodByKey[state.period].years; return ys.length>0 && ys.every(y=>NO_CAASPP_YEARS.has(y)); }
   function caasppMsg(){ const ys=periodByKey[state.period].years, y21=ys.includes(2021), y22=ys.includes(2022);
-    const lead='CAASPP matches each entering class to its own grade-11 test. ';
+    const lead='The CAASPP shown for a class is from when those students were in 11th grade — the test they took the spring before applying to college. ';
     const tail=' Admissions, GPA, A–G completion, poverty and graduation are all available — switch the axis to one of those, or pick another year.';
-    if(y21&&!y22) return lead+'The 2021 class sat that test in spring 2020, which California cancelled (COVID), so there are no scores to plot.'+tail;
-    if(y22&&!y21) return lead+'The 2022 class sat that test in spring 2021, when only about a quarter of California students were tested — excluded here as non-representative.'+tail;
-    return lead+'The 2021 and 2022 classes sat their grade-11 tests in spring 2020 (cancelled by COVID) and spring 2021 (only ~a quarter tested, excluded as non-representative).'+tail; }
+    if(y21&&!y22) return lead+'The class entering in 2021 took it in spring 2020, which California cancelled (COVID), so there are no scores to plot.'+tail;
+    if(y22&&!y21) return lead+'The class entering in 2022 took it in spring 2021, when only about a quarter of California students were tested, so it is excluded here as non-representative.'+tail;
+    return lead+'The classes entering in 2021 and 2022 took theirs in spring 2020 (cancelled by COVID) and spring 2021 (only about a quarter of students tested, excluded as non-representative).'+tail; }
 
   const state = { campus:0, period:D.defaultPeriod, view:'scatter',
                   xMetric:'avg', yMetric:'admit_rate', stripMetric:'admit_rate',
