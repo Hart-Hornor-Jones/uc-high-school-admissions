@@ -6,7 +6,7 @@ admission outcomes — across all nine undergraduate campuses, **by admission ye
 period**, and across the **full admissions funnel** (apply → admit → enroll) against several
 denominators.
 
-> **Live site:** `https://hart-hornor-jones.github.io/uc-high-school-merit/`
+> **Live site:** `https://hart-hornor-jones.github.io/uc-high-school-admissions/`
 
 
 ---
