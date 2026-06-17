@@ -331,10 +331,15 @@
   // CAASPP (Smarter Balanced) was not administered in 2020 (cancelled) or 2021 (~25% tested), so the
   // academic merit axis is blank for those years while every other variable is present. Detect that case
   // so a CAASPP view explains itself instead of showing an empty chart.
-  const NO_CAASPP_YEARS = new Set([2020,2021]);
+  const NO_CAASPP_YEARS = new Set([2021,2022]);
   const isCaasppKey = k => k==='avg'||k==='ela'||k==='math';
   function caasppMissingForPeriod(){ const ys=periodByKey[state.period].years; return ys.length>0 && ys.every(y=>NO_CAASPP_YEARS.has(y)); }
-  const CAASPP_MSG = 'CAASPP (Smarter Balanced) was not administered in 2020–21 \u2014 spring 2020 was cancelled and 2021 reached only about a quarter of students — so the academic axis is blank for these years. Admissions, GPA, A–G completion, poverty and graduation are all available: switch the axis to one of those, or pick another year.';
+  function caasppMsg(){ const ys=periodByKey[state.period].years, y21=ys.includes(2021), y22=ys.includes(2022);
+    const lead='CAASPP matches each entering class to its own grade-11 test. ';
+    const tail=' Admissions, GPA, A–G completion, poverty and graduation are all available — switch the axis to one of those, or pick another year.';
+    if(y21&&!y22) return lead+'The 2021 class sat that test in spring 2020, which California cancelled (COVID), so there are no scores to plot.'+tail;
+    if(y22&&!y21) return lead+'The 2022 class sat that test in spring 2021, when only about a quarter of California students were tested — excluded here as non-representative.'+tail;
+    return lead+'The 2021 and 2022 classes sat their grade-11 tests in spring 2020 (cancelled by COVID) and spring 2021 (only ~a quarter tested, excluded as non-representative).'+tail; }
 
   const state = { campus:0, period:D.defaultPeriod, view:'scatter',
                   xMetric:'avg', yMetric:'admit_rate', stripMetric:'admit_rate',
@@ -564,7 +569,7 @@
     $('plotSub').textContent=`${drawn.length} schools · size = ${sizeLabelFor(yk)} · dashed = mean of school rates`
       +(state.dropOut&&A.dropped?` · ${A.dropped} outlier${A.dropped>1?'s':''} hidden`:'')
       +(gradNote(xk,yk)?` · ${gradNote(xk,yk)}`:'');
-    if(!drawn.length){ const _m=(isCaasppKey(xk)&&caasppMissingForPeriod())?CAASPP_MSG:((MByKey[xk].grad||MByKey[yk].grad)?'No mature graduation cohorts in this selection — 6-yr rates exist through entry 2019, 4-yr through 2021 (try the 2016–2019 preset).':'No schools with both metrics in this selection.'); emptyMsg(w,h,_m); return; }
+    if(!drawn.length){ const _m=(isCaasppKey(xk)&&caasppMissingForPeriod())?caasppMsg():((MByKey[xk].grad||MByKey[yk].grad)?'No mature graduation cohorts in this selection — 6-yr rates exist through entry 2019, 4-yr through 2021 (try the 2016–2019 preset).':'No schools with both metrics in this selection.'); emptyMsg(w,h,_m); return; }
     // dot size encodes the active denominator (yk's denominator); reserve max radius so dots stay in-frame
     const bvals=drawn.map(d=>sizeBasis(d.s,yk)), bmin=d3.min(bvals), bmax=d3.max(bvals)||1;
     const r=d3.scaleSqrt().domain([bmin===bmax?0:bmin,bmax]).range([3,20]); const RMAX=22;
@@ -615,7 +620,7 @@
       +(state.dropOut&&A.dropped?` · ${A.dropped} outlier${A.dropped>1?'s':''} hidden`:'')
       +(gradNote(mk)?` · ${gradNote(mk)}`:'');
     if(!drawn.length){ svg.attr('width',w).attr('height',baseH).selectAll('*').remove();
-      const _m=(isCaasppKey(mk)&&caasppMissingForPeriod())?CAASPP_MSG:(MByKey[mk].grad?'No mature graduation cohorts in this selection — 6-yr rates exist through entry 2019, 4-yr through 2021 (try the 2016–2019 preset).':'No schools with this metric in this selection.'); emptyMsg(w,baseH,_m); return; }
+      const _m=(isCaasppKey(mk)&&caasppMissingForPeriod())?caasppMsg():(MByKey[mk].grad?'No mature graduation cohorts in this selection — 6-yr rates exist through entry 2019, 4-yr through 2021 (try the 2016–2019 preset).':'No schools with this metric in this selection.'); emptyMsg(w,baseH,_m); return; }
     const RMAX=20;
     const x=d3.scaleLinear().domain(d3.extent(drawn,d=>d.v)).nice().range([m.left+RMAX,w-m.right-RMAX]);
     // Dot-size scale (design range). With ~1,000 schools the beeswarm can need far more vertical room

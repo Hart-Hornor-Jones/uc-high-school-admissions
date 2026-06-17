@@ -20,7 +20,7 @@ Grain: **one row per high school × UC campus × year** (Berkeley & San Diego; 1
 | `applicants`, `admits`, `enrollees` | counts of students in each category. **Blank = suppressed or not observed — not zero** (UC suppresses cells to avoid identifying particular students) |
 | `admit_rate` | `100 × admits / applicants` (blank if either is blank) |
 | `adm_gpa` | Mean GPA of the subset of students admitted, where reported |
-| `caaspp_year` | year of CAASPP observations grafted on (= `year` when a CAASPP file exists: annual 2015–2025, except 2020 cancelled and 2021 excluded as COVID-non-representative) |
+| `caaspp_year` | grade-11 CAASPP test grafted on. Each entering class is matched to its **own grade-11 test, the prior spring** (`caaspp_year = year − 1`). Spring tests run 2015–2025 except spring 2020 (cancelled, COVID) and spring 2021 (excluded, non-representative) — so CAASPP is blank for the **2021 and 2022** entering classes (and 2015, whose 2014 test predates the series). |
 | `ela_pct_met`, `math_pct_met` | Grade-11 **% Standard Met & Above**, school-level, All students |
 | `avg_pct_met` | Mean of `ela_pct_met` and `math_pct_met` |
 | `ag_year` | year of associated A-G completion observations (graduating cohort `(year-1)-(year)`) |

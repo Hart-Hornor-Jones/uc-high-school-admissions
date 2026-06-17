@@ -5,7 +5,8 @@ build_panel_all9.py  -  assemble the per-year, all-9-campus analysis panel.
 Joins the admissions funnel (data/dv_admissions_all9.csv) to CAASPP grade-11 proficiency,
 A-G eligibility (cohort + UC/CSU-eligible counts) and UPP/headcount, through the CEEB<->CDS
 crosswalk, one row per (CEEB x campus x year). Year alignment mirrors the original
-merge_panel.py: CAASPP uses the same year; A-G uses grad cohort (year-1)-(year);
+merge_panel.py: CAASPP uses the PRIOR year (Y-1) so each entering class is matched to its own
+grade-11 test; A-G uses grad cohort (year-1)-(year);
 UPP uses pupil year (year-1)-(year). CAASPP 2021 is excluded (COVID, non-representative).
 
 Reproducible from the committed repo (no raw 12 GB needed).
@@ -48,7 +49,7 @@ for r in csv.DictReader(open(os.path.join(DATA, "dv_admissions_all9.csv"))):
     ce = r["ceeb"]; cds = xwalk.get(ce, ""); mm, ms = xmeta.get(ce, ("", ""))
     app = f(r["applicants"]); adm = f(r["admits"]); enr = f(r["enrollees"])
     rate = round(100*adm/app, 2) if (app and adm is not None and app > 0) else ""
-    C2 = caaspp.get((cds, yr)) if cds else None
+    C2 = caaspp.get((cds, str(int(yr)-1))) if (cds and yr.isdigit()) else None  # LAG: admission Fall-Y <- spring (Y-1) CAASPP (each class's own grade-11 test)
     ela = f(C2["ela_pct_met"]) if C2 else None; math = f(C2["math_pct_met"]) if C2 else None
     avg = round((ela+math)/2, 2) if (ela is not None and math is not None) else (ela if ela is not None else math)
     A = ag.get((cds, agk(yr))) if cds else None
