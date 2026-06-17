@@ -626,8 +626,8 @@
     const rmed=d3.median(drawn,d=>rBase(sizeBasis(d.s,mk)))||6;
     const xs=drawn.map(d=>x(d.v)).sort(d3.ascending);                              // → densest column
     let dense=1; for(let i=0,j=0;i<xs.length;i++){ while(xs[i]-xs[j]>2*rmed+2) j++; if(i-j+1>dense) dense=i-j+1; }
-    const want=dense*(2*rmed+1.5);                                                 // px the column wants
-    const MAXH=Math.min(1200,Math.max(baseH,Math.round(window.innerHeight*1.4)));
+    const want=0.82*dense*(2*rmed+1.5);                                                 // px the column wants
+    const MAXH=baseH+120;
     const H=Math.round(Math.min(MAXH,Math.max(baseH,want+m.top+m.bottom)));
     const avail=H-m.top-m.bottom, f=want>avail?Math.max(.45,avail/want):1;         // shrink dots if still tight
     const r=v=>rBase(v)*f;
@@ -838,12 +838,12 @@
       pts=full.map(r=>{ const v=valOf({rows:[r],awpe:s.awpe},yk); return v==null?null:[r[IX.year],v]; }).filter(Boolean);
     }
     const sv=d3.select('#profSpark'); sv.selectAll('*').remove();
-    const W=document.querySelector('#profile .spark').clientWidth||300,H=96,pad=24; sv.attr('width',W);
+    const W=document.querySelector('#profile .spark').clientWidth||300,H=104,pad=24; sv.attr('width',W).attr('height',H);
     if(pts.length<2){ sv.attr('height',0); $('profNote').textContent='Not enough yearly data to chart this rate.'; return; }
     $('profNote').textContent=note;
     const x=d3.scaleLinear().domain(d3.extent(pts,p=>p[0])).range([pad,W-pad]);
-    const y=d3.scaleLinear().domain([0,(d3.max(pts,p=>p[1])||1)*1.1]).range([H-16,8]);
-    sv.append('g').attr('transform',`translate(0,${H-14})`).attr('class','axis').call(d3.axisBottom(x).ticks(5).tickFormat(d3.format('d')));
+    const y=d3.scaleLinear().domain([0,(d3.max(pts,p=>p[1])||1)*1.1]).range([H-22,8]);
+    sv.append('g').attr('transform',`translate(0,${H-22})`).attr('class','axis').call(d3.axisBottom(x).ticks(5).tickFormat(d3.format('d')));
     sv.append('path').datum(pts).attr('fill','none').attr('stroke','var(--accent)').attr('stroke-width',1.8).attr('d',d3.line().x(p=>x(p[0])).y(p=>y(p[1])));
     const last=pts[pts.length-1];
     sv.append('circle').attr('r',2.6).attr('cx',x(last[0])).attr('cy',y(last[1])).attr('fill','var(--accent)');
