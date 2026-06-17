@@ -569,7 +569,7 @@
     $('plotSub').textContent=`${drawn.length} schools · size = ${sizeLabelFor(yk)} · dashed = mean of school rates`
       +(state.dropOut&&A.dropped?` · ${A.dropped} outlier${A.dropped>1?'s':''} hidden`:'')
       +(gradNote(xk,yk)?` · ${gradNote(xk,yk)}`:'');
-    if(!drawn.length){ const _m=(isCaasppKey(xk)&&caasppMissingForPeriod())?caasppMsg():((MByKey[xk].grad||MByKey[yk].grad)?'No mature graduation cohorts in this selection — 6-yr rates exist through entry 2019, 4-yr through 2021 (try the 2016–2019 preset).':'No schools with both metrics in this selection.'); emptyMsg(w,h,_m); return; }
+    if(!drawn.length){ const _m=(isCaasppKey(xk)&&caasppMissingForPeriod())?caasppMsg():((MByKey[xk].grad||MByKey[yk].grad)?'No mature graduation cohorts in this selection — 6-yr rates exist through entry 2019, 4-yr through 2021 (try the 2016–2020 preset).':'No schools with both metrics in this selection.'); emptyMsg(w,h,_m); return; }
     // dot size encodes the active denominator (yk's denominator); reserve max radius so dots stay in-frame
     const bvals=drawn.map(d=>sizeBasis(d.s,yk)), bmin=d3.min(bvals), bmax=d3.max(bvals)||1;
     const r=d3.scaleSqrt().domain([bmin===bmax?0:bmin,bmax]).range([3,20]); const RMAX=22;
@@ -620,7 +620,7 @@
       +(state.dropOut&&A.dropped?` · ${A.dropped} outlier${A.dropped>1?'s':''} hidden`:'')
       +(gradNote(mk)?` · ${gradNote(mk)}`:'');
     if(!drawn.length){ svg.attr('width',w).attr('height',baseH).selectAll('*').remove();
-      const _m=(isCaasppKey(mk)&&caasppMissingForPeriod())?caasppMsg():(MByKey[mk].grad?'No mature graduation cohorts in this selection — 6-yr rates exist through entry 2019, 4-yr through 2021 (try the 2016–2019 preset).':'No schools with this metric in this selection.'); emptyMsg(w,baseH,_m); return; }
+      const _m=(isCaasppKey(mk)&&caasppMissingForPeriod())?caasppMsg():(MByKey[mk].grad?'No mature graduation cohorts in this selection — 6-yr rates exist through entry 2019, 4-yr through 2021 (try the 2016–2020 preset).':'No schools with this metric in this selection.'); emptyMsg(w,baseH,_m); return; }
     const RMAX=20;
     const x=d3.scaleLinear().domain(d3.extent(drawn,d=>d.v)).nice().range([m.left+RMAX,w-m.right-RMAX]);
     // Dot-size scale (design range). With ~1,000 schools the beeswarm can need far more vertical room
