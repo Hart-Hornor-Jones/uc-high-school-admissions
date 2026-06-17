@@ -163,7 +163,7 @@ METRICS = [
 # ---- periods (presets + single years) ----
 PERIODS = [
   {"key":"p2325","label":"2023–2025 (recent, test-blind)","years":[2023,2024,2025]},
-  {"key":"p1620","label":"2016–2020 (pre-test-blind)","years":[2016,2017,2018,2019,2020]},
+  {"key":"p1619","label":"2016–2019 (pre-test-blind)","years":[2016,2017,2018,2019]},
 ] + [{"key":f"y{y}","label":str(y),"years":[y]} for y in (2025,2024,2023,2022,2021,2020,2019,2018,2017,2016)]
 DEFAULT_PERIOD = "p2325"
 
