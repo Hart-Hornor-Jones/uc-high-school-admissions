@@ -760,12 +760,13 @@
     const W=document.querySelector('.spark').clientWidth||300,H=94,pad=16,padTop=20,padBot=20; s.attr('width',W).attr('height',H);
     if(ser.length<2){ s.append('text').attr('x',8).attr('y',40).attr('fill','#999').attr('font-size',12).text('not enough data for this pair'); return; }
     const x=d3.scaleLinear().domain(d3.extent(ser,d=>d.y)).range([pad,W-pad]);
+    const pys=periodByKey[state.period].years, showRef=pys.length>1 && pooledR!=null;   // reference line only when years are genuinely pooled
     let yd=[d3.min([-.1,d3.min(ser,d=>d.r)]),d3.max([.1,d3.max(ser,d=>d.r)])];
-    if(pooledR!=null) yd=[Math.min(yd[0],pooledR-.02),Math.max(yd[1],pooledR+.02)];   // widen to include the pooled headline r
+    if(showRef) yd=[Math.min(yd[0],pooledR-.02),Math.max(yd[1],pooledR+.02)];   // widen to include the pooled headline r
     const y=d3.scaleLinear().domain(yd).range([H-padBot,padTop]);   // extra top/bottom room for labels
     s.append('line').attr('x1',pad).attr('x2',W-pad).attr('y1',y(0)).attr('y2',y(0)).attr('stroke','#ccc').attr('stroke-dasharray','3 3');
-    if(pooledR!=null){ const pys=periodByKey[state.period].years, py0=Math.min(...pys), py1=Math.max(...pys);
-      const perLbl=py0===py1?`${py0}`:`${py0}–${String(py1).slice(2)}`;                      // e.g. 2023–25
+    if(showRef){ const py0=Math.min(...pys), py1=Math.max(...pys);
+      const perLbl=`${py0}–${String(py1).slice(2)}`;                      // e.g. 2023–25
       s.append('line').attr('class','refline').attr('x1',pad).attr('x2',W-pad).attr('y1',y(pooledR)).attr('y2',y(pooledR));
       s.append('text').attr('class','reflabel').attr('x',pad).attr('y',Math.max(9,y(pooledR)-4))
         .text(`pooled ${perLbl}: ${(pooledR>=0?'+':'')+pooledR.toFixed(2)}`); }
