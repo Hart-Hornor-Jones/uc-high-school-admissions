@@ -47,6 +47,12 @@
   .avgline{stroke:#888;stroke-dasharray:5 4;stroke-width:1;}
   .avglabel{fill:#777;font-size:10.5px;}
   .fitline{stroke:#111;stroke-width:1.6;opacity:.75;}
+  .fitline.sel{stroke-width:2.8;opacity:1;}
+  .fitcase{stroke:#fff;stroke-width:4.5;opacity:0;}
+  .fitcase.sel{opacity:.92;}
+  .fithit{stroke:transparent;stroke-width:12;pointer-events:stroke;cursor:pointer;}
+  .refline{stroke:#9c3a12;stroke-width:1.4;stroke-dasharray:5 3;}
+  .reflabel{fill:#9c3a12;font-size:9.5px;font-variant-numeric:tabular-nums;}
   .dot{stroke:#2b2f36;stroke-width:.4;cursor:pointer;}
   .dot.lowconf{stroke:#aab2bf;stroke-width:1.3;stroke-dasharray:2.5 1.5;}
   .dot.dim{opacity:.08 !important;}
@@ -165,6 +171,9 @@
     <div class="ctl"><label for="dropout">Outliers</label>
       <label class="chk"><input type="checkbox" id="dropout" /> <span>Drop (1.5&times;IQR)</span></label>
     </div>
+    <div class="ctl"><label for="dotvary">Dot size</label>
+      <label class="chk"><input type="checkbox" id="dotvary" /> <span>Scale by sample size</span></label>
+    </div>
     <div class="ctl grow"><label for="search">Search for a high school</label>
       <input type="text" id="search" list="schoollist" placeholder="e.g. Berkeley High, University High &mdash; Irvine&hellip;" />
       <datalist id="schoollist"></datalist>
@@ -205,12 +214,12 @@
     <summary>How to read this &mdash; and important caveats</summary>
     <div>
       <ul>
-        <li><b>Dots</b> are California high schools. <b>Dot size</b> encodes the <i>denominator of the metric
-          you're viewing</i> &mdash; applicants for admit rate, admits for yield, A&ndash;G eligible for
-          per&ndash;eligible rates, grade&nbsp;9&ndash;12 enrollment for per&ndash;head rates, cohort for A&ndash;G
-          completion &mdash; so a bigger dot always means a larger base for that rate. Only schools at or above
-          <b>Min applicants</b> are shown (a fixed sample floor, kept on applicants whatever the size metric).
-          Scale ranges are padded by the largest dot radius so whole dots stay inside the frame.</li>
+        <li><b>Dots</b> are California high schools, drawn one uniform size by default. Tick <b>Dot size &rarr;
+          Scale by sample size</b> to size each dot by the <i>denominator of the metric you're viewing</i>
+          &mdash; applicants for admit rate, admits for yield, A&ndash;G eligible for per&ndash;eligible rates,
+          grade&nbsp;9&ndash;12 enrollment for per&ndash;head rates, cohort for A&ndash;G completion &mdash; so a
+          bigger dot means a larger base for that rate. Only schools at or above <b>Min applicants</b> are shown
+          (a fixed sample floor). Scale ranges are padded by the largest dot radius so whole dots stay in frame.</li>
         <li><b>Reading the rates.</b> All <b>outcome rates are shown as proportions</b> (an admit rate reads
           0.241, a yield 0.45) so the eight funnel ratios share one scale; the academic/context measures
           (CAASPP, A&ndash;G completion, UPP, ELWR) stay as the percentages they natively are. The <b>admit rate
@@ -229,7 +238,8 @@
           Every rate is computed as a <i>ratio of sums</i> over years where both numerator and denominator are
           observed, so it is comparable across periods of different length.</li>
         <li><b>Explore the cloud.</b> <b>Scroll</b> to zoom, <b>drag</b> to pan, <b>double&ndash;click</b> to reset
-          &mdash; handy for spreading piled&ndash;up dots enough to click one. <b>Focus mode</b> (top&ndash;right)
+          &mdash; handy for spreading piled&ndash;up dots enough to click one. <b>Click the trend line</b> to bring
+          it in front of the dots (click again to send it back). <b>Focus mode</b> (top&ndash;right)
           hides the control bar and side panels for a clean, full&ndash;width view. You can divide any funnel stage
           by A&ndash;G&nbsp;eligible or by grade&nbsp;9&ndash;12 enrollment via the metric menu.</li>
         <li><b>Drop outliers.</b> Ticking the box removes, <i>for the current view</i>, any school flagged by the
@@ -237,6 +247,12 @@
           points leave the chart, the correlation <i>r</i>, the trend line, the mean and the LCFF+ gap; the number
           removed is reported. Because the headline mean is outlier&ndash;sensitive, this is the intended way to set
           extremes aside.</li>
+        <li><b>Headline <i>r</i> vs. the over&ndash;time panel.</b> The headline correlation pools the selected
+          period into <i>one rate per school</i>, then correlates across schools. The lower&ndash;right panel
+          instead computes a <i>separate r for each year</i> and spans the full record &mdash; so the two measure
+          different things: pooling several years per school damps year&ndash;to&ndash;year noise and can leave the
+          pooled <i>r</i> stronger (more negative here) than any single year. The dashed line on the panel marks the
+          pooled value for the selected period, with the axis widened to include it, so the two can be read together.</li>
         <li><b>Base counts.</b> A selected school's profile lists the raw denominators behind its rates
           &mdash; A&ndash;G eligible, grade&nbsp;9&ndash;12 enrollment and graduating cohort &mdash; and every rate
           row also shows its own numerator&nbsp;&div;&nbsp;denominator.</li>
@@ -348,7 +364,7 @@
 
   const state = { campus:0, period:D.defaultPeriod, view:'scatter',
                   xMetric:'avg', yMetric:'admit_rate', stripMetric:'admit_rate',
-                  colorby:'upp', minApps:30, dropOut:false, sel:null, query:'' };
+                  colorby:'upp', minApps:30, dropOut:false, dotVary:false, sel:null, query:'' };
 
   const $ = id=>document.getElementById(id);
   const tooltip = $('tooltip'), svg = d3.select('#chart'), fmtN = d3.format(',');
@@ -571,13 +587,15 @@
     const drawn=A.pts.filter(d=>!(state.dropOut&&d.out));   // hide dropped outliers; low-conf stay (hollow)
     const keep=A.keep;                                       // reliable & non-dropped → fit, mean, stats
     $('plotTitle').textContent=`${D.campuses[state.campus]} · ${periodLabel()}: ${MByKey[yk].short} vs. ${MByKey[xk].short}`;
-    $('plotSub').textContent=`${drawn.length} schools · size = ${sizeLabelFor(yk)} · dashed = mean of school rates`
+    $('plotSub').textContent=`${drawn.length} schools · ${state.dotVary?`size = ${sizeLabelFor(yk)}`:'dots uniform size'} · dashed = mean of school rates`
       +(state.dropOut&&A.dropped?` · ${A.dropped} outlier${A.dropped>1?'s':''} hidden`:'')
       +(gradNote(xk,yk)?` · ${gradNote(xk,yk)}`:'');
     if(!drawn.length){ const _m=(isCaasppKey(xk)&&caasppMissingForPeriod())?caasppMsg():((MByKey[xk].grad||MByKey[yk].grad)?'No mature graduation cohorts in this selection — 6-yr rates exist through entry 2019, 4-yr through 2021 (try the 2016–2019 preset).':'No schools with both metrics in this selection.'); emptyMsg(w,h,_m); return; }
-    // dot size encodes the active denominator (yk's denominator); reserve max radius so dots stay in-frame
+    // dot size encodes the active denominator (yk's denominator) when "Scale by sample size" is on;
+    // otherwise every dot is one uniform size. Reserve max radius so whole dots stay in-frame.
     const bvals=drawn.map(d=>sizeBasis(d.s,yk)), bmin=d3.min(bvals), bmax=d3.max(bvals)||1;
-    const r=d3.scaleSqrt().domain([bmin===bmax?0:bmin,bmax]).range([3,20]); const RMAX=22;
+    const UNIR=4.5, rScale=d3.scaleSqrt().domain([bmin===bmax?0:bmin,bmax]).range([3,20]);
+    const r=v=> state.dotVary? rScale(v) : UNIR; const RMAX=state.dotVary?22:UNIR+3;
     const x=d3.scaleLinear().domain(d3.extent(drawn,d=>d.x)).nice().range([m.left+RMAX,w-m.right-RMAX]);
     const ymax=d3.max(drawn,d=>d.y)||1;
     const y=d3.scaleLinear().domain([0,ymax]).range([h-m.bottom-RMAX,m.top+RMAX]);
@@ -599,18 +617,29 @@
       ovLine=plot.append('line').attr('class','avgline').attr('x1',m.left).attr('x2',w-m.right).attr('y1',y(meanY)).attr('y2',y(meanY));
       ovTxt=plot.append('text').attr('class','avglabel').attr('x',w-m.right).attr('y',y(meanY)-4).attr('text-anchor','end').text(`mean ${fmtVal(meanY,yk)}`);
     }
-    const fit=ols(keep.map(d=>[d.x,d.y])); const xd=x.domain(); let fitSel=null;   // trend uses kept points only
-    if(fit){ fitSel=plot.append('line').attr('class','fitline').attr('x1',x(xd[0])).attr('y1',y(fit.a+fit.b*xd[0])).attr('x2',x(xd[1])).attr('y2',y(fit.a+fit.b*xd[1])); }
-    const dots=plot.append('g').selectAll('circle').data(drawn,d=>d.s.ceeb).join('circle')
+    const fit=ols(keep.map(d=>[d.x,d.y])); const xd=x.domain();   // trend uses kept points only
+    let fitSel=null,fitCase=null,fitHit=null,trendG=null;
+    if(fit){ trendG=plot.append('g');                             // own layer, behind dots until clicked forward
+      const X1=x(xd[0]),X2=x(xd[1]),Y1=y(fit.a+fit.b*xd[0]),Y2=y(fit.a+fit.b*xd[1]);
+      fitCase=trendG.append('line').attr('class','fitcase').attr('x1',X1).attr('y1',Y1).attr('x2',X2).attr('y2',Y2);
+      fitSel =trendG.append('line').attr('class','fitline').attr('x1',X1).attr('y1',Y1).attr('x2',X2).attr('y2',Y2);
+      fitHit =trendG.append('line').attr('class','fithit').attr('x1',X1).attr('y1',Y1).attr('x2',X2).attr('y2',Y2);
+      fitHit.append('title').text('Click to bring the trend line in front of the dots'); }
+    const dotsG=plot.append('g'); const dots=dotsG.selectAll('circle').data(drawn,d=>d.s.ceeb).join('circle')
       .attr('class',d=>'dot'+(d.rel?'':' lowconf')).attr('cx',d=>x(d.x)).attr('cy',d=>y(d.y)).attr('r',d=>r(sizeBasis(d.s,yk)))
       .attr('fill',d=>d.rel?dotColor(d.s):'#fff').attr('fill-opacity',d=>d.rel?.82:.95)
       .on('mousemove',(e,d)=>showTip(e,d.s)).on('mouseleave',hideTip).on('click',(e,d)=>select(d.s));
     applyHighlight(dots,d=>d.s);
+    if(trendG){ let front=false;                                 // trend line: click to bring forward / send back
+      const setFront=f=>{ front=f; if(front) trendG.raise(); else dotsG.raise();
+        fitSel.classed('sel',front); fitCase.classed('sel',front); };
+      fitHit.on('click',(e)=>{ e.stopPropagation(); setFront(!front); }); }
     zoomApply=(t)=>{ const zx=t.rescaleX(x),zy=t.rescaleY(y);
       gx.call(d3.axisBottom(zx).ticks(8).tickFormat(axisFmt(xk)));
       gy.call(d3.axisLeft(zy).ticks(7).tickFormat(axisFmt(yk)));
       drawGrid(zy); dots.attr('cx',d=>zx(d.x)).attr('cy',d=>zy(d.y));
-      if(fitSel) fitSel.attr('x1',zx(xd[0])).attr('y1',zy(fit.a+fit.b*xd[0])).attr('x2',zx(xd[1])).attr('y2',zy(fit.a+fit.b*xd[1]));
+      if(fit){ const X1=zx(xd[0]),X2=zx(xd[1]),Y1=zy(fit.a+fit.b*xd[0]),Y2=zy(fit.a+fit.b*xd[1]);
+        [fitCase,fitSel,fitHit].forEach(L=>{ if(L) L.attr('x1',X1).attr('y1',Y1).attr('x2',X2).attr('y2',Y2); }); }
       if(ovLine){ ovLine.attr('y1',zy(meanY)).attr('y2',zy(meanY)); ovTxt.attr('y',zy(meanY)-4); } };
     installZoom(w,h,m);
   }
@@ -621,7 +650,7 @@
     const A=analysisOne(shown(),mk);
     const drawn=A.pts.filter(d=>!(state.dropOut&&d.out)); const keep=A.keep;
     $('plotTitle').textContent=`${D.campuses[state.campus]} · ${periodLabel()}: schools by ${MByKey[mk].short}`;
-    $('plotSub').textContent=`${drawn.length} schools · size = ${sizeLabelFor(mk)} · each dot is one high school`
+    $('plotSub').textContent=`${drawn.length} schools · ${state.dotVary?`size = ${sizeLabelFor(mk)}`:'dots uniform size'} · each dot is one high school`
       +(state.dropOut&&A.dropped?` · ${A.dropped} outlier${A.dropped>1?'s':''} hidden`:'')
       +(gradNote(mk)?` · ${gradNote(mk)}`:'');
     if(!drawn.length){ svg.attr('width',w).attr('height',baseH).selectAll('*').remove();
@@ -632,7 +661,8 @@
     // than a fixed frame, so dots used to clamp and pile against the top/bottom edges (the "clipping").
     // Fix: grow the row to fit the densest vertical column, capped; past the cap, shrink dots to fit.
     const bvals=drawn.map(d=>sizeBasis(d.s,mk)), bmin=d3.min(bvals), bmax=d3.max(bvals)||1;
-    const rBase=d3.scaleSqrt().domain([bmin===bmax?0:bmin,bmax]).range([3,18]);
+    const rScaleS=d3.scaleSqrt().domain([bmin===bmax?0:bmin,bmax]).range([3,18]), UNIR=4.5;
+    const rBase=v=> state.dotVary? rScaleS(v) : UNIR;
     const rmed=d3.median(drawn,d=>rBase(sizeBasis(d.s,mk)))||6;
     const xs=drawn.map(d=>x(d.v)).sort(d3.ascending);                              // → densest column
     let dense=1; for(let i=0,j=0;i<xs.length;i++){ while(xs[i]-xs[j]>2*rmed+2) j++; if(i-j+1>dense) dense=i-j+1; }
@@ -707,7 +737,7 @@
     const lc=okSchools.filter(s=>s.lcff).map(s=>valOf(s,ok)).filter(v=>v!=null), nc=okSchools.filter(s=>s.upp!=null&&!s.lcff).map(s=>valOf(s,ok)).filter(v=>v!=null);
     if(lc.length&&nc.length){ const gap=d3.mean(lc)-d3.mean(nc); const mm=MByKey[ok];
       $('sGap').textContent=(gap>=0?'+':'')+(mm.fmt==='pct'?gap.toFixed(1)+' pts':gap.toFixed(3)); } else $('sGap').textContent='—';
-    renderSpark(xk,yk);
+    renderSpark(xk,yk,r);
   }
 
   // per-year value for the over-time correlation: grad metrics re-anchor their entry-year
@@ -715,8 +745,8 @@
   function valOfAt(sObj,key,yr){ const m=MByKey[key];
     if(m.grad){ const a=gradAgg(sObj.ceeb,m,gradWinYears(m.grad.win,yr)); return a?a.val:null; }
     return valOf(sObj,key); }
-  function renderSpark(xk,yk){
-    $('sparkLbl').textContent=`r( ${MByKey[yk].short} vs ${MByKey[xk].short} ) over time`;
+  function renderSpark(xk,yk,pooledR){
+    $('sparkLbl').textContent=`per-year r( ${MByKey[yk].short} vs ${MByKey[xk].short} )`;
     const pre=state.campus+'|'; const byYear={};
     for(const k in D.panel){ if(k.lastIndexOf(pre,0)!==0) continue;
       const ceeb=k.slice(pre.length), aw=(D.awpe[ceeb]||[null,null])[0];
@@ -730,9 +760,15 @@
     const W=document.querySelector('.spark').clientWidth||300,H=94,pad=16,padTop=20,padBot=20; s.attr('width',W).attr('height',H);
     if(ser.length<2){ s.append('text').attr('x',8).attr('y',40).attr('fill','#999').attr('font-size',12).text('not enough data for this pair'); return; }
     const x=d3.scaleLinear().domain(d3.extent(ser,d=>d.y)).range([pad,W-pad]);
-    const yd=[d3.min([-.1,d3.min(ser,d=>d.r)]),d3.max([.1,d3.max(ser,d=>d.r)])];
+    let yd=[d3.min([-.1,d3.min(ser,d=>d.r)]),d3.max([.1,d3.max(ser,d=>d.r)])];
+    if(pooledR!=null) yd=[Math.min(yd[0],pooledR-.02),Math.max(yd[1],pooledR+.02)];   // widen to include the pooled headline r
     const y=d3.scaleLinear().domain(yd).range([H-padBot,padTop]);   // extra top/bottom room for labels
     s.append('line').attr('x1',pad).attr('x2',W-pad).attr('y1',y(0)).attr('y2',y(0)).attr('stroke','#ccc').attr('stroke-dasharray','3 3');
+    if(pooledR!=null){ const pys=periodByKey[state.period].years, py0=Math.min(...pys), py1=Math.max(...pys);
+      const perLbl=py0===py1?`${py0}`:`${py0}–${String(py1).slice(2)}`;                      // e.g. 2023–25
+      s.append('line').attr('class','refline').attr('x1',pad).attr('x2',W-pad).attr('y1',y(pooledR)).attr('y2',y(pooledR));
+      s.append('text').attr('class','reflabel').attr('x',pad).attr('y',Math.max(9,y(pooledR)-4))
+        .text(`pooled ${perLbl}: ${(pooledR>=0?'+':'')+pooledR.toFixed(2)}`); }
     s.append('path').datum(ser).attr('fill','none').attr('stroke','var(--accent)').attr('stroke-width',1.8).attr('d',d3.line().x(d=>x(d.y)).y(d=>y(d.r)));
     s.selectAll('circle.sp').data(ser).join('circle').attr('class','sp').attr('r',2.2).attr('cx',d=>x(d.y)).attr('cy',d=>y(d.r)).attr('fill','var(--accent)');
     [ser[0],ser[ser.length-1]].forEach((d,i)=>{ const ly=d.r>0?Math.max(10,y(d.r)-6):Math.min(H-4,y(d.r)+13);  // clamp inside the box
@@ -879,6 +915,7 @@
   $('colorby').onchange=()=>{ state.colorby=$('colorby').value; render(); };
   $('minapps').oninput=()=>{ state.minApps=+$('minapps').value; $('minappsval').textContent=state.minApps; render(); };
   $('dropout').onchange=()=>{ state.dropOut=$('dropout').checked; render(); };
+  $('dotvary').onchange=()=>{ state.dotVary=$('dotvary').checked; render(); };
   $('focusBtn').onclick=()=>{ const on=document.body.classList.toggle('focus');
     $('focusBtn').textContent=on?'Exit focus mode':'Focus mode'; setTimeout(render,40); };  // re-render: chart width changed
   $('search').oninput=onSearch; $('search').onchange=onSearch;
