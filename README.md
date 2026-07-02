@@ -38,6 +38,16 @@ The visual design is modeled on the San Francisco Chronicle's UC-admissions expl
 **independent project, not affiliated with or endorsed by the Chronicle**, and contains none of
 the Chronicle's content.
 
+**Companion page — [`context/`](context/):** adds each school's *surroundings* — tract-level
+American Community Survey measures (median income, adult education, poverty, unemployment, home
+values, race/ethnicity, and a composite SES index) assigned from the school's coordinates via the
+Census Geocoder — and asks how much of the achievement–admissions association they carry. Three
+views: a conditioning scatter (brush a band of similar neighborhoods; watch the within-band
+achievement→outcome correlation), matched "twin schools" (near-identical surroundings, large
+achievement gaps — do outcomes differ?), and a per-campus variance decomposition (R² unique to
+neighborhood, unique to achievement, and joint). Methods & caveats:
+[docs/NEIGHBORHOOD_CONTEXT.md](docs/NEIGHBORHOOD_CONTEXT.md).
+
 ---
 
 ## The question
@@ -89,6 +99,9 @@ time shift helps separate a possible school-level effect from static self-select
 .
 ├── index.html                  # the interactive explorer (self-contained, D3)
 ├── data.js                     # generated app data (window.UCDATA, per-year panel); rebuilt by scripts/
+├── context/                    # companion page: neighborhood context (see docs/NEIGHBORHOOD_CONTEXT.md)
+│   ├── index.html              #   conditioning scatter · twin schools · variance decomposition
+│   └── data_context.js         #   generated (window.UCCTX): tract ACS + CAASPP means; rebuilt by scripts/
 ├── data/                       # curated DERIVED datasets (see data/README.md)
 │   ├── panel_all9_by_year.csv  #   MASTER: one row per CEEB × campus × year, all 9 campuses, 2015–2025
 │   ├── dv_admissions_all9.csv  #   admissions funnel only (apply/admit/enroll), all 9 campuses, 1994–2025
@@ -101,7 +114,8 @@ time shift helps separate a possible school-level effect from static self-select
 │   └── elwr_school_year_wide.csv  # ELWR/AWPE (UC enrollees)
 ├── scripts/
 │   ├── build_panel_all9.py     # data/dv_admissions_all9 + components  →  data/panel_all9_by_year.csv
-│   └── make_site_data.py       # data/panel_all9_by_year.csv  →  data.js  (+ cross_section_all9.csv)
+│   ├── make_site_data.py       # data/panel_all9_by_year.csv  →  data.js  (+ cross_section_all9.csv)
+│   └── make_context_data.py    # components/tract_context.csv + caaspp means  →  context/data_context.js
 ├── build/                      # documented upstream pipeline (raw public files → data/)
 │   ├── extract_dv_all9.py      #   the one step needing the ~12 GB raw dump → dv_admissions_all9.csv
 │   └── README.md               #   runbook

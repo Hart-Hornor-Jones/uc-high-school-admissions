@@ -19,8 +19,7 @@ from collections import defaultdict
 
 LEAN = sys.argv[1] if len(sys.argv) > 1 else \
     "path/to/admissions_source_school_consolidated_lean"
-OUT  = sys.argv[2] if len(sys.argv) > 2 else \
-    "/sessions/serene-practical-tesla/mnt/outputs/uc-merit-admissions/data/dv_admissions_all9.csv"
+OUT  = sys.argv[2] if len(sys.argv) > 2 else "data/dv_admissions_all9.csv"
 
 CAMPUS = {"Berkeley","Davis","Irvine","Los Angeles","Merced",
           "Riverside","San Diego","Santa Barbara","Santa Cruz"}

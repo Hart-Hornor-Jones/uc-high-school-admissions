@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Neighborhood context, achievement &amp; UC admissions — companion explorer</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<style>
+  :root{
+    --ink:#1a1a1a; --muted:#5c6470; --line:#e2e6ec; --bg:#ffffff; --card:#fbfcfe;
+    --accent:#2b6cb0; --warm:#e34a33; --cool:#2166ac;
+    --shadow:0 1px 3px rgba(20,30,50,.07),0 6px 24px rgba(20,30,50,.06);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;color:var(--ink);background:var(--bg);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1200px;margin:0 auto;padding:22px 20px 60px;}
+  .backlink{font-size:12.5px;margin-bottom:6px;}
+  header h1{font-size:23px;margin:0 0 4px;letter-spacing:-.01em;}
+  header p.sub{margin:0;color:var(--muted);max-width:820px;}
+  .controls{display:flex;flex-wrap:wrap;gap:12px 16px;align-items:flex-end;
+    margin:18px 0 14px;padding:14px 16px;background:var(--card);border:1px solid var(--line);
+    border-radius:12px;box-shadow:var(--shadow);}
+  .ctl{display:flex;flex-direction:column;gap:5px;}
+  .ctl.hide{display:none;}
+  .ctl label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);}
+  select{font:inherit;padding:7px 9px;border:1px solid #cfd6e0;border-radius:8px;background:#fff;color:var(--ink);min-width:140px;max-width:280px;}
+  .seg{display:inline-flex;border:1px solid #cfd6e0;border-radius:8px;overflow:hidden;}
+  .seg button{font:inherit;font-weight:600;border:0;background:#fff;color:var(--muted);padding:7px 14px;cursor:pointer;}
+  .seg button.on{background:var(--accent);color:#fff;}
+  .rangewrap{display:flex;align-items:center;gap:8px;}
+  input[type=range]{width:110px;}
+  .rangeval{font-variant-numeric:tabular-nums;font-weight:600;min-width:28px;}
+  .chk{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--ink);font-weight:500;
+    padding:7px 9px;border:1px solid #cfd6e0;border-radius:8px;background:#fff;cursor:pointer;white-space:nowrap;}
+  .chk input{margin:0;cursor:pointer;}
+  .layout{display:grid;grid-template-columns:1fr 340px;gap:18px;align-items:start;}
+  @media (max-width:880px){.layout{grid-template-columns:1fr;}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);}
+  .chartcard{padding:8px 8px 4px;position:relative;min-height:420px;}
+  .chartcard .plot-title{font-size:13px;font-weight:600;padding:8px 10px 0;color:var(--ink);}
+  .chartcard .plot-sub{font-size:12px;color:var(--muted);padding:0 10px 6px;}
+  svg{display:block;width:100%;height:auto;}
+  .axis path,.axis line{stroke:#cdd4de;}
+  .axis text{fill:var(--muted);font-size:11px;}
+  .gridline{stroke:#eef1f5;}
+  .fitline{stroke:#111;stroke-width:1.6;opacity:.75;}
+  .dot{stroke:#2b2f36;stroke-width:.4;cursor:pointer;}
+  .dot.dim{opacity:.10 !important;}
+  .dot.sel{stroke:#000;stroke-width:2.4;}
+  .bandrect{fill:#2b6cb0;fill-opacity:.07;stroke:#2b6cb0;stroke-opacity:.35;stroke-dasharray:4 3;}
+  .railtick{stroke:#9aa6b5;stroke-width:1;opacity:.55;}
+  .railbase{stroke:#cdd4de;}
+  .brush .selection{fill:#2b6cb0;fill-opacity:.18;stroke:#2b6cb0;}
+  .side .card{padding:14px 15px;margin-bottom:16px;}
+  .stat-headline{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-weight:600;margin:0 0 8px;}
+  .bigr{font-size:28px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1;}
+  .bigr .lbl{font-size:12px;font-weight:500;color:var(--muted);margin-left:6px;}
+  .statline{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:4px 0;border-top:1px dashed var(--line);}
+  .statline:first-of-type{border-top:0;}
+  .statline .k{color:var(--muted);} .statline .v{font-weight:600;font-variant-numeric:tabular-nums;}
+  .interp{font-size:12.5px;color:var(--muted);margin-top:8px;}
+  .legend{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:12px;color:var(--muted);padding:6px 12px 10px;}
+  .legend .grad{height:10px;width:120px;border-radius:5px;border:1px solid #ccc;}
+  .legend .sw{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:4px;vertical-align:-1px;border:1px solid #2b2f36;}
+  .ptable{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px;}
+  .ptable td{padding:4px 0;border-top:1px solid var(--line);}
+  .ptable td.k{color:var(--muted);} .ptable td.v{text-align:right;font-weight:600;font-variant-numeric:tabular-nums;}
+  .ptable tr.sec td{border-top:2px solid #d8deea;color:#333;font-weight:600;padding-top:7px;}
+  .profile h3{margin:0 0 2px;font-size:16px;}
+  .profile .ploc{color:var(--muted);font-size:12.5px;margin-bottom:6px;}
+  .empty{color:var(--muted);font-size:13px;padding:20px 4px;text-align:center;}
+  .tooltip{position:fixed;pointer-events:none;background:#11151c;color:#fff;font-size:12px;
+    padding:8px 10px;border-radius:8px;max-width:260px;opacity:0;transition:opacity .08s;z-index:50;box-shadow:0 6px 20px rgba(0,0,0,.3);}
+  .tooltip b{color:#fff;} .tooltip .tl{color:#aeb6c2;}
+  details.notes{margin-top:22px;border:1px solid var(--line);border-radius:12px;background:var(--card);padding:0 16px;}
+  details.notes summary{cursor:pointer;font-weight:600;padding:13px 0;}
+  details.notes div{padding:0 0 14px;color:#3a4150;font-size:13.5px;}
+  details.notes li{margin:5px 0;}
+  footer{margin-top:26px;color:var(--muted);font-size:12px;line-height:1.6;border-top:1px solid var(--line);padding-top:14px;}
+  a{color:var(--accent);}
+  .pairname{font-size:10.5px;fill:#3a4150;}
+  .pairctx{font-size:10px;fill:#8a93a1;font-variant-numeric:tabular-nums;}
+  .pairrow{cursor:pointer;}
+  .pairrow.sel .pairname{font-weight:700;fill:#000;}
+  .decomp-name{font-size:12px;fill:#3a4150;cursor:pointer;}
+  .decomp-name.sel{font-weight:700;fill:#000;}
+  .decomp-val{font-size:10.5px;fill:#5c6470;font-variant-numeric:tabular-nums;}
+  @media (max-width:700px){
+    .wrap{padding:12px 10px 40px;}
+    header h1{font-size:19px;}
+    header p.sub{font-size:13px;}
+    .controls{gap:8px 10px;padding:10px 12px;margin:12px 0 12px;}
+    .ctl{flex:1 1 calc(50% - 10px);min-width:0;}
+    .ctl select{width:100%;min-width:0;max-width:none;font-size:16px;}
+    .seg{display:flex;} .seg button{flex:1;padding:7px 6px;}
+    .rangewrap{width:100%;} input[type=range]{flex:1;width:auto;}
+    .chk{width:100%;justify-content:flex-start;}
+    .chartcard{min-height:0;padding:6px 2px 2px;}
+    .side .card{padding:12px 12px;}
+    .bigr{font-size:24px;}
+    details.notes{padding:0 12px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="backlink"><a href="../">&larr; Back to the main explorer</a></div>
+    <h1>Neighborhood context, achievement &amp; UC admissions</h1>
+    <p class="sub">Each dot is a California public high school. The x-axis describes the school's
+    <b>surroundings</b> &mdash; American Community Survey measures for the census tract where the school sits.
+    The dot's <b>color</b> is its students' measured achievement (CAASPP grade&nbsp;11, A&ndash;G completion).
+    The y-axis is the <b>admissions outcome</b> at the selected UC campus. Drag a band on the rail below the
+    chart to hold neighborhood roughly fixed, and see how much achievement still separates schools inside it.</p>
+  </header>
+
+  <div class="controls">
+    <div class="ctl"><label for="campus">Campus</label><select id="campus"></select></div>
+    <div class="ctl"><label for="period">Year / period</label><select id="period"></select></div>
+    <div class="ctl"><label>View</label>
+      <div class="seg" id="view">
+        <button data-v="cond" class="on" title="Scatter of neighborhood vs outcome; brush a band to condition on neighborhood">Hold neighborhood fixed</button>
+        <button data-v="twins" title="Pairs of schools in near-identical surroundings with very different achievement">Twin schools</button>
+        <button data-v="decomp" title="How much of the school-to-school variance each factor explains, campus by campus">What explains more?</button>
+      </div>
+    </div>
+    <div class="ctl"><label for="ctxMetric">Neighborhood (x)</label><select id="ctxMetric"></select></div>
+    <div class="ctl"><label for="achMetric">Achievement (color)</label><select id="achMetric"></select></div>
+    <div class="ctl"><label for="outMetric">Outcome (y)</label><select id="outMetric"></select></div>
+    <div class="ctl" id="ctlMatch"><label for="matchMode">Twins share</label>
+      <select id="matchMode">
+        <option value="band">Similar neighborhood (&plusmn;4 pctile)</option>
+        <option value="zcta">The same ZIP (ZCTA)</option>
+        <option value="tract">The same census tract</option>
+      </select>
+    </div>
+    <div class="ctl" id="ctlGap"><label for="gapMin">Min achievement gap</label>
+      <div class="rangewrap"><input type="range" id="gapMin" min="5" max="40" step="5" value="15" /><span class="rangeval" id="gapMinVal">15</span></div>
+    </div>
+    <div class="ctl"><label for="minapps">Min applicants</label>
+      <div class="rangewrap"><input type="range" id="minapps" min="10" max="200" step="5" value="30" /><span class="rangeval" id="minappsval">30</span></div>
+    </div>
+    <div class="ctl"><label for="dropout">Outliers</label>
+      <label class="chk"><input type="checkbox" id="dropout" /> <span>Drop (1.5&times;IQR)</span></label>
+    </div>
+  </div>
+
+  <div class="layout">
+    <div>
+      <div class="card chartcard">
+        <div class="plot-title" id="plotTitle"></div>
+        <div class="plot-sub" id="plotSub"></div>
+        <svg id="chart"></svg>
+        <div class="legend" id="legend"></div>
+      </div>
+    </div>
+    <div class="side">
+      <div class="card" id="statsCard">
+        <p class="stat-headline" id="statHead"></p>
+        <div id="statsBody"></div>
+      </div>
+      <div class="card profile" id="profile">
+        <div class="empty">Click a dot (or a twin pair) for details.</div>
+      </div>
+    </div>
+  </div>
+
+  <details class="notes">
+    <summary>How to read this &mdash; and important caveats</summary>
+    <div>
+      <ul>
+        <li><b>The question.</b> The main explorer shows that a school's measured achievement relates to its UC
+          admissions outcomes. This page asks the follow-up: is that relationship its own thing, or is it mostly
+          the neighborhood? <b>Hold neighborhood fixed</b> conditions directly (brush a band of similar
+          neighborhoods and look at the spread inside). <b>Twin schools</b> makes it concrete (near-identical
+          surroundings, very different achievement &mdash; do outcomes differ?). <b>What explains more?</b>
+          summarizes with a variance decomposition, campus by campus.</li>
+        <li><b>Neighborhood = the school's tract, not its students.</b> Each school is assigned the American
+          Community Survey (ACS) 5-year profile of the census tract around its current campus location
+          (CDE coordinates &rarr; Census Geocoder). Students may commute across boundaries, transfer, or attend
+          charters far from home, and a tract (&asymp;4,000 residents) is not an attendance zone. Read the x-axis
+          as "the kind of place the school sits in."</li>
+        <li><b>Timing.</b> Neighborhood and test measures are taken from each entering class's grade-11 year
+          &mdash; the spring before application &mdash; matching the main explorer's CAASPP convention. 2025
+          classes use ACS&nbsp;2024 (the latest 5-year release), and where a class's grade-11 join is
+          unavailable (there are no 2020 entity files, affecting classes entering in 2021) the nearest
+          available year substitutes. ACS 5-year estimates are rolling averages and
+          move slowly; tract-level estimates carry sampling error, and top-coded medians ($250k+ income,
+          $2M+ home value) are kept at the cap.</li>
+        <li><b>The SES index</b> is a plain z-score composite &mdash; income, adult BA share, home value, minus
+          poverty, minus unemployment &mdash; standardized each year over all California public high schools, so
+          0 is the average school's surroundings and &plusmn;1 is one standard deviation.</li>
+        <li><b>Statistics are school-level and unweighted</b> (each school counts once), computed on schools
+          passing the min-applicants filter. Pooled periods use ratio-of-sums for funnel rates, as in the main
+          explorer, with the same reliability gate for suppression-distorted rates. Partial correlation and the
+          R&sup2; decomposition use ordinary least squares with one neighborhood and one achievement variable at
+          a time &mdash; a lens, not a full causal model. "Shared" variance is explanatory overlap that the data
+          cannot attribute to either factor alone.</li>
+        <li><b>This is an observational, school-level (ecological) analysis.</b> It cannot say what happens to an
+          individual student, and no partial correlation here identifies a causal effect in either direction.</li>
+        <li><b>Coverage.</b> 1,464 of 1,518 schools in the main explorer have tract context (the rest are mostly
+          closed or relocated campuses without current coordinates). CAASPP is missing for classes entering in
+          2021 (spring-2020 test cancelled) and 2022 (spring-2021 test non-representative); those periods show
+          context-only dots in gray.</li>
+      </ul>
+    </div>
+  </details>
+
+  <footer id="footer">
+    <b>Sources.</b> UC admissions funnel: University of California Information Center (admissions by source
+    school). Achievement: CDE CAASPP research files (Smarter Balanced grade 11), CDE A&ndash;G completion.
+    Neighborhood: U.S. Census Bureau ACS 5-year estimates (detailed tables) at the census-tract level, assigned
+    via CDE school coordinates and the Census Geocoder. Built by <code>scripts/make_context_data.py</code> in the
+    same repository as the <a href="../">main explorer</a>; admissions numbers here are identical to the main
+    explorer's data layer. <span id="genstamp"></span>
+  </footer>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+<script src="../data.js"></script>
+<script src="data_context.js"></script>
+<script>
+(function(){
+  "use strict";
+  const D = window.UCDATA, X = window.UCCTX;
+  if(!D || !X){ document.querySelector('.wrap').innerHTML =
+    '<p style="color:#b00">Could not load <code>../data.js</code> / <code>data_context.js</code>. If you opened this file directly, '+
+    'serve the repo over HTTP (e.g. <code>python3 -m http.server</code>) or view it on GitHub Pages.</p>'; return; }
+
+  // panel row layout (identical to the main explorer)
+  const IX = {year:0,A:1,D:2,E:3,C:4,G:5,H:6,ela:7,math:8,upp:9,Gp:10,agpa:11,dgpa:12,egpa:13};
+  const CIX = Object.fromEntries(X.cvars.map((k,i)=>[k,i]));   // context row layout
+  const periodByKey = Object.fromEntries(D.periods.map(p=>[p.key,p]));
+  const MByKey = Object.fromEntries(D.metrics.map(m=>[m.key,m]));
+  const NO_CAASPP_YEARS = new Set([2021,2022]);   // admission years (test cancelled / non-representative)
+
+  // ---- metric catalogues ----
+  const CTX_METRICS = [
+    {key:'ses',    label:'Neighborhood SES index (composite)', short:'SES index', fmt:'z',
+     desc:'z-score composite: income, adult BA share, home value, − poverty, − unemployment (0 = average CA high school)'},
+    {key:'inc',    label:'Median household income', short:'median income', fmt:'usd'},
+    {key:'ba',     label:'Adults with a bachelor’s degree or higher (%)', short:'% adults with BA+', fmt:'pct'},
+    {key:'pov',    label:'Poverty rate (%)', short:'poverty rate', fmt:'pct'},
+    {key:'unemp',  label:'Unemployment rate (%)', short:'unemployment', fmt:'pct'},
+    {key:'homeval',label:'Median home value', short:'median home value', fmt:'usd'},
+    {key:'rent',   label:'Median gross rent', short:'median rent', fmt:'usd'},
+    {key:'own',    label:'Owner-occupied housing (%)', short:'% owner-occupied', fmt:'pct'},
+    {key:'hs',     label:'Adults with a HS diploma or higher (%)', short:'% adults HS+', fmt:'pct'},
+    {key:'hisp',   label:'Hispanic or Latino residents (%)', short:'% Hispanic', fmt:'pct'},
+    {key:'white',  label:'White (non-Hispanic) residents (%)', short:'% White (NH)', fmt:'pct'},
+    {key:'black',  label:'Black (non-Hispanic) residents (%)', short:'% Black (NH)', fmt:'pct'},
+    {key:'asian',  label:'Asian (non-Hispanic) residents (%)', short:'% Asian (NH)', fmt:'pct'},
+  ];
+  const ACH_METRICS = [
+    {key:'avg',      label:'CAASPP proficiency — avg % met (gr 11)', short:'CAASPP avg % met', fmt:'pct'},
+    {key:'ela',      label:'CAASPP ELA — % met (gr 11)', short:'CAASPP ELA % met', fmt:'pct'},
+    {key:'math',     label:'CAASPP Math — % met (gr 11)', short:'CAASPP Math % met', fmt:'pct'},
+    {key:'ela_mean', label:'CAASPP ELA — mean scale score (gr 11)', short:'ELA mean score', fmt:'score'},
+    {key:'math_mean',label:'CAASPP Math — mean scale score (gr 11)', short:'Math mean score', fmt:'score'},
+    {key:'ag',       label:'A–G completion — % of cohort UC/CSU-eligible', short:'A–G completion', fmt:'pct', num:'G', den:'C'},
+  ];
+  // outcome metrics: reuse the main explorer's funnel definitions (num/den) verbatim
+  const OUT_KEYS = ['admit_rate','yield','app_rate','adm_per_elig','enr_per_elig','app_per_head','adm_per_head','enr_per_head'];
+  const OUT_METRICS = OUT_KEYS.map(k=>MByKey[k]).filter(Boolean);
+  const CTXBy = Object.fromEntries(CTX_METRICS.map(m=>[m.key,m]));
+  const ACHBy = Object.fromEntries(ACH_METRICS.map(m=>[m.key,m]));
+
+  const state = { campus:0, period:D.defaultPeriod, view:'cond',
+                  ctx:'ses', ach:'avg', out:'admit_rate',
+                  minApps:30, dropOut:false, matchMode:'band', gapMin:15,
+                  band:null,          // [c0,c1] in context units, or null
+                  sel:null, selPair:null };
+
+  // ---- URL hash state (shareable) ----
+  const HASHKEYS = [['c','campus',parseInt],['p','period',String],['v','view',String],['x','ctx',String],
+                    ['a','ach',String],['y','out',String],['n','minApps',parseInt],['m','matchMode',String],['g','gapMin',parseInt]];
+  (function readHash(){ try{
+    const h = new URLSearchParams(location.hash.replace(/^#/,''));
+    for(const [k,sk,cast] of HASHKEYS){ if(h.has(k)){ const v=cast(h.get(k)); if(v===v&&v!=='') state[sk]=v; } }
+    if(h.get('o')==='1') state.dropOut=true;
+  }catch(e){} })();
+  function writeHash(){ try{
+    const h = new URLSearchParams();
+    for(const [k,sk] of HASHKEYS) h.set(k,state[sk]);
+    if(state.dropOut) h.set('o','1');
+    history.replaceState(null,'','#'+h.toString());
+  }catch(e){} }
+
+  const $ = id=>document.getElementById(id);
+  const tooltip = $('tooltip'), svg = d3.select('#chart'), fmtN = d3.format(',');
+
+  // ---- controls ----
+  D.campuses.forEach((c,i)=>{ const o=document.createElement('option'); o.value=i; o.textContent=c; $('campus').appendChild(o); });
+  D.periods.forEach(p=>{ const o=document.createElement('option'); o.value=p.key; o.textContent=p.label; $('period').appendChild(o); });
+  function fillSel(sel,arr,val){ sel.innerHTML=''; arr.forEach(m=>{ const o=document.createElement('option'); o.value=m.key; o.textContent=m.label; sel.appendChild(o); }); sel.value=val; }
+  fillSel($('ctxMetric'),CTX_METRICS,state.ctx);
+  fillSel($('achMetric'),ACH_METRICS,state.ach);
+  fillSel($('outMetric'),OUT_METRICS,state.out);
+  $('campus').value=state.campus; $('period').value=state.period;
+  $('minapps').value=state.minApps; $('minappsval').textContent=state.minApps;
+  $('matchMode').value=state.matchMode; $('gapMin').value=state.gapMin; $('gapMinVal').textContent=state.gapMin;
+  $('dropout').checked=state.dropOut;
+  $('genstamp').textContent = 'Data layers generated '+(D.generated||'')+' / '+(X.generated||'')+'.';
+
+  // ---- shared computation (mirrors the main explorer) ----
+  function meanIdx(rows,idx){ let s=0,n=0; for(const r of rows){ if(r[idx]!=null){s+=r[idx];n++;} } return n?s/n:null; }
+  function jsum(rows,num,den){ let sn=0,sd=0,ok=false,denAll=0,denOK=false;
+    for(const r of rows){ const a=r[IX[num]],b=r[IX[den]]; if(b==null) continue;
+      if(den==='H'&&a!=null&&a>b) continue;
+      denAll+=b; denOK=true; if(a!=null){ sn+=a; sd+=b; ok=true; } }
+    return (ok&&sd>0)?{sn,sd,cov:(denOK&&denAll>0)?sd/denAll:1}:null; }
+  const COV_MIN=0.5;
+
+  let cache={};
+  function schools(campus){
+    const ci = campus==null?state.campus:campus;
+    const ck = ci+'|'+state.period;
+    if(cache[ck]) return cache[ck];
+    const years = periodByKey[state.period].years;
+    const yset = new Set(years);
+    const pre = ci+'|', arr=[];
+    for(const k in D.panel){ if(k.lastIndexOf(pre,0)!==0) continue;
+      const ceeb = k.slice(pre.length);
+      const rows = D.panel[k].filter(r=>yset.has(r[IX.year]));
+      if(!rows.length) continue;
+      let apps=0; for(const r of rows){ if(r[IX.A]!=null) apps+=r[IX.A]; }
+      const md = D.meta[ceeb]||["","","",""];
+      // context rows for the classes' grade-11 years; if a year's join is unavailable
+      // (no 2020 entity files -> classes entering 2021), fall back to the nearest year (Y-1 -> Y -> Y-2)
+      const byY={}; (X.ctx[ceeb]||[]).forEach(r=>{ byY[r[0]]=r; });
+      const chosen={};
+      for(const y of years){ const r=byY[y-1]||byY[y]||byY[y-2]; if(r) chosen[r[0]]=r; }
+      const crows=Object.values(chosen);
+      const mm = X.means[ceeb]||{};
+      let se=0,ne=0,sm=0,nm=0;
+      for(const y of years){ const v=mm[String(y-1)]; if(!v) continue;
+        if(v[0]!=null){se+=v[0];ne++;} if(v[1]!=null){sm+=v[1];nm++;} }
+      arr.push({ceeb,rows,apps,crows,name:md[0],city:md[1],county:md[2],cds:md[3],
+                elaMean:ne?se/ne:null, mathMean:nm?sm/nm:null,
+                geo:X.geo[ceeb]||null, _c:{}});
+    }
+    cache[ck]=arr; return arr;
+  }
+  function ctxVal(s,key){ if(key in s._c) return s._c[key];
+    const idx=CIX[key]; let v=null;
+    if(idx!=null && s.crows.length){ let sum=0,n=0;
+      for(const r of s.crows){ if(r[idx]!=null){sum+=r[idx];n++;} } v=n?sum/n:null; }
+    s._c[key]=v; return v; }
+  function valOf(s,key){
+    if(CTXBy[key]) return ctxVal(s,key);
+    if(key==='avg'){ let sum=0,n=0; for(const r of s.rows){ const e=r[IX.ela],t=r[IX.math];
+        if(e!=null&&t!=null){sum+=(e+t)/2;n++;} else if(e!=null){sum+=e;n++;} else if(t!=null){sum+=t;n++;} } return n?sum/n:null; }
+    if(key==='ela')  return meanIdx(s.rows,IX.ela);
+    if(key==='math') return meanIdx(s.rows,IX.math);
+    if(key==='ela_mean')  return s.elaMean;
+    if(key==='math_mean') return s.mathMean;
+    if(key==='ag'){ const j=jsum(s.rows,'G','C'); return j?100*j.sn/j.sd:null; }
+    const m=MByKey[key];
+    if(m&&m.num&&m.den){ const j=jsum(s.rows,m.num,m.den); return j?j.sn/j.sd:null; }
+    return null;
+  }
+  function reliable(s,key){ const m=MByKey[key]; if(!(m&&m.num&&m.den)) return true;
+    const j=jsum(s.rows,m.num,m.den); return j?j.cov>=COV_MIN:true; }
+
+  function pearson(pts){ pts=pts.filter(p=>p[0]!=null&&p[1]!=null); const n=pts.length; if(n<3) return {r:null,n};
+    const mx=d3.mean(pts,p=>p[0]),my=d3.mean(pts,p=>p[1]); let sxy=0,sxx=0,syy=0;
+    pts.forEach(p=>{const dx=p[0]-mx,dy=p[1]-my;sxy+=dx*dy;sxx+=dx*dx;syy+=dy*dy;});
+    return (!sxx||!syy)?{r:null,n}:{r:sxy/Math.sqrt(sxx*syy),n}; }
+  function ols(pts){ pts=pts.filter(p=>p[0]!=null&&p[1]!=null); const n=pts.length; if(n<3) return null;
+    const mx=d3.mean(pts,p=>p[0]),my=d3.mean(pts,p=>p[1]); let sxy=0,sxx=0;
+    pts.forEach(p=>{const dx=p[0]-mx;sxy+=dx*(p[1]-my);sxx+=dx*dx;}); return sxx?{b:sxy/sxx,a:my-(sxy/sxx)*mx}:null; }
+  // y ~ x1 + x2 (closed form on centered sums); returns R² and coefficients
+  function ols2(tr){ // tr: [[x1,x2,y],...]
+    const n=tr.length; if(n<4) return null;
+    const m1=d3.mean(tr,t=>t[0]), m2=d3.mean(tr,t=>t[1]), my=d3.mean(tr,t=>t[2]);
+    let s11=0,s22=0,s12=0,s1y=0,s2y=0,syy=0;
+    for(const t of tr){ const a=t[0]-m1,b=t[1]-m2,c=t[2]-my;
+      s11+=a*a; s22+=b*b; s12+=a*b; s1y+=a*c; s2y+=b*c; syy+=c*c; }
+    const det=s11*s22-s12*s12; if(!det||!syy) return null;
+    const b1=(s22*s1y-s12*s2y)/det, b2=(s11*s2y-s12*s1y)/det;
+    return {b1,b2,r2:(b1*s1y+b2*s2y)/syy,n};
+  }
+  function partialR(rxy,rxz,ryz){ // r(x,y | z)
+    const d=Math.sqrt((1-rxz*rxz)*(1-ryz*ryz)); return d?(rxy-rxz*ryz)/d:null; }
+  function tukeyBounds(vals){ const v=vals.filter(x=>x!=null).slice().sort(d3.ascending); if(v.length<4) return null;
+    const q1=d3.quantileSorted(v,.25), q3=d3.quantileSorted(v,.75), iqr=q3-q1;
+    return [q1-1.5*iqr, q3+1.5*iqr]; }
+  function isOut(v,b){ return !!b && (v<b[0]||v>b[1]); }
+
+  // dots for the current campus/period: context+outcome required, achievement optional
+  function dots(campus){
+    const arr = schools(campus).filter(s=>s.apps>=state.minApps);
+    let pts = arr.map(s=>({s, c:valOf(s,state.ctx), a:valOf(s,state.ach), y:valOf(s,state.out)}))
+                 .filter(d=>d.c!=null && d.y!=null && reliable(d.s,state.out));
+    if(state.dropOut){
+      const full=pts.filter(d=>d.a!=null);
+      const bc=tukeyBounds(pts.map(d=>d.c)), by=tukeyBounds(pts.map(d=>d.y)), ba=tukeyBounds(full.map(d=>d.a));
+      pts = pts.filter(d=>!isOut(d.c,bc)&&!isOut(d.y,by)&&!(d.a!=null&&isOut(d.a,ba)));
+    }
+    return pts;
+  }
+  function triples(campus){ return dots(campus).filter(d=>d.a!=null); }
+
+  // ---- formatting ----
+  function fmtUSD(v){ if(v==null) return '—';
+    return v>=1e6 ? '$'+(v/1e6).toFixed(v>=3e6?1:2)+'M' : '$'+Math.round(v/1000)+'k'; }
+  function fmtUSDfull(v){ return v==null?'—':'$'+fmtN(Math.round(v)); }
+  function fmtCtx(v,key){ const m=CTXBy[key]; if(v==null) return '—';
+    if(m.fmt==='usd') return fmtUSD(v);
+    if(m.fmt==='z') return (v>0?'+':'')+v.toFixed(2);
+    return v.toFixed(1)+'%'; }
+  function fmtCtxFull(v,key){ const m=CTXBy[key]; if(v==null) return '—';
+    if(m.fmt==='usd') return fmtUSDfull(v); return fmtCtx(v,key); }
+  function fmtAch(v,key){ const m=ACHBy[key]; if(v==null) return '—';
+    return m.fmt==='score' ? Math.round(v).toString() : v.toFixed(1)+'%'; }
+  function fmtOut(v){ return v==null?'—':(100*v).toFixed(1)+'%'; }
+  function fmtR(r){ return r==null?'—':(r>0?'+':'−')+Math.abs(r).toFixed(2); }
+  function axisCtx(key){ const m=CTXBy[key];
+    if(m.fmt==='usd') return fmtUSD; if(m.fmt==='z') return v=>(v>0?'+':'')+v; return v=>v+'%'; }
+  const periodLabel = ()=>periodByKey[state.period].label;
+  const campusName = ()=>D.campuses[state.campus];
+  const outShort = ()=>MByKey[state.out].short.toLowerCase();
+  const ctxShort = k=>CTXBy[k||state.ctx].short;
+  const achShort = k=>ACHBy[k||state.ach].short;
+
+  // achievement color scale (low = warm red, high = cool blue; gray when missing)
+  const achInterp = d3.interpolateRgbBasis(['#b2182b','#f4e08a','#2166ac']);
+  function achScale(pts){ const v=pts.map(d=>d.a).filter(x=>x!=null).sort(d3.ascending);
+    if(!v.length) return ()=> '#bbb';
+    const lo=d3.quantileSorted(v,.05), hi=d3.quantileSorted(v,.95);
+    const sc=d3.scaleLinear().domain([lo,hi]).range([0,1]).clamp(true);
+    const f=a=>a==null?'#bbb':achInterp(sc(a)); f.lo=lo; f.hi=hi; return f; }
+
+  function caasppMissing(){ const ach=['avg','ela','math','ela_mean','math_mean'].includes(state.ach);
+    const ys=periodByKey[state.period].years;
+    return ach && ys.length>0 && ys.every(y=>NO_CAASPP_YEARS.has(y)); }
+
+  // ---- tooltip ----
+  function showTip(ev,html){ tooltip.innerHTML=html; tooltip.style.opacity=1;
+    const pad=14, w=tooltip.offsetWidth, h=tooltip.offsetHeight;
+    let x=ev.clientX+pad, y=ev.clientY+pad;
+    if(x+w>window.innerWidth-8) x=ev.clientX-w-pad;
+    if(y+h>window.innerHeight-8) y=ev.clientY-h-pad;
+    tooltip.style.left=x+'px'; tooltip.style.top=y+'px'; }
+  function hideTip(){ tooltip.style.opacity=0; }
+  function tipHTML(d){
+    return '<b>'+d.s.name+'</b><br><span class="tl">'+(d.s.city||'')+' · '+(d.s.county||'')+' County</span><br>'
+      +'<span class="tl">'+ctxShort()+':</span> '+fmtCtxFull(d.c,state.ctx)+'<br>'
+      +'<span class="tl">'+achShort()+':</span> '+fmtAch(d.a,state.ach)+'<br>'
+      +'<span class="tl">'+MByKey[state.out].short+':</span> '+fmtOut(d.y)
+      +'<br><span class="tl">applicants:</span> '+fmtN(d.s.apps); }
+
+  // ---- side profile card ----
+  function renderProfile(d){
+    const el=$('profile');
+    if(!d){ el.innerHTML='<div class="empty">Click a dot (or a twin pair) for details.</div>'; return; }
+    const s=d.s, rows=[];
+    rows.push('<tr class="sec"><td colspan="2">Surroundings (tract, '+periodLabel()+' classes)</td></tr>');
+    for(const k of ['ses','inc','ba','pov','unemp','homeval']){
+      rows.push('<tr><td class="k">'+CTXBy[k].short+'</td><td class="v">'+fmtCtxFull(ctxVal(s,k),k)+'</td></tr>');
+    }
+    if(s.geo) rows.push('<tr><td class="k">tract / ZCTA</td><td class="v">'+(s.geo[0]||'—')+' / '+(s.geo[1]||'—')+'</td></tr>');
+    rows.push('<tr class="sec"><td colspan="2">Achievement</td></tr>');
+    for(const k of ['avg','ela_mean','math_mean','ag']){
+      rows.push('<tr><td class="k">'+ACHBy[k].short+'</td><td class="v">'+fmtAch(valOf(s,k),k)+'</td></tr>');
+    }
+    rows.push('<tr class="sec"><td colspan="2">'+campusName()+' · '+periodLabel()+'</td></tr>');
+    rows.push('<tr><td class="k">applicants</td><td class="v">'+fmtN(s.apps)+'</td></tr>');
+    rows.push('<tr><td class="k">'+MByKey[state.out].short+'</td><td class="v">'+fmtOut(valOf(s,state.out))+'</td></tr>');
+    el.innerHTML='<h3>'+s.name+'</h3><div class="ploc">'+(s.city||'')+' · '+(s.county||'')+' County · CEEB '+s.ceeb+'</div>'
+      +'<table class="ptable">'+rows.join('')+'</table>';
+  }
+
+  // ============================ VIEW: conditioning scatter ============================
+  function renderCond(){
+    const pts = dots();
+    const w = Math.max(320, document.querySelector('.chartcard').clientWidth-16);
+    const small = window.innerWidth<=700;
+    const H = small? 400 : 470, RAIL=34, h = H+RAIL;
+    const m = {top:14,right:16,bottom:40+RAIL,left:56};
+    svg.attr('viewBox','0 0 '+w+' '+h).attr('height',null); svg.selectAll('*').remove();
+    $('plotTitle').textContent = ctxShort().replace(/^%/,'Share of ')+' (x) vs '+MByKey[state.out].short.toLowerCase()+' at '+campusName()+' (y) — dots colored by '+achShort();
+    $('plotSub').textContent = periodLabel()+' · each dot one high school · brush the rail below the x-axis to hold neighborhood fixed';
+    if(!pts.length){ svg.append('text').attr('x',w/2).attr('y',h/2).attr('text-anchor','middle')
+        .attr('fill','#5c6470').attr('font-size',13).text('No schools match the current filters.');
+      renderCondStats(pts,[]); return; }
+
+    const col = achScale(pts);
+    const x = d3.scaleLinear().domain(d3.extent(pts,d=>d.c)).nice().range([m.left+8,w-m.right-8]);
+    const y = d3.scaleLinear().domain([0,d3.max(pts,d=>d.y)||1]).nice().range([H-m.bottom+RAIL,m.top]);
+    // grid + axes
+    const g=svg.append('g');
+    g.selectAll('line.gy').data(y.ticks(7)).join('line').attr('class','gridline')
+      .attr('x1',m.left).attr('x2',w-m.right).attr('y1',d=>y(d)).attr('y2',d=>y(d));
+    svg.append('g').attr('class','axis').attr('transform','translate(0,'+(H-m.bottom+RAIL)+')')
+      .call(d3.axisBottom(x).ticks(7).tickFormat(axisCtx(state.ctx)));
+    svg.append('g').attr('class','axis').attr('transform','translate('+m.left+',0)')
+      .call(d3.axisLeft(y).ticks(7).tickFormat(v=>(100*v).toFixed(0)+'%'));
+    svg.append('text').attr('x',(m.left+w-m.right)/2).attr('y',h-6).attr('text-anchor','middle')
+      .attr('fill','#5c6470').attr('font-size',11.5).text(CTXBy[state.ctx].label+(CTXBy[state.ctx].fmt==='usd'?' (tract)':CTXBy[state.ctx].key==='ses'?'':' (tract)'));
+    svg.append('text').attr('transform','rotate(-90)').attr('x',-(m.top+(H-m.bottom+RAIL))/2).attr('y',14)
+      .attr('text-anchor','middle').attr('fill','#5c6470').attr('font-size',11.5)
+      .text(MByKey[state.out].short+' — '+campusName());
+
+    // band shading (behind dots)
+    const bandG = svg.append('g');
+    // fit line: outcome ~ context (all kept points)
+    const fit = ols(pts.map(d=>[d.c,d.y]));
+    if(fit){ const xd=x.domain();
+      svg.append('line').attr('class','fitline')
+        .attr('x1',x(xd[0])).attr('y1',y(fit.a+fit.b*xd[0]))
+        .attr('x2',x(xd[1])).attr('y2',y(fit.a+fit.b*xd[1])); }
+    // dots
+    const dotsG = svg.append('g');
+    const circles = dotsG.selectAll('circle').data(pts,d=>d.s.ceeb).join('circle')
+      .attr('class','dot').attr('r',4.4)
+      .attr('cx',d=>x(d.c)).attr('cy',d=>y(d.y)).attr('fill',d=>col(d.a))
+      .on('mousemove',(ev,d)=>showTip(ev,tipHTML(d))).on('mouseleave',hideTip)
+      .on('click',(ev,d)=>{ state.sel = state.sel===d.s.ceeb?null:d.s.ceeb;
+        circles.classed('sel',p=>p.s.ceeb===state.sel); renderProfile(state.sel?d:null); });
+    circles.classed('sel',d=>d.s.ceeb===state.sel);
+
+    // brush rail
+    const railY = H-m.bottom+RAIL;
+    const rail = svg.append('g');
+    rail.append('line').attr('class','railbase').attr('x1',m.left).attr('x2',w-m.right)
+      .attr('y1',railY+26).attr('y2',railY+26);
+    rail.selectAll('line.t').data(pts).join('line').attr('class','railtick')
+      .attr('x1',d=>x(d.c)).attr('x2',d=>x(d.c)).attr('y1',railY+20).attr('y2',railY+32);
+    const brush = d3.brushX().extent([[m.left,railY+18],[w-m.right,railY+34]])
+      .on('brush end',ev=>{
+        if(ev.sourceEvent==null) return;   // ignore programmatic moves
+        state.band = ev.selection ? [x.invert(ev.selection[0]),x.invert(ev.selection[1])] : null;
+        applyBand();
+      });
+    const brushG = svg.append('g').attr('class','brush').call(brush);
+    svg.append('text').attr('x',m.left).attr('y',railY+14).attr('fill','#8a93a1').attr('font-size',10)
+      .text('neighborhood band — drag to select, click away to clear');
+
+    // default band: middle quintile, first render only
+    if(state.band===null && pts.length>=15){
+      const v=pts.map(d=>d.c).sort(d3.ascending);
+      state.band=[d3.quantileSorted(v,.40), d3.quantileSorted(v,.60)];
+    }
+    if(state.band){ // clamp to domain
+      const xd=x.domain();
+      state.band=[Math.max(state.band[0],xd[0]),Math.min(state.band[1],xd[1])];
+      if(state.band[0]>=state.band[1]) state.band=null;
+    }
+    if(state.band) brushG.call(brush.move,[x(state.band[0]),x(state.band[1])]);
+
+    function applyBand(){
+      bandG.selectAll('*').remove();
+      const b=state.band;
+      if(b){ bandG.append('rect').attr('class','bandrect')
+          .attr('x',x(b[0])).attr('width',Math.max(0,x(b[1])-x(b[0])))
+          .attr('y',m.top).attr('height',railY-m.top);
+        circles.classed('dim',d=>d.c<b[0]||d.c>b[1]);
+      } else circles.classed('dim',false);
+      renderCondStats(pts, b? pts.filter(d=>d.c>=b[0]&&d.c<=b[1]) : []);
+    }
+    applyBand();
+
+    // legend
+    const lg=$('legend'); lg.innerHTML='';
+    const gid='achgrad'; let html='<span>'+achShort()+':</span>';
+    html+='<span style="font-variant-numeric:tabular-nums">'+fmtAch(col.lo,state.ach)+'</span>';
+    html+='<span class="grad" style="background:linear-gradient(90deg,'+achInterp(0)+','+achInterp(.5)+','+achInterp(1)+')"></span>';
+    html+='<span style="font-variant-numeric:tabular-nums">'+fmtAch(col.hi,state.ach)+'</span>';
+    html+='<span><span class="sw" style="background:#bbb"></span>not available</span>';
+    html+='<span>line: least-squares fit of outcome on neighborhood</span>';
+    lg.innerHTML=html;
+    if(caasppMissing()) $('plotSub').textContent += ' · CAASPP is unavailable for this period (COVID years) — dots are gray; pick another year or an A–G axis';
+  }
+
+  function renderCondStats(pts, band){
+    $('statHead').textContent = campusName()+' · '+periodLabel();
+    const tri = pts.filter(d=>d.a!=null);
+    const rCO = pearson(pts.map(d=>[d.c,d.y]));
+    const rAO = pearson(tri.map(d=>[d.a,d.y]));
+    const rCA = pearson(tri.map(d=>[d.c,d.a]));
+    const rAO3 = pearson(tri.map(d=>[d.a,d.y]));   // on triple-complete set for partial
+    const rCO3 = pearson(tri.map(d=>[d.c,d.y]));
+    let part=null;
+    if(rAO3.r!=null&&rCO3.r!=null&&rCA.r!=null) part=partialR(rAO3.r,rCA.r,rCO3.r);
+    let html='';
+    html+='<div><span class="bigr">'+fmtR(rCO.r)+'<span class="lbl">r — neighborhood → outcome</span></span></div>';
+    html+='<div class="statline"><span class="k">Schools shown</span><span class="v">'+pts.length+'</span></div>';
+    html+='<div class="statline"><span class="k">r: '+achShort()+' → outcome</span><span class="v">'+fmtR(rAO.r)+'</span></div>';
+    html+='<div class="statline"><span class="k">r: neighborhood ↔ achievement</span><span class="v">'+fmtR(rCA.r)+'</span></div>';
+    html+='<div class="statline"><span class="k" title="Correlation of achievement with the outcome after linearly removing the neighborhood variable from both — computed over the '+tri.length+' schools with all three values.">Partial r: achievement → outcome, neighborhood held fixed</span><span class="v">'+fmtR(part)+'</span></div>';
+    if(band.length){
+      const bt=band.filter(d=>d.a!=null);
+      const rB=pearson(bt.map(d=>[d.a,d.y]));
+      html+='<div class="statline"><span class="k">Band: schools</span><span class="v">'+band.length+'</span></div>';
+      html+='<div class="statline"><span class="k">Band: '+ctxShort()+'</span><span class="v">'+fmtCtx(state.band[0],state.ctx)+' – '+fmtCtx(state.band[1],state.ctx)+'</span></div>';
+      html+='<div class="statline"><span class="k">Band: r achievement → outcome</span><span class="v">'+fmtR(rB.r)+' <span style="font-weight:400;color:var(--muted)">(n='+rB.n+')</span></span></div>';
+      html+='<div id="insetWrap"><svg id="inset" height="180"></svg></div>';
+    } else {
+      html+='<div class="interp">Drag a band on the rail to condition on neighborhood.</div>';
+    }
+    // interpretation
+    let interp='';
+    if(rCO.r!=null&&rAO.r!=null&&part!=null){
+      const raw=Math.abs(rAO.r), pr=Math.abs(part);
+      if(raw>=0.1&&pr<raw*0.45) interp='Across all schools, '+achShort()+' and '+outShort()+' move together (r '+fmtR(rAO.r)+'). Hold the neighborhood variable fixed and most of that association goes away (partial r '+fmtR(part)+') — schools’ surroundings and their admissions outcomes overlap heavily here.';
+      else if(raw>=0.1&&pr>=raw*0.8) interp='Holding the neighborhood variable fixed barely changes the achievement–outcome association ('+fmtR(rAO.r)+' → '+fmtR(part)+'): achievement carries information about '+outShort()+' beyond this measure of surroundings.';
+      else if(raw>=0.1) interp='Holding the neighborhood variable fixed weakens the achievement–outcome association ('+fmtR(rAO.r)+' → '+fmtR(part)+'), but does not remove it.';
+      else interp='Achievement and '+outShort()+' are only weakly related here to begin with (r '+fmtR(rAO.r)+').';
+      interp+=' One neighborhood variable at a time — try others, or the composite.';
+    }
+    html+='<div class="interp">'+interp+'</div>';
+    $('statsBody').innerHTML=html;
+    if(band.length) renderInset(band);
+  }
+
+  function renderInset(band){
+    const el=document.getElementById('inset'); if(!el) return;
+    const bw=el.parentElement.clientWidth||300, bh=180;
+    const s=d3.select(el).attr('viewBox','0 0 '+bw+' '+bh); s.selectAll('*').remove();
+    const bt=band.filter(d=>d.a!=null);
+    s.append('text').attr('x',4).attr('y',12).attr('font-size',11).attr('font-weight',600).attr('fill','#5c6470')
+      .text('Inside the band: '+achShort()+' vs '+outShort());
+    if(bt.length<3){ s.append('text').attr('x',bw/2).attr('y',bh/2).attr('text-anchor','middle')
+        .attr('fill','#8a93a1').attr('font-size',11).text('too few schools in band'); return; }
+    const m={top:20,right:8,bottom:26,left:40};
+    const x=d3.scaleLinear().domain(d3.extent(bt,d=>d.a)).nice().range([m.left,bw-m.right]);
+    const y=d3.scaleLinear().domain(d3.extent(bt,d=>d.y)).nice().range([bh-m.bottom,m.top]);
+    s.append('g').attr('class','axis').attr('transform','translate(0,'+(bh-m.bottom)+')')
+      .call(d3.axisBottom(x).ticks(4).tickFormat(v=>ACHBy[state.ach].fmt==='score'?v:v+'%'));
+    s.append('g').attr('class','axis').attr('transform','translate('+m.left+',0)')
+      .call(d3.axisLeft(y).ticks(4).tickFormat(v=>(100*v).toFixed(0)+'%'));
+    const col=achScale(bt);
+    s.append('g').selectAll('circle').data(bt).join('circle')
+      .attr('class','dot').attr('r',3.4).attr('cx',d=>x(d.a)).attr('cy',d=>y(d.y)).attr('fill',d=>col(d.a))
+      .on('mousemove',(ev,d)=>showTip(ev,tipHTML(d))).on('mouseleave',hideTip);
+    const fit=ols(bt.map(d=>[d.a,d.y]));
+    if(fit){ const xd=x.domain(); s.append('line').attr('class','fitline')
+      .attr('x1',x(xd[0])).attr('y1',y(fit.a+fit.b*xd[0])).attr('x2',x(xd[1])).attr('y2',y(fit.a+fit.b*xd[1])); }
+  }
+
+  // ============================ VIEW: twins ============================
+  function percentileRanks(vals){ // value -> percentile (0..100), average ranks
+    const sorted=vals.slice().sort(d3.ascending);
+    return v=>100*( (d3.bisectLeft(sorted,v)+d3.bisectRight(sorted,v))/2 )/sorted.length; }
+
+  function buildPairs(){
+    const tri = triples();
+    const out=[];
+    const gap = ACHBy[state.ach].fmt==='score' ? state.gapMin*2.5 : state.gapMin;  // scale-score units ≈ 2.5×pp
+    if(state.matchMode==='band'){
+      const pr=percentileRanks(tri.map(d=>d.c));
+      tri.forEach(d=>d._p=pr(d.c));
+      const byP=tri.slice().sort((a,b)=>a._p-b._p);
+      for(let i=0;i<byP.length;i++) for(let j=i+1;j<byP.length;j++){
+        if(byP[j]._p-byP[i]._p>4) break;
+        const ga=Math.abs(byP[i].a-byP[j].a);
+        if(ga>=gap) out.push({a:byP[i],b:byP[j],gap:ga});
+      }
+    } else {
+      const gi = state.matchMode==='tract'?0:1;
+      const groups=new Map();
+      tri.forEach(d=>{ const g=d.s.geo&&d.s.geo[gi]; if(!g) return;
+        if(!groups.has(g)) groups.set(g,[]); groups.get(g).push(d); });
+      for(const arr of groups.values()) if(arr.length>1)
+        for(let i=0;i<arr.length;i++) for(let j=i+1;j<arr.length;j++){
+          const ga=Math.abs(arr[i].a-arr[j].a);
+          if(ga>=gap) out.push({a:arr[i],b:arr[j],gap:ga});
+        }
+    }
+    // orient: a = lower achievement; greedy non-overlapping, biggest gaps first, cap 30
+    out.forEach(p=>{ if(p.a.a>p.b.a){ const t=p.a; p.a=p.b; p.b=t; } });
+    out.sort((p,q)=>q.gap-p.gap);
+    const used=new Set(), keep=[];
+    for(const p of out){ if(used.has(p.a.s.ceeb)||used.has(p.b.s.ceeb)) continue;
+      used.add(p.a.s.ceeb); used.add(p.b.s.ceeb); keep.push(p); if(keep.length>=30) break; }
+    keep.sort((p,q)=>( (p.a.c+p.b.c) - (q.a.c+q.b.c) ));
+    return keep;
+  }
+
+  function renderTwins(){
+    const pairs=buildPairs();
+    const w = Math.max(320, document.querySelector('.chartcard').clientWidth-16);
+    $('plotTitle').textContent='Twin schools — '+(state.matchMode==='band'?'near-identical '+ctxShort():state.matchMode==='zcta'?'the same ZIP (ZCTA)':'the same census tract')
+      +', '+achShort()+' gap ≥ '+(ACHBy[state.ach].fmt==='score'?Math.round(state.gapMin*2.5)+' points':state.gapMin+' pp');
+    $('plotSub').textContent=campusName()+' · '+periodLabel()+' · each row is one pair · x-position: '+MByKey[state.out].short.toLowerCase()+' · red = lower-achievement school, blue = higher';
+    $('legend').innerHTML='<span><span class="sw" style="background:#b2182b"></span>lower '+achShort()+'</span>'
+      +'<span><span class="sw" style="background:#2166ac"></span>higher '+achShort()+'</span>'
+      +'<span>schools are paired without replacement; up to 30 pairs with the largest gaps are shown</span>';
+    if(!pairs.length){
+      svg.attr('viewBox','0 0 '+w+' 200'); svg.selectAll('*').remove();
+      svg.append('text').attr('x',w/2).attr('y',100).attr('text-anchor','middle').attr('fill','#5c6470').attr('font-size',13)
+        .text(caasppMissing()?'CAASPP is unavailable for this period — pick another year or an A–G axis.':'No pairs found — widen the gap slider down, or switch the match mode.');
+      renderTwinStats(pairs); return;
+    }
+    const rowH=30, m={top:26,right:150,bottom:34,left:210};
+    const h=m.top+rowH*pairs.length+m.bottom;
+    svg.attr('viewBox','0 0 '+w+' '+h).attr('height',null); svg.selectAll('*').remove();
+    const allY=pairs.flatMap(p=>[p.a.y,p.b.y]);
+    const x=d3.scaleLinear().domain([0,d3.max(allY)||1]).nice().range([m.left,w-m.right]);
+    svg.append('g').attr('class','axis').attr('transform','translate(0,'+(h-m.bottom+6)+')')
+      .call(d3.axisBottom(x).ticks(6).tickFormat(v=>(100*v).toFixed(0)+'%'));
+    svg.append('text').attr('x',(m.left+w-m.right)/2).attr('y',h-4).attr('text-anchor','middle')
+      .attr('fill','#5c6470').attr('font-size',11.5).text(MByKey[state.out].short+' — '+campusName());
+    svg.append('g').selectAll('line.g').data(x.ticks(6)).join('line').attr('class','gridline')
+      .attr('x1',d=>x(d)).attr('x2',d=>x(d)).attr('y1',m.top-8).attr('y2',h-m.bottom);
+    const trunc=(s,n)=>s&&s.length>n?s.slice(0,n-1)+'…':(s||'');
+    const rows=svg.append('g').selectAll('g.pairrow').data(pairs).join('g')
+      .attr('class','pairrow').attr('transform',(p,i)=>'translate(0,'+(m.top+i*rowH+rowH/2)+')')
+      .on('click',(ev,p)=>{ state.selPair = state.selPair===p?null:p;
+        rows.classed('sel',q=>q===state.selPair); renderPairProfile(state.selPair); })
+      .on('mousemove',(ev,p)=>showTip(ev,
+        '<b>'+p.a.s.name+'</b> '+fmtAch(p.a.a,state.ach)+' → '+fmtOut(p.a.y)+'<br>'
+        +'<b>'+p.b.s.name+'</b> '+fmtAch(p.b.a,state.ach)+' → '+fmtOut(p.b.y)+'<br>'
+        +'<span class="tl">'+ctxShort()+':</span> '+fmtCtxFull(p.a.c,state.ctx)+' / '+fmtCtxFull(p.b.c,state.ctx)))
+      .on('mouseleave',hideTip);
+    rows.append('rect').attr('x',0).attr('y',-rowH/2).attr('width',w).attr('height',rowH).attr('fill','transparent');
+    rows.append('text').attr('class','pairname').attr('x',6).attr('y',-3)
+      .text(p=>trunc(p.a.s.name,32)+'  ·  '+fmtAch(p.a.a,state.ach));
+    rows.append('text').attr('class','pairname').attr('x',6).attr('y',10)
+      .text(p=>trunc(p.b.s.name,32)+'  ·  '+fmtAch(p.b.a,state.ach));
+    rows.append('line').attr('x1',p=>x(p.a.y)).attr('x2',p=>x(p.b.y)).attr('y1',0).attr('y2',0)
+      .attr('stroke',p=>p.b.y>=p.a.y?'#7a889b':'#e08214').attr('stroke-width',2);
+    rows.append('circle').attr('cx',p=>x(p.a.y)).attr('cy',0).attr('r',5.2).attr('fill','#b2182b').attr('class','dot');
+    rows.append('circle').attr('cx',p=>x(p.b.y)).attr('cy',0).attr('r',5.2).attr('fill','#2166ac').attr('class','dot');
+    rows.append('text').attr('class','pairctx').attr('x',w-m.right+10).attr('y',4)
+      .text(p=>state.matchMode==='band'
+        ? ctxShort()+' '+fmtCtx((p.a.c+p.b.c)/2,state.ctx)
+        : (state.matchMode==='zcta'?'ZCTA ':'tract ')+(p.a.s.geo?(state.matchMode==='zcta'?p.a.s.geo[1]:p.a.s.geo[0]):''));
+    renderTwinStats(pairs);
+  }
+
+  function renderTwinStats(pairs){
+    $('statHead').textContent=campusName()+' · '+periodLabel();
+    if(!pairs.length){ $('statsBody').innerHTML='<div class="interp">No qualifying pairs under the current settings.</div>'; return; }
+    const upWins=pairs.filter(p=>p.b.y>p.a.y).length;
+    const ties=pairs.filter(p=>p.b.y===p.a.y).length;
+    const gaps=pairs.map(p=>p.b.y-p.a.y).sort(d3.ascending);
+    const med=d3.quantileSorted(gaps,.5);
+    const medAch=d3.quantileSorted(pairs.map(p=>p.gap).sort(d3.ascending),.5);
+    let html='';
+    html+='<div><span class="bigr">'+upWins+'/'+pairs.length+'<span class="lbl">pairs where the higher-achievement school has the higher '+outShort()+'</span></span></div>';
+    if(ties) html+='<div class="statline"><span class="k">exact ties</span><span class="v">'+ties+'</span></div>';
+    html+='<div class="statline"><span class="k">median outcome gap (higher − lower)</span><span class="v">'+(med>=0?'+':'')+(100*med).toFixed(1)+' pp</span></div>';
+    html+='<div class="statline"><span class="k">median achievement gap</span><span class="v">'+(ACHBy[state.ach].fmt==='score'?Math.round(medAch)+' pts':medAch.toFixed(1)+' pp')+'</span></div>';
+    html+='<div class="interp">Pairs share '+(state.matchMode==='band'?'a nearly identical value of '+ctxShort()+' (within ±4 percentile points)':state.matchMode==='zcta'?'a ZIP code (ZCTA)':'a census tract')+
+      ' but differ widely in '+achShort()+'. If surroundings were the whole story, red and blue dots would sit on top of each other. Click a pair for details.</div>';
+    $('statsBody').innerHTML=html;
+  }
+
+  function renderPairProfile(p){
+    const el=$('profile');
+    if(!p){ el.innerHTML='<div class="empty">Click a dot (or a twin pair) for details.</div>'; return; }
+    const row=(s,d)=>{
+      return '<tr class="sec"><td colspan="2">'+s.name+'</td></tr>'
+        +'<tr><td class="k">city</td><td class="v">'+(s.city||'—')+'</td></tr>'
+        +'<tr><td class="k">'+ctxShort()+'</td><td class="v">'+fmtCtxFull(d.c,state.ctx)+'</td></tr>'
+        +'<tr><td class="k">median income / poverty</td><td class="v">'+fmtUSD(ctxVal(s,'inc'))+' / '+fmtCtx(ctxVal(s,'pov'),'pov')+'</td></tr>'
+        +'<tr><td class="k">'+achShort()+'</td><td class="v">'+fmtAch(d.a,state.ach)+'</td></tr>'
+        +'<tr><td class="k">applicants</td><td class="v">'+fmtN(s.apps)+'</td></tr>'
+        +'<tr><td class="k">'+MByKey[state.out].short+'</td><td class="v">'+fmtOut(d.y)+'</td></tr>'; };
+    el.innerHTML='<h3>Twin pair</h3><div class="ploc">'+campusName()+' · '+periodLabel()+'</div>'
+      +'<table class="ptable">'+row(p.a.s,p.a)+row(p.b.s,p.b)+'</table>';
+  }
+
+  // ============================ VIEW: decomposition ============================
+  function decompose(campus){
+    const tr = triples(campus).map(d=>[d.c,d.a,d.y]);
+    if(tr.length<8) return null;
+    const rCO=pearson(tr.map(t=>[t[0],t[2]])).r, rAO=pearson(tr.map(t=>[t[1],t[2]])).r;
+    const both=ols2(tr); if(!both||rCO==null||rAO==null) return null;
+    const r2c=rCO*rCO, r2a=rAO*rAO, r2b=Math.max(both.r2,0);
+    return {n:tr.length, r2c, r2a, r2b,
+            uC:Math.max(r2b-r2a,0), uA:Math.max(r2b-r2c,0),
+            shared:r2c+r2a-r2b};
+  }
+
+  function renderDecomp(){
+    const w = Math.max(320, document.querySelector('.chartcard').clientWidth-16);
+    const rowH=42, m={top:30,right:120,bottom:40,left:110};
+    const h=m.top+rowH*D.campuses.length+m.bottom;
+    svg.attr('viewBox','0 0 '+w+' '+h).attr('height',null); svg.selectAll('*').remove();
+    $('plotTitle').textContent='What explains the school-to-school spread in '+MByKey[state.out].short.toLowerCase()+'? — '+ctxShort()+' vs '+achShort();
+    $('plotSub').textContent=periodLabel()+' · bar length = R² of a two-variable linear fit · split into what each factor explains uniquely and what they explain jointly';
+    const res=D.campuses.map((c,i)=>({name:c,i,d:decompose(i)}));
+    const maxR2=d3.max(res,r=>r.d?r.d.r2b:0)||.5;
+    const x=d3.scaleLinear().domain([0,Math.max(.1,maxR2)]).nice().range([m.left,w-m.right]);
+    svg.append('g').attr('class','axis').attr('transform','translate(0,'+(h-m.bottom+4)+')')
+      .call(d3.axisBottom(x).ticks(6).tickFormat(d3.format('.0%')));
+    svg.append('text').attr('x',(m.left+w-m.right)/2).attr('y',h-6).attr('text-anchor','middle')
+      .attr('fill','#5c6470').attr('font-size',11.5).text('share of variance explained (R²)');
+    svg.append('g').selectAll('line.g').data(x.ticks(6)).join('line').attr('class','gridline')
+      .attr('x1',d=>x(d)).attr('x2',d=>x(d)).attr('y1',m.top-6).attr('y2',h-m.bottom);
+    const C_U='#2e74b5', C_S='#a9b8c9', C_A='#e34a33';
+    const g=svg.append('g').selectAll('g.row').data(res).join('g')
+      .attr('transform',r=>'translate(0,'+(m.top+r.i*rowH)+')');
+    g.append('text').attr('class','decomp-name').classed('sel',r=>r.i===+state.campus)
+      .attr('x',m.left-8).attr('y',rowH/2+4).attr('text-anchor','end').text(r=>r.name)
+      .on('click',(ev,r)=>{ state.campus=r.i; $('campus').value=r.i; update(); });
+    const bh=20;
+    g.each(function(r){
+      const gg=d3.select(this);
+      if(!r.d){ gg.append('text').attr('x',m.left+6).attr('y',rowH/2+4).attr('fill','#8a93a1').attr('font-size',11)
+          .text('too few schools'); return; }
+      const y0=(rowH-bh)/2;
+      const segs=[ {v:r.d.uC,c:C_U,t:'uniquely neighborhood'},
+                   {v:Math.max(r.d.shared,0),c:C_S,t:'joint (inseparable)'},
+                   {v:r.d.uA,c:C_A,t:'uniquely achievement'} ];
+      let acc=0;
+      for(const s of segs){
+        gg.append('rect').attr('x',x(acc)).attr('y',y0).attr('height',bh)
+          .attr('width',Math.max(0,x(acc+s.v)-x(acc))).attr('fill',s.c)
+          .on('mousemove',ev=>showTip(ev,'<b>'+r.name+'</b><br>'+s.t+': '+(100*s.v).toFixed(1)+'% of variance'
+            +'<br><span class="tl">R² neighborhood alone: '+(100*r.d.r2c).toFixed(1)+'% · achievement alone: '
+            +(100*r.d.r2a).toFixed(1)+'% · both: '+(100*r.d.r2b).toFixed(1)+'% · n='+r.d.n+'</span>'))
+          .on('mouseleave',hideTip);
+        acc+=s.v;
+      }
+      gg.append('text').attr('class','decomp-val').attr('x',x(acc)+6).attr('y',rowH/2+4)
+        .text('R² '+(100*r.d.r2b).toFixed(0)+'% · n='+r.d.n);
+      if(r.d.shared<0) gg.append('text').attr('class','decomp-val').attr('x',m.left+2).attr('y',rowH/2+16)
+        .text('suppression: joint share < 0'); });
+    $('legend').innerHTML='<span><span class="sw" style="background:'+C_U+';border-radius:2px"></span>uniquely neighborhood</span>'
+      +'<span><span class="sw" style="background:'+C_S+';border-radius:2px"></span>joint — cannot be attributed to either alone</span>'
+      +'<span><span class="sw" style="background:'+C_A+';border-radius:2px"></span>uniquely achievement</span>';
+    renderDecompStats(res);
+  }
+
+  function renderDecompStats(res){
+    $('statHead').textContent='All campuses · '+periodLabel();
+    const r=res.find(q=>q.i===+state.campus);
+    let html='';
+    if(r&&r.d){
+      html+='<div><span class="bigr">'+(100*r.d.r2b).toFixed(0)+'%<span class="lbl">of variance in '+outShort()+' at '+r.name+' explained by the pair</span></span></div>';
+      html+='<div class="statline"><span class="k">'+ctxShort()+' alone (R²)</span><span class="v">'+(100*r.d.r2c).toFixed(1)+'%</span></div>';
+      html+='<div class="statline"><span class="k">'+achShort()+' alone (R²)</span><span class="v">'+(100*r.d.r2a).toFixed(1)+'%</span></div>';
+      html+='<div class="statline"><span class="k">both together (R²)</span><span class="v">'+(100*r.d.r2b).toFixed(1)+'%</span></div>';
+      html+='<div class="statline"><span class="k">uniquely neighborhood</span><span class="v">'+(100*r.d.uC).toFixed(1)+'%</span></div>';
+      html+='<div class="statline"><span class="k">joint (inseparable)</span><span class="v">'+(100*r.d.shared).toFixed(1)+'%</span></div>';
+      html+='<div class="statline"><span class="k">uniquely achievement</span><span class="v">'+(100*r.d.uA).toFixed(1)+'%</span></div>';
+    }
+    html+='<div class="interp">The gray middle is the crux: variance that neighborhood and achievement explain jointly, because the two travel together across schools. A large gray share means the data cannot, by itself, say which one "does the work." Click a campus name to focus it.'+(caasppMissing()?' CAASPP is unavailable for this period — pick another year or use A–G completion as the achievement axis.':'')+'</div>';
+    $('statsBody').innerHTML=html;
+  }
+
+  // ---- render dispatch + events ----
+  function updateCtlVisibility(){
+    $('ctlMatch').classList.toggle('hide',state.view!=='twins');
+    $('ctlGap').classList.toggle('hide',state.view!=='twins');
+    $('gapMinVal').textContent = ACHBy[state.ach].fmt==='score' ? Math.round(state.gapMin*2.5)+' pts' : state.gapMin+' pp';
+  }
+  function update(){
+    writeHash(); updateCtlVisibility();
+    document.querySelectorAll('#view button').forEach(b=>b.classList.toggle('on',b.dataset.v===state.view));
+    if(state.view==='cond') renderCond();
+    else if(state.view==='twins') renderTwins();
+    else renderDecomp();
+  }
+  $('campus').addEventListener('change',e=>{ state.campus=+e.target.value; state.sel=null; state.selPair=null; update(); });
+  $('period').addEventListener('change',e=>{ state.period=e.target.value; cache={}; state.band=null; state.sel=null; state.selPair=null; update(); });
+  $('ctxMetric').addEventListener('change',e=>{ state.ctx=e.target.value; state.band=null; update(); });
+  $('achMetric').addEventListener('change',e=>{ state.ach=e.target.value; update(); });
+  $('outMetric').addEventListener('change',e=>{ state.out=e.target.value; update(); });
+  $('matchMode').addEventListener('change',e=>{ state.matchMode=e.target.value; state.selPair=null; update(); });
+  $('gapMin').addEventListener('input',e=>{ state.gapMin=+e.target.value; updateCtlVisibility(); });
+  $('gapMin').addEventListener('change',e=>{ state.gapMin=+e.target.value; state.selPair=null; update(); });
+  $('minapps').addEventListener('input',e=>{ $('minappsval').textContent=e.target.value; });
+  $('minapps').addEventListener('change',e=>{ state.minApps=+e.target.value; update(); });
+  $('dropout').addEventListener('change',e=>{ state.dropOut=e.target.checked; update(); });
+  document.querySelectorAll('#view button').forEach(b=>b.addEventListener('click',()=>{ state.view=b.dataset.v; update(); }));
+  let rto=null; window.addEventListener('resize',()=>{ clearTimeout(rto); rto=setTimeout(update,150); });
+
+  update();
+})();
+</script>
+</body>
+</html>
