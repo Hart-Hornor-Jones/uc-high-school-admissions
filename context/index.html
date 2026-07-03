@@ -645,6 +645,15 @@
   function percentileRanks(vals){ // value -> percentile (0..100), average ranks
     const sorted=vals.slice().sort(d3.ascending);
     return v=>100*( (d3.bisectLeft(sorted,v)+d3.bisectRight(sorted,v))/2 )/sorted.length; }
+  // The chart draws one row per pair; hundreds of rows is unusable, so cap the DRAWN rows.
+  // Stats are computed over the full population; the drawn rows are an even sample of it,
+  // so both the numbers and the picture respond as the slider moves.
+  const TWIN_SHOW_MAX = 40;
+  function evenSample(a,k){ if(a.length<=k) return a.slice();
+    const out=[], seen=new Set();
+    for(let i=0;i<k;i++){ let idx=Math.round(i*(a.length-1)/(k-1));
+      while(seen.has(idx)) idx++; if(idx>=a.length) break; seen.add(idx); out.push(a[idx]); }
+    return out; }
 
   function buildPairs(){
     const tri = triples();
@@ -673,32 +682,39 @@
     // orient: a = lower achievement; greedy non-overlapping, biggest gaps first, cap 30
     out.forEach(p=>{ if(p.a.a>p.b.a){ const t=p.a; p.a=p.b; p.b=t; } });
     out.sort((p,q)=>q.gap-p.gap);
+    // greedy non-overlapping matching; biggest gaps win a school when pairs conflict.
+    // NO cap here — keep every qualifying pair so the gap slider and the stats reflect
+    // the full population (the ≤30 cap used to mask the slider: the 30 widest gaps were
+    // stable across thresholds, so raising the floor changed nothing until pairs ran out).
     const used=new Set(), keep=[];
     for(const p of out){ if(used.has(p.a.s.ceeb)||used.has(p.b.s.ceeb)) continue;
-      used.add(p.a.s.ceeb); used.add(p.b.s.ceeb); keep.push(p); if(keep.length>=30) break; }
+      used.add(p.a.s.ceeb); used.add(p.b.s.ceeb); keep.push(p); }
     keep.sort((p,q)=>( (p.a.c+p.b.c) - (q.a.c+q.b.c) ));
     return keep;
   }
 
   function renderTwins(){
-    const pairs=buildPairs();
+    const pop=buildPairs();                                              // full qualifying population -> stats
+    const shown = pop.length>TWIN_SHOW_MAX ? evenSample(pop,TWIN_SHOW_MAX) : pop;   // even sample -> drawn rows
     const w = Math.max(320, document.querySelector('.chartcard').clientWidth-16);
     $('plotTitle').textContent='Twin schools — '+(state.matchMode==='band'?'near-identical '+ctxShort():state.matchMode==='zcta'?'the same ZIP (ZCTA)':'the same census tract')
       +', '+achShort()+' gap ≥ '+(ACHBy[state.ach].fmt==='score'?Math.round(state.gapMin*2.5)+' points':state.gapMin+' pp');
-    $('plotSub').textContent=campusName()+' · '+periodLabel()+' · each row is one pair · x-position: '+MByKey[state.out].short.toLowerCase()+' · red = lower-achievement school, blue = higher';
+    $('plotSub').textContent=campusName()+' · '+periodLabel()+' · '+pop.length+' qualifying pair'+(pop.length===1?'':'s')
+      +(pop.length>shown.length?' · showing '+shown.length+' spread evenly across '+ctxShort()+' (stats cover all '+pop.length+')':'')
+      +' · x-position: '+MByKey[state.out].short.toLowerCase()+' · red = lower-achievement school, blue = higher';
     $('legend').innerHTML='<span><span class="sw" style="background:#b2182b"></span>lower '+achShort()+'</span>'
       +'<span><span class="sw" style="background:#2166ac"></span>higher '+achShort()+'</span>'
-      +'<span>schools are paired without replacement; up to 30 pairs with the largest gaps are shown</span>';
-    if(!pairs.length){
+      +'<span>schools are paired without replacement; every pair with a gap ≥ the slider is counted</span>';
+    if(!pop.length){
       svg.attr('viewBox','0 0 '+w+' 200'); svg.selectAll('*').remove();
       svg.append('text').attr('x',w/2).attr('y',100).attr('text-anchor','middle').attr('fill','#5c6470').attr('font-size',13)
-        .text(caasppMissing()?'CAASPP is unavailable for this period — pick another year or an A–G axis.':'No pairs found — widen the gap slider down, or switch the match mode.');
-      renderTwinStats(pairs); return;
+        .text(caasppMissing()?'CAASPP is unavailable for this period — pick another year or an A–G axis.':'No pairs found — lower the gap slider, or switch the match mode.');
+      renderTwinStats(pop); return;
     }
     const rowH=30, m={top:26,right:150,bottom:34,left:210};
-    const h=m.top+rowH*pairs.length+m.bottom;
+    const h=m.top+rowH*shown.length+m.bottom;
     svg.attr('viewBox','0 0 '+w+' '+h).attr('height',null); svg.selectAll('*').remove();
-    const allY=pairs.flatMap(p=>[p.a.y,p.b.y]);
+    const allY=shown.flatMap(p=>[p.a.y,p.b.y]);
     const x=d3.scaleLinear().domain([0,d3.max(allY)||1]).nice().range([m.left,w-m.right]);
     svg.append('g').attr('class','axis').attr('transform','translate(0,'+(h-m.bottom+6)+')')
       .call(d3.axisBottom(x).ticks(6).tickFormat(v=>(100*v).toFixed(0)+'%'));
@@ -707,7 +723,7 @@
     svg.append('g').selectAll('line.g').data(x.ticks(6)).join('line').attr('class','gridline')
       .attr('x1',d=>x(d)).attr('x2',d=>x(d)).attr('y1',m.top-8).attr('y2',h-m.bottom);
     const trunc=(s,n)=>s&&s.length>n?s.slice(0,n-1)+'…':(s||'');
-    const rows=svg.append('g').selectAll('g.pairrow').data(pairs).join('g')
+    const rows=svg.append('g').selectAll('g.pairrow').data(shown).join('g')
       .attr('class','pairrow').attr('transform',(p,i)=>'translate(0,'+(m.top+i*rowH+rowH/2)+')')
       .on('click',(ev,p)=>{ state.selPair = state.selPair===p?null:p;
         rows.classed('sel',q=>q===state.selPair); renderPairProfile(state.selPair); })
@@ -729,7 +745,7 @@
       .text(p=>state.matchMode==='band'
         ? ctxShort()+' '+fmtCtx((p.a.c+p.b.c)/2,state.ctx)
         : (state.matchMode==='zcta'?'ZCTA ':'tract ')+(p.a.s.geo?(state.matchMode==='zcta'?p.a.s.geo[1]:p.a.s.geo[0]):''));
-    renderTwinStats(pairs);
+    renderTwinStats(pop);
   }
 
   function renderTwinStats(pairs){

@@ -53,8 +53,10 @@ achievement–admissions association is carried by where the school sits?
   with all three values.
 - **Twin schools** — pairs in near-identical surroundings (within ±4 percentile points of the
   chosen context variable, or sharing a ZCTA / a census tract) whose achievement differs by at
-  least a chosen gap; dumbbells compare their outcomes. Pairing is greedy without replacement,
-  largest gaps first, capped at 30 pairs.
+  least a chosen gap; dumbbells compare their outcomes. Pairing is greedy without replacement
+  (when two candidate pairs share a school the wider-gap pair wins it). Every pair clearing the
+  gap slider is counted, and all reported statistics cover that full population; the chart draws
+  an even sample across the context variable (up to 40 rows) when the population is larger.
 - **What explains more?** — per campus, R² from OLS of the outcome on context alone,
   achievement alone, and both; displayed as unique-context / joint / unique-achievement shares
   (commonality decomposition). "Joint" is overlap the data cannot attribute to either variable;
