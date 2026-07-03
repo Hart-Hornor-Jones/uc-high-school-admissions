@@ -1,0 +1,30 @@
+{
+ "cells": 2229,
+ "race_keys_seen": [
+  "aian",
+  "all_race_ethnicity",
+  "asian",
+  "black",
+  "hispanic",
+  "nhpi",
+  "nonresident",
+  "two_or_more",
+  "unknown",
+  "white"
+ ],
+ "years": [
+  2011,
+  2012,
+  2013,
+  2014,
+  2015,
+  2016,
+  2017,
+  2018,
+  2019,
+  2020,
+  2021,
+  2022,
+  2023
+ ]
+}

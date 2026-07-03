@@ -48,6 +48,18 @@ achievement gaps — do outcomes differ?), and a per-campus variance decompositi
 neighborhood, unique to achievement, and joint). Methods & caveats:
 [docs/NEIGHBORHOOD_CONTEXT.md](docs/NEIGHBORHOOD_CONTEXT.md).
 
+**Companion page — [`trends/`](trends/):** what happens *after* admission, across entering
+cohorts back to 1999–2000. One chart, eight comparisons: systemwide graduation/retention/time-to-
+degree/final-GPA trajectories split by ethnicity, Pell, first-generation, and their crosses
+(UC Information Center data, cohorts 2000–2024); the nine campuses' six-year completion by race
+and by Pell/loan status (federal panel, ~1997–2025); per-high-school and per-community-college
+outcome series (the same by-school universe as the main explorer); GPA-tercile bands within each
+campus×cohort (timing of degrees for freshmen, published band rates for transfers); bachelor's
+degrees conferred by major and the underrepresented share (IPEDS 2011–2023); median earnings by
+family-income origin and median graduate debt by group (Scorecard). Each chart carries its
+universe badge, definitions, cohort sizes, and a CSV download. Methods & caveats:
+[docs/OUTCOMES_TRENDS.md](docs/OUTCOMES_TRENDS.md).
+
 ---
 
 ## The question
@@ -102,6 +114,9 @@ time shift helps separate a possible school-level effect from static self-select
 ├── context/                    # companion page: neighborhood context (see docs/NEIGHBORHOOD_CONTEXT.md)
 │   ├── index.html              #   conditioning scatter · twin schools · variance decomposition
 │   └── data_context.js         #   generated (window.UCCTX): tract ACS + CAASPP means; rebuilt by scripts/
+├── trends/                     # companion page: undergraduate outcomes over time (see docs/OUTCOMES_TRENDS.md)
+│   ├── index.html              #   cohort trend explorer: groups · campuses · schools · GPA bands · majors · money
+│   └── data_trends.js          #   generated (window.TRENDS_DATA); rebuilt by scripts/make_trends_data.py
 ├── data/                       # curated DERIVED datasets (see data/README.md)
 │   ├── panel_all9_by_year.csv  #   MASTER: one row per CEEB × campus × year, all 9 campuses, 2015–2025
 │   ├── dv_admissions_all9.csv  #   admissions funnel only (apply/admit/enroll), all 9 campuses, 1994–2025
@@ -115,7 +130,8 @@ time shift helps separate a possible school-level effect from static self-select
 ├── scripts/
 │   ├── build_panel_all9.py     # data/dv_admissions_all9 + components  →  data/panel_all9_by_year.csv
 │   ├── make_site_data.py       # data/panel_all9_by_year.csv  →  data.js  (+ cross_section_all9.csv)
-│   └── make_context_data.py    # components/tract_context.csv + caaspp means  →  context/data_context.js
+│   ├── make_context_data.py    # components/tract_context.csv + caaspp means  →  context/data_context.js
+│   └── make_trends_data.py     # data/trends/*.csv  →  trends/data_trends.js
 ├── build/                      # documented upstream pipeline (raw public files → data/)
 │   ├── extract_dv_all9.py      #   the one step needing the ~12 GB raw dump → dv_admissions_all9.csv
 │   └── README.md               #   runbook

@@ -1,0 +1,28 @@
+{
+ "fed_campus_panel_rows": 2214,
+ "berkeley_latest_c150": [
+  [
+   "Berkeley",
+   2022,
+   "overall",
+   94.0,
+   6199
+  ],
+  [
+   "Berkeley",
+   2023,
+   "overall",
+   92.9,
+   6344
+  ],
+  [
+   "Berkeley",
+   2024,
+   "overall",
+   92.8,
+   5988
+  ]
+ ],
+ "fed_money_rows": 180,
+ "fed_firstgen_rows": 358
+}

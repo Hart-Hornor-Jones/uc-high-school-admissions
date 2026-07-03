@@ -1,0 +1,43 @@
+{
+ "rows": 11801,
+ "files_failed": [],
+ "anchor_2024_ret": [
+  [
+   "FR",
+   "all",
+   "all",
+   "all",
+   "all",
+   2024,
+   "ret1",
+   93.0,
+   50742
+  ]
+ ],
+ "anchor_2021_g4": [
+  [
+   "FR",
+   "all",
+   "all",
+   "all",
+   "all",
+   2021,
+   "grad4",
+   74.0,
+   51931
+  ]
+ ],
+ "anchor_hisp_pell_2019_g6": [
+  [
+   "FR",
+   "eth_x_pell",
+   "hispanic_latino",
+   "pell",
+   "all",
+   2019,
+   "grad6",
+   77.7,
+   7976
+  ]
+ ]
+}

@@ -1,0 +1,2230 @@
+campus,year,cip2,cip2_title,total,urm,urm_share_pct
+Berkeley,2011,03,03 - Natural resources,398,47,11.8
+Berkeley,2011,04,04 - Architecture,172,32,18.6
+Berkeley,2011,05,"05 - Area, ethnic, cultural, gender, and group studies",288,117,40.6
+Berkeley,2011,09,09 - Communication/journalism,194,33,17.0
+Berkeley,2011,11,11 - Computer and information sciences,91,6,6.6
+Berkeley,2011,14,14 - Engineering,918,44,4.8
+Berkeley,2011,16,16 - Foreign languages,211,45,21.3
+Berkeley,2011,22,22 - Legal professions,108,22,20.4
+Berkeley,2011,23,23 - English language and literature,372,70,18.8
+Berkeley,2011,26,26 - Biological sciences,882,83,9.4
+Berkeley,2011,27,27 - Mathematics and statistics,268,15,5.6
+Berkeley,2011,30,30 - Multi/interdisciplinary studies,393,62,15.8
+Berkeley,2011,38,38 - Philosophy and religious studies,81,12,14.8
+Berkeley,2011,40,40 - Physical sciences,241,17,7.1
+Berkeley,2011,42,42 - Psychology,299,49,16.4
+Berkeley,2011,44,44 - Public administration and social service,101,39,38.6
+Berkeley,2011,45,45 - Social sciences,1519,280,18.4
+Berkeley,2011,50,50 - Visual and performing arts,285,57,20.0
+Berkeley,2011,51,51 - Health professions,148,18,12.2
+Berkeley,2011,52,52 - Business/management/marketing,356,22,6.2
+Berkeley,2011,54,54 - History,201,43,21.4
+Berkeley,2012,03,03 - Natural resources,384,51,13.3
+Berkeley,2012,04,04 - Architecture,158,30,19.0
+Berkeley,2012,05,"05 - Area, ethnic, cultural, gender, and group studies",258,101,39.1
+Berkeley,2012,09,09 - Communication/journalism,242,42,17.4
+Berkeley,2012,11,11 - Computer and information sciences,149,7,4.7
+Berkeley,2012,14,14 - Engineering,912,56,6.1
+Berkeley,2012,16,16 - Foreign languages,226,39,17.3
+Berkeley,2012,22,22 - Legal professions,124,22,17.7
+Berkeley,2012,23,23 - English language and literature,452,106,23.5
+Berkeley,2012,26,26 - Biological sciences,908,85,9.4
+Berkeley,2012,27,27 - Mathematics and statistics,298,27,9.1
+Berkeley,2012,30,30 - Multi/interdisciplinary studies,385,67,17.4
+Berkeley,2012,38,38 - Philosophy and religious studies,113,25,22.1
+Berkeley,2012,40,40 - Physical sciences,245,13,5.3
+Berkeley,2012,42,42 - Psychology,341,60,17.6
+Berkeley,2012,44,44 - Public administration and social service,102,53,52.0
+Berkeley,2012,45,45 - Social sciences,1609,298,18.5
+Berkeley,2012,50,50 - Visual and performing arts,246,44,17.9
+Berkeley,2012,51,51 - Health professions,114,15,13.2
+Berkeley,2012,52,52 - Business/management/marketing,340,26,7.6
+Berkeley,2012,54,54 - History,169,31,18.3
+Berkeley,2013,03,03 - Natural resources,341,53,15.5
+Berkeley,2013,04,04 - Architecture,156,22,14.1
+Berkeley,2013,05,"05 - Area, ethnic, cultural, gender, and group studies",217,96,44.2
+Berkeley,2013,09,09 - Communication/journalism,194,30,15.5
+Berkeley,2013,11,11 - Computer and information sciences,191,7,3.7
+Berkeley,2013,14,14 - Engineering,993,52,5.2
+Berkeley,2013,16,16 - Foreign languages,179,39,21.8
+Berkeley,2013,22,22 - Legal professions,126,46,36.5
+Berkeley,2013,23,23 - English language and literature,390,87,22.3
+Berkeley,2013,26,26 - Biological sciences,898,92,10.2
+Berkeley,2013,27,27 - Mathematics and statistics,323,30,9.3
+Berkeley,2013,30,30 - Multi/interdisciplinary studies,421,52,12.4
+Berkeley,2013,38,38 - Philosophy and religious studies,75,15,20.0
+Berkeley,2013,40,40 - Physical sciences,250,21,8.4
+Berkeley,2013,42,42 - Psychology,281,51,18.1
+Berkeley,2013,44,44 - Public administration and social service,89,56,62.9
+Berkeley,2013,45,45 - Social sciences,1583,273,17.2
+Berkeley,2013,50,50 - Visual and performing arts,231,44,19.0
+Berkeley,2013,51,51 - Health professions,156,12,7.7
+Berkeley,2013,52,52 - Business/management/marketing,332,31,9.3
+Berkeley,2013,54,54 - History,139,38,27.3
+Berkeley,2014,03,03 - Natural resources,304,41,13.5
+Berkeley,2014,04,04 - Architecture,147,35,23.8
+Berkeley,2014,05,"05 - Area, ethnic, cultural, gender, and group studies",205,88,42.9
+Berkeley,2014,09,09 - Communication/journalism,188,33,17.6
+Berkeley,2014,11,11 - Computer and information sciences,286,18,6.3
+Berkeley,2014,14,14 - Engineering,936,44,4.7
+Berkeley,2014,16,16 - Foreign languages,188,31,16.5
+Berkeley,2014,22,22 - Legal professions,98,29,29.6
+Berkeley,2014,23,23 - English language and literature,328,68,20.7
+Berkeley,2014,26,26 - Biological sciences,872,94,10.8
+Berkeley,2014,27,27 - Mathematics and statistics,372,24,6.5
+Berkeley,2014,30,30 - Multi/interdisciplinary studies,426,61,14.3
+Berkeley,2014,38,38 - Philosophy and religious studies,81,20,24.7
+Berkeley,2014,40,40 - Physical sciences,287,24,8.4
+Berkeley,2014,42,42 - Psychology,341,78,22.9
+Berkeley,2014,44,44 - Public administration and social service,93,45,48.4
+Berkeley,2014,45,45 - Social sciences,1616,295,18.3
+Berkeley,2014,50,50 - Visual and performing arts,232,48,20.7
+Berkeley,2014,51,51 - Health professions,164,19,11.6
+Berkeley,2014,52,52 - Business/management/marketing,356,34,9.6
+Berkeley,2014,54,54 - History,127,31,24.4
+Berkeley,2015,03,03 - Natural resources,333,52,15.6
+Berkeley,2015,04,04 - Architecture,130,24,18.5
+Berkeley,2015,05,"05 - Area, ethnic, cultural, gender, and group studies",197,90,45.7
+Berkeley,2015,09,09 - Communication/journalism,189,37,19.6
+Berkeley,2015,11,11 - Computer and information sciences,380,13,3.4
+Berkeley,2015,14,14 - Engineering,887,47,5.3
+Berkeley,2015,16,16 - Foreign languages,171,37,21.6
+Berkeley,2015,22,22 - Legal professions,129,46,35.7
+Berkeley,2015,23,23 - English language and literature,313,86,27.5
+Berkeley,2015,26,26 - Biological sciences,785,97,12.4
+Berkeley,2015,27,27 - Mathematics and statistics,334,31,9.3
+Berkeley,2015,30,30 - Multi/interdisciplinary studies,477,78,16.4
+Berkeley,2015,38,38 - Philosophy and religious studies,78,11,14.1
+Berkeley,2015,40,40 - Physical sciences,260,28,10.8
+Berkeley,2015,42,42 - Psychology,305,73,23.9
+Berkeley,2015,44,44 - Public administration and social service,98,57,58.2
+Berkeley,2015,45,45 - Social sciences,1493,277,18.6
+Berkeley,2015,50,50 - Visual and performing arts,200,40,20.0
+Berkeley,2015,51,51 - Health professions,236,39,16.5
+Berkeley,2015,52,52 - Business/management/marketing,338,31,9.2
+Berkeley,2015,54,54 - History,124,19,15.3
+Berkeley,2016,03,03 - Natural resources,353,47,13.3
+Berkeley,2016,04,04 - Architecture,143,30,21.0
+Berkeley,2016,05,"05 - Area, ethnic, cultural, gender, and group studies",175,71,40.6
+Berkeley,2016,09,09 - Communication/journalism,227,33,14.5
+Berkeley,2016,11,11 - Computer and information sciences,501,15,3.0
+Berkeley,2016,14,14 - Engineering,917,49,5.3
+Berkeley,2016,16,16 - Foreign languages,150,30,20.0
+Berkeley,2016,22,22 - Legal professions,158,60,38.0
+Berkeley,2016,23,23 - English language and literature,298,74,24.8
+Berkeley,2016,24,24 - Liberal arts/general studies,1,1,100.0
+Berkeley,2016,26,26 - Biological sciences,828,101,12.2
+Berkeley,2016,27,27 - Mathematics and statistics,387,32,8.3
+Berkeley,2016,30,30 - Multi/interdisciplinary studies,554,82,14.8
+Berkeley,2016,38,38 - Philosophy and religious studies,83,17,20.5
+Berkeley,2016,40,40 - Physical sciences,269,17,6.3
+Berkeley,2016,42,42 - Psychology,317,62,19.6
+Berkeley,2016,44,44 - Public administration and social service,117,57,48.7
+Berkeley,2016,45,45 - Social sciences,1491,249,16.7
+Berkeley,2016,50,50 - Visual and performing arts,208,50,24.0
+Berkeley,2016,51,51 - Health professions,204,48,23.5
+Berkeley,2016,52,52 - Business/management/marketing,388,44,11.3
+Berkeley,2016,54,54 - History,137,27,19.7
+Berkeley,2017,03,03 - Natural resources,497,81,16.3
+Berkeley,2017,04,04 - Architecture,164,25,15.2
+Berkeley,2017,05,"05 - Area, ethnic, cultural, gender, and group studies",196,80,40.8
+Berkeley,2017,09,09 - Communication/journalism,277,40,14.4
+Berkeley,2017,11,11 - Computer and information sciences,532,13,2.4
+Berkeley,2017,14,14 - Engineering,889,69,7.8
+Berkeley,2017,16,16 - Foreign languages,148,30,20.3
+Berkeley,2017,22,22 - Legal professions,143,56,39.2
+Berkeley,2017,23,23 - English language and literature,318,80,25.2
+Berkeley,2017,26,26 - Biological sciences,813,106,13.0
+Berkeley,2017,27,27 - Mathematics and statistics,419,31,7.4
+Berkeley,2017,30,30 - Multi/interdisciplinary studies,547,86,15.7
+Berkeley,2017,38,38 - Philosophy and religious studies,98,25,25.5
+Berkeley,2017,40,40 - Physical sciences,284,28,9.9
+Berkeley,2017,42,42 - Psychology,240,53,22.1
+Berkeley,2017,44,44 - Public administration and social service,124,54,43.5
+Berkeley,2017,45,45 - Social sciences,1656,328,19.8
+Berkeley,2017,50,50 - Visual and performing arts,185,34,18.4
+Berkeley,2017,51,51 - Health professions,188,59,31.4
+Berkeley,2017,52,52 - Business/management/marketing,344,43,12.5
+Berkeley,2017,54,54 - History,151,31,20.5
+Berkeley,2018,03,03 - Natural resources,539,79,14.7
+Berkeley,2018,04,04 - Architecture,182,26,14.3
+Berkeley,2018,05,"05 - Area, ethnic, cultural, gender, and group studies",191,90,47.1
+Berkeley,2018,09,09 - Communication/journalism,239,51,21.3
+Berkeley,2018,11,11 - Computer and information sciences,637,14,2.2
+Berkeley,2018,14,14 - Engineering,1012,88,8.7
+Berkeley,2018,16,16 - Foreign languages,124,33,26.6
+Berkeley,2018,22,22 - Legal professions,143,53,37.1
+Berkeley,2018,23,23 - English language and literature,321,95,29.6
+Berkeley,2018,26,26 - Biological sciences,916,129,14.1
+Berkeley,2018,27,27 - Mathematics and statistics,448,35,7.8
+Berkeley,2018,30,30 - Multi/interdisciplinary studies,593,79,13.3
+Berkeley,2018,38,38 - Philosophy and religious studies,99,22,22.2
+Berkeley,2018,40,40 - Physical sciences,349,48,13.8
+Berkeley,2018,42,42 - Psychology,206,48,23.3
+Berkeley,2018,44,44 - Public administration and social service,117,62,53.0
+Berkeley,2018,45,45 - Social sciences,1771,347,19.6
+Berkeley,2018,50,50 - Visual and performing arts,211,43,20.4
+Berkeley,2018,51,51 - Health professions,172,40,23.3
+Berkeley,2018,52,52 - Business/management/marketing,344,44,12.8
+Berkeley,2018,54,54 - History,113,26,23.0
+Berkeley,2019,03,03 - Natural resources,482,87,18.0
+Berkeley,2019,04,04 - Architecture,142,27,19.0
+Berkeley,2019,05,"05 - Area, ethnic, cultural, gender, and group studies",184,92,50.0
+Berkeley,2019,09,09 - Communication/journalism,262,64,24.4
+Berkeley,2019,11,11 - Computer and information sciences,1012,41,4.1
+Berkeley,2019,14,14 - Engineering,992,72,7.3
+Berkeley,2019,16,16 - Foreign languages,156,38,24.4
+Berkeley,2019,22,22 - Legal professions,154,60,39.0
+Berkeley,2019,23,23 - English language and literature,266,71,26.7
+Berkeley,2019,26,26 - Biological sciences,939,145,15.4
+Berkeley,2019,27,27 - Mathematics and statistics,488,42,8.6
+Berkeley,2019,30,30 - Multi/interdisciplinary studies,596,82,13.8
+Berkeley,2019,38,38 - Philosophy and religious studies,89,12,13.5
+Berkeley,2019,40,40 - Physical sciences,343,57,16.6
+Berkeley,2019,42,42 - Psychology,236,37,15.7
+Berkeley,2019,44,44 - Public administration and social service,87,38,43.7
+Berkeley,2019,45,45 - Social sciences,1735,351,20.2
+Berkeley,2019,50,50 - Visual and performing arts,231,49,21.2
+Berkeley,2019,51,51 - Health professions,215,51,23.7
+Berkeley,2019,52,52 - Business/management/marketing,385,52,13.5
+Berkeley,2019,54,54 - History,102,28,27.5
+Berkeley,2020,03,03 - Natural resources,455,102,22.4
+Berkeley,2020,04,04 - Architecture,165,39,23.6
+Berkeley,2020,05,"05 - Area, ethnic, cultural, gender, and group studies",182,85,46.7
+Berkeley,2020,09,09 - Communication/journalism,244,57,23.4
+Berkeley,2020,11,11 - Computer and information sciences,1131,63,5.6
+Berkeley,2020,14,14 - Engineering,1144,105,9.2
+Berkeley,2020,16,16 - Foreign languages,146,38,26.0
+Berkeley,2020,22,22 - Legal professions,171,66,38.6
+Berkeley,2020,23,23 - English language and literature,276,66,23.9
+Berkeley,2020,26,26 - Biological sciences,1027,175,17.0
+Berkeley,2020,27,27 - Mathematics and statistics,398,40,10.1
+Berkeley,2020,30,30 - Multi/interdisciplinary studies,553,101,18.3
+Berkeley,2020,38,38 - Philosophy and religious studies,92,15,16.3
+Berkeley,2020,40,40 - Physical sciences,306,35,11.4
+Berkeley,2020,42,42 - Psychology,254,63,24.8
+Berkeley,2020,44,44 - Public administration and social service,77,39,50.6
+Berkeley,2020,45,45 - Social sciences,1784,412,23.1
+Berkeley,2020,50,50 - Visual and performing arts,208,57,27.4
+Berkeley,2020,51,51 - Health professions,208,48,23.1
+Berkeley,2020,52,52 - Business/management/marketing,392,33,8.4
+Berkeley,2020,54,54 - History,113,29,25.7
+Berkeley,2021,03,03 - Natural resources,401,78,19.5
+Berkeley,2021,04,04 - Architecture,150,38,25.3
+Berkeley,2021,05,"05 - Area, ethnic, cultural, gender, and group studies",147,88,59.9
+Berkeley,2021,09,09 - Communication/journalism,226,46,20.4
+Berkeley,2021,11,11 - Computer and information sciences,1166,59,5.1
+Berkeley,2021,14,14 - Engineering,1114,125,11.2
+Berkeley,2021,16,16 - Foreign languages,152,46,30.3
+Berkeley,2021,22,22 - Legal professions,169,87,51.5
+Berkeley,2021,23,23 - English language and literature,246,74,30.1
+Berkeley,2021,26,26 - Biological sciences,907,174,19.2
+Berkeley,2021,27,27 - Mathematics and statistics,336,28,8.3
+Berkeley,2021,30,30 - Multi/interdisciplinary studies,464,86,18.5
+Berkeley,2021,38,38 - Philosophy and religious studies,82,24,29.3
+Berkeley,2021,40,40 - Physical sciences,288,41,14.2
+Berkeley,2021,42,42 - Psychology,280,78,27.9
+Berkeley,2021,44,44 - Public administration and social service,82,52,63.4
+Berkeley,2021,45,45 - Social sciences,1684,398,23.6
+Berkeley,2021,50,50 - Visual and performing arts,200,51,25.5
+Berkeley,2021,51,51 - Health professions,187,37,19.8
+Berkeley,2021,52,52 - Business/management/marketing,409,49,12.0
+Berkeley,2021,54,54 - History,99,21,21.2
+Berkeley,2022,03,03 - Natural resources,453,95,21.0
+Berkeley,2022,04,04 - Architecture,143,28,19.6
+Berkeley,2022,05,"05 - Area, ethnic, cultural, gender, and group studies",124,70,56.5
+Berkeley,2022,09,09 - Communication/journalism,226,66,29.2
+Berkeley,2022,11,11 - Computer and information sciences,1394,93,6.7
+Berkeley,2022,14,14 - Engineering,1128,127,11.3
+Berkeley,2022,16,16 - Foreign languages,133,34,25.6
+Berkeley,2022,22,22 - Legal professions,180,93,51.7
+Berkeley,2022,23,23 - English language and literature,256,83,32.4
+Berkeley,2022,26,26 - Biological sciences,920,144,15.7
+Berkeley,2022,27,27 - Mathematics and statistics,349,40,11.5
+Berkeley,2022,30,30 - Multi/interdisciplinary studies,462,64,13.9
+Berkeley,2022,38,38 - Philosophy and religious studies,88,24,27.3
+Berkeley,2022,40,40 - Physical sciences,305,42,13.8
+Berkeley,2022,42,42 - Psychology,322,81,25.2
+Berkeley,2022,44,44 - Public administration and social service,73,41,56.2
+Berkeley,2022,45,45 - Social sciences,1686,429,25.4
+Berkeley,2022,50,50 - Visual and performing arts,271,76,28.0
+Berkeley,2022,51,51 - Health professions,185,43,23.2
+Berkeley,2022,52,52 - Business/management/marketing,428,54,12.6
+Berkeley,2022,54,54 - History,90,25,27.8
+Berkeley,2023,03,03 - Natural resources,433,103,23.8
+Berkeley,2023,04,04 - Architecture,159,49,30.8
+Berkeley,2023,05,"05 - Area, ethnic, cultural, gender, and group studies",138,77,55.8
+Berkeley,2023,09,09 - Communication/journalism,226,55,24.3
+Berkeley,2023,11,11 - Computer and information sciences,1567,138,8.8
+Berkeley,2023,14,14 - Engineering,1180,224,19.0
+Berkeley,2023,16,16 - Foreign languages,121,41,33.9
+Berkeley,2023,22,22 - Legal professions,163,81,49.7
+Berkeley,2023,23,23 - English language and literature,238,75,31.5
+Berkeley,2023,26,26 - Biological sciences,935,175,18.7
+Berkeley,2023,27,27 - Mathematics and statistics,328,44,13.4
+Berkeley,2023,30,30 - Multi/interdisciplinary studies,450,101,22.4
+Berkeley,2023,38,38 - Philosophy and religious studies,87,24,27.6
+Berkeley,2023,40,40 - Physical sciences,295,54,18.3
+Berkeley,2023,42,42 - Psychology,307,101,32.9
+Berkeley,2023,44,44 - Public administration and social service,64,33,51.6
+Berkeley,2023,45,45 - Social sciences,1520,464,30.5
+Berkeley,2023,50,50 - Visual and performing arts,287,77,26.8
+Berkeley,2023,51,51 - Health professions,170,51,30.0
+Berkeley,2023,52,52 - Business/management/marketing,425,60,14.1
+Berkeley,2023,54,54 - History,114,32,28.1
+Davis,2011,01,01 - Agriculture,251,43,17.1
+Davis,2011,03,03 - Natural resources,157,23,14.6
+Davis,2011,04,04 - Architecture,109,23,21.1
+Davis,2011,05,"05 - Area, ethnic, cultural, gender, and group studies",112,50,44.6
+Davis,2011,09,09 - Communication/journalism,228,28,12.3
+Davis,2011,11,11 - Computer and information sciences,60,3,5.0
+Davis,2011,13,13 - Education,6,1,16.7
+Davis,2011,14,14 - Engineering,593,71,12.0
+Davis,2011,16,16 - Foreign languages,194,43,22.2
+Davis,2011,19,19 - Family and consumer sciences,264,51,19.3
+Davis,2011,23,23 - English language and literature,234,49,20.9
+Davis,2011,26,26 - Biological sciences,1350,170,12.6
+Davis,2011,27,27 - Mathematics and statistics,73,6,8.2
+Davis,2011,30,30 - Multi/interdisciplinary studies,148,19,12.8
+Davis,2011,38,38 - Philosophy and religious studies,63,13,20.6
+Davis,2011,40,40 - Physical sciences,213,25,11.7
+Davis,2011,42,42 - Psychology,677,139,20.5
+Davis,2011,45,45 - Social sciences,1230,225,18.3
+Davis,2011,50,50 - Visual and performing arts,312,63,20.2
+Davis,2011,52,52 - Business/management/marketing,297,16,5.4
+Davis,2011,54,54 - History,167,35,21.0
+Davis,2012,01,01 - Agriculture,336,71,21.1
+Davis,2012,03,03 - Natural resources,216,26,12.0
+Davis,2012,04,04 - Architecture,109,33,30.3
+Davis,2012,05,"05 - Area, ethnic, cultural, gender, and group studies",104,53,51.0
+Davis,2012,09,09 - Communication/journalism,245,41,16.7
+Davis,2012,11,11 - Computer and information sciences,90,7,7.8
+Davis,2012,13,13 - Education,7,1,14.3
+Davis,2012,14,14 - Engineering,598,67,11.2
+Davis,2012,16,16 - Foreign languages,179,62,34.6
+Davis,2012,19,19 - Family and consumer sciences,261,57,21.8
+Davis,2012,23,23 - English language and literature,221,46,20.8
+Davis,2012,26,26 - Biological sciences,1400,178,12.7
+Davis,2012,27,27 - Mathematics and statistics,97,13,13.4
+Davis,2012,30,30 - Multi/interdisciplinary studies,171,18,10.5
+Davis,2012,38,38 - Philosophy and religious studies,53,12,22.6
+Davis,2012,40,40 - Physical sciences,145,14,9.7
+Davis,2012,42,42 - Psychology,734,151,20.6
+Davis,2012,45,45 - Social sciences,1264,267,21.1
+Davis,2012,50,50 - Visual and performing arts,288,43,14.9
+Davis,2012,51,51 - Health professions,72,11,15.3
+Davis,2012,52,52 - Business/management/marketing,281,24,8.5
+Davis,2012,54,54 - History,144,28,19.4
+Davis,2013,01,01 - Agriculture,333,72,21.6
+Davis,2013,03,03 - Natural resources,192,28,14.6
+Davis,2013,04,04 - Architecture,92,35,38.0
+Davis,2013,05,"05 - Area, ethnic, cultural, gender, and group studies",75,37,49.3
+Davis,2013,09,09 - Communication/journalism,211,38,18.0
+Davis,2013,11,11 - Computer and information sciences,123,7,5.7
+Davis,2013,13,13 - Education,2,0,0.0
+Davis,2013,14,14 - Engineering,655,98,15.0
+Davis,2013,16,16 - Foreign languages,151,48,31.8
+Davis,2013,19,19 - Family and consumer sciences,261,74,28.4
+Davis,2013,23,23 - English language and literature,166,38,22.9
+Davis,2013,26,26 - Biological sciences,1430,177,12.4
+Davis,2013,27,27 - Mathematics and statistics,92,9,9.8
+Davis,2013,30,30 - Multi/interdisciplinary studies,164,27,16.5
+Davis,2013,38,38 - Philosophy and religious studies,59,12,20.3
+Davis,2013,40,40 - Physical sciences,133,15,11.3
+Davis,2013,42,42 - Psychology,717,156,21.8
+Davis,2013,45,45 - Social sciences,1121,209,18.6
+Davis,2013,50,50 - Visual and performing arts,246,43,17.5
+Davis,2013,51,51 - Health professions,83,7,8.4
+Davis,2013,52,52 - Business/management/marketing,337,32,9.5
+Davis,2013,54,54 - History,122,27,22.1
+Davis,2014,01,01 - Agriculture,379,74,19.5
+Davis,2014,03,03 - Natural resources,196,26,13.3
+Davis,2014,04,04 - Architecture,120,39,32.5
+Davis,2014,05,"05 - Area, ethnic, cultural, gender, and group studies",93,52,55.9
+Davis,2014,09,09 - Communication/journalism,218,38,17.4
+Davis,2014,11,11 - Computer and information sciences,154,10,6.5
+Davis,2014,13,13 - Education,9,2,22.2
+Davis,2014,14,14 - Engineering,710,104,14.6
+Davis,2014,16,16 - Foreign languages,153,58,37.9
+Davis,2014,19,19 - Family and consumer sciences,266,66,24.8
+Davis,2014,23,23 - English language and literature,186,49,26.3
+Davis,2014,26,26 - Biological sciences,1460,212,14.5
+Davis,2014,27,27 - Mathematics and statistics,105,11,10.5
+Davis,2014,30,30 - Multi/interdisciplinary studies,179,20,11.2
+Davis,2014,38,38 - Philosophy and religious studies,40,8,20.0
+Davis,2014,40,40 - Physical sciences,136,21,15.4
+Davis,2014,42,42 - Psychology,607,146,24.1
+Davis,2014,45,45 - Social sciences,1189,261,22.0
+Davis,2014,50,50 - Visual and performing arts,284,59,20.8
+Davis,2014,51,51 - Health professions,124,13,10.5
+Davis,2014,52,52 - Business/management/marketing,398,33,8.3
+Davis,2014,54,54 - History,114,24,21.1
+Davis,2015,01,01 - Agriculture,435,80,18.4
+Davis,2015,03,03 - Natural resources,190,29,15.3
+Davis,2015,04,04 - Architecture,104,34,32.7
+Davis,2015,05,"05 - Area, ethnic, cultural, gender, and group studies",91,50,54.9
+Davis,2015,09,09 - Communication/journalism,247,43,17.4
+Davis,2015,11,11 - Computer and information sciences,222,16,7.2
+Davis,2015,13,13 - Education,6,2,33.3
+Davis,2015,14,14 - Engineering,810,127,15.7
+Davis,2015,16,16 - Foreign languages,154,54,35.1
+Davis,2015,19,19 - Family and consumer sciences,308,86,27.9
+Davis,2015,23,23 - English language and literature,176,34,19.3
+Davis,2015,26,26 - Biological sciences,1493,233,15.6
+Davis,2015,27,27 - Mathematics and statistics,154,22,14.3
+Davis,2015,30,30 - Multi/interdisciplinary studies,185,30,16.2
+Davis,2015,38,38 - Philosophy and religious studies,51,18,35.3
+Davis,2015,40,40 - Physical sciences,157,27,17.2
+Davis,2015,42,42 - Psychology,664,163,24.5
+Davis,2015,45,45 - Social sciences,1140,270,23.7
+Davis,2015,50,50 - Visual and performing arts,253,41,16.2
+Davis,2015,51,51 - Health professions,118,11,9.3
+Davis,2015,52,52 - Business/management/marketing,493,42,8.5
+Davis,2015,54,54 - History,109,30,27.5
+Davis,2016,01,01 - Agriculture,429,94,21.9
+Davis,2016,03,03 - Natural resources,257,49,19.1
+Davis,2016,04,04 - Architecture,117,31,26.5
+Davis,2016,05,"05 - Area, ethnic, cultural, gender, and group studies",110,67,60.9
+Davis,2016,09,09 - Communication/journalism,283,48,17.0
+Davis,2016,11,11 - Computer and information sciences,279,23,8.2
+Davis,2016,13,13 - Education,8,3,37.5
+Davis,2016,14,14 - Engineering,802,147,18.3
+Davis,2016,16,16 - Foreign languages,178,78,43.8
+Davis,2016,19,19 - Family and consumer sciences,331,106,32.0
+Davis,2016,23,23 - English language and literature,182,44,24.2
+Davis,2016,26,26 - Biological sciences,1379,200,14.5
+Davis,2016,27,27 - Mathematics and statistics,185,18,9.7
+Davis,2016,30,30 - Multi/interdisciplinary studies,253,52,20.6
+Davis,2016,38,38 - Philosophy and religious studies,34,7,20.6
+Davis,2016,40,40 - Physical sciences,153,33,21.6
+Davis,2016,42,42 - Psychology,652,167,25.6
+Davis,2016,45,45 - Social sciences,1161,272,23.4
+Davis,2016,50,50 - Visual and performing arts,297,49,16.5
+Davis,2016,51,51 - Health professions,118,20,16.9
+Davis,2016,52,52 - Business/management/marketing,558,63,11.3
+Davis,2016,54,54 - History,89,20,22.5
+Davis,2017,01,01 - Agriculture,485,117,24.1
+Davis,2017,03,03 - Natural resources,300,48,16.0
+Davis,2017,04,04 - Architecture,71,25,35.2
+Davis,2017,05,"05 - Area, ethnic, cultural, gender, and group studies",107,72,67.3
+Davis,2017,09,09 - Communication/journalism,275,63,22.9
+Davis,2017,11,11 - Computer and information sciences,303,14,4.6
+Davis,2017,13,13 - Education,8,2,25.0
+Davis,2017,14,14 - Engineering,817,133,16.3
+Davis,2017,16,16 - Foreign languages,132,55,41.7
+Davis,2017,19,19 - Family and consumer sciences,288,90,31.2
+Davis,2017,23,23 - English language and literature,152,42,27.6
+Davis,2017,26,26 - Biological sciences,1411,240,17.0
+Davis,2017,27,27 - Mathematics and statistics,246,21,8.5
+Davis,2017,30,30 - Multi/interdisciplinary studies,253,51,20.2
+Davis,2017,38,38 - Philosophy and religious studies,40,9,22.5
+Davis,2017,40,40 - Physical sciences,158,27,17.1
+Davis,2017,42,42 - Psychology,670,168,25.1
+Davis,2017,45,45 - Social sciences,1245,291,23.4
+Davis,2017,50,50 - Visual and performing arts,345,69,20.0
+Davis,2017,51,51 - Health professions,132,20,15.2
+Davis,2017,52,52 - Business/management/marketing,580,69,11.9
+Davis,2017,54,54 - History,119,27,22.7
+Davis,2018,01,01 - Agriculture,471,122,25.9
+Davis,2018,03,03 - Natural resources,300,68,22.7
+Davis,2018,04,04 - Architecture,50,24,48.0
+Davis,2018,05,"05 - Area, ethnic, cultural, gender, and group studies",113,71,62.8
+Davis,2018,09,09 - Communication/journalism,268,62,23.1
+Davis,2018,11,11 - Computer and information sciences,271,19,7.0
+Davis,2018,13,13 - Education,7,2,28.6
+Davis,2018,14,14 - Engineering,787,117,14.9
+Davis,2018,16,16 - Foreign languages,173,67,38.7
+Davis,2018,19,19 - Family and consumer sciences,309,115,37.2
+Davis,2018,23,23 - English language and literature,181,63,34.8
+Davis,2018,26,26 - Biological sciences,1266,232,18.3
+Davis,2018,27,27 - Mathematics and statistics,309,34,11.0
+Davis,2018,30,30 - Multi/interdisciplinary studies,293,71,24.2
+Davis,2018,38,38 - Philosophy and religious studies,48,11,22.9
+Davis,2018,40,40 - Physical sciences,164,29,17.7
+Davis,2018,42,42 - Psychology,722,219,30.3
+Davis,2018,45,45 - Social sciences,1193,306,25.6
+Davis,2018,50,50 - Visual and performing arts,340,74,21.8
+Davis,2018,51,51 - Health professions,117,15,12.8
+Davis,2018,52,52 - Business/management/marketing,512,62,12.1
+Davis,2018,54,54 - History,99,26,26.3
+Davis,2019,01,01 - Agriculture,544,156,28.7
+Davis,2019,03,03 - Natural resources,369,94,25.5
+Davis,2019,04,04 - Architecture,41,20,48.8
+Davis,2019,05,"05 - Area, ethnic, cultural, gender, and group studies",110,76,69.1
+Davis,2019,09,09 - Communication/journalism,269,60,22.3
+Davis,2019,11,11 - Computer and information sciences,295,22,7.5
+Davis,2019,13,13 - Education,12,3,25.0
+Davis,2019,14,14 - Engineering,840,152,18.1
+Davis,2019,16,16 - Foreign languages,164,62,37.8
+Davis,2019,19,19 - Family and consumer sciences,338,127,37.6
+Davis,2019,23,23 - English language and literature,172,50,29.1
+Davis,2019,26,26 - Biological sciences,1468,289,19.7
+Davis,2019,27,27 - Mathematics and statistics,279,28,10.0
+Davis,2019,30,30 - Multi/interdisciplinary studies,332,61,18.4
+Davis,2019,38,38 - Philosophy and religious studies,50,13,26.0
+Davis,2019,40,40 - Physical sciences,140,29,20.7
+Davis,2019,42,42 - Psychology,738,208,28.2
+Davis,2019,45,45 - Social sciences,1274,343,26.9
+Davis,2019,50,50 - Visual and performing arts,383,97,25.3
+Davis,2019,51,51 - Health professions,132,19,14.4
+Davis,2019,52,52 - Business/management/marketing,592,71,12.0
+Davis,2019,54,54 - History,94,26,27.7
+Davis,2020,01,01 - Agriculture,524,166,31.7
+Davis,2020,03,03 - Natural resources,354,88,24.9
+Davis,2020,04,04 - Architecture,49,24,49.0
+Davis,2020,05,"05 - Area, ethnic, cultural, gender, and group studies",144,90,62.5
+Davis,2020,09,09 - Communication/journalism,246,65,26.4
+Davis,2020,11,11 - Computer and information sciences,329,23,7.0
+Davis,2020,13,13 - Education,11,3,27.3
+Davis,2020,14,14 - Engineering,862,178,20.6
+Davis,2020,16,16 - Foreign languages,151,58,38.4
+Davis,2020,19,19 - Family and consumer sciences,341,145,42.5
+Davis,2020,23,23 - English language and literature,177,73,41.2
+Davis,2020,26,26 - Biological sciences,1619,325,20.1
+Davis,2020,27,27 - Mathematics and statistics,327,36,11.0
+Davis,2020,30,30 - Multi/interdisciplinary studies,336,76,22.6
+Davis,2020,38,38 - Philosophy and religious studies,52,11,21.2
+Davis,2020,40,40 - Physical sciences,159,28,17.6
+Davis,2020,42,42 - Psychology,780,250,32.1
+Davis,2020,45,45 - Social sciences,1301,355,27.3
+Davis,2020,50,50 - Visual and performing arts,359,91,25.3
+Davis,2020,51,51 - Health professions,129,20,15.5
+Davis,2020,52,52 - Business/management/marketing,644,76,11.8
+Davis,2020,54,54 - History,88,25,28.4
+Davis,2021,01,01 - Agriculture,508,169,33.3
+Davis,2021,03,03 - Natural resources,340,89,26.2
+Davis,2021,05,"05 - Area, ethnic, cultural, gender, and group studies",105,82,78.1
+Davis,2021,09,09 - Communication/journalism,225,58,25.8
+Davis,2021,11,11 - Computer and information sciences,369,20,5.4
+Davis,2021,13,13 - Education,8,3,37.5
+Davis,2021,14,14 - Engineering,767,148,19.3
+Davis,2021,16,16 - Foreign languages,147,69,46.9
+Davis,2021,19,19 - Family and consumer sciences,350,159,45.4
+Davis,2021,23,23 - English language and literature,169,51,30.2
+Davis,2021,26,26 - Biological sciences,1700,370,21.8
+Davis,2021,27,27 - Mathematics and statistics,333,31,9.3
+Davis,2021,30,30 - Multi/interdisciplinary studies,335,78,23.3
+Davis,2021,38,38 - Philosophy and religious studies,42,14,33.3
+Davis,2021,40,40 - Physical sciences,142,28,19.7
+Davis,2021,42,42 - Psychology,825,264,32.0
+Davis,2021,44,44 - Public administration and social service,33,11,33.3
+Davis,2021,45,45 - Social sciences,1250,370,29.6
+Davis,2021,50,50 - Visual and performing arts,347,90,25.9
+Davis,2021,51,51 - Health professions,58,9,15.5
+Davis,2021,52,52 - Business/management/marketing,595,91,15.3
+Davis,2021,54,54 - History,95,34,35.8
+Davis,2022,01,01 - Agriculture,462,148,32.0
+Davis,2022,03,03 - Natural resources,327,83,25.4
+Davis,2022,05,"05 - Area, ethnic, cultural, gender, and group studies",106,78,73.6
+Davis,2022,09,09 - Communication/journalism,239,60,25.1
+Davis,2022,11,11 - Computer and information sciences,390,21,5.4
+Davis,2022,13,13 - Education,13,7,53.8
+Davis,2022,14,14 - Engineering,741,185,25.0
+Davis,2022,16,16 - Foreign languages,115,53,46.1
+Davis,2022,19,19 - Family and consumer sciences,335,138,41.2
+Davis,2022,23,23 - English language and literature,141,37,26.2
+Davis,2022,26,26 - Biological sciences,1517,319,21.0
+Davis,2022,27,27 - Mathematics and statistics,304,36,11.8
+Davis,2022,30,30 - Multi/interdisciplinary studies,283,58,20.5
+Davis,2022,38,38 - Philosophy and religious studies,64,16,25.0
+Davis,2022,40,40 - Physical sciences,173,51,29.5
+Davis,2022,42,42 - Psychology,866,304,35.1
+Davis,2022,44,44 - Public administration and social service,43,23,53.5
+Davis,2022,45,45 - Social sciences,1145,394,34.4
+Davis,2022,50,50 - Visual and performing arts,364,80,22.0
+Davis,2022,51,51 - Health professions,56,10,17.9
+Davis,2022,52,52 - Business/management/marketing,498,78,15.7
+Davis,2022,54,54 - History,101,29,28.7
+Davis,2023,01,01 - Agriculture,468,182,38.9
+Davis,2023,03,03 - Natural resources,365,122,33.4
+Davis,2023,05,"05 - Area, ethnic, cultural, gender, and group studies",83,65,78.3
+Davis,2023,09,09 - Communication/journalism,258,75,29.1
+Davis,2023,11,11 - Computer and information sciences,401,29,7.2
+Davis,2023,13,13 - Education,3,0,0.0
+Davis,2023,14,14 - Engineering,700,157,22.4
+Davis,2023,16,16 - Foreign languages,96,48,50.0
+Davis,2023,19,19 - Family and consumer sciences,269,135,50.2
+Davis,2023,23,23 - English language and literature,135,46,34.1
+Davis,2023,26,26 - Biological sciences,1533,315,20.5
+Davis,2023,27,27 - Mathematics and statistics,323,38,11.8
+Davis,2023,30,30 - Multi/interdisciplinary studies,329,76,23.1
+Davis,2023,38,38 - Philosophy and religious studies,52,17,32.7
+Davis,2023,40,40 - Physical sciences,125,35,28.0
+Davis,2023,42,42 - Psychology,875,282,32.2
+Davis,2023,44,44 - Public administration and social service,29,16,55.2
+Davis,2023,45,45 - Social sciences,1055,323,30.6
+Davis,2023,50,50 - Visual and performing arts,407,103,25.3
+Davis,2023,51,51 - Health professions,61,10,16.4
+Davis,2023,52,52 - Business/management/marketing,483,81,16.8
+Davis,2023,54,54 - History,107,30,28.0
+Irvine,2011,03,03 - Natural resources,5,1,20.0
+Irvine,2011,05,"05 - Area, ethnic, cultural, gender, and group studies",88,40,45.5
+Irvine,2011,09,09 - Communication/journalism,62,12,19.4
+Irvine,2011,11,11 - Computer and information sciences,184,13,7.1
+Irvine,2011,13,13 - Education,2,0,0.0
+Irvine,2011,14,14 - Engineering,523,76,14.5
+Irvine,2011,16,16 - Foreign languages,85,36,42.4
+Irvine,2011,23,23 - English language and literature,189,44,23.3
+Irvine,2011,24,24 - Liberal arts/general studies,2,2,100.0
+Irvine,2011,26,26 - Biological sciences,991,119,12.0
+Irvine,2011,27,27 - Mathematics and statistics,79,12,15.2
+Irvine,2011,30,30 - Multi/interdisciplinary studies,334,61,18.3
+Irvine,2011,38,38 - Philosophy and religious studies,33,2,6.1
+Irvine,2011,40,40 - Physical sciences,217,24,11.1
+Irvine,2011,42,42 - Psychology,679,146,21.5
+Irvine,2011,45,45 - Social sciences,1343,300,22.3
+Irvine,2011,50,50 - Visual and performing arts,400,78,19.5
+Irvine,2011,51,51 - Health professions,406,44,10.8
+Irvine,2011,52,52 - Business/management/marketing,638,48,7.5
+Irvine,2011,54,54 - History,118,39,33.1
+Irvine,2012,03,03 - Natural resources,12,3,25.0
+Irvine,2012,05,"05 - Area, ethnic, cultural, gender, and group studies",77,29,37.7
+Irvine,2012,09,09 - Communication/journalism,34,4,11.8
+Irvine,2012,11,11 - Computer and information sciences,156,15,9.6
+Irvine,2012,13,13 - Education,4,1,25.0
+Irvine,2012,14,14 - Engineering,522,79,15.1
+Irvine,2012,16,16 - Foreign languages,81,33,40.7
+Irvine,2012,23,23 - English language and literature,170,33,19.4
+Irvine,2012,24,24 - Liberal arts/general studies,4,2,50.0
+Irvine,2012,26,26 - Biological sciences,893,107,12.0
+Irvine,2012,27,27 - Mathematics and statistics,78,15,19.2
+Irvine,2012,30,30 - Multi/interdisciplinary studies,258,43,16.7
+Irvine,2012,38,38 - Philosophy and religious studies,32,9,28.1
+Irvine,2012,40,40 - Physical sciences,195,28,14.4
+Irvine,2012,42,42 - Psychology,669,152,22.7
+Irvine,2012,45,45 - Social sciences,1228,343,27.9
+Irvine,2012,50,50 - Visual and performing arts,381,73,19.2
+Irvine,2012,51,51 - Health professions,435,52,12.0
+Irvine,2012,52,52 - Business/management/marketing,637,57,8.9
+Irvine,2012,54,54 - History,97,23,23.7
+Irvine,2013,03,03 - Natural resources,19,2,10.5
+Irvine,2013,04,04 - Architecture,1,0,0.0
+Irvine,2013,05,"05 - Area, ethnic, cultural, gender, and group studies",65,23,35.4
+Irvine,2013,09,09 - Communication/journalism,42,12,28.6
+Irvine,2013,11,11 - Computer and information sciences,192,18,9.4
+Irvine,2013,13,13 - Education,6,0,0.0
+Irvine,2013,14,14 - Engineering,634,101,15.9
+Irvine,2013,16,16 - Foreign languages,67,28,41.8
+Irvine,2013,23,23 - English language and literature,152,37,24.3
+Irvine,2013,24,24 - Liberal arts/general studies,1,0,0.0
+Irvine,2013,26,26 - Biological sciences,815,89,10.9
+Irvine,2013,27,27 - Mathematics and statistics,82,16,19.5
+Irvine,2013,30,30 - Multi/interdisciplinary studies,295,60,20.3
+Irvine,2013,38,38 - Philosophy and religious studies,29,7,24.1
+Irvine,2013,40,40 - Physical sciences,187,26,13.9
+Irvine,2013,42,42 - Psychology,738,179,24.3
+Irvine,2013,45,45 - Social sciences,1082,276,25.5
+Irvine,2013,50,50 - Visual and performing arts,374,66,17.6
+Irvine,2013,51,51 - Health professions,596,77,12.9
+Irvine,2013,52,52 - Business/management/marketing,553,53,9.6
+Irvine,2013,54,54 - History,67,19,28.4
+Irvine,2014,03,03 - Natural resources,25,5,20.0
+Irvine,2014,05,"05 - Area, ethnic, cultural, gender, and group studies",74,35,47.3
+Irvine,2014,09,09 - Communication/journalism,48,12,25.0
+Irvine,2014,11,11 - Computer and information sciences,284,33,11.6
+Irvine,2014,13,13 - Education,118,51,43.2
+Irvine,2014,14,14 - Engineering,620,115,18.5
+Irvine,2014,16,16 - Foreign languages,86,37,43.0
+Irvine,2014,23,23 - English language and literature,134,25,18.7
+Irvine,2014,26,26 - Biological sciences,723,111,15.4
+Irvine,2014,27,27 - Mathematics and statistics,106,24,22.6
+Irvine,2014,30,30 - Multi/interdisciplinary studies,247,62,25.1
+Irvine,2014,38,38 - Philosophy and religious studies,37,10,27.0
+Irvine,2014,40,40 - Physical sciences,215,37,17.2
+Irvine,2014,42,42 - Psychology,733,195,26.6
+Irvine,2014,45,45 - Social sciences,1185,370,31.2
+Irvine,2014,50,50 - Visual and performing arts,370,74,20.0
+Irvine,2014,51,51 - Health professions,761,102,13.4
+Irvine,2014,52,52 - Business/management/marketing,579,74,12.8
+Irvine,2014,54,54 - History,69,16,23.2
+Irvine,2015,03,03 - Natural resources,34,12,35.3
+Irvine,2015,05,"05 - Area, ethnic, cultural, gender, and group studies",75,46,61.3
+Irvine,2015,09,09 - Communication/journalism,38,13,34.2
+Irvine,2015,11,11 - Computer and information sciences,345,42,12.2
+Irvine,2015,13,13 - Education,247,125,50.6
+Irvine,2015,14,14 - Engineering,677,135,19.9
+Irvine,2015,16,16 - Foreign languages,79,41,51.9
+Irvine,2015,23,23 - English language and literature,116,41,35.3
+Irvine,2015,26,26 - Biological sciences,705,121,17.2
+Irvine,2015,27,27 - Mathematics and statistics,94,12,12.8
+Irvine,2015,30,30 - Multi/interdisciplinary studies,235,76,32.3
+Irvine,2015,38,38 - Philosophy and religious studies,24,11,45.8
+Irvine,2015,40,40 - Physical sciences,162,29,17.9
+Irvine,2015,42,42 - Psychology,741,244,32.9
+Irvine,2015,45,45 - Social sciences,1134,430,37.9
+Irvine,2015,50,50 - Visual and performing arts,378,83,22.0
+Irvine,2015,51,51 - Health professions,738,140,19.0
+Irvine,2015,52,52 - Business/management/marketing,680,89,13.1
+Irvine,2015,54,54 - History,68,26,38.2
+Irvine,2016,03,03 - Natural resources,29,11,37.9
+Irvine,2016,05,"05 - Area, ethnic, cultural, gender, and group studies",57,33,57.9
+Irvine,2016,09,09 - Communication/journalism,29,12,41.4
+Irvine,2016,11,11 - Computer and information sciences,543,73,13.4
+Irvine,2016,13,13 - Education,306,148,48.4
+Irvine,2016,14,14 - Engineering,813,180,22.1
+Irvine,2016,16,16 - Foreign languages,78,39,50.0
+Irvine,2016,23,23 - English language and literature,118,26,22.0
+Irvine,2016,26,26 - Biological sciences,648,107,16.5
+Irvine,2016,27,27 - Mathematics and statistics,150,13,8.7
+Irvine,2016,30,30 - Multi/interdisciplinary studies,266,74,27.8
+Irvine,2016,38,38 - Philosophy and religious studies,32,15,46.9
+Irvine,2016,40,40 - Physical sciences,164,32,19.5
+Irvine,2016,42,42 - Psychology,752,278,37.0
+Irvine,2016,45,45 - Social sciences,1305,504,38.6
+Irvine,2016,50,50 - Visual and performing arts,325,83,25.5
+Irvine,2016,51,51 - Health professions,736,149,20.2
+Irvine,2016,52,52 - Business/management/marketing,739,85,11.5
+Irvine,2016,54,54 - History,58,25,43.1
+Irvine,2017,03,03 - Natural resources,47,20,42.6
+Irvine,2017,05,"05 - Area, ethnic, cultural, gender, and group studies",54,28,51.9
+Irvine,2017,09,09 - Communication/journalism,27,13,48.1
+Irvine,2017,11,11 - Computer and information sciences,636,86,13.5
+Irvine,2017,13,13 - Education,321,162,50.5
+Irvine,2017,14,14 - Engineering,780,169,21.7
+Irvine,2017,16,16 - Foreign languages,65,29,44.6
+Irvine,2017,23,23 - English language and literature,110,44,40.0
+Irvine,2017,26,26 - Biological sciences,640,120,18.8
+Irvine,2017,27,27 - Mathematics and statistics,179,18,10.1
+Irvine,2017,30,30 - Multi/interdisciplinary studies,240,64,26.7
+Irvine,2017,38,38 - Philosophy and religious studies,31,8,25.8
+Irvine,2017,40,40 - Physical sciences,215,51,23.7
+Irvine,2017,42,42 - Psychology,753,275,36.5
+Irvine,2017,45,45 - Social sciences,1303,516,39.6
+Irvine,2017,50,50 - Visual and performing arts,350,83,23.7
+Irvine,2017,51,51 - Health professions,684,157,23.0
+Irvine,2017,52,52 - Business/management/marketing,763,109,14.3
+Irvine,2017,54,54 - History,67,27,40.3
+Irvine,2018,03,03 - Natural resources,38,20,52.6
+Irvine,2018,05,"05 - Area, ethnic, cultural, gender, and group studies",65,30,46.2
+Irvine,2018,09,09 - Communication/journalism,27,9,33.3
+Irvine,2018,11,11 - Computer and information sciences,742,116,15.6
+Irvine,2018,13,13 - Education,388,189,48.7
+Irvine,2018,14,14 - Engineering,907,216,23.8
+Irvine,2018,16,16 - Foreign languages,50,27,54.0
+Irvine,2018,23,23 - English language and literature,133,67,50.4
+Irvine,2018,26,26 - Biological sciences,790,166,21.0
+Irvine,2018,27,27 - Mathematics and statistics,180,18,10.0
+Irvine,2018,30,30 - Multi/interdisciplinary studies,298,51,17.1
+Irvine,2018,38,38 - Philosophy and religious studies,23,5,21.7
+Irvine,2018,40,40 - Physical sciences,225,49,21.8
+Irvine,2018,42,42 - Psychology,794,302,38.0
+Irvine,2018,45,45 - Social sciences,1392,593,42.6
+Irvine,2018,50,50 - Visual and performing arts,336,90,26.8
+Irvine,2018,51,51 - Health professions,643,182,28.3
+Irvine,2018,52,52 - Business/management/marketing,969,131,13.5
+Irvine,2018,54,54 - History,63,28,44.4
+Irvine,2019,03,03 - Natural resources,44,14,31.8
+Irvine,2019,05,"05 - Area, ethnic, cultural, gender, and group studies",58,33,56.9
+Irvine,2019,09,09 - Communication/journalism,26,11,42.3
+Irvine,2019,11,11 - Computer and information sciences,956,115,12.0
+Irvine,2019,13,13 - Education,388,168,43.3
+Irvine,2019,14,14 - Engineering,1028,237,23.1
+Irvine,2019,16,16 - Foreign languages,51,25,49.0
+Irvine,2019,23,23 - English language and literature,121,50,41.3
+Irvine,2019,26,26 - Biological sciences,891,212,23.8
+Irvine,2019,27,27 - Mathematics and statistics,288,24,8.3
+Irvine,2019,30,30 - Multi/interdisciplinary studies,310,61,19.7
+Irvine,2019,38,38 - Philosophy and religious studies,43,15,34.9
+Irvine,2019,40,40 - Physical sciences,251,74,29.5
+Irvine,2019,42,42 - Psychology,887,368,41.5
+Irvine,2019,45,45 - Social sciences,1477,572,38.7
+Irvine,2019,50,50 - Visual and performing arts,358,83,23.2
+Irvine,2019,51,51 - Health professions,666,203,30.5
+Irvine,2019,52,52 - Business/management/marketing,1045,158,15.1
+Irvine,2019,54,54 - History,67,28,41.8
+Irvine,2020,03,03 - Natural resources,42,21,50.0
+Irvine,2020,05,"05 - Area, ethnic, cultural, gender, and group studies",83,41,49.4
+Irvine,2020,09,09 - Communication/journalism,26,12,46.2
+Irvine,2020,11,11 - Computer and information sciences,996,113,11.3
+Irvine,2020,13,13 - Education,365,167,45.8
+Irvine,2020,14,14 - Engineering,1030,251,24.4
+Irvine,2020,16,16 - Foreign languages,58,33,56.9
+Irvine,2020,23,23 - English language and literature,132,56,42.4
+Irvine,2020,26,26 - Biological sciences,897,222,24.7
+Irvine,2020,27,27 - Mathematics and statistics,290,28,9.7
+Irvine,2020,30,30 - Multi/interdisciplinary studies,340,70,20.6
+Irvine,2020,38,38 - Philosophy and religious studies,50,15,30.0
+Irvine,2020,40,40 - Physical sciences,253,74,29.2
+Irvine,2020,42,42 - Psychology,1044,386,37.0
+Irvine,2020,45,45 - Social sciences,1573,611,38.8
+Irvine,2020,50,50 - Visual and performing arts,458,133,29.0
+Irvine,2020,51,51 - Health professions,652,178,27.3
+Irvine,2020,52,52 - Business/management/marketing,1134,156,13.8
+Irvine,2020,54,54 - History,77,35,45.5
+Irvine,2021,03,03 - Natural resources,51,24,47.1
+Irvine,2021,05,"05 - Area, ethnic, cultural, gender, and group studies",63,28,44.4
+Irvine,2021,09,09 - Communication/journalism,23,8,34.8
+Irvine,2021,11,11 - Computer and information sciences,904,95,10.5
+Irvine,2021,13,13 - Education,263,111,42.2
+Irvine,2021,14,14 - Engineering,1077,221,20.5
+Irvine,2021,16,16 - Foreign languages,31,15,48.4
+Irvine,2021,23,23 - English language and literature,138,60,43.5
+Irvine,2021,26,26 - Biological sciences,817,222,27.2
+Irvine,2021,27,27 - Mathematics and statistics,309,28,9.1
+Irvine,2021,30,30 - Multi/interdisciplinary studies,335,63,18.8
+Irvine,2021,38,38 - Philosophy and religious studies,33,6,18.2
+Irvine,2021,40,40 - Physical sciences,234,48,20.5
+Irvine,2021,42,42 - Psychology,947,343,36.2
+Irvine,2021,45,45 - Social sciences,1322,477,36.1
+Irvine,2021,50,50 - Visual and performing arts,409,129,31.5
+Irvine,2021,51,51 - Health professions,624,192,30.8
+Irvine,2021,52,52 - Business/management/marketing,1039,129,12.4
+Irvine,2021,54,54 - History,62,32,51.6
+Irvine,2022,03,03 - Natural resources,62,20,32.3
+Irvine,2022,05,"05 - Area, ethnic, cultural, gender, and group studies",47,26,55.3
+Irvine,2022,09,09 - Communication/journalism,28,9,32.1
+Irvine,2022,11,11 - Computer and information sciences,600,63,10.5
+Irvine,2022,13,13 - Education,287,122,42.5
+Irvine,2022,14,14 - Engineering,1019,249,24.4
+Irvine,2022,16,16 - Foreign languages,44,31,70.5
+Irvine,2022,23,23 - English language and literature,142,56,39.4
+Irvine,2022,26,26 - Biological sciences,919,222,24.2
+Irvine,2022,27,27 - Mathematics and statistics,249,33,13.3
+Irvine,2022,30,30 - Multi/interdisciplinary studies,331,67,20.2
+Irvine,2022,38,38 - Philosophy and religious studies,34,11,32.4
+Irvine,2022,40,40 - Physical sciences,220,53,24.1
+Irvine,2022,42,42 - Psychology,1067,391,36.6
+Irvine,2022,45,45 - Social sciences,1329,510,38.4
+Irvine,2022,50,50 - Visual and performing arts,443,117,26.4
+Irvine,2022,51,51 - Health professions,555,156,28.1
+Irvine,2022,52,52 - Business/management/marketing,999,124,12.4
+Irvine,2022,54,54 - History,63,19,30.2
+Irvine,2023,03,03 - Natural resources,59,21,35.6
+Irvine,2023,05,"05 - Area, ethnic, cultural, gender, and group studies",43,23,53.5
+Irvine,2023,09,09 - Communication/journalism,33,14,42.4
+Irvine,2023,11,11 - Computer and information sciences,773,87,11.3
+Irvine,2023,13,13 - Education,259,88,34.0
+Irvine,2023,14,14 - Engineering,842,173,20.5
+Irvine,2023,16,16 - Foreign languages,48,24,50.0
+Irvine,2023,23,23 - English language and literature,146,61,41.8
+Irvine,2023,26,26 - Biological sciences,956,166,17.4
+Irvine,2023,27,27 - Mathematics and statistics,205,27,13.2
+Irvine,2023,30,30 - Multi/interdisciplinary studies,326,60,18.4
+Irvine,2023,38,38 - Philosophy and religious studies,39,10,25.6
+Irvine,2023,40,40 - Physical sciences,240,58,24.2
+Irvine,2023,42,42 - Psychology,1034,397,38.4
+Irvine,2023,45,45 - Social sciences,1313,459,35.0
+Irvine,2023,50,50 - Visual and performing arts,362,111,30.7
+Irvine,2023,51,51 - Health professions,506,134,26.5
+Irvine,2023,52,52 - Business/management/marketing,965,118,12.2
+Irvine,2023,54,54 - History,70,25,35.7
+Los Angeles,2011,03,03 - Natural resources,75,10,13.3
+Los Angeles,2011,04,04 - Architecture,27,2,7.4
+Los Angeles,2011,05,"05 - Area, ethnic, cultural, gender, and group studies",250,101,40.4
+Los Angeles,2011,11,11 - Computer and information sciences,99,8,8.1
+Los Angeles,2011,14,14 - Engineering,617,64,10.4
+Los Angeles,2011,16,16 - Foreign languages,255,66,25.9
+Los Angeles,2011,23,23 - English language and literature,382,100,26.2
+Los Angeles,2011,24,24 - Liberal arts/general studies,3,1,33.3
+Los Angeles,2011,26,26 - Biological sciences,1145,133,11.6
+Los Angeles,2011,27,27 - Mathematics and statistics,344,33,9.6
+Los Angeles,2011,30,30 - Multi/interdisciplinary studies,282,37,13.1
+Los Angeles,2011,38,38 - Philosophy and religious studies,120,23,19.2
+Los Angeles,2011,40,40 - Physical sciences,126,13,10.3
+Los Angeles,2011,42,42 - Psychology,769,138,17.9
+Los Angeles,2011,45,45 - Social sciences,1762,426,24.2
+Los Angeles,2011,50,50 - Visual and performing arts,432,71,16.4
+Los Angeles,2011,51,51 - Health professions,68,15,22.1
+Los Angeles,2011,52,52 - Business/management/marketing,207,13,6.3
+Los Angeles,2011,54,54 - History,428,94,22.0
+Los Angeles,2012,03,03 - Natural resources,76,11,14.5
+Los Angeles,2012,04,04 - Architecture,19,1,5.3
+Los Angeles,2012,05,"05 - Area, ethnic, cultural, gender, and group studies",292,138,47.3
+Los Angeles,2012,11,11 - Computer and information sciences,114,10,8.8
+Los Angeles,2012,14,14 - Engineering,572,47,8.2
+Los Angeles,2012,16,16 - Foreign languages,257,88,34.2
+Los Angeles,2012,23,23 - English language and literature,367,96,26.2
+Los Angeles,2012,24,24 - Liberal arts/general studies,1,1,100.0
+Los Angeles,2012,26,26 - Biological sciences,1142,132,11.6
+Los Angeles,2012,27,27 - Mathematics and statistics,305,44,14.4
+Los Angeles,2012,30,30 - Multi/interdisciplinary studies,304,46,15.1
+Los Angeles,2012,38,38 - Philosophy and religious studies,166,35,21.1
+Los Angeles,2012,40,40 - Physical sciences,156,30,19.2
+Los Angeles,2012,42,42 - Psychology,806,148,18.4
+Los Angeles,2012,45,45 - Social sciences,1727,456,26.4
+Los Angeles,2012,50,50 - Visual and performing arts,377,80,21.2
+Los Angeles,2012,51,51 - Health professions,58,10,17.2
+Los Angeles,2012,52,52 - Business/management/marketing,192,9,4.7
+Los Angeles,2012,54,54 - History,398,104,26.1
+Los Angeles,2013,03,03 - Natural resources,70,7,10.0
+Los Angeles,2013,04,04 - Architecture,17,2,11.8
+Los Angeles,2013,05,"05 - Area, ethnic, cultural, gender, and group studies",288,140,48.6
+Los Angeles,2013,11,11 - Computer and information sciences,135,6,4.4
+Los Angeles,2013,14,14 - Engineering,588,58,9.9
+Los Angeles,2013,16,16 - Foreign languages,261,79,30.3
+Los Angeles,2013,23,23 - English language and literature,364,92,25.3
+Los Angeles,2013,26,26 - Biological sciences,1137,140,12.3
+Los Angeles,2013,27,27 - Mathematics and statistics,393,33,8.4
+Los Angeles,2013,30,30 - Multi/interdisciplinary studies,288,38,13.2
+Los Angeles,2013,38,38 - Philosophy and religious studies,169,31,18.3
+Los Angeles,2013,40,40 - Physical sciences,172,27,15.7
+Los Angeles,2013,42,42 - Psychology,764,139,18.2
+Los Angeles,2013,45,45 - Social sciences,1700,407,23.9
+Los Angeles,2013,50,50 - Visual and performing arts,394,87,22.1
+Los Angeles,2013,51,51 - Health professions,51,6,11.8
+Los Angeles,2013,52,52 - Business/management/marketing,199,3,1.5
+Los Angeles,2013,54,54 - History,341,90,26.4
+Los Angeles,2014,03,03 - Natural resources,81,14,17.3
+Los Angeles,2014,04,04 - Architecture,21,4,19.0
+Los Angeles,2014,05,"05 - Area, ethnic, cultural, gender, and group studies",259,129,49.8
+Los Angeles,2014,11,11 - Computer and information sciences,141,3,2.1
+Los Angeles,2014,14,14 - Engineering,572,51,8.9
+Los Angeles,2014,16,16 - Foreign languages,255,78,30.6
+Los Angeles,2014,23,23 - English language and literature,336,122,36.3
+Los Angeles,2014,24,24 - Liberal arts/general studies,1,0,0.0
+Los Angeles,2014,26,26 - Biological sciences,1217,161,13.2
+Los Angeles,2014,27,27 - Mathematics and statistics,454,40,8.8
+Los Angeles,2014,30,30 - Multi/interdisciplinary studies,374,52,13.9
+Los Angeles,2014,38,38 - Philosophy and religious studies,131,31,23.7
+Los Angeles,2014,40,40 - Physical sciences,222,30,13.5
+Los Angeles,2014,42,42 - Psychology,876,175,20.0
+Los Angeles,2014,45,45 - Social sciences,2084,527,25.3
+Los Angeles,2014,50,50 - Visual and performing arts,375,85,22.7
+Los Angeles,2014,51,51 - Health professions,54,13,24.1
+Los Angeles,2014,52,52 - Business/management/marketing,221,3,1.4
+Los Angeles,2014,54,54 - History,303,89,29.4
+Los Angeles,2015,03,03 - Natural resources,74,7,9.5
+Los Angeles,2015,04,04 - Architecture,22,4,18.2
+Los Angeles,2015,05,"05 - Area, ethnic, cultural, gender, and group studies",224,107,47.8
+Los Angeles,2015,11,11 - Computer and information sciences,179,8,4.5
+Los Angeles,2015,14,14 - Engineering,533,42,7.9
+Los Angeles,2015,16,16 - Foreign languages,270,77,28.5
+Los Angeles,2015,23,23 - English language and literature,318,98,30.8
+Los Angeles,2015,24,24 - Liberal arts/general studies,1,0,0.0
+Los Angeles,2015,26,26 - Biological sciences,1255,174,13.9
+Los Angeles,2015,27,27 - Mathematics and statistics,545,35,6.4
+Los Angeles,2015,30,30 - Multi/interdisciplinary studies,334,54,16.2
+Los Angeles,2015,38,38 - Philosophy and religious studies,118,25,21.2
+Los Angeles,2015,40,40 - Physical sciences,192,21,10.9
+Los Angeles,2015,42,42 - Psychology,837,188,22.5
+Los Angeles,2015,45,45 - Social sciences,2150,681,31.7
+Los Angeles,2015,50,50 - Visual and performing arts,438,83,18.9
+Los Angeles,2015,51,51 - Health professions,44,12,27.3
+Los Angeles,2015,52,52 - Business/management/marketing,247,7,2.8
+Los Angeles,2015,54,54 - History,324,98,30.2
+Los Angeles,2016,03,03 - Natural resources,65,10,15.4
+Los Angeles,2016,04,04 - Architecture,19,3,15.8
+Los Angeles,2016,05,"05 - Area, ethnic, cultural, gender, and group studies",292,135,46.2
+Los Angeles,2016,11,11 - Computer and information sciences,183,5,2.7
+Los Angeles,2016,14,14 - Engineering,592,62,10.5
+Los Angeles,2016,16,16 - Foreign languages,286,86,30.1
+Los Angeles,2016,23,23 - English language and literature,303,87,28.7
+Los Angeles,2016,24,24 - Liberal arts/general studies,1,0,0.0
+Los Angeles,2016,26,26 - Biological sciences,1316,233,17.7
+Los Angeles,2016,27,27 - Mathematics and statistics,541,46,8.5
+Los Angeles,2016,30,30 - Multi/interdisciplinary studies,421,75,17.8
+Los Angeles,2016,38,38 - Philosophy and religious studies,128,30,23.4
+Los Angeles,2016,40,40 - Physical sciences,210,37,17.6
+Los Angeles,2016,42,42 - Psychology,974,262,26.9
+Los Angeles,2016,45,45 - Social sciences,2159,653,30.2
+Los Angeles,2016,50,50 - Visual and performing arts,389,91,23.4
+Los Angeles,2016,51,51 - Health professions,52,14,26.9
+Los Angeles,2016,52,52 - Business/management/marketing,221,6,2.7
+Los Angeles,2016,54,54 - History,319,102,32.0
+Los Angeles,2017,03,03 - Natural resources,62,13,21.0
+Los Angeles,2017,04,04 - Architecture,19,1,5.3
+Los Angeles,2017,05,"05 - Area, ethnic, cultural, gender, and group studies",284,135,47.5
+Los Angeles,2017,11,11 - Computer and information sciences,213,5,2.3
+Los Angeles,2017,13,13 - Education,5,2,40.0
+Los Angeles,2017,14,14 - Engineering,598,62,10.4
+Los Angeles,2017,16,16 - Foreign languages,309,78,25.2
+Los Angeles,2017,23,23 - English language and literature,315,133,42.2
+Los Angeles,2017,26,26 - Biological sciences,1365,237,17.4
+Los Angeles,2017,27,27 - Mathematics and statistics,546,44,8.1
+Los Angeles,2017,30,30 - Multi/interdisciplinary studies,410,73,17.8
+Los Angeles,2017,38,38 - Philosophy and religious studies,109,39,35.8
+Los Angeles,2017,40,40 - Physical sciences,183,38,20.8
+Los Angeles,2017,42,42 - Psychology,934,273,29.2
+Los Angeles,2017,45,45 - Social sciences,2241,657,29.3
+Los Angeles,2017,50,50 - Visual and performing arts,372,82,22.0
+Los Angeles,2017,51,51 - Health professions,45,16,35.6
+Los Angeles,2017,52,52 - Business/management/marketing,213,21,9.9
+Los Angeles,2017,54,54 - History,276,102,37.0
+Los Angeles,2018,03,03 - Natural resources,74,17,23.0
+Los Angeles,2018,04,04 - Architecture,23,3,13.0
+Los Angeles,2018,05,"05 - Area, ethnic, cultural, gender, and group studies",294,167,56.8
+Los Angeles,2018,11,11 - Computer and information sciences,242,13,5.4
+Los Angeles,2018,13,13 - Education,4,0,0.0
+Los Angeles,2018,14,14 - Engineering,643,51,7.9
+Los Angeles,2018,16,16 - Foreign languages,283,77,27.2
+Los Angeles,2018,23,23 - English language and literature,293,107,36.5
+Los Angeles,2018,26,26 - Biological sciences,1285,239,18.6
+Los Angeles,2018,27,27 - Mathematics and statistics,583,57,9.8
+Los Angeles,2018,30,30 - Multi/interdisciplinary studies,421,79,18.8
+Los Angeles,2018,38,38 - Philosophy and religious studies,122,32,26.2
+Los Angeles,2018,40,40 - Physical sciences,171,30,17.5
+Los Angeles,2018,42,42 - Psychology,982,275,28.0
+Los Angeles,2018,45,45 - Social sciences,2239,688,30.7
+Los Angeles,2018,50,50 - Visual and performing arts,361,88,24.4
+Los Angeles,2018,51,51 - Health professions,44,16,36.4
+Los Angeles,2018,52,52 - Business/management/marketing,189,11,5.8
+Los Angeles,2018,54,54 - History,308,103,33.4
+Los Angeles,2019,03,03 - Natural resources,75,17,22.7
+Los Angeles,2019,04,04 - Architecture,21,4,19.0
+Los Angeles,2019,05,"05 - Area, ethnic, cultural, gender, and group studies",311,168,54.0
+Los Angeles,2019,09,09 - Communication/journalism,16,4,25.0
+Los Angeles,2019,11,11 - Computer and information sciences,283,13,4.6
+Los Angeles,2019,13,13 - Education,5,0,0.0
+Los Angeles,2019,14,14 - Engineering,669,86,12.9
+Los Angeles,2019,16,16 - Foreign languages,258,80,31.0
+Los Angeles,2019,23,23 - English language and literature,353,142,40.2
+Los Angeles,2019,24,24 - Liberal arts/general studies,2,0,0.0
+Los Angeles,2019,26,26 - Biological sciences,1624,393,24.2
+Los Angeles,2019,27,27 - Mathematics and statistics,667,68,10.2
+Los Angeles,2019,30,30 - Multi/interdisciplinary studies,554,118,21.3
+Los Angeles,2019,38,38 - Philosophy and religious studies,134,39,29.1
+Los Angeles,2019,40,40 - Physical sciences,181,28,15.5
+Los Angeles,2019,42,42 - Psychology,991,272,27.4
+Los Angeles,2019,45,45 - Social sciences,2529,806,31.9
+Los Angeles,2019,50,50 - Visual and performing arts,376,90,23.9
+Los Angeles,2019,51,51 - Health professions,44,18,40.9
+Los Angeles,2019,52,52 - Business/management/marketing,33,1,3.0
+Los Angeles,2019,54,54 - History,292,107,36.6
+Los Angeles,2020,03,03 - Natural resources,98,25,25.5
+Los Angeles,2020,04,04 - Architecture,19,4,21.1
+Los Angeles,2020,05,"05 - Area, ethnic, cultural, gender, and group studies",304,171,56.2
+Los Angeles,2020,09,09 - Communication/journalism,160,28,17.5
+Los Angeles,2020,11,11 - Computer and information sciences,342,16,4.7
+Los Angeles,2020,13,13 - Education,10,1,10.0
+Los Angeles,2020,14,14 - Engineering,713,90,12.6
+Los Angeles,2020,16,16 - Foreign languages,216,71,32.9
+Los Angeles,2020,23,23 - English language and literature,313,118,37.7
+Los Angeles,2020,24,24 - Liberal arts/general studies,3,2,66.7
+Los Angeles,2020,26,26 - Biological sciences,1594,386,24.2
+Los Angeles,2020,27,27 - Mathematics and statistics,662,54,8.2
+Los Angeles,2020,30,30 - Multi/interdisciplinary studies,468,76,16.2
+Los Angeles,2020,38,38 - Philosophy and religious studies,155,34,21.9
+Los Angeles,2020,40,40 - Physical sciences,196,40,20.4
+Los Angeles,2020,42,42 - Psychology,1036,297,28.7
+Los Angeles,2020,44,44 - Public administration and social service,61,22,36.1
+Los Angeles,2020,45,45 - Social sciences,2430,813,33.5
+Los Angeles,2020,50,50 - Visual and performing arts,379,92,24.3
+Los Angeles,2020,51,51 - Health professions,48,21,43.8
+Los Angeles,2020,52,52 - Business/management/marketing,10,7,70.0
+Los Angeles,2020,54,54 - History,289,84,29.1
+Los Angeles,2021,03,03 - Natural resources,105,23,21.9
+Los Angeles,2021,04,04 - Architecture,33,7,21.2
+Los Angeles,2021,05,"05 - Area, ethnic, cultural, gender, and group studies",211,123,58.3
+Los Angeles,2021,09,09 - Communication/journalism,207,36,17.4
+Los Angeles,2021,11,11 - Computer and information sciences,348,18,5.2
+Los Angeles,2021,13,13 - Education,48,23,47.9
+Los Angeles,2021,14,14 - Engineering,730,73,10.0
+Los Angeles,2021,16,16 - Foreign languages,201,59,29.4
+Los Angeles,2021,23,23 - English language and literature,291,119,40.9
+Los Angeles,2021,24,24 - Liberal arts/general studies,3,1,33.3
+Los Angeles,2021,26,26 - Biological sciences,1495,330,22.1
+Los Angeles,2021,27,27 - Mathematics and statistics,705,53,7.5
+Los Angeles,2021,30,30 - Multi/interdisciplinary studies,464,100,21.6
+Los Angeles,2021,38,38 - Philosophy and religious studies,114,34,29.8
+Los Angeles,2021,40,40 - Physical sciences,211,29,13.7
+Los Angeles,2021,42,42 - Psychology,998,265,26.6
+Los Angeles,2021,44,44 - Public administration and social service,106,45,42.5
+Los Angeles,2021,45,45 - Social sciences,2319,708,30.5
+Los Angeles,2021,50,50 - Visual and performing arts,371,91,24.5
+Los Angeles,2021,51,51 - Health professions,54,20,37.0
+Los Angeles,2021,52,52 - Business/management/marketing,19,12,63.2
+Los Angeles,2021,54,54 - History,232,78,33.6
+Los Angeles,2022,03,03 - Natural resources,105,22,21.0
+Los Angeles,2022,04,04 - Architecture,17,3,17.6
+Los Angeles,2022,05,"05 - Area, ethnic, cultural, gender, and group studies",171,93,54.4
+Los Angeles,2022,09,09 - Communication/journalism,194,51,26.3
+Los Angeles,2022,11,11 - Computer and information sciences,340,16,4.7
+Los Angeles,2022,13,13 - Education,99,58,58.6
+Los Angeles,2022,14,14 - Engineering,706,107,15.2
+Los Angeles,2022,16,16 - Foreign languages,199,55,27.6
+Los Angeles,2022,23,23 - English language and literature,234,84,35.9
+Los Angeles,2022,24,24 - Liberal arts/general studies,1,0,0.0
+Los Angeles,2022,26,26 - Biological sciences,1423,316,22.2
+Los Angeles,2022,27,27 - Mathematics and statistics,748,71,9.5
+Los Angeles,2022,30,30 - Multi/interdisciplinary studies,533,107,20.1
+Los Angeles,2022,38,38 - Philosophy and religious studies,105,35,33.3
+Los Angeles,2022,40,40 - Physical sciences,205,36,17.6
+Los Angeles,2022,42,42 - Psychology,1063,324,30.5
+Los Angeles,2022,44,44 - Public administration and social service,111,42,37.8
+Los Angeles,2022,45,45 - Social sciences,2228,676,30.3
+Los Angeles,2022,50,50 - Visual and performing arts,405,112,27.7
+Los Angeles,2022,51,51 - Health professions,49,15,30.6
+Los Angeles,2022,52,52 - Business/management/marketing,24,15,62.5
+Los Angeles,2022,54,54 - History,222,79,35.6
+Los Angeles,2023,03,03 - Natural resources,126,27,21.4
+Los Angeles,2023,04,04 - Architecture,17,5,29.4
+Los Angeles,2023,05,"05 - Area, ethnic, cultural, gender, and group studies",174,95,54.6
+Los Angeles,2023,09,09 - Communication/journalism,228,51,22.4
+Los Angeles,2023,11,11 - Computer and information sciences,352,24,6.8
+Los Angeles,2023,13,13 - Education,102,47,46.1
+Los Angeles,2023,14,14 - Engineering,753,94,12.5
+Los Angeles,2023,16,16 - Foreign languages,158,44,27.8
+Los Angeles,2023,23,23 - English language and literature,253,106,41.9
+Los Angeles,2023,26,26 - Biological sciences,1564,325,20.8
+Los Angeles,2023,27,27 - Mathematics and statistics,724,78,10.8
+Los Angeles,2023,30,30 - Multi/interdisciplinary studies,593,129,21.8
+Los Angeles,2023,38,38 - Philosophy and religious studies,104,29,27.9
+Los Angeles,2023,40,40 - Physical sciences,224,43,19.2
+Los Angeles,2023,42,42 - Psychology,1107,307,27.7
+Los Angeles,2023,44,44 - Public administration and social service,112,34,30.4
+Los Angeles,2023,45,45 - Social sciences,2336,703,30.1
+Los Angeles,2023,50,50 - Visual and performing arts,374,106,28.3
+Los Angeles,2023,51,51 - Health professions,50,19,38.0
+Los Angeles,2023,52,52 - Business/management/marketing,35,21,60.0
+Los Angeles,2023,54,54 - History,197,68,34.5
+Merced,2011,14,14 - Engineering,101,26,25.7
+Merced,2011,16,16 - Foreign languages,24,17,70.8
+Merced,2011,26,26 - Biological sciences,137,41,29.9
+Merced,2011,27,27 - Mathematics and statistics,14,6,42.9
+Merced,2011,30,30 - Multi/interdisciplinary studies,24,9,37.5
+Merced,2011,40,40 - Physical sciences,29,4,13.8
+Merced,2011,42,42 - Psychology,133,57,42.9
+Merced,2011,45,45 - Social sciences,94,44,46.8
+Merced,2011,52,52 - Business/management/marketing,58,23,39.7
+Merced,2011,54,54 - History,27,10,37.0
+Merced,2012,14,14 - Engineering,136,38,27.9
+Merced,2012,16,16 - Foreign languages,30,14,46.7
+Merced,2012,26,26 - Biological sciences,172,47,27.3
+Merced,2012,27,27 - Mathematics and statistics,18,5,27.8
+Merced,2012,30,30 - Multi/interdisciplinary studies,32,12,37.5
+Merced,2012,40,40 - Physical sciences,36,7,19.4
+Merced,2012,42,42 - Psychology,169,93,55.0
+Merced,2012,45,45 - Social sciences,132,67,50.8
+Merced,2012,52,52 - Business/management/marketing,97,27,27.8
+Merced,2012,54,54 - History,36,13,36.1
+Merced,2013,14,14 - Engineering,163,65,39.9
+Merced,2013,16,16 - Foreign languages,29,19,65.5
+Merced,2013,23,23 - English language and literature,4,2,50.0
+Merced,2013,26,26 - Biological sciences,233,74,31.8
+Merced,2013,27,27 - Mathematics and statistics,21,10,47.6
+Merced,2013,30,30 - Multi/interdisciplinary studies,49,15,30.6
+Merced,2013,40,40 - Physical sciences,28,5,17.9
+Merced,2013,42,42 - Psychology,204,120,58.8
+Merced,2013,45,45 - Social sciences,177,93,52.5
+Merced,2013,52,52 - Business/management/marketing,121,44,36.4
+Merced,2013,54,54 - History,21,10,47.6
+Merced,2014,14,14 - Engineering,161,57,35.4
+Merced,2014,16,16 - Foreign languages,15,6,40.0
+Merced,2014,23,23 - English language and literature,10,2,20.0
+Merced,2014,26,26 - Biological sciences,212,71,33.5
+Merced,2014,27,27 - Mathematics and statistics,23,10,43.5
+Merced,2014,30,30 - Multi/interdisciplinary studies,62,25,40.3
+Merced,2014,40,40 - Physical sciences,42,13,31.0
+Merced,2014,42,42 - Psychology,209,128,61.2
+Merced,2014,45,45 - Social sciences,171,97,56.7
+Merced,2014,52,52 - Business/management/marketing,126,62,49.2
+Merced,2014,54,54 - History,26,14,53.8
+Merced,2015,14,14 - Engineering,195,71,36.4
+Merced,2015,16,16 - Foreign languages,13,7,53.8
+Merced,2015,23,23 - English language and literature,10,3,30.0
+Merced,2015,26,26 - Biological sciences,238,82,34.5
+Merced,2015,27,27 - Mathematics and statistics,22,8,36.4
+Merced,2015,30,30 - Multi/interdisciplinary studies,71,33,46.5
+Merced,2015,40,40 - Physical sciences,46,14,30.4
+Merced,2015,42,42 - Psychology,220,145,65.9
+Merced,2015,45,45 - Social sciences,194,118,60.8
+Merced,2015,51,51 - Health professions,6,2,33.3
+Merced,2015,52,52 - Business/management/marketing,118,57,48.3
+Merced,2015,54,54 - History,28,13,46.4
+Merced,2016,14,14 - Engineering,236,92,39.0
+Merced,2016,16,16 - Foreign languages,12,9,75.0
+Merced,2016,23,23 - English language and literature,26,17,65.4
+Merced,2016,26,26 - Biological sciences,291,127,43.6
+Merced,2016,27,27 - Mathematics and statistics,21,12,57.1
+Merced,2016,30,30 - Multi/interdisciplinary studies,61,35,57.4
+Merced,2016,40,40 - Physical sciences,51,23,45.1
+Merced,2016,42,42 - Psychology,220,150,68.2
+Merced,2016,45,45 - Social sciences,188,117,62.2
+Merced,2016,51,51 - Health professions,35,17,48.6
+Merced,2016,52,52 - Business/management/marketing,142,78,54.9
+Merced,2016,54,54 - History,12,4,33.3
+Merced,2017,14,14 - Engineering,265,103,38.9
+Merced,2017,16,16 - Foreign languages,4,3,75.0
+Merced,2017,23,23 - English language and literature,16,12,75.0
+Merced,2017,26,26 - Biological sciences,317,152,47.9
+Merced,2017,27,27 - Mathematics and statistics,25,16,64.0
+Merced,2017,30,30 - Multi/interdisciplinary studies,43,26,60.5
+Merced,2017,40,40 - Physical sciences,55,25,45.5
+Merced,2017,42,42 - Psychology,209,129,61.7
+Merced,2017,45,45 - Social sciences,130,77,59.2
+Merced,2017,51,51 - Health professions,68,42,61.8
+Merced,2017,52,52 - Business/management/marketing,175,101,57.7
+Merced,2017,54,54 - History,12,8,66.7
+Merced,2018,14,14 - Engineering,296,123,41.6
+Merced,2018,16,16 - Foreign languages,13,12,92.3
+Merced,2018,23,23 - English language and literature,19,14,73.7
+Merced,2018,26,26 - Biological sciences,318,149,46.9
+Merced,2018,27,27 - Mathematics and statistics,20,9,45.0
+Merced,2018,30,30 - Multi/interdisciplinary studies,63,39,61.9
+Merced,2018,40,40 - Physical sciences,41,19,46.3
+Merced,2018,42,42 - Psychology,214,141,65.9
+Merced,2018,45,45 - Social sciences,168,110,65.5
+Merced,2018,50,50 - Visual and performing arts,3,2,66.7
+Merced,2018,51,51 - Health professions,88,59,67.0
+Merced,2018,52,52 - Business/management/marketing,153,76,49.7
+Merced,2018,54,54 - History,19,13,68.4
+Merced,2019,05,"05 - Area, ethnic, cultural, gender, and group studies",2,2,100.0
+Merced,2019,14,14 - Engineering,334,150,44.9
+Merced,2019,16,16 - Foreign languages,10,5,50.0
+Merced,2019,23,23 - English language and literature,19,16,84.2
+Merced,2019,26,26 - Biological sciences,287,149,51.9
+Merced,2019,27,27 - Mathematics and statistics,31,21,67.7
+Merced,2019,30,30 - Multi/interdisciplinary studies,58,29,50.0
+Merced,2019,38,38 - Philosophy and religious studies,1,0,0.0
+Merced,2019,40,40 - Physical sciences,65,30,46.2
+Merced,2019,42,42 - Psychology,230,158,68.7
+Merced,2019,45,45 - Social sciences,164,117,71.3
+Merced,2019,50,50 - Visual and performing arts,4,3,75.0
+Merced,2019,51,51 - Health professions,119,78,65.5
+Merced,2019,52,52 - Business/management/marketing,178,111,62.4
+Merced,2019,54,54 - History,20,12,60.0
+Merced,2020,05,"05 - Area, ethnic, cultural, gender, and group studies",10,7,70.0
+Merced,2020,14,14 - Engineering,428,227,53.0
+Merced,2020,16,16 - Foreign languages,10,8,80.0
+Merced,2020,23,23 - English language and literature,28,19,67.9
+Merced,2020,26,26 - Biological sciences,358,188,52.5
+Merced,2020,27,27 - Mathematics and statistics,25,13,52.0
+Merced,2020,30,30 - Multi/interdisciplinary studies,61,37,60.7
+Merced,2020,38,38 - Philosophy and religious studies,1,1,100.0
+Merced,2020,40,40 - Physical sciences,73,30,41.1
+Merced,2020,42,42 - Psychology,296,183,61.8
+Merced,2020,45,45 - Social sciences,213,148,69.5
+Merced,2020,50,50 - Visual and performing arts,5,4,80.0
+Merced,2020,51,51 - Health professions,153,96,62.7
+Merced,2020,52,52 - Business/management/marketing,207,118,57.0
+Merced,2020,54,54 - History,21,12,57.1
+Merced,2021,05,"05 - Area, ethnic, cultural, gender, and group studies",19,15,78.9
+Merced,2021,14,14 - Engineering,464,202,43.5
+Merced,2021,16,16 - Foreign languages,7,5,71.4
+Merced,2021,23,23 - English language and literature,31,16,51.6
+Merced,2021,26,26 - Biological sciences,315,162,51.4
+Merced,2021,27,27 - Mathematics and statistics,35,20,57.1
+Merced,2021,30,30 - Multi/interdisciplinary studies,66,39,59.1
+Merced,2021,38,38 - Philosophy and religious studies,6,2,33.3
+Merced,2021,40,40 - Physical sciences,64,40,62.5
+Merced,2021,42,42 - Psychology,282,204,72.3
+Merced,2021,45,45 - Social sciences,248,193,77.8
+Merced,2021,50,50 - Visual and performing arts,12,11,91.7
+Merced,2021,51,51 - Health professions,135,96,71.1
+Merced,2021,52,52 - Business/management/marketing,185,108,58.4
+Merced,2021,54,54 - History,13,8,61.5
+Merced,2022,05,"05 - Area, ethnic, cultural, gender, and group studies",10,5,50.0
+Merced,2022,14,14 - Engineering,442,242,54.8
+Merced,2022,16,16 - Foreign languages,6,3,50.0
+Merced,2022,23,23 - English language and literature,24,15,62.5
+Merced,2022,26,26 - Biological sciences,307,163,53.1
+Merced,2022,27,27 - Mathematics and statistics,33,16,48.5
+Merced,2022,30,30 - Multi/interdisciplinary studies,47,24,51.1
+Merced,2022,38,38 - Philosophy and religious studies,4,3,75.0
+Merced,2022,40,40 - Physical sciences,52,23,44.2
+Merced,2022,42,42 - Psychology,338,230,68.0
+Merced,2022,45,45 - Social sciences,233,169,72.5
+Merced,2022,50,50 - Visual and performing arts,6,5,83.3
+Merced,2022,51,51 - Health professions,106,75,70.8
+Merced,2022,52,52 - Business/management/marketing,182,108,59.3
+Merced,2022,54,54 - History,14,6,42.9
+Merced,2023,05,"05 - Area, ethnic, cultural, gender, and group studies",8,7,87.5
+Merced,2023,14,14 - Engineering,384,222,57.8
+Merced,2023,16,16 - Foreign languages,13,13,100.0
+Merced,2023,23,23 - English language and literature,29,22,75.9
+Merced,2023,26,26 - Biological sciences,286,174,60.8
+Merced,2023,27,27 - Mathematics and statistics,25,17,68.0
+Merced,2023,30,30 - Multi/interdisciplinary studies,38,25,65.8
+Merced,2023,38,38 - Philosophy and religious studies,4,2,50.0
+Merced,2023,40,40 - Physical sciences,48,32,66.7
+Merced,2023,42,42 - Psychology,326,261,80.1
+Merced,2023,45,45 - Social sciences,161,131,81.4
+Merced,2023,50,50 - Visual and performing arts,15,9,60.0
+Merced,2023,51,51 - Health professions,93,77,82.8
+Merced,2023,52,52 - Business/management/marketing,177,120,67.8
+Merced,2023,54,54 - History,25,17,68.0
+Riverside,2011,03,03 - Natural resources,43,12,27.9
+Riverside,2011,05,"05 - Area, ethnic, cultural, gender, and group studies",67,48,71.6
+Riverside,2011,11,11 - Computer and information sciences,48,14,29.2
+Riverside,2011,14,14 - Engineering,198,58,29.3
+Riverside,2011,16,16 - Foreign languages,81,44,54.3
+Riverside,2011,23,23 - English language and literature,177,68,38.4
+Riverside,2011,24,24 - Liberal arts/general studies,99,47,47.5
+Riverside,2011,26,26 - Biological sciences,546,138,25.3
+Riverside,2011,27,27 - Mathematics and statistics,73,19,26.0
+Riverside,2011,30,30 - Multi/interdisciplinary studies,103,39,37.9
+Riverside,2011,38,38 - Philosophy and religious studies,66,20,30.3
+Riverside,2011,40,40 - Physical sciences,74,16,21.6
+Riverside,2011,42,42 - Psychology,467,205,43.9
+Riverside,2011,44,44 - Public administration and social service,22,13,59.1
+Riverside,2011,45,45 - Social sciences,822,378,46.0
+Riverside,2011,50,50 - Visual and performing arts,242,97,40.1
+Riverside,2011,52,52 - Business/management/marketing,726,151,20.8
+Riverside,2011,54,54 - History,186,87,46.8
+Riverside,2012,03,03 - Natural resources,49,13,26.5
+Riverside,2012,05,"05 - Area, ethnic, cultural, gender, and group studies",61,38,62.3
+Riverside,2012,11,11 - Computer and information sciences,35,8,22.9
+Riverside,2012,14,14 - Engineering,277,74,26.7
+Riverside,2012,16,16 - Foreign languages,99,65,65.7
+Riverside,2012,23,23 - English language and literature,237,101,42.6
+Riverside,2012,24,24 - Liberal arts/general studies,95,55,57.9
+Riverside,2012,26,26 - Biological sciences,637,169,26.5
+Riverside,2012,27,27 - Mathematics and statistics,91,37,40.7
+Riverside,2012,30,30 - Multi/interdisciplinary studies,50,17,34.0
+Riverside,2012,38,38 - Philosophy and religious studies,82,29,35.4
+Riverside,2012,40,40 - Physical sciences,85,25,29.4
+Riverside,2012,42,42 - Psychology,432,199,46.1
+Riverside,2012,44,44 - Public administration and social service,47,24,51.1
+Riverside,2012,45,45 - Social sciences,970,478,49.3
+Riverside,2012,50,50 - Visual and performing arts,275,107,38.9
+Riverside,2012,52,52 - Business/management/marketing,697,150,21.5
+Riverside,2012,54,54 - History,183,78,42.6
+Riverside,2013,03,03 - Natural resources,65,22,33.8
+Riverside,2013,05,"05 - Area, ethnic, cultural, gender, and group studies",82,48,58.5
+Riverside,2013,11,11 - Computer and information sciences,67,6,9.0
+Riverside,2013,14,14 - Engineering,336,113,33.6
+Riverside,2013,16,16 - Foreign languages,94,62,66.0
+Riverside,2013,23,23 - English language and literature,196,91,46.4
+Riverside,2013,24,24 - Liberal arts/general studies,66,42,63.6
+Riverside,2013,26,26 - Biological sciences,725,189,26.1
+Riverside,2013,27,27 - Mathematics and statistics,101,33,32.7
+Riverside,2013,30,30 - Multi/interdisciplinary studies,39,14,35.9
+Riverside,2013,38,38 - Philosophy and religious studies,73,34,46.6
+Riverside,2013,40,40 - Physical sciences,107,24,22.4
+Riverside,2013,42,42 - Psychology,423,197,46.6
+Riverside,2013,44,44 - Public administration and social service,42,19,45.2
+Riverside,2013,45,45 - Social sciences,952,491,51.6
+Riverside,2013,50,50 - Visual and performing arts,287,116,40.4
+Riverside,2013,52,52 - Business/management/marketing,764,207,27.1
+Riverside,2013,54,54 - History,157,84,53.5
+Riverside,2014,03,03 - Natural resources,54,23,42.6
+Riverside,2014,05,"05 - Area, ethnic, cultural, gender, and group studies",74,46,62.2
+Riverside,2014,11,11 - Computer and information sciences,80,25,31.2
+Riverside,2014,14,14 - Engineering,374,122,32.6
+Riverside,2014,16,16 - Foreign languages,107,68,63.6
+Riverside,2014,23,23 - English language and literature,223,94,42.2
+Riverside,2014,24,24 - Liberal arts/general studies,71,47,66.2
+Riverside,2014,26,26 - Biological sciences,705,221,31.3
+Riverside,2014,27,27 - Mathematics and statistics,114,50,43.9
+Riverside,2014,30,30 - Multi/interdisciplinary studies,28,10,35.7
+Riverside,2014,38,38 - Philosophy and religious studies,62,33,53.2
+Riverside,2014,40,40 - Physical sciences,82,37,45.1
+Riverside,2014,42,42 - Psychology,398,189,47.5
+Riverside,2014,44,44 - Public administration and social service,64,27,42.2
+Riverside,2014,45,45 - Social sciences,1009,530,52.5
+Riverside,2014,50,50 - Visual and performing arts,238,100,42.0
+Riverside,2014,52,52 - Business/management/marketing,751,189,25.2
+Riverside,2014,54,54 - History,153,69,45.1
+Riverside,2015,03,03 - Natural resources,38,14,36.8
+Riverside,2015,05,"05 - Area, ethnic, cultural, gender, and group studies",74,45,60.8
+Riverside,2015,11,11 - Computer and information sciences,100,15,15.0
+Riverside,2015,14,14 - Engineering,391,142,36.3
+Riverside,2015,16,16 - Foreign languages,100,56,56.0
+Riverside,2015,23,23 - English language and literature,172,93,54.1
+Riverside,2015,24,24 - Liberal arts/general studies,56,40,71.4
+Riverside,2015,26,26 - Biological sciences,655,208,31.8
+Riverside,2015,27,27 - Mathematics and statistics,125,45,36.0
+Riverside,2015,30,30 - Multi/interdisciplinary studies,32,12,37.5
+Riverside,2015,38,38 - Philosophy and religious studies,56,26,46.4
+Riverside,2015,40,40 - Physical sciences,69,28,40.6
+Riverside,2015,42,42 - Psychology,448,197,44.0
+Riverside,2015,44,44 - Public administration and social service,62,34,54.8
+Riverside,2015,45,45 - Social sciences,974,511,52.5
+Riverside,2015,50,50 - Visual and performing arts,244,109,44.7
+Riverside,2015,52,52 - Business/management/marketing,669,188,28.1
+Riverside,2015,54,54 - History,127,73,57.5
+Riverside,2016,03,03 - Natural resources,47,9,19.1
+Riverside,2016,05,"05 - Area, ethnic, cultural, gender, and group studies",53,28,52.8
+Riverside,2016,11,11 - Computer and information sciences,84,9,10.7
+Riverside,2016,14,14 - Engineering,408,93,22.8
+Riverside,2016,16,16 - Foreign languages,89,46,51.7
+Riverside,2016,23,23 - English language and literature,184,62,33.7
+Riverside,2016,24,24 - Liberal arts/general studies,92,53,57.6
+Riverside,2016,26,26 - Biological sciences,616,128,20.8
+Riverside,2016,27,27 - Mathematics and statistics,120,51,42.5
+Riverside,2016,30,30 - Multi/interdisciplinary studies,44,21,47.7
+Riverside,2016,38,38 - Philosophy and religious studies,49,20,40.8
+Riverside,2016,40,40 - Physical sciences,73,18,24.7
+Riverside,2016,42,42 - Psychology,417,160,38.4
+Riverside,2016,44,44 - Public administration and social service,68,29,42.6
+Riverside,2016,45,45 - Social sciences,964,427,44.3
+Riverside,2016,50,50 - Visual and performing arts,274,88,32.1
+Riverside,2016,52,52 - Business/management/marketing,802,153,19.1
+Riverside,2016,54,54 - History,96,35,36.5
+Riverside,2017,03,03 - Natural resources,34,11,32.4
+Riverside,2017,05,"05 - Area, ethnic, cultural, gender, and group studies",62,26,41.9
+Riverside,2017,11,11 - Computer and information sciences,142,29,20.4
+Riverside,2017,13,13 - Education,2,1,50.0
+Riverside,2017,14,14 - Engineering,457,139,30.4
+Riverside,2017,16,16 - Foreign languages,80,48,60.0
+Riverside,2017,23,23 - English language and literature,192,88,45.8
+Riverside,2017,24,24 - Liberal arts/general studies,80,57,71.2
+Riverside,2017,26,26 - Biological sciences,763,173,22.7
+Riverside,2017,27,27 - Mathematics and statistics,163,60,36.8
+Riverside,2017,30,30 - Multi/interdisciplinary studies,44,19,43.2
+Riverside,2017,38,38 - Philosophy and religious studies,48,25,52.1
+Riverside,2017,40,40 - Physical sciences,77,26,33.8
+Riverside,2017,42,42 - Psychology,492,225,45.7
+Riverside,2017,44,44 - Public administration and social service,69,29,42.0
+Riverside,2017,45,45 - Social sciences,926,464,50.1
+Riverside,2017,50,50 - Visual and performing arts,213,87,40.8
+Riverside,2017,52,52 - Business/management/marketing,754,198,26.3
+Riverside,2017,54,54 - History,87,43,49.4
+Riverside,2018,03,03 - Natural resources,45,10,22.2
+Riverside,2018,05,"05 - Area, ethnic, cultural, gender, and group studies",40,26,65.0
+Riverside,2018,11,11 - Computer and information sciences,150,26,17.3
+Riverside,2018,13,13 - Education,43,34,79.1
+Riverside,2018,14,14 - Engineering,391,121,30.9
+Riverside,2018,16,16 - Foreign languages,90,69,76.7
+Riverside,2018,23,23 - English language and literature,184,99,53.8
+Riverside,2018,24,24 - Liberal arts/general studies,74,52,70.3
+Riverside,2018,26,26 - Biological sciences,688,228,33.1
+Riverside,2018,27,27 - Mathematics and statistics,170,76,44.7
+Riverside,2018,30,30 - Multi/interdisciplinary studies,50,27,54.0
+Riverside,2018,38,38 - Philosophy and religious studies,39,20,51.3
+Riverside,2018,40,40 - Physical sciences,125,45,36.0
+Riverside,2018,42,42 - Psychology,444,212,47.7
+Riverside,2018,44,44 - Public administration and social service,75,40,53.3
+Riverside,2018,45,45 - Social sciences,882,453,51.4
+Riverside,2018,50,50 - Visual and performing arts,226,115,50.9
+Riverside,2018,52,52 - Business/management/marketing,731,210,28.7
+Riverside,2018,54,54 - History,73,37,50.7
+Riverside,2019,03,03 - Natural resources,47,22,46.8
+Riverside,2019,05,"05 - Area, ethnic, cultural, gender, and group studies",60,46,76.7
+Riverside,2019,11,11 - Computer and information sciences,191,44,23.0
+Riverside,2019,13,13 - Education,102,73,71.6
+Riverside,2019,14,14 - Engineering,455,171,37.6
+Riverside,2019,16,16 - Foreign languages,104,78,75.0
+Riverside,2019,23,23 - English language and literature,217,144,66.4
+Riverside,2019,24,24 - Liberal arts/general studies,130,95,73.1
+Riverside,2019,26,26 - Biological sciences,851,309,36.3
+Riverside,2019,27,27 - Mathematics and statistics,217,109,50.2
+Riverside,2019,30,30 - Multi/interdisciplinary studies,77,38,49.4
+Riverside,2019,38,38 - Philosophy and religious studies,51,31,60.8
+Riverside,2019,40,40 - Physical sciences,103,49,47.6
+Riverside,2019,42,42 - Psychology,588,308,52.4
+Riverside,2019,44,44 - Public administration and social service,92,56,60.9
+Riverside,2019,45,45 - Social sciences,1038,619,59.6
+Riverside,2019,50,50 - Visual and performing arts,259,134,51.7
+Riverside,2019,52,52 - Business/management/marketing,866,297,34.3
+Riverside,2019,54,54 - History,93,53,57.0
+Riverside,2020,03,03 - Natural resources,39,19,48.7
+Riverside,2020,05,"05 - Area, ethnic, cultural, gender, and group studies",48,31,64.6
+Riverside,2020,11,11 - Computer and information sciences,215,54,25.1
+Riverside,2020,13,13 - Education,118,76,64.4
+Riverside,2020,14,14 - Engineering,445,170,38.2
+Riverside,2020,16,16 - Foreign languages,100,68,68.0
+Riverside,2020,23,23 - English language and literature,233,152,65.2
+Riverside,2020,24,24 - Liberal arts/general studies,126,90,71.4
+Riverside,2020,26,26 - Biological sciences,1019,379,37.2
+Riverside,2020,27,27 - Mathematics and statistics,210,90,42.9
+Riverside,2020,30,30 - Multi/interdisciplinary studies,79,44,55.7
+Riverside,2020,38,38 - Philosophy and religious studies,70,40,57.1
+Riverside,2020,40,40 - Physical sciences,143,61,42.7
+Riverside,2020,42,42 - Psychology,582,315,54.1
+Riverside,2020,44,44 - Public administration and social service,97,54,55.7
+Riverside,2020,45,45 - Social sciences,1235,659,53.4
+Riverside,2020,50,50 - Visual and performing arts,280,127,45.4
+Riverside,2020,52,52 - Business/management/marketing,863,271,31.4
+Riverside,2020,54,54 - History,115,72,62.6
+Riverside,2021,03,03 - Natural resources,42,14,33.3
+Riverside,2021,05,"05 - Area, ethnic, cultural, gender, and group studies",46,31,67.4
+Riverside,2021,11,11 - Computer and information sciences,239,49,20.5
+Riverside,2021,13,13 - Education,168,105,62.5
+Riverside,2021,14,14 - Engineering,386,143,37.0
+Riverside,2021,16,16 - Foreign languages,95,75,78.9
+Riverside,2021,23,23 - English language and literature,165,107,64.8
+Riverside,2021,24,24 - Liberal arts/general studies,72,53,73.6
+Riverside,2021,26,26 - Biological sciences,1057,359,34.0
+Riverside,2021,27,27 - Mathematics and statistics,224,102,45.5
+Riverside,2021,30,30 - Multi/interdisciplinary studies,61,32,52.5
+Riverside,2021,38,38 - Philosophy and religious studies,53,23,43.4
+Riverside,2021,40,40 - Physical sciences,103,47,45.6
+Riverside,2021,42,42 - Psychology,559,271,48.5
+Riverside,2021,44,44 - Public administration and social service,98,60,61.2
+Riverside,2021,45,45 - Social sciences,1147,629,54.8
+Riverside,2021,50,50 - Visual and performing arts,262,129,49.2
+Riverside,2021,52,52 - Business/management/marketing,795,233,29.3
+Riverside,2021,54,54 - History,106,63,59.4
+Riverside,2022,03,03 - Natural resources,39,19,48.7
+Riverside,2022,05,"05 - Area, ethnic, cultural, gender, and group studies",44,31,70.5
+Riverside,2022,11,11 - Computer and information sciences,374,71,19.0
+Riverside,2022,13,13 - Education,181,123,68.0
+Riverside,2022,14,14 - Engineering,403,156,38.7
+Riverside,2022,16,16 - Foreign languages,97,67,69.1
+Riverside,2022,23,23 - English language and literature,162,107,66.0
+Riverside,2022,24,24 - Liberal arts/general studies,63,52,82.5
+Riverside,2022,26,26 - Biological sciences,1127,357,31.7
+Riverside,2022,27,27 - Mathematics and statistics,189,74,39.2
+Riverside,2022,30,30 - Multi/interdisciplinary studies,49,23,46.9
+Riverside,2022,38,38 - Philosophy and religious studies,40,22,55.0
+Riverside,2022,40,40 - Physical sciences,106,47,44.3
+Riverside,2022,42,42 - Psychology,580,268,46.2
+Riverside,2022,44,44 - Public administration and social service,91,56,61.5
+Riverside,2022,45,45 - Social sciences,1045,553,52.9
+Riverside,2022,50,50 - Visual and performing arts,250,132,52.8
+Riverside,2022,52,52 - Business/management/marketing,834,265,31.8
+Riverside,2022,54,54 - History,98,54,55.1
+Riverside,2023,03,03 - Natural resources,49,21,42.9
+Riverside,2023,05,"05 - Area, ethnic, cultural, gender, and group studies",35,25,71.4
+Riverside,2023,11,11 - Computer and information sciences,386,76,19.7
+Riverside,2023,13,13 - Education,160,105,65.6
+Riverside,2023,14,14 - Engineering,390,138,35.4
+Riverside,2023,16,16 - Foreign languages,84,59,70.2
+Riverside,2023,23,23 - English language and literature,156,90,57.7
+Riverside,2023,24,24 - Liberal arts/general studies,83,65,78.3
+Riverside,2023,26,26 - Biological sciences,918,354,38.6
+Riverside,2023,27,27 - Mathematics and statistics,151,80,53.0
+Riverside,2023,30,30 - Multi/interdisciplinary studies,46,27,58.7
+Riverside,2023,38,38 - Philosophy and religious studies,30,19,63.3
+Riverside,2023,40,40 - Physical sciences,117,56,47.9
+Riverside,2023,42,42 - Psychology,586,278,47.4
+Riverside,2023,44,44 - Public administration and social service,95,52,54.7
+Riverside,2023,45,45 - Social sciences,922,485,52.6
+Riverside,2023,50,50 - Visual and performing arts,270,142,52.6
+Riverside,2023,52,52 - Business/management/marketing,815,271,33.3
+Riverside,2023,54,54 - History,106,67,63.2
+San Diego,2011,03,03 - Natural resources,47,4,8.5
+San Diego,2011,05,"05 - Area, ethnic, cultural, gender, and group studies",84,43,51.2
+San Diego,2011,09,09 - Communication/journalism,353,69,19.5
+San Diego,2011,11,11 - Computer and information sciences,183,8,4.4
+San Diego,2011,13,13 - Education,8,1,12.5
+San Diego,2011,14,14 - Engineering,702,75,10.7
+San Diego,2011,16,16 - Foreign languages,62,25,40.3
+San Diego,2011,19,19 - Family and consumer sciences,92,12,13.0
+San Diego,2011,23,23 - English language and literature,131,21,16.0
+San Diego,2011,26,26 - Biological sciences,1497,143,9.6
+San Diego,2011,27,27 - Mathematics and statistics,130,15,11.5
+San Diego,2011,30,30 - Multi/interdisciplinary studies,441,65,14.7
+San Diego,2011,38,38 - Philosophy and religious studies,54,8,14.8
+San Diego,2011,40,40 - Physical sciences,247,21,8.5
+San Diego,2011,42,42 - Psychology,521,102,19.6
+San Diego,2011,45,45 - Social sciences,1325,215,16.2
+San Diego,2011,50,50 - Visual and performing arts,215,27,12.6
+San Diego,2011,52,52 - Business/management/marketing,308,21,6.8
+San Diego,2011,54,54 - History,126,20,15.9
+San Diego,2012,03,03 - Natural resources,88,11,12.5
+San Diego,2012,05,"05 - Area, ethnic, cultural, gender, and group studies",55,27,49.1
+San Diego,2012,09,09 - Communication/journalism,326,48,14.7
+San Diego,2012,11,11 - Computer and information sciences,212,22,10.4
+San Diego,2012,13,13 - Education,6,1,16.7
+San Diego,2012,14,14 - Engineering,825,124,15.0
+San Diego,2012,16,16 - Foreign languages,63,16,25.4
+San Diego,2012,19,19 - Family and consumer sciences,123,26,21.1
+San Diego,2012,23,23 - English language and literature,91,14,15.4
+San Diego,2012,26,26 - Biological sciences,1239,140,11.3
+San Diego,2012,27,27 - Mathematics and statistics,140,18,12.9
+San Diego,2012,30,30 - Multi/interdisciplinary studies,438,68,15.5
+San Diego,2012,38,38 - Philosophy and religious studies,44,14,31.8
+San Diego,2012,40,40 - Physical sciences,318,21,6.6
+San Diego,2012,42,42 - Psychology,525,106,20.2
+San Diego,2012,45,45 - Social sciences,1245,226,18.2
+San Diego,2012,50,50 - Visual and performing arts,206,39,18.9
+San Diego,2012,52,52 - Business/management/marketing,283,21,7.4
+San Diego,2012,54,54 - History,117,33,28.2
+San Diego,2013,03,03 - Natural resources,103,18,17.5
+San Diego,2013,05,"05 - Area, ethnic, cultural, gender, and group studies",57,27,47.4
+San Diego,2013,09,09 - Communication/journalism,286,37,12.9
+San Diego,2013,11,11 - Computer and information sciences,235,20,8.5
+San Diego,2013,13,13 - Education,6,1,16.7
+San Diego,2013,14,14 - Engineering,802,106,13.2
+San Diego,2013,16,16 - Foreign languages,58,16,27.6
+San Diego,2013,19,19 - Family and consumer sciences,135,32,23.7
+San Diego,2013,23,23 - English language and literature,74,17,23.0
+San Diego,2013,26,26 - Biological sciences,1100,141,12.8
+San Diego,2013,27,27 - Mathematics and statistics,147,15,10.2
+San Diego,2013,30,30 - Multi/interdisciplinary studies,503,82,16.3
+San Diego,2013,38,38 - Philosophy and religious studies,30,3,10.0
+San Diego,2013,40,40 - Physical sciences,385,45,11.7
+San Diego,2013,42,42 - Psychology,519,108,20.8
+San Diego,2013,45,45 - Social sciences,1183,225,19.0
+San Diego,2013,50,50 - Visual and performing arts,193,36,18.7
+San Diego,2013,52,52 - Business/management/marketing,258,18,7.0
+San Diego,2013,54,54 - History,74,22,29.7
+San Diego,2014,03,03 - Natural resources,57,7,12.3
+San Diego,2014,05,"05 - Area, ethnic, cultural, gender, and group studies",26,12,46.2
+San Diego,2014,09,09 - Communication/journalism,268,49,18.3
+San Diego,2014,11,11 - Computer and information sciences,304,25,8.2
+San Diego,2014,13,13 - Education,12,3,25.0
+San Diego,2014,14,14 - Engineering,878,134,15.3
+San Diego,2014,16,16 - Foreign languages,45,20,44.4
+San Diego,2014,19,19 - Family and consumer sciences,103,29,28.2
+San Diego,2014,23,23 - English language and literature,71,23,32.4
+San Diego,2014,26,26 - Biological sciences,1051,150,14.3
+San Diego,2014,27,27 - Mathematics and statistics,168,22,13.1
+San Diego,2014,30,30 - Multi/interdisciplinary studies,375,66,17.6
+San Diego,2014,38,38 - Philosophy and religious studies,21,3,14.3
+San Diego,2014,40,40 - Physical sciences,283,30,10.6
+San Diego,2014,42,42 - Psychology,428,105,24.5
+San Diego,2014,45,45 - Social sciences,996,194,19.5
+San Diego,2014,50,50 - Visual and performing arts,157,35,22.3
+San Diego,2014,51,51 - Health professions,27,3,11.1
+San Diego,2014,52,52 - Business/management/marketing,274,22,8.0
+San Diego,2014,54,54 - History,56,12,21.4
+San Diego,2015,03,03 - Natural resources,48,12,25.0
+San Diego,2015,05,"05 - Area, ethnic, cultural, gender, and group studies",38,13,34.2
+San Diego,2015,09,09 - Communication/journalism,281,39,13.9
+San Diego,2015,11,11 - Computer and information sciences,465,47,10.1
+San Diego,2015,13,13 - Education,11,3,27.3
+San Diego,2015,14,14 - Engineering,1060,157,14.8
+San Diego,2015,16,16 - Foreign languages,54,18,33.3
+San Diego,2015,19,19 - Family and consumer sciences,91,23,25.3
+San Diego,2015,23,23 - English language and literature,58,18,31.0
+San Diego,2015,26,26 - Biological sciences,1343,195,14.5
+San Diego,2015,27,27 - Mathematics and statistics,200,22,11.0
+San Diego,2015,30,30 - Multi/interdisciplinary studies,358,64,17.9
+San Diego,2015,38,38 - Philosophy and religious studies,19,4,21.1
+San Diego,2015,40,40 - Physical sciences,228,36,15.8
+San Diego,2015,42,42 - Psychology,391,96,24.6
+San Diego,2015,45,45 - Social sciences,979,180,18.4
+San Diego,2015,50,50 - Visual and performing arts,116,20,17.2
+San Diego,2015,51,51 - Health professions,143,32,22.4
+San Diego,2015,52,52 - Business/management/marketing,262,24,9.2
+San Diego,2015,54,54 - History,58,13,22.4
+San Diego,2016,03,03 - Natural resources,40,10,25.0
+San Diego,2016,05,"05 - Area, ethnic, cultural, gender, and group studies",30,17,56.7
+San Diego,2016,09,09 - Communication/journalism,299,55,18.4
+San Diego,2016,11,11 - Computer and information sciences,604,50,8.3
+San Diego,2016,13,13 - Education,10,5,50.0
+San Diego,2016,14,14 - Engineering,1262,199,15.8
+San Diego,2016,16,16 - Foreign languages,39,10,25.6
+San Diego,2016,19,19 - Family and consumer sciences,87,19,21.8
+San Diego,2016,23,23 - English language and literature,67,22,32.8
+San Diego,2016,26,26 - Biological sciences,1661,247,14.9
+San Diego,2016,27,27 - Mathematics and statistics,291,29,10.0
+San Diego,2016,30,30 - Multi/interdisciplinary studies,499,72,14.4
+San Diego,2016,38,38 - Philosophy and religious studies,15,3,20.0
+San Diego,2016,40,40 - Physical sciences,250,42,16.8
+San Diego,2016,42,42 - Psychology,350,83,23.7
+San Diego,2016,45,45 - Social sciences,979,185,18.9
+San Diego,2016,50,50 - Visual and performing arts,166,30,18.1
+San Diego,2016,51,51 - Health professions,198,57,28.8
+San Diego,2016,52,52 - Business/management/marketing,301,31,10.3
+San Diego,2016,54,54 - History,59,14,23.7
+San Diego,2017,03,03 - Natural resources,49,6,12.2
+San Diego,2017,05,"05 - Area, ethnic, cultural, gender, and group studies",37,16,43.2
+San Diego,2017,09,09 - Communication/journalism,249,64,25.7
+San Diego,2017,11,11 - Computer and information sciences,540,40,7.4
+San Diego,2017,13,13 - Education,6,2,33.3
+San Diego,2017,14,14 - Engineering,1062,157,14.8
+San Diego,2017,16,16 - Foreign languages,35,15,42.9
+San Diego,2017,19,19 - Family and consumer sciences,56,20,35.7
+San Diego,2017,23,23 - English language and literature,69,19,27.5
+San Diego,2017,26,26 - Biological sciences,1659,258,15.6
+San Diego,2017,27,27 - Mathematics and statistics,415,34,8.2
+San Diego,2017,30,30 - Multi/interdisciplinary studies,913,128,14.0
+San Diego,2017,38,38 - Philosophy and religious studies,16,2,12.5
+San Diego,2017,40,40 - Physical sciences,303,46,15.2
+San Diego,2017,42,42 - Psychology,359,96,26.7
+San Diego,2017,45,45 - Social sciences,879,192,21.8
+San Diego,2017,50,50 - Visual and performing arts,177,37,20.9
+San Diego,2017,51,51 - Health professions,235,73,31.1
+San Diego,2017,52,52 - Business/management/marketing,255,28,11.0
+San Diego,2017,54,54 - History,42,12,28.6
+San Diego,2018,03,03 - Natural resources,49,10,20.4
+San Diego,2018,04,04 - Architecture,3,0,0.0
+San Diego,2018,05,"05 - Area, ethnic, cultural, gender, and group studies",36,20,55.6
+San Diego,2018,09,09 - Communication/journalism,282,55,19.5
+San Diego,2018,11,11 - Computer and information sciences,411,19,4.6
+San Diego,2018,13,13 - Education,6,2,33.3
+San Diego,2018,14,14 - Engineering,936,124,13.2
+San Diego,2018,16,16 - Foreign languages,41,14,34.1
+San Diego,2018,19,19 - Family and consumer sciences,57,18,31.6
+San Diego,2018,23,23 - English language and literature,60,19,31.7
+San Diego,2018,26,26 - Biological sciences,1621,262,16.2
+San Diego,2018,27,27 - Mathematics and statistics,462,25,5.4
+San Diego,2018,30,30 - Multi/interdisciplinary studies,1318,160,12.1
+San Diego,2018,38,38 - Philosophy and religious studies,20,2,10.0
+San Diego,2018,40,40 - Physical sciences,357,63,17.6
+San Diego,2018,42,42 - Psychology,374,101,27.0
+San Diego,2018,45,45 - Social sciences,872,205,23.5
+San Diego,2018,50,50 - Visual and performing arts,235,53,22.6
+San Diego,2018,51,51 - Health professions,220,71,32.3
+San Diego,2018,52,52 - Business/management/marketing,200,11,5.5
+San Diego,2018,54,54 - History,49,14,28.6
+San Diego,2019,03,03 - Natural resources,64,19,29.7
+San Diego,2019,04,04 - Architecture,17,4,23.5
+San Diego,2019,05,"05 - Area, ethnic, cultural, gender, and group studies",39,20,51.3
+San Diego,2019,09,09 - Communication/journalism,223,51,22.9
+San Diego,2019,11,11 - Computer and information sciences,465,26,5.6
+San Diego,2019,13,13 - Education,14,8,57.1
+San Diego,2019,14,14 - Engineering,945,160,16.9
+San Diego,2019,16,16 - Foreign languages,61,26,42.6
+San Diego,2019,19,19 - Family and consumer sciences,66,27,40.9
+San Diego,2019,23,23 - English language and literature,75,26,34.7
+San Diego,2019,26,26 - Biological sciences,1581,293,18.5
+San Diego,2019,27,27 - Mathematics and statistics,428,33,7.7
+San Diego,2019,30,30 - Multi/interdisciplinary studies,1517,257,16.9
+San Diego,2019,38,38 - Philosophy and religious studies,36,10,27.8
+San Diego,2019,40,40 - Physical sciences,356,65,18.3
+San Diego,2019,42,42 - Psychology,423,113,26.7
+San Diego,2019,45,45 - Social sciences,979,264,27.0
+San Diego,2019,50,50 - Visual and performing arts,229,49,21.4
+San Diego,2019,51,51 - Health professions,224,77,34.4
+San Diego,2019,52,52 - Business/management/marketing,116,8,6.9
+San Diego,2019,54,54 - History,75,19,25.3
+San Diego,2020,03,03 - Natural resources,83,28,33.7
+San Diego,2020,04,04 - Architecture,38,8,21.1
+San Diego,2020,05,"05 - Area, ethnic, cultural, gender, and group studies",25,10,40.0
+San Diego,2020,09,09 - Communication/journalism,241,65,27.0
+San Diego,2020,11,11 - Computer and information sciences,747,53,7.1
+San Diego,2020,13,13 - Education,43,20,46.5
+San Diego,2020,14,14 - Engineering,1066,223,20.9
+San Diego,2020,16,16 - Foreign languages,61,15,24.6
+San Diego,2020,19,19 - Family and consumer sciences,80,26,32.5
+San Diego,2020,23,23 - English language and literature,81,29,35.8
+San Diego,2020,24,24 - Liberal arts/general studies,8,5,62.5
+San Diego,2020,26,26 - Biological sciences,1573,351,22.3
+San Diego,2020,27,27 - Mathematics and statistics,368,41,11.1
+San Diego,2020,30,30 - Multi/interdisciplinary studies,1459,259,17.8
+San Diego,2020,38,38 - Philosophy and religious studies,38,8,21.1
+San Diego,2020,40,40 - Physical sciences,405,89,22.0
+San Diego,2020,42,42 - Psychology,518,138,26.6
+San Diego,2020,45,45 - Social sciences,1077,334,31.0
+San Diego,2020,50,50 - Visual and performing arts,200,55,27.5
+San Diego,2020,51,51 - Health professions,284,91,32.0
+San Diego,2020,52,52 - Business/management/marketing,113,7,6.2
+San Diego,2020,54,54 - History,57,13,22.8
+San Diego,2021,03,03 - Natural resources,79,27,34.2
+San Diego,2021,04,04 - Architecture,51,16,31.4
+San Diego,2021,05,"05 - Area, ethnic, cultural, gender, and group studies",37,19,51.4
+San Diego,2021,09,09 - Communication/journalism,255,68,26.7
+San Diego,2021,11,11 - Computer and information sciences,754,53,7.0
+San Diego,2021,13,13 - Education,51,21,41.2
+San Diego,2021,14,14 - Engineering,1030,213,20.7
+San Diego,2021,16,16 - Foreign languages,55,20,36.4
+San Diego,2021,19,19 - Family and consumer sciences,88,39,44.3
+San Diego,2021,23,23 - English language and literature,85,32,37.6
+San Diego,2021,24,24 - Liberal arts/general studies,4,2,50.0
+San Diego,2021,26,26 - Biological sciences,1657,366,22.1
+San Diego,2021,27,27 - Mathematics and statistics,400,37,9.2
+San Diego,2021,30,30 - Multi/interdisciplinary studies,1510,250,16.6
+San Diego,2021,38,38 - Philosophy and religious studies,27,13,48.1
+San Diego,2021,40,40 - Physical sciences,419,88,21.0
+San Diego,2021,42,42 - Psychology,696,228,32.8
+San Diego,2021,45,45 - Social sciences,967,275,28.4
+San Diego,2021,50,50 - Visual and performing arts,184,38,20.7
+San Diego,2021,51,51 - Health professions,311,118,37.9
+San Diego,2021,52,52 - Business/management/marketing,152,10,6.6
+San Diego,2021,54,54 - History,59,19,32.2
+San Diego,2022,03,03 - Natural resources,73,25,34.2
+San Diego,2022,04,04 - Architecture,51,19,37.3
+San Diego,2022,05,"05 - Area, ethnic, cultural, gender, and group studies",31,14,45.2
+San Diego,2022,09,09 - Communication/journalism,211,48,22.7
+San Diego,2022,11,11 - Computer and information sciences,716,48,6.7
+San Diego,2022,13,13 - Education,56,32,57.1
+San Diego,2022,14,14 - Engineering,935,197,21.1
+San Diego,2022,16,16 - Foreign languages,14,6,42.9
+San Diego,2022,19,19 - Family and consumer sciences,49,21,42.9
+San Diego,2022,23,23 - English language and literature,87,34,39.1
+San Diego,2022,24,24 - Liberal arts/general studies,2,0,0.0
+San Diego,2022,26,26 - Biological sciences,1629,386,23.7
+San Diego,2022,27,27 - Mathematics and statistics,384,44,11.5
+San Diego,2022,30,30 - Multi/interdisciplinary studies,1459,261,17.9
+San Diego,2022,38,38 - Philosophy and religious studies,36,14,38.9
+San Diego,2022,40,40 - Physical sciences,320,73,22.8
+San Diego,2022,42,42 - Psychology,725,246,33.9
+San Diego,2022,45,45 - Social sciences,941,284,30.2
+San Diego,2022,50,50 - Visual and performing arts,196,52,26.5
+San Diego,2022,51,51 - Health professions,304,122,40.1
+San Diego,2022,52,52 - Business/management/marketing,256,35,13.7
+San Diego,2022,54,54 - History,60,23,38.3
+San Diego,2023,03,03 - Natural resources,79,22,27.8
+San Diego,2023,04,04 - Architecture,64,15,23.4
+San Diego,2023,05,"05 - Area, ethnic, cultural, gender, and group studies",30,10,33.3
+San Diego,2023,09,09 - Communication/journalism,220,61,27.7
+San Diego,2023,11,11 - Computer and information sciences,649,44,6.8
+San Diego,2023,13,13 - Education,59,28,47.5
+San Diego,2023,14,14 - Engineering,1033,200,19.4
+San Diego,2023,16,16 - Foreign languages,6,3,50.0
+San Diego,2023,19,19 - Family and consumer sciences,52,20,38.5
+San Diego,2023,23,23 - English language and literature,69,20,29.0
+San Diego,2023,24,24 - Liberal arts/general studies,7,1,14.3
+San Diego,2023,26,26 - Biological sciences,1842,402,21.8
+San Diego,2023,27,27 - Mathematics and statistics,352,30,8.5
+San Diego,2023,30,30 - Multi/interdisciplinary studies,1483,263,17.7
+San Diego,2023,38,38 - Philosophy and religious studies,19,7,36.8
+San Diego,2023,40,40 - Physical sciences,268,58,21.6
+San Diego,2023,42,42 - Psychology,810,275,34.0
+San Diego,2023,45,45 - Social sciences,842,273,32.4
+San Diego,2023,50,50 - Visual and performing arts,228,72,31.6
+San Diego,2023,51,51 - Health professions,317,119,37.5
+San Diego,2023,52,52 - Business/management/marketing,429,49,11.4
+San Diego,2023,54,54 - History,65,23,35.4
+Santa Barbara,2011,03,03 - Natural resources,246,40,16.3
+Santa Barbara,2011,05,"05 - Area, ethnic, cultural, gender, and group studies",174,118,67.8
+Santa Barbara,2011,09,09 - Communication/journalism,313,47,15.0
+Santa Barbara,2011,11,11 - Computer and information sciences,85,7,8.2
+Santa Barbara,2011,14,14 - Engineering,195,23,11.8
+Santa Barbara,2011,16,16 - Foreign languages,224,106,47.3
+Santa Barbara,2011,22,22 - Legal professions,5,2,40.0
+Santa Barbara,2011,23,23 - English language and literature,190,52,27.4
+Santa Barbara,2011,24,24 - Liberal arts/general studies,7,1,14.3
+Santa Barbara,2011,26,26 - Biological sciences,448,71,15.8
+Santa Barbara,2011,27,27 - Mathematics and statistics,99,23,23.2
+Santa Barbara,2011,30,30 - Multi/interdisciplinary studies,286,91,31.8
+Santa Barbara,2011,38,38 - Philosophy and religious studies,150,32,21.3
+Santa Barbara,2011,40,40 - Physical sciences,135,26,19.3
+Santa Barbara,2011,42,42 - Psychology,487,103,21.1
+Santa Barbara,2011,45,45 - Social sciences,1274,420,33.0
+Santa Barbara,2011,50,50 - Visual and performing arts,341,82,24.0
+Santa Barbara,2011,52,52 - Business/management/marketing,532,71,13.3
+Santa Barbara,2011,54,54 - History,167,41,24.6
+Santa Barbara,2012,03,03 - Natural resources,266,48,18.0
+Santa Barbara,2012,05,"05 - Area, ethnic, cultural, gender, and group studies",128,81,63.3
+Santa Barbara,2012,09,09 - Communication/journalism,285,50,17.5
+Santa Barbara,2012,11,11 - Computer and information sciences,80,12,15.0
+Santa Barbara,2012,14,14 - Engineering,223,32,14.3
+Santa Barbara,2012,16,16 - Foreign languages,180,82,45.6
+Santa Barbara,2012,22,22 - Legal professions,3,0,0.0
+Santa Barbara,2012,23,23 - English language and literature,186,52,28.0
+Santa Barbara,2012,24,24 - Liberal arts/general studies,4,0,0.0
+Santa Barbara,2012,26,26 - Biological sciences,482,82,17.0
+Santa Barbara,2012,27,27 - Mathematics and statistics,133,27,20.3
+Santa Barbara,2012,30,30 - Multi/interdisciplinary studies,314,91,29.0
+Santa Barbara,2012,38,38 - Philosophy and religious studies,127,31,24.4
+Santa Barbara,2012,40,40 - Physical sciences,188,35,18.6
+Santa Barbara,2012,42,42 - Psychology,631,138,21.9
+Santa Barbara,2012,45,45 - Social sciences,1347,410,30.4
+Santa Barbara,2012,50,50 - Visual and performing arts,313,81,25.9
+Santa Barbara,2012,52,52 - Business/management/marketing,159,24,15.1
+Santa Barbara,2012,54,54 - History,173,49,28.3
+Santa Barbara,2013,03,03 - Natural resources,231,36,15.6
+Santa Barbara,2013,05,"05 - Area, ethnic, cultural, gender, and group studies",123,84,68.3
+Santa Barbara,2013,09,09 - Communication/journalism,328,48,14.6
+Santa Barbara,2013,11,11 - Computer and information sciences,92,11,12.0
+Santa Barbara,2013,14,14 - Engineering,213,35,16.4
+Santa Barbara,2013,16,16 - Foreign languages,146,57,39.0
+Santa Barbara,2013,22,22 - Legal professions,5,2,40.0
+Santa Barbara,2013,23,23 - English language and literature,188,55,29.3
+Santa Barbara,2013,24,24 - Liberal arts/general studies,4,0,0.0
+Santa Barbara,2013,26,26 - Biological sciences,444,84,18.9
+Santa Barbara,2013,27,27 - Mathematics and statistics,133,33,24.8
+Santa Barbara,2013,30,30 - Multi/interdisciplinary studies,315,90,28.6
+Santa Barbara,2013,38,38 - Philosophy and religious studies,112,29,25.9
+Santa Barbara,2013,40,40 - Physical sciences,137,17,12.4
+Santa Barbara,2013,42,42 - Psychology,605,130,21.5
+Santa Barbara,2013,45,45 - Social sciences,1256,367,29.2
+Santa Barbara,2013,50,50 - Visual and performing arts,347,81,23.3
+Santa Barbara,2013,52,52 - Business/management/marketing,47,8,17.0
+Santa Barbara,2013,54,54 - History,145,47,32.4
+Santa Barbara,2014,03,03 - Natural resources,238,45,18.9
+Santa Barbara,2014,05,"05 - Area, ethnic, cultural, gender, and group studies",80,47,58.8
+Santa Barbara,2014,09,09 - Communication/journalism,297,69,23.2
+Santa Barbara,2014,11,11 - Computer and information sciences,125,20,16.0
+Santa Barbara,2014,14,14 - Engineering,223,44,19.7
+Santa Barbara,2014,16,16 - Foreign languages,160,57,35.6
+Santa Barbara,2014,22,22 - Legal professions,3,0,0.0
+Santa Barbara,2014,23,23 - English language and literature,182,54,29.7
+Santa Barbara,2014,24,24 - Liberal arts/general studies,2,0,0.0
+Santa Barbara,2014,26,26 - Biological sciences,512,89,17.4
+Santa Barbara,2014,27,27 - Mathematics and statistics,166,39,23.5
+Santa Barbara,2014,30,30 - Multi/interdisciplinary studies,294,97,33.0
+Santa Barbara,2014,38,38 - Philosophy and religious studies,105,21,20.0
+Santa Barbara,2014,40,40 - Physical sciences,206,32,15.5
+Santa Barbara,2014,42,42 - Psychology,611,158,25.9
+Santa Barbara,2014,45,45 - Social sciences,1220,362,29.7
+Santa Barbara,2014,50,50 - Visual and performing arts,266,64,24.1
+Santa Barbara,2014,52,52 - Business/management/marketing,61,7,11.5
+Santa Barbara,2014,54,54 - History,122,34,27.9
+Santa Barbara,2015,03,03 - Natural resources,226,59,26.1
+Santa Barbara,2015,05,"05 - Area, ethnic, cultural, gender, and group studies",81,47,58.0
+Santa Barbara,2015,09,09 - Communication/journalism,357,75,21.0
+Santa Barbara,2015,11,11 - Computer and information sciences,92,8,8.7
+Santa Barbara,2015,14,14 - Engineering,242,40,16.5
+Santa Barbara,2015,16,16 - Foreign languages,153,79,51.6
+Santa Barbara,2015,22,22 - Legal professions,5,0,0.0
+Santa Barbara,2015,23,23 - English language and literature,177,52,29.4
+Santa Barbara,2015,24,24 - Liberal arts/general studies,2,1,50.0
+Santa Barbara,2015,26,26 - Biological sciences,563,110,19.5
+Santa Barbara,2015,27,27 - Mathematics and statistics,235,36,15.3
+Santa Barbara,2015,30,30 - Multi/interdisciplinary studies,364,104,28.6
+Santa Barbara,2015,38,38 - Philosophy and religious studies,89,27,30.3
+Santa Barbara,2015,40,40 - Physical sciences,247,26,10.5
+Santa Barbara,2015,42,42 - Psychology,609,154,25.3
+Santa Barbara,2015,45,45 - Social sciences,1352,408,30.2
+Santa Barbara,2015,50,50 - Visual and performing arts,275,85,30.9
+Santa Barbara,2015,52,52 - Business/management/marketing,55,4,7.3
+Santa Barbara,2015,54,54 - History,111,38,34.2
+Santa Barbara,2016,03,03 - Natural resources,286,69,24.1
+Santa Barbara,2016,05,"05 - Area, ethnic, cultural, gender, and group studies",98,67,68.4
+Santa Barbara,2016,09,09 - Communication/journalism,327,64,19.6
+Santa Barbara,2016,11,11 - Computer and information sciences,102,10,9.8
+Santa Barbara,2016,14,14 - Engineering,222,42,18.9
+Santa Barbara,2016,16,16 - Foreign languages,170,79,46.5
+Santa Barbara,2016,22,22 - Legal professions,4,0,0.0
+Santa Barbara,2016,23,23 - English language and literature,160,55,34.4
+Santa Barbara,2016,24,24 - Liberal arts/general studies,1,1,100.0
+Santa Barbara,2016,26,26 - Biological sciences,619,114,18.4
+Santa Barbara,2016,27,27 - Mathematics and statistics,309,46,14.9
+Santa Barbara,2016,30,30 - Multi/interdisciplinary studies,313,81,25.9
+Santa Barbara,2016,38,38 - Philosophy and religious studies,77,20,26.0
+Santa Barbara,2016,40,40 - Physical sciences,224,37,16.5
+Santa Barbara,2016,42,42 - Psychology,646,176,27.2
+Santa Barbara,2016,45,45 - Social sciences,1367,420,30.7
+Santa Barbara,2016,50,50 - Visual and performing arts,280,89,31.8
+Santa Barbara,2016,52,52 - Business/management/marketing,59,4,6.8
+Santa Barbara,2016,54,54 - History,109,34,31.2
+Santa Barbara,2017,03,03 - Natural resources,273,78,28.6
+Santa Barbara,2017,05,"05 - Area, ethnic, cultural, gender, and group studies",93,59,63.4
+Santa Barbara,2017,09,09 - Communication/journalism,359,108,30.1
+Santa Barbara,2017,11,11 - Computer and information sciences,138,14,10.1
+Santa Barbara,2017,14,14 - Engineering,222,39,17.6
+Santa Barbara,2017,16,16 - Foreign languages,137,64,46.7
+Santa Barbara,2017,22,22 - Legal professions,2,1,50.0
+Santa Barbara,2017,23,23 - English language and literature,136,47,34.6
+Santa Barbara,2017,24,24 - Liberal arts/general studies,2,0,0.0
+Santa Barbara,2017,26,26 - Biological sciences,598,115,19.2
+Santa Barbara,2017,27,27 - Mathematics and statistics,367,55,15.0
+Santa Barbara,2017,30,30 - Multi/interdisciplinary studies,354,99,28.0
+Santa Barbara,2017,38,38 - Philosophy and religious studies,84,25,29.8
+Santa Barbara,2017,40,40 - Physical sciences,282,52,18.4
+Santa Barbara,2017,42,42 - Psychology,652,166,25.5
+Santa Barbara,2017,45,45 - Social sciences,1449,477,32.9
+Santa Barbara,2017,50,50 - Visual and performing arts,264,81,30.7
+Santa Barbara,2017,52,52 - Business/management/marketing,72,3,4.2
+Santa Barbara,2017,54,54 - History,122,39,32.0
+Santa Barbara,2018,03,03 - Natural resources,312,100,32.1
+Santa Barbara,2018,05,"05 - Area, ethnic, cultural, gender, and group studies",109,70,64.2
+Santa Barbara,2018,09,09 - Communication/journalism,395,98,24.8
+Santa Barbara,2018,11,11 - Computer and information sciences,111,17,15.3
+Santa Barbara,2018,14,14 - Engineering,268,44,16.4
+Santa Barbara,2018,16,16 - Foreign languages,163,80,49.1
+Santa Barbara,2018,23,23 - English language and literature,143,50,35.0
+Santa Barbara,2018,24,24 - Liberal arts/general studies,3,1,33.3
+Santa Barbara,2018,26,26 - Biological sciences,603,116,19.2
+Santa Barbara,2018,27,27 - Mathematics and statistics,354,53,15.0
+Santa Barbara,2018,30,30 - Multi/interdisciplinary studies,328,86,26.2
+Santa Barbara,2018,38,38 - Philosophy and religious studies,96,33,34.4
+Santa Barbara,2018,40,40 - Physical sciences,281,60,21.4
+Santa Barbara,2018,42,42 - Psychology,661,206,31.2
+Santa Barbara,2018,45,45 - Social sciences,1530,516,33.7
+Santa Barbara,2018,50,50 - Visual and performing arts,299,83,27.8
+Santa Barbara,2018,51,51 - Health professions,1,0,0.0
+Santa Barbara,2018,52,52 - Business/management/marketing,87,4,4.6
+Santa Barbara,2018,54,54 - History,138,69,50.0
+Santa Barbara,2019,03,03 - Natural resources,348,92,26.4
+Santa Barbara,2019,05,"05 - Area, ethnic, cultural, gender, and group studies",111,67,60.4
+Santa Barbara,2019,09,09 - Communication/journalism,469,100,21.3
+Santa Barbara,2019,11,11 - Computer and information sciences,143,11,7.7
+Santa Barbara,2019,14,14 - Engineering,249,49,19.7
+Santa Barbara,2019,16,16 - Foreign languages,169,63,37.3
+Santa Barbara,2019,22,22 - Legal professions,1,1,100.0
+Santa Barbara,2019,23,23 - English language and literature,189,85,45.0
+Santa Barbara,2019,26,26 - Biological sciences,645,143,22.2
+Santa Barbara,2019,27,27 - Mathematics and statistics,470,63,13.4
+Santa Barbara,2019,30,30 - Multi/interdisciplinary studies,347,71,20.5
+Santa Barbara,2019,38,38 - Philosophy and religious studies,142,41,28.9
+Santa Barbara,2019,40,40 - Physical sciences,324,67,20.7
+Santa Barbara,2019,42,42 - Psychology,567,154,27.2
+Santa Barbara,2019,45,45 - Social sciences,1826,563,30.8
+Santa Barbara,2019,50,50 - Visual and performing arts,342,85,24.9
+Santa Barbara,2019,52,52 - Business/management/marketing,82,7,8.5
+Santa Barbara,2019,54,54 - History,159,59,37.1
+Santa Barbara,2020,03,03 - Natural resources,356,104,29.2
+Santa Barbara,2020,05,"05 - Area, ethnic, cultural, gender, and group studies",106,58,54.7
+Santa Barbara,2020,09,09 - Communication/journalism,424,97,22.9
+Santa Barbara,2020,11,11 - Computer and information sciences,170,13,7.6
+Santa Barbara,2020,14,14 - Engineering,243,41,16.9
+Santa Barbara,2020,16,16 - Foreign languages,187,85,45.5
+Santa Barbara,2020,22,22 - Legal professions,4,2,50.0
+Santa Barbara,2020,23,23 - English language and literature,160,64,40.0
+Santa Barbara,2020,26,26 - Biological sciences,677,145,21.4
+Santa Barbara,2020,27,27 - Mathematics and statistics,552,72,13.0
+Santa Barbara,2020,30,30 - Multi/interdisciplinary studies,272,79,29.0
+Santa Barbara,2020,38,38 - Philosophy and religious studies,148,45,30.4
+Santa Barbara,2020,40,40 - Physical sciences,285,53,18.6
+Santa Barbara,2020,42,42 - Psychology,562,141,25.1
+Santa Barbara,2020,45,45 - Social sciences,1822,585,32.1
+Santa Barbara,2020,50,50 - Visual and performing arts,338,90,26.6
+Santa Barbara,2020,52,52 - Business/management/marketing,58,9,15.5
+Santa Barbara,2020,54,54 - History,135,54,40.0
+Santa Barbara,2021,03,03 - Natural resources,302,82,27.2
+Santa Barbara,2021,05,"05 - Area, ethnic, cultural, gender, and group studies",88,50,56.8
+Santa Barbara,2021,09,09 - Communication/journalism,531,123,23.2
+Santa Barbara,2021,11,11 - Computer and information sciences,159,14,8.8
+Santa Barbara,2021,14,14 - Engineering,271,49,18.1
+Santa Barbara,2021,16,16 - Foreign languages,182,75,41.2
+Santa Barbara,2021,22,22 - Legal professions,1,0,0.0
+Santa Barbara,2021,23,23 - English language and literature,152,51,33.6
+Santa Barbara,2021,26,26 - Biological sciences,686,153,22.3
+Santa Barbara,2021,27,27 - Mathematics and statistics,577,71,12.3
+Santa Barbara,2021,30,30 - Multi/interdisciplinary studies,174,61,35.1
+Santa Barbara,2021,38,38 - Philosophy and religious studies,111,33,29.7
+Santa Barbara,2021,40,40 - Physical sciences,302,50,16.6
+Santa Barbara,2021,42,42 - Psychology,609,201,33.0
+Santa Barbara,2021,45,45 - Social sciences,1662,540,32.5
+Santa Barbara,2021,50,50 - Visual and performing arts,321,97,30.2
+Santa Barbara,2021,52,52 - Business/management/marketing,49,1,2.0
+Santa Barbara,2021,54,54 - History,140,52,37.1
+Santa Barbara,2022,03,03 - Natural resources,321,86,26.8
+Santa Barbara,2022,05,"05 - Area, ethnic, cultural, gender, and group studies",86,46,53.5
+Santa Barbara,2022,09,09 - Communication/journalism,566,118,20.8
+Santa Barbara,2022,11,11 - Computer and information sciences,160,14,8.8
+Santa Barbara,2022,14,14 - Engineering,239,34,14.2
+Santa Barbara,2022,16,16 - Foreign languages,164,70,42.7
+Santa Barbara,2022,23,23 - English language and literature,175,69,39.4
+Santa Barbara,2022,24,24 - Liberal arts/general studies,1,0,0.0
+Santa Barbara,2022,26,26 - Biological sciences,723,159,22.0
+Santa Barbara,2022,27,27 - Mathematics and statistics,612,76,12.4
+Santa Barbara,2022,30,30 - Multi/interdisciplinary studies,137,37,27.0
+Santa Barbara,2022,38,38 - Philosophy and religious studies,100,24,24.0
+Santa Barbara,2022,40,40 - Physical sciences,343,76,22.2
+Santa Barbara,2022,42,42 - Psychology,643,165,25.7
+Santa Barbara,2022,45,45 - Social sciences,1758,561,31.9
+Santa Barbara,2022,50,50 - Visual and performing arts,346,106,30.6
+Santa Barbara,2022,52,52 - Business/management/marketing,47,3,6.4
+Santa Barbara,2022,54,54 - History,142,63,44.4
+Santa Barbara,2023,03,03 - Natural resources,331,104,31.4
+Santa Barbara,2023,05,"05 - Area, ethnic, cultural, gender, and group studies",47,27,57.4
+Santa Barbara,2023,09,09 - Communication/journalism,597,144,24.1
+Santa Barbara,2023,11,11 - Computer and information sciences,168,9,5.4
+Santa Barbara,2023,14,14 - Engineering,270,30,11.1
+Santa Barbara,2023,16,16 - Foreign languages,141,61,43.3
+Santa Barbara,2023,22,22 - Legal professions,1,0,0.0
+Santa Barbara,2023,23,23 - English language and literature,123,43,35.0
+Santa Barbara,2023,26,26 - Biological sciences,715,148,20.7
+Santa Barbara,2023,27,27 - Mathematics and statistics,608,66,10.9
+Santa Barbara,2023,30,30 - Multi/interdisciplinary studies,127,44,34.6
+Santa Barbara,2023,38,38 - Philosophy and religious studies,100,29,29.0
+Santa Barbara,2023,40,40 - Physical sciences,261,50,19.2
+Santa Barbara,2023,42,42 - Psychology,661,159,24.1
+Santa Barbara,2023,45,45 - Social sciences,1713,500,29.2
+Santa Barbara,2023,50,50 - Visual and performing arts,372,104,28.0
+Santa Barbara,2023,52,52 - Business/management/marketing,39,4,10.3
+Santa Barbara,2023,54,54 - History,155,55,35.5
+Santa Cruz,2011,01,01 - Agriculture,12,1,8.3
+Santa Cruz,2011,03,03 - Natural resources,287,42,14.6
+Santa Cruz,2011,05,"05 - Area, ethnic, cultural, gender, and group studies",177,84,47.5
+Santa Cruz,2011,11,11 - Computer and information sciences,143,21,14.7
+Santa Cruz,2011,13,13 - Education,2,1,50.0
+Santa Cruz,2011,14,14 - Engineering,95,11,11.6
+Santa Cruz,2011,16,16 - Foreign languages,92,20,21.7
+Santa Cruz,2011,22,22 - Legal professions,82,25,30.5
+Santa Cruz,2011,23,23 - English language and literature,273,58,21.2
+Santa Cruz,2011,26,26 - Biological sciences,568,96,16.9
+Santa Cruz,2011,27,27 - Mathematics and statistics,65,12,18.5
+Santa Cruz,2011,30,30 - Multi/interdisciplinary studies,21,2,9.5
+Santa Cruz,2011,38,38 - Philosophy and religious studies,56,8,14.3
+Santa Cruz,2011,40,40 - Physical sciences,165,28,17.0
+Santa Cruz,2011,42,42 - Psychology,510,118,23.1
+Santa Cruz,2011,44,44 - Public administration and social service,96,25,26.0
+Santa Cruz,2011,45,45 - Social sciences,680,153,22.5
+Santa Cruz,2011,50,50 - Visual and performing arts,425,69,16.2
+Santa Cruz,2011,52,52 - Business/management/marketing,342,42,12.3
+Santa Cruz,2011,54,54 - History,210,45,21.4
+Santa Cruz,2012,01,01 - Agriculture,16,2,12.5
+Santa Cruz,2012,03,03 - Natural resources,266,39,14.7
+Santa Cruz,2012,05,"05 - Area, ethnic, cultural, gender, and group studies",176,100,56.8
+Santa Cruz,2012,11,11 - Computer and information sciences,188,28,14.9
+Santa Cruz,2012,13,13 - Education,1,0,0.0
+Santa Cruz,2012,14,14 - Engineering,103,15,14.6
+Santa Cruz,2012,16,16 - Foreign languages,290,68,23.4
+Santa Cruz,2012,22,22 - Legal professions,69,19,27.5
+Santa Cruz,2012,26,26 - Biological sciences,660,112,17.0
+Santa Cruz,2012,27,27 - Mathematics and statistics,66,9,13.6
+Santa Cruz,2012,30,30 - Multi/interdisciplinary studies,54,9,16.7
+Santa Cruz,2012,38,38 - Philosophy and religious studies,61,12,19.7
+Santa Cruz,2012,40,40 - Physical sciences,152,28,18.4
+Santa Cruz,2012,42,42 - Psychology,471,125,26.5
+Santa Cruz,2012,44,44 - Public administration and social service,33,13,39.4
+Santa Cruz,2012,45,45 - Social sciences,602,165,27.4
+Santa Cruz,2012,50,50 - Visual and performing arts,385,94,24.4
+Santa Cruz,2012,52,52 - Business/management/marketing,289,45,15.6
+Santa Cruz,2012,54,54 - History,156,41,26.3
+Santa Cruz,2013,01,01 - Agriculture,17,0,0.0
+Santa Cruz,2013,03,03 - Natural resources,226,32,14.2
+Santa Cruz,2013,05,"05 - Area, ethnic, cultural, gender, and group studies",115,71,61.7
+Santa Cruz,2013,11,11 - Computer and information sciences,171,19,11.1
+Santa Cruz,2013,14,14 - Engineering,102,18,17.6
+Santa Cruz,2013,16,16 - Foreign languages,265,63,23.8
+Santa Cruz,2013,22,22 - Legal professions,73,19,26.0
+Santa Cruz,2013,26,26 - Biological sciences,666,129,19.4
+Santa Cruz,2013,27,27 - Mathematics and statistics,51,16,31.4
+Santa Cruz,2013,30,30 - Multi/interdisciplinary studies,66,17,25.8
+Santa Cruz,2013,38,38 - Philosophy and religious studies,56,13,23.2
+Santa Cruz,2013,40,40 - Physical sciences,158,36,22.8
+Santa Cruz,2013,42,42 - Psychology,466,136,29.2
+Santa Cruz,2013,44,44 - Public administration and social service,18,3,16.7
+Santa Cruz,2013,45,45 - Social sciences,557,197,35.4
+Santa Cruz,2013,50,50 - Visual and performing arts,332,81,24.4
+Santa Cruz,2013,52,52 - Business/management/marketing,286,49,17.1
+Santa Cruz,2013,54,54 - History,141,38,27.0
+Santa Cruz,2014,01,01 - Agriculture,12,3,25.0
+Santa Cruz,2014,03,03 - Natural resources,217,46,21.2
+Santa Cruz,2014,05,"05 - Area, ethnic, cultural, gender, and group studies",110,86,78.2
+Santa Cruz,2014,11,11 - Computer and information sciences,273,35,12.8
+Santa Cruz,2014,14,14 - Engineering,133,24,18.0
+Santa Cruz,2014,16,16 - Foreign languages,276,69,25.0
+Santa Cruz,2014,22,22 - Legal professions,81,41,50.6
+Santa Cruz,2014,26,26 - Biological sciences,690,154,22.3
+Santa Cruz,2014,27,27 - Mathematics and statistics,54,17,31.5
+Santa Cruz,2014,30,30 - Multi/interdisciplinary studies,93,15,16.1
+Santa Cruz,2014,38,38 - Philosophy and religious studies,60,17,28.3
+Santa Cruz,2014,40,40 - Physical sciences,136,27,19.9
+Santa Cruz,2014,42,42 - Psychology,437,140,32.0
+Santa Cruz,2014,44,44 - Public administration and social service,15,6,40.0
+Santa Cruz,2014,45,45 - Social sciences,557,219,39.3
+Santa Cruz,2014,50,50 - Visual and performing arts,333,91,27.3
+Santa Cruz,2014,52,52 - Business/management/marketing,259,45,17.4
+Santa Cruz,2014,54,54 - History,160,39,24.4
+Santa Cruz,2015,01,01 - Agriculture,19,9,47.4
+Santa Cruz,2015,03,03 - Natural resources,225,54,24.0
+Santa Cruz,2015,05,"05 - Area, ethnic, cultural, gender, and group studies",122,96,78.7
+Santa Cruz,2015,11,11 - Computer and information sciences,313,57,18.2
+Santa Cruz,2015,14,14 - Engineering,127,36,28.3
+Santa Cruz,2015,16,16 - Foreign languages,238,76,31.9
+Santa Cruz,2015,22,22 - Legal professions,92,45,48.9
+Santa Cruz,2015,26,26 - Biological sciences,774,185,23.9
+Santa Cruz,2015,27,27 - Mathematics and statistics,47,11,23.4
+Santa Cruz,2015,30,30 - Multi/interdisciplinary studies,116,26,22.4
+Santa Cruz,2015,38,38 - Philosophy and religious studies,45,12,26.7
+Santa Cruz,2015,40,40 - Physical sciences,173,41,23.7
+Santa Cruz,2015,42,42 - Psychology,448,167,37.3
+Santa Cruz,2015,44,44 - Public administration and social service,33,14,42.4
+Santa Cruz,2015,45,45 - Social sciences,566,245,43.3
+Santa Cruz,2015,50,50 - Visual and performing arts,295,87,29.5
+Santa Cruz,2015,52,52 - Business/management/marketing,268,60,22.4
+Santa Cruz,2015,54,54 - History,115,35,30.4
+Santa Cruz,2016,01,01 - Agriculture,14,3,21.4
+Santa Cruz,2016,03,03 - Natural resources,197,59,29.9
+Santa Cruz,2016,05,"05 - Area, ethnic, cultural, gender, and group studies",113,82,72.6
+Santa Cruz,2016,11,11 - Computer and information sciences,376,78,20.7
+Santa Cruz,2016,13,13 - Education,1,0,0.0
+Santa Cruz,2016,14,14 - Engineering,163,34,20.9
+Santa Cruz,2016,16,16 - Foreign languages,243,105,43.2
+Santa Cruz,2016,22,22 - Legal professions,95,48,50.5
+Santa Cruz,2016,26,26 - Biological sciences,673,197,29.3
+Santa Cruz,2016,27,27 - Mathematics and statistics,60,16,26.7
+Santa Cruz,2016,30,30 - Multi/interdisciplinary studies,98,30,30.6
+Santa Cruz,2016,38,38 - Philosophy and religious studies,39,10,25.6
+Santa Cruz,2016,40,40 - Physical sciences,193,51,26.4
+Santa Cruz,2016,42,42 - Psychology,396,150,37.9
+Santa Cruz,2016,44,44 - Public administration and social service,55,26,47.3
+Santa Cruz,2016,45,45 - Social sciences,572,271,47.4
+Santa Cruz,2016,50,50 - Visual and performing arts,321,122,38.0
+Santa Cruz,2016,52,52 - Business/management/marketing,257,57,22.2
+Santa Cruz,2016,54,54 - History,116,40,34.5
+Santa Cruz,2017,01,01 - Agriculture,16,3,18.8
+Santa Cruz,2017,03,03 - Natural resources,220,55,25.0
+Santa Cruz,2017,05,"05 - Area, ethnic, cultural, gender, and group studies",134,98,73.1
+Santa Cruz,2017,11,11 - Computer and information sciences,550,60,10.9
+Santa Cruz,2017,14,14 - Engineering,204,49,24.0
+Santa Cruz,2017,16,16 - Foreign languages,224,78,34.8
+Santa Cruz,2017,22,22 - Legal professions,97,53,54.6
+Santa Cruz,2017,26,26 - Biological sciences,712,193,27.1
+Santa Cruz,2017,27,27 - Mathematics and statistics,82,22,26.8
+Santa Cruz,2017,30,30 - Multi/interdisciplinary studies,106,33,31.1
+Santa Cruz,2017,38,38 - Philosophy and religious studies,51,16,31.4
+Santa Cruz,2017,40,40 - Physical sciences,156,37,23.7
+Santa Cruz,2017,42,42 - Psychology,417,178,42.7
+Santa Cruz,2017,44,44 - Public administration and social service,53,26,49.1
+Santa Cruz,2017,45,45 - Social sciences,551,205,37.2
+Santa Cruz,2017,50,50 - Visual and performing arts,316,90,28.5
+Santa Cruz,2017,52,52 - Business/management/marketing,288,56,19.4
+Santa Cruz,2017,54,54 - History,93,37,39.8
+Santa Cruz,2018,01,01 - Agriculture,9,3,33.3
+Santa Cruz,2018,03,03 - Natural resources,216,70,32.4
+Santa Cruz,2018,05,"05 - Area, ethnic, cultural, gender, and group studies",124,89,71.8
+Santa Cruz,2018,11,11 - Computer and information sciences,656,96,14.6
+Santa Cruz,2018,14,14 - Engineering,193,49,25.4
+Santa Cruz,2018,16,16 - Foreign languages,190,75,39.5
+Santa Cruz,2018,22,22 - Legal professions,106,58,54.7
+Santa Cruz,2018,26,26 - Biological sciences,725,214,29.5
+Santa Cruz,2018,27,27 - Mathematics and statistics,89,31,34.8
+Santa Cruz,2018,30,30 - Multi/interdisciplinary studies,107,37,34.6
+Santa Cruz,2018,38,38 - Philosophy and religious studies,39,11,28.2
+Santa Cruz,2018,40,40 - Physical sciences,180,57,31.7
+Santa Cruz,2018,42,42 - Psychology,381,140,36.7
+Santa Cruz,2018,44,44 - Public administration and social service,47,21,44.7
+Santa Cruz,2018,45,45 - Social sciences,565,226,40.0
+Santa Cruz,2018,50,50 - Visual and performing arts,348,106,30.5
+Santa Cruz,2018,52,52 - Business/management/marketing,335,83,24.8
+Santa Cruz,2018,54,54 - History,85,34,40.0
+Santa Cruz,2019,01,01 - Agriculture,11,1,9.1
+Santa Cruz,2019,03,03 - Natural resources,227,54,23.8
+Santa Cruz,2019,05,"05 - Area, ethnic, cultural, gender, and group studies",145,98,67.6
+Santa Cruz,2019,11,11 - Computer and information sciences,792,106,13.4
+Santa Cruz,2019,13,13 - Education,1,1,100.0
+Santa Cruz,2019,14,14 - Engineering,212,58,27.4
+Santa Cruz,2019,16,16 - Foreign languages,228,80,35.1
+Santa Cruz,2019,22,22 - Legal professions,118,60,50.8
+Santa Cruz,2019,26,26 - Biological sciences,842,250,29.7
+Santa Cruz,2019,27,27 - Mathematics and statistics,102,24,23.5
+Santa Cruz,2019,30,30 - Multi/interdisciplinary studies,144,36,25.0
+Santa Cruz,2019,38,38 - Philosophy and religious studies,46,15,32.6
+Santa Cruz,2019,40,40 - Physical sciences,205,61,29.8
+Santa Cruz,2019,42,42 - Psychology,460,163,35.4
+Santa Cruz,2019,44,44 - Public administration and social service,54,26,48.1
+Santa Cruz,2019,45,45 - Social sciences,592,232,39.2
+Santa Cruz,2019,50,50 - Visual and performing arts,458,145,31.7
+Santa Cruz,2019,52,52 - Business/management/marketing,307,66,21.5
+Santa Cruz,2019,54,54 - History,118,47,39.8
+Santa Cruz,2020,01,01 - Agriculture,19,5,26.3
+Santa Cruz,2020,03,03 - Natural resources,191,61,31.9
+Santa Cruz,2020,05,"05 - Area, ethnic, cultural, gender, and group studies",146,97,66.4
+Santa Cruz,2020,11,11 - Computer and information sciences,795,108,13.6
+Santa Cruz,2020,13,13 - Education,31,11,35.5
+Santa Cruz,2020,14,14 - Engineering,171,41,24.0
+Santa Cruz,2020,16,16 - Foreign languages,204,74,36.3
+Santa Cruz,2020,22,22 - Legal professions,131,72,55.0
+Santa Cruz,2020,26,26 - Biological sciences,802,267,33.3
+Santa Cruz,2020,27,27 - Mathematics and statistics,107,18,16.8
+Santa Cruz,2020,30,30 - Multi/interdisciplinary studies,140,27,19.3
+Santa Cruz,2020,38,38 - Philosophy and religious studies,50,11,22.0
+Santa Cruz,2020,40,40 - Physical sciences,270,69,25.6
+Santa Cruz,2020,42,42 - Psychology,435,160,36.8
+Santa Cruz,2020,44,44 - Public administration and social service,34,17,50.0
+Santa Cruz,2020,45,45 - Social sciences,626,216,34.5
+Santa Cruz,2020,50,50 - Visual and performing arts,435,110,25.3
+Santa Cruz,2020,52,52 - Business/management/marketing,289,55,19.0
+Santa Cruz,2020,54,54 - History,110,37,33.6
+Santa Cruz,2021,01,01 - Agriculture,19,4,21.1
+Santa Cruz,2021,03,03 - Natural resources,140,42,30.0
+Santa Cruz,2021,05,"05 - Area, ethnic, cultural, gender, and group studies",106,79,74.5
+Santa Cruz,2021,11,11 - Computer and information sciences,694,103,14.8
+Santa Cruz,2021,13,13 - Education,54,30,55.6
+Santa Cruz,2021,14,14 - Engineering,182,23,12.6
+Santa Cruz,2021,16,16 - Foreign languages,180,68,37.8
+Santa Cruz,2021,22,22 - Legal professions,115,56,48.7
+Santa Cruz,2021,26,26 - Biological sciences,697,202,29.0
+Santa Cruz,2021,27,27 - Mathematics and statistics,106,19,17.9
+Santa Cruz,2021,30,30 - Multi/interdisciplinary studies,128,32,25.0
+Santa Cruz,2021,38,38 - Philosophy and religious studies,48,10,20.8
+Santa Cruz,2021,40,40 - Physical sciences,208,52,25.0
+Santa Cruz,2021,42,42 - Psychology,355,134,37.7
+Santa Cruz,2021,44,44 - Public administration and social service,30,11,36.7
+Santa Cruz,2021,45,45 - Social sciences,530,177,33.4
+Santa Cruz,2021,50,50 - Visual and performing arts,405,119,29.4
+Santa Cruz,2021,52,52 - Business/management/marketing,286,52,18.2
+Santa Cruz,2021,54,54 - History,81,26,32.1
+Santa Cruz,2022,01,01 - Agriculture,26,7,26.9
+Santa Cruz,2022,03,03 - Natural resources,156,43,27.6
+Santa Cruz,2022,05,"05 - Area, ethnic, cultural, gender, and group studies",106,65,61.3
+Santa Cruz,2022,11,11 - Computer and information sciences,744,112,15.1
+Santa Cruz,2022,13,13 - Education,69,32,46.4
+Santa Cruz,2022,14,14 - Engineering,155,30,19.4
+Santa Cruz,2022,16,16 - Foreign languages,157,44,28.0
+Santa Cruz,2022,22,22 - Legal professions,106,41,38.7
+Santa Cruz,2022,26,26 - Biological sciences,708,208,29.4
+Santa Cruz,2022,27,27 - Mathematics and statistics,104,14,13.5
+Santa Cruz,2022,30,30 - Multi/interdisciplinary studies,125,35,28.0
+Santa Cruz,2022,38,38 - Philosophy and religious studies,42,14,33.3
+Santa Cruz,2022,40,40 - Physical sciences,235,71,30.2
+Santa Cruz,2022,42,42 - Psychology,430,159,37.0
+Santa Cruz,2022,44,44 - Public administration and social service,29,8,27.6
+Santa Cruz,2022,45,45 - Social sciences,524,173,33.0
+Santa Cruz,2022,50,50 - Visual and performing arts,430,98,22.8
+Santa Cruz,2022,52,52 - Business/management/marketing,279,44,15.8
+Santa Cruz,2022,54,54 - History,93,30,32.3
+Santa Cruz,2023,01,01 - Agriculture,36,10,27.8
+Santa Cruz,2023,03,03 - Natural resources,159,48,30.2
+Santa Cruz,2023,05,"05 - Area, ethnic, cultural, gender, and group studies",105,66,62.9
+Santa Cruz,2023,11,11 - Computer and information sciences,758,100,13.2
+Santa Cruz,2023,13,13 - Education,76,37,48.7
+Santa Cruz,2023,14,14 - Engineering,207,39,18.8
+Santa Cruz,2023,16,16 - Foreign languages,181,54,29.8
+Santa Cruz,2023,22,22 - Legal professions,104,41,39.4
+Santa Cruz,2023,26,26 - Biological sciences,695,206,29.6
+Santa Cruz,2023,27,27 - Mathematics and statistics,96,29,30.2
+Santa Cruz,2023,30,30 - Multi/interdisciplinary studies,142,40,28.2
+Santa Cruz,2023,38,38 - Philosophy and religious studies,39,10,25.6
+Santa Cruz,2023,40,40 - Physical sciences,226,60,26.5
+Santa Cruz,2023,42,42 - Psychology,448,172,38.4
+Santa Cruz,2023,44,44 - Public administration and social service,26,10,38.5
+Santa Cruz,2023,45,45 - Social sciences,475,146,30.7
+Santa Cruz,2023,50,50 - Visual and performing arts,469,135,28.8
+Santa Cruz,2023,51,51 - Health professions,19,8,42.1
+Santa Cruz,2023,52,52 - Business/management/marketing,304,80,26.3
+Santa Cruz,2023,54,54 - History,93,30,32.3

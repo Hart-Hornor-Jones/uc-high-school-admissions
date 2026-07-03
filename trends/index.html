@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>UC undergraduate outcomes over time — trends explorer</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<style>
+  :root{
+    --ink:#1a1a1a; --muted:#5c6470; --line:#e2e6ec; --bg:#ffffff; --card:#fbfcfe;
+    --accent:#2b6cb0; --warm:#e34a33; --cool:#2166ac;
+    --shadow:0 1px 3px rgba(20,30,50,.07),0 6px 24px rgba(20,30,50,.06);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;color:var(--ink);background:var(--bg);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1200px;margin:0 auto;padding:22px 20px 60px;}
+  .backlink{font-size:12.5px;margin-bottom:6px;}
+  a{color:var(--accent);}
+  header h1{font-size:23px;margin:0 0 4px;letter-spacing:-.01em;}
+  header p.sub{margin:0;color:var(--muted);max-width:860px;}
+  .controls{display:flex;flex-wrap:wrap;gap:12px 16px;align-items:flex-end;
+    margin:18px 0 10px;padding:14px 16px;background:var(--card);border:1px solid var(--line);
+    border-radius:12px;box-shadow:var(--shadow);}
+  .ctl{display:flex;flex-direction:column;gap:5px;}
+  .ctl.hide{display:none;}
+  .ctl label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);}
+  select,input[type=text]{font:inherit;padding:7px 9px;border:1px solid #cfd6e0;border-radius:8px;background:#fff;color:var(--ink);min-width:120px;max-width:300px;}
+  .seg{display:inline-flex;border:1px solid #cfd6e0;border-radius:8px;overflow:hidden;}
+  .seg button{font:inherit;font-weight:600;border:0;background:#fff;color:var(--muted);padding:7px 12px;cursor:pointer;}
+  .seg button.on{background:var(--accent);color:#fff;}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;max-width:640px;}
+  .chip{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;
+    padding:4px 9px;border:1px solid var(--line);border-radius:999px;background:#fff;cursor:pointer;user-select:none;}
+  .chip .sw{width:10px;height:10px;border-radius:3px;display:inline-block;}
+  .chip .x{color:var(--muted);font-weight:400;margin-left:2px;}
+  .chip.add{color:var(--muted);border-style:dashed;}
+  .searchwrap{position:relative;}
+  .suggest{position:absolute;top:100%;left:0;z-index:30;background:#fff;border:1px solid var(--line);
+    border-radius:8px;box-shadow:var(--shadow);max-height:260px;overflow:auto;min-width:290px;display:none;}
+  .suggest div{padding:6px 10px;font-size:13px;cursor:pointer;}
+  .suggest div:hover{background:#eef3fa;}
+  .suggest .meta{color:var(--muted);font-size:11.5px;}
+  .badge{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+    padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);background:#fff;vertical-align:2px;margin-left:8px;}
+  .badge.uc{border-color:#bcd2ea;color:#2b6cb0;background:#f2f7fc;}
+  .badge.fed{border-color:#e6cfc0;color:#a3512b;background:#fcf6f1;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);}
+  .chartcard{padding:10px 10px 6px;position:relative;}
+  .plot-title{font-size:14.5px;font-weight:650;padding:6px 8px 0;}
+  .plot-sub{font-size:12.5px;color:var(--muted);padding:0 8px 8px;max-width:900px;}
+  svg{display:block;width:100%;height:auto;}
+  .axis text{fill:var(--muted);font-size:11px;}
+  .axis path,.axis line{stroke:#cdd4de;}
+  .gridline{stroke:#eef1f5;}
+  .covidband{fill:#8a6d4a;fill-opacity:.06;}
+  .covidlbl{fill:#8a6d4a;font-size:10px;opacity:.75;}
+  .sline{fill:none;stroke-width:2;}
+  .sline.dim{opacity:.18;}
+  .pt{stroke:#fff;stroke-width:1;}
+  .footer-note{font-size:12px;color:var(--muted);padding:6px 8px 8px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;}
+  .footer-note a{cursor:pointer;}
+  .tooltip{position:fixed;pointer-events:none;background:rgba(22,26,32,.94);color:#fff;font-size:12.5px;
+    padding:8px 10px;border-radius:8px;max-width:300px;z-index:50;display:none;line-height:1.45;}
+  .tooltip .tl{color:#aeb8c5;}
+  details.notes{margin-top:22px;font-size:13.5px;color:var(--ink);}
+  details.notes summary{cursor:pointer;font-weight:650;font-size:14px;padding:6px 0;}
+  details.notes h3{font-size:13px;margin:14px 0 4px;}
+  details.notes table{border-collapse:collapse;font-size:12.5px;margin:8px 0;}
+  details.notes th,details.notes td{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top;}
+  details.notes th{background:#f4f6fa;}
+  .dl{font-size:12.5px;color:var(--muted);margin-top:8px;}
+  .cutnote{font-size:12px;color:var(--muted);padding:2px 8px 6px;}
+  noscript table{border-collapse:collapse;} noscript td,noscript th{border:1px solid #ccc;padding:4px 8px;}
+  @media (max-width:700px){
+    .wrap{padding:14px 12px 40px;}
+    select,input[type=text]{min-width:100px;}
+    .chips{max-width:100%;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="backlink"><a href="../">&larr; Back to the main explorer</a> &middot; <a href="../context/">neighborhood context</a></div>
+    <h1>Undergraduate outcomes over time <span class="badge" id="universeBadge">UC data</span></h1>
+    <p class="sub">Graduation, retention, time to degree, degrees conferred, earnings and debt for University of
+    California undergraduates, plotted across entering cohorts &mdash; split by the populations the public data can
+    distinguish. Pick a comparison, then add or remove groups. Every point carries its definition and, where
+    published, its cohort size.</p>
+  </header>
+
+  <div class="controls" id="controls">
+    <div class="ctl"><label for="mode">Compare</label><select id="mode"></select></div>
+    <div class="ctl" id="ctlLevel"><label>Entry</label>
+      <div class="seg" id="level">
+        <button data-v="FR" class="on">Freshman</button><button data-v="TR">Transfer</button>
+      </div>
+    </div>
+    <div class="ctl" id="ctlCampus"><label for="campus">Campus</label><select id="campus"></select></div>
+    <div class="ctl" id="ctlMeasure"><label for="measure">Measure</label><select id="measure"></select></div>
+    <div class="ctl" id="ctlHorizon"><label for="horizon">Years after entry</label><select id="horizon"></select></div>
+    <div class="ctl searchwrap" id="ctlSearch"><label for="search" id="searchLabel">Add a school</label>
+      <input type="text" id="search" placeholder="Type a school name&hellip;" autocomplete="off" />
+      <div class="suggest" id="suggest"></div>
+    </div>
+    <div class="ctl" id="ctlSeries"><label id="seriesLabel">Groups shown</label><div class="chips" id="chips"></div></div>
+  </div>
+
+  <div class="card chartcard">
+    <div class="plot-title" id="plotTitle"></div>
+    <div class="plot-sub" id="plotSub"></div>
+    <div id="chart"></div>
+    <div class="cutnote" id="cutnote" style="display:none"></div>
+    <div class="footer-note">
+      <span id="maskNote"></span>
+      <a id="dlcsv">Download the numbers shown (CSV)</a>
+    </div>
+  </div>
+
+  <details class="notes">
+    <summary>Methods, definitions &amp; downloads</summary>
+    <h3>Two data universes, never mixed in one chart</h3>
+    <table>
+      <tr><th>Universe</th><th>Who is counted</th><th>Group definitions</th><th>Used in</th></tr>
+      <tr><td><span class="badge uc">UC data</span> UC Information Center</td>
+          <td>All new UC undergraduates (freshman or transfer entrants), by entering cohort year. By-school tables
+              count enrollees from that source school.</td>
+          <td>UC's ethnicity categories; Pell status in the entering year; first-generation = no parent with a
+              four-year degree.</td>
+          <td>Systemwide groups, high schools, community colleges, GPA bands</td></tr>
+      <tr><td><span class="badge fed">Federal data</span> IPEDS / College Scorecard</td>
+          <td>Completion (C150): first-time, full-time bachelor's-seeking fall cohorts, completing at the same
+              campus within 150% of expected time (six years). Scorecard earnings/debt: students receiving federal
+              Title IV aid only. IPEDS completions: degrees conferred, not rates.</td>
+          <td>Federal race/ethnicity (includes two-or-more); Pell in entry year; Scorecard first-generation = no
+              parent with <em>any</em> postsecondary schooling (broader than UC's definition); family-income
+              terciles at entry.</td>
+          <td>Campuses, majors, earnings &amp; debt, first-generation (federal)</td></tr>
+    </table>
+    <h3>Measures</h3>
+    <p id="measureGlossary" style="margin:4px 0"></p>
+    <h3>Reading the by-campus completion panel</h3>
+    <p>Federal C150 rates are keyed here to the Scorecard data year in which they were published. Each value
+    reflects a cohort that entered roughly six years earlier; comparisons across campuses or groups within a year
+    are unaffected, but do not read the x-axis as entering-cohort year.</p>
+    <h3>GPA bands</h3>
+    <p>Bands are terciles of each campus &times; cohort's own enrollee GPA distribution (weighted-capped high-school
+    GPA for freshman entrants, transfer GPA for transfer entrants), so band boundaries differ by campus and year
+    &mdash; the boundaries themselves are shown under the chart and in tooltips. For freshman entrants the source
+    publishes graduate counts per band but no entering-cohort denominators, so graduation <em>rates</em> per band
+    are not identified; the chart instead shows how graduates split by time to degree. For transfer entrants the
+    source also publishes the band-level completion rates, shown directly (values are integer-rounded at source;
+    cumulative rates are sums of rounded parts).</p>
+    <h3>Masking &amp; small groups</h3>
+    <p>School-level cells are shown by the source only when the entering cohort has at least 10 students, as
+    integer percents. GPA-band timing shares are hidden here when fewer than 25 graduates underlie them. Systemwide
+    lines carry the published cohort sizes in tooltips; small groups (for example American Indian entrants) are
+    noisy &mdash; read them with their Ns.</p>
+    <h3>Cohorts of 2020 and 2021</h3>
+    <p>Entering cohorts 2020&ndash;2021 experienced pandemic disruption, and 2021 was the first test-blind cohort;
+    2020&ndash;21 high-school records also carry grade inflation. Charts shade these cohorts. Recent cohorts also
+    have short follow-up: a six-year rate exists only for cohorts entering by 2019.</p>
+    <h3>What these data cannot show</h3>
+    <p>Individual students' grades, major switching, or reasons for leaving; anything about students below the
+    published masking thresholds; and for Scorecard measures, anyone outside the federal-aid universe.</p>
+    <h3>Sources &amp; downloads</h3>
+    <p id="srcline"></p>
+    <p class="dl">Tidy CSVs behind this page:
+      <a href="../data/trends/sys_rates.csv">systemwide rates</a> &middot;
+      <a href="../data/trends/hs_series.csv">by high school</a> &middot;
+      <a href="../data/trends/ccc_series.csv">by community college</a> &middot;
+      <a href="../data/trends/gpa_band_counts.csv">GPA bands</a> &middot;
+      <a href="../data/trends/gpa_cutpoints.csv">GPA cutpoints</a> &middot;
+      <a href="../data/trends/fed_campus_panel.csv">federal campus panel</a> &middot;
+      <a href="../data/trends/majors_cip2.csv">majors</a> &middot;
+      <a href="../data/trends/fed_money.csv">earnings &amp; debt</a> &middot;
+      <a href="../data/trends/fed_firstgen_curves.csv">first-generation curves</a>.
+      Build scripts live in <a href="https://github.com/hart-hornor-jones/uc-high-school-admissions/tree/main/build">build/</a>.</p>
+  </details>
+
+  <noscript>
+    <p>This page is interactive and needs JavaScript. Headline numbers from the underlying data: systemwide
+    freshman cohorts &mdash; first-year retention 93.0% (2024 entrants, N=50,742); graduation within four years
+    74.0% (2021 entrants); within six years 86.1% (2019 entrants). The tidy CSVs are linked in the page source
+    under data/trends/.</p>
+  </noscript>
+</div>
+<div class="tooltip" id="tooltip"></div>
+
+<script src="data_trends.js"></script>
+<script>
+(function(){
+'use strict';
+const T = window.TRENDS_DATA;
+const $ = id => document.getElementById(id);
+const tooltip = $('tooltip');
+const fmtN = d3.format(',');
+
+/* ---------- vocabulary ---------- */
+const ETH_LBL = {all:'All students', hispanic_latino:'Hispanic/Latinx', black:'African American',
+  asian_pi:'Asian/Pac. Islander', white:'White', aian:'American Indian',
+  international:'International', unknown:'Domestic unknown'};
+const PELL_LBL = {pell:'Pell', non_pell:'non-Pell'};
+const FG_LBL = {first_gen:'first-gen', not_first_gen:'not first-gen'};
+const GPA_SUB_LBL = {pell:'Pell recipients', non_pell:'Non-Pell', first_gen:'First-generation',
+  not_first_gen:'Not first-generation', black:'African American', hispanic_latino:'Hispanic/Latinx',
+  asian:'Asian', pacific_islander:'Pacific Islander', white:'White', aian:'American Indian',
+  international:'International', unknown:'Domestic unknown', overall:'All entrants'};
+const FED_GROUP_LBL = {overall:'All students', white:'White', black:'Black', hispanic_latino:'Hispanic/Latino',
+  asian:'Asian', aian:'American Indian/AK Native', nhpi:'Hawaiian/Pac. Islander', two_or_more:'Two or more races',
+  international:'Nonresident', unknown:'Unknown', urm_basic:'Underrepresented (B/H/AIAN/NHPI)',
+  pell:'Pell recipients', loan_no_pell:'Loan, no Pell', no_loan_no_pell:'No loan, no Pell'};
+const CAMPUSES = ['Berkeley','Davis','Irvine','Los Angeles','Merced','Riverside','San Diego','Santa Barbara','Santa Cruz'];
+const PALETTE = ['#2b6cb0','#e34a33','#2a9d8f','#7b5cb8','#d4a017','#c76b8e','#4f7f4f','#8a6d4a','#5c6470','#1f9ed9','#a35a2b','#4a4a8a'];
+
+const SYS_MEASURES = {
+  FR:[['ret1','First-year retention','Enrolled at the start of the second year'],
+      ['grad4','Graduated within 4 years','Cumulative share of the entering cohort earning a UC degree within 4 years'],
+      ['grad5','Graduated within 5 years','Cumulative share earning a UC degree within 5 years'],
+      ['grad6','Graduated within 6 years','Cumulative share earning a UC degree within 6 years'],
+      ['grad7p','Graduated, 7+ years','Cumulative share earning a UC degree in 7 or more years (final)'],
+      ['grad3','Graduated within 3 years','Cumulative share earning a UC degree within 3 years'],
+      ['grad6_nonuc','UC or non-UC degree within 6 years','Share earning a degree anywhere within 6 years (cohorts 2010–2019)'],
+      ['ttd_mean','Mean time to degree (years)','Average years to degree among graduates'],
+      ['gradgpa_mean','Mean final UC GPA of graduates','Average final GPA among graduates (weighted across time-to-degree groups)']],
+  TR:[['ret1','First-year retention','Enrolled at the start of the second year'],
+      ['grad2','Graduated within 2 years','Cumulative share of entering transfers earning a UC degree within 2 years'],
+      ['grad3','Graduated within 3 years','Cumulative share within 3 years'],
+      ['grad4','Graduated within 4 years','Cumulative share within 4 years'],
+      ['grad5p','Graduated, 5+ years','Cumulative share in 5 or more years (final)'],
+      ['ttd_mean','Mean time to degree (years)','Average years to degree among graduates'],
+      ['gradgpa_mean','Mean final UC GPA of graduates','Average final GPA among graduates']]
+};
+const SCHOOL_MEASURES = {
+  hs:[['ret1','First-year retention'],['grad4','Graduated within 4 years'],
+      ['grad5','Graduated within 5 years'],['grad6','Graduated within 6 years']],
+  ccc:[['ret1','First-year retention'],['grad2','Graduated within 2 years'],
+       ['grad3','Graduated within 3 years'],['grad4','Graduated within 4 years']]
+};
+const GPA_MEASURES = {
+  FR:[['share4','Of graduates: finished in 4 years (%)'],['share5','Of graduates: needed a 5th year (%)'],
+      ['share6','Of graduates: needed a 6th year (%)'],['grads','Graduates (count)']],
+  TR:[['rate2','Graduated within 2 years (%)'],['rate3','Graduated within 3 years (%)'],
+      ['rate4','Graduated within 4 years (%)'],
+      ['share2','Of graduates: finished in 2 years (%)'],['grads','Graduates (count)']]
+};
+
+/* ---------- state ---------- */
+const state = {
+  mode:'sys', level:'FR', slice:'eth', measure:'grad6', campus:'All',
+  fedBy:'campus', fedGroup:'pell', fedCampus:'Berkeley', fedMeasure:'c150',
+  gpaGroupType:'pell_status', horizon:'p10', moneyMetric:'earnings',
+  fgOutcome:'comp_orig',
+  sel:{}   // per-mode selected series keys
+};
+
+const MODES = [
+  ['sys','Systemwide groups (ethnicity, Pell, first-gen)'],
+  ['fed','Campuses (federal completion panel)'],
+  ['hs','High schools (freshman entrants)'],
+  ['ccc','Community colleges (transfer entrants)'],
+  ['gpa','GPA bands (terciles at entry)'],
+  ['majors','Majors (degrees conferred)'],
+  ['money','Earnings & debt (federal)'],
+  ['fgfed','First-generation (federal, years after entry)']
+];
+
+/* ---------- helpers ---------- */
+function sysKey(level, slice, eth, pell, fg){ return [level,slice,eth,pell,fg].join('|'); }
+function sysSeries(key, measure){ const s = T.sys[key]; return s ? s[measure] : null; }
+function has(key, measure){ const s = T.sys[key]; return !!(s && s[measure] && s[measure].length); }
+
+function sysSubgroups(slice, level){
+  // returns [key, label] pairs available for the slice
+  const out = [];
+  if(slice==='eth'){
+    ['all','hispanic_latino','asian_pi','white','black','aian','international','unknown'].forEach(e=>{
+      const k = e==='all' ? sysKey(level,'all','all','all','all') : sysKey(level,'eth',e,'all','all');
+      if(T.sys[k]) out.push([k, ETH_LBL[e]]);
+    });
+  } else if(slice==='pell'){
+    [['all','All students'],['pell','Pell recipients'],['non_pell','Non-Pell']].forEach(([p,lbl])=>{
+      const k = p==='all' ? sysKey(level,'all','all','all','all') : sysKey(level,'agg','all',p,'all');
+      if(T.sys[k]) out.push([k,lbl]);
+    });
+  } else if(slice==='fg'){
+    [['all','All students'],['first_gen','First-generation'],['not_first_gen','Not first-generation']].forEach(([f,lbl])=>{
+      const k = f==='all' ? sysKey(level,'all','all','all','all') : sysKey(level,'agg','all','all',f);
+      if(T.sys[k]) out.push([k,lbl]);
+    });
+  } else if(slice==='eth_x_pell'){
+    Object.keys(ETH_LBL).filter(e=>e!=='all').forEach(e=>{
+      ['pell','non_pell'].forEach(p=>{
+        const k = sysKey(level,'eth_x_pell',e,p,'all');
+        if(T.sys[k]) out.push([k, ETH_LBL[e]+' × '+PELL_LBL[p]]);
+      });
+    });
+  } else if(slice==='eth_x_fg'){
+    Object.keys(ETH_LBL).filter(e=>e!=='all').forEach(e=>{
+      ['first_gen','not_first_gen'].forEach(f=>{
+        const k = sysKey(level,'eth_x_fg',e,'all',f);
+        if(T.sys[k]) out.push([k, ETH_LBL[e]+' × '+FG_LBL[f]]);
+      });
+    });
+  }
+  return out;
+}
+
+function el(tag, attrs, parent){
+  const n = document.createElement(tag);
+  for(const k in (attrs||{})){ if(k==='text') n.textContent=attrs[k]; else n.setAttribute(k,attrs[k]); }
+  if(parent) parent.appendChild(n);
+  return n;
+}
+function opt(sel, v, lbl, selected){ const o=el('option',{value:v,text:lbl},sel); if(selected) o.selected=true; return o; }
+function clear(n){ while(n.firstChild) n.removeChild(n.firstChild); }
+
+/* ---------- controls ---------- */
+const modeSel = $('mode');
+MODES.forEach(([v,l])=>opt(modeSel,v,l,v===state.mode));
+modeSel.addEventListener('change',()=>{ state.mode=modeSel.value; buildControls(); update(); });
+
+$('level').addEventListener('click',ev=>{
+  const b=ev.target.closest('button'); if(!b) return;
+  state.level=b.dataset.v;
+  [...$('level').children].forEach(x=>x.classList.toggle('on',x===b));
+  // re-derive defaults that depend on level
+  if(state.mode==='sys'){ if(!SYS_MEASURES[state.level].some(m=>m[0]===state.measure)) state.measure = state.level==='FR'?'grad6':'grad4'; state.sel.sys=null; }
+  if(state.mode==='gpa'){ state.sel.gpa=null; state.gpaMeasure=null; }
+  buildControls(); update();
+});
+
+const campusSel=$('campus'), measureSel=$('measure'), horizonSel=$('horizon');
+campusSel.addEventListener('change',()=>{
+  if(state.mode==='fed'&&state.fedBy==='group'){ state.fedCampus=campusSel.value; state.sel.fed=null; }
+  else state.campus=campusSel.value;
+  if(state.mode==='gpa') state.sel.gpa=null;
+  update(); });
+measureSel.addEventListener('change',()=>{
+  if(state.mode==='sys') state.measure=measureSel.value;
+  else if(state.mode==='fed') state.fedMeasure=measureSel.value;
+  else if(state.mode==='hs') state.hsMeasure=measureSel.value;
+  else if(state.mode==='ccc') state.cccMeasure=measureSel.value;
+  else if(state.mode==='gpa') state.gpaMeasure=measureSel.value;
+  else if(state.mode==='majors') state.majMeasure=measureSel.value;
+  else if(state.mode==='money') state.moneyMetric=measureSel.value;
+  else if(state.mode==='fgfed') state.fgOutcome=measureSel.value;
+  update(); });
+horizonSel.addEventListener('change',()=>{
+  if(state.mode==='sys'){ state.slice=horizonSel.value; state.sel.sys=null; }
+  else if(state.mode==='fed'){ state.fedBy=horizonSel.value; state.sel.fed=null; }
+  else if(state.mode==='gpa'){ state.gpaGroupType=horizonSel.value; state.sel.gpa=null; }
+  else if(state.mode==='money') state.horizon=horizonSel.value;
+  buildControls(); update(); });
+
+function buildControls(){
+  const m=state.mode;
+  $('ctlLevel').classList.toggle('hide', !(m==='sys'||m==='gpa'));
+  $('ctlCampus').classList.toggle('hide', !(m==='hs'||m==='ccc'||m==='gpa'||m==='majors'||m==='fgfed'||(m==='fed'&&state.fedBy==='group')));
+  $('ctlSearch').classList.toggle('hide', !(m==='hs'||m==='ccc'));
+  $('ctlHorizon').classList.toggle('hide', !(m==='sys'||m==='fed'||m==='gpa'||m==='money'));
+  $('ctlSeries').classList.toggle('hide', m==='money');
+  // campus options
+  clear(campusSel);
+  if(m==='hs'||m==='ccc'||m==='gpa'){
+    ['All'].concat(CAMPUSES).forEach(c=>opt(campusSel,c,c==='All'?'All UC (systemwide)':c,c===state.campus));
+  } else if(m==='majors'||m==='fgfed'){
+    CAMPUSES.forEach(c=>opt(campusSel,c,c,c===(CAMPUSES.includes(state.campus)?state.campus:'Berkeley')));
+    if(!CAMPUSES.includes(state.campus)) state.campus='Berkeley';
+  } else if(m==='fed'&&state.fedBy==='group'){
+    CAMPUSES.forEach(c=>opt(campusSel,c,c,c===state.fedCampus));
+  }
+  // measure options
+  clear(measureSel);
+  if(m==='sys'){
+    SYS_MEASURES[state.level].forEach(([v,l])=>opt(measureSel,v,l,v===state.measure));
+  } else if(m==='fed'){
+    [['c150','Completed within 6 yrs at same campus (C150)'],['ret','Full-time retention (campus overall)'],['pctpell','% undergraduates with Pell (campus)']]
+      .forEach(([v,l])=>opt(measureSel,v,l,v===state.fedMeasure));
+  } else if(m==='hs'){
+    state.hsMeasure = state.hsMeasure||'grad6';
+    SCHOOL_MEASURES.hs.forEach(([v,l])=>opt(measureSel,v,l,v===state.hsMeasure));
+  } else if(m==='ccc'){
+    state.cccMeasure = state.cccMeasure||'grad4';
+    SCHOOL_MEASURES.ccc.forEach(([v,l])=>opt(measureSel,v,l,v===state.cccMeasure));
+  } else if(m==='gpa'){
+    state.gpaMeasure = state.gpaMeasure || (state.level==='FR'?'share4':'rate4');
+    GPA_MEASURES[state.level].forEach(([v,l])=>opt(measureSel,v,l,v===state.gpaMeasure));
+  } else if(m==='majors'){
+    state.majMeasure = state.majMeasure||'total';
+    [['total','Bachelor’s degrees conferred (count)'],['urm_share','Underrepresented share of degrees (%)']]
+      .forEach(([v,l])=>opt(measureSel,v,l,v===state.majMeasure));
+  } else if(m==='money'){
+    [['earnings','Median earnings by family-income origin'],['debt','Median debt at graduation by group']]
+      .forEach(([v,l])=>opt(measureSel,v,l,v===state.moneyMetric));
+  } else if(m==='fgfed'){
+    [['comp_orig','Completed at this campus'],['wdraw_orig','Withdrew, no award'],['enrl_orig','Still enrolled'],
+     ['comp_4yr_trans','Completed after transfer to a 4-yr'],['comp_2yr_trans','Completed after transfer to a 2-yr']]
+      .forEach(([v,l])=>opt(measureSel,v,l,v===state.fgOutcome));
+  }
+  // horizon select becomes the "second dimension" per mode
+  clear(horizonSel);
+  const hz=$('ctlHorizon').querySelector('label');
+  if(m==='sys'){
+    hz.textContent='Split by';
+    [['eth','Ethnicity'],['pell','Pell status'],['fg','First-generation'],
+     ['eth_x_pell','Ethnicity × Pell'],['eth_x_fg','Ethnicity × first-gen']]
+      .forEach(([v,l])=>opt(horizonSel,v,l,v===state.slice));
+  } else if(m==='fed'){
+    hz.textContent='Lines are';
+    [['campus','Campuses (one group)'],['group','Groups (one campus)']]
+      .forEach(([v,l])=>opt(horizonSel,v,l,v===state.fedBy));
+  } else if(m==='gpa'){
+    hz.textContent='Population';
+    [['overall','All entrants (2019–20 only)'],['pell_status','By Pell status'],
+     ['first_gen_status','By first-generation'],['ethnicity','By ethnicity']]
+      .forEach(([v,l])=>opt(horizonSel,v,l,v===state.gpaGroupType));
+  } else if(m==='money'){
+    hz.textContent='Years after entry';
+    [['p6','6 years'],['p8','8 years'],['p10','10 years']]
+      .forEach(([v,l])=>opt(horizonSel,v,l,v===state.horizon));
+  }
+  $('searchLabel').textContent = m==='ccc' ? 'Add a community college' : 'Add a high school';
+  $('search').placeholder = m==='ccc' ? 'Type a college name…' : 'Type a school name…';
+  buildChips();
+}
+
+/* ---------- series selection (chips) ---------- */
+function currentOptions(){
+  const m=state.mode;
+  if(m==='sys') return sysSubgroups(state.slice, state.level);
+  if(m==='fed'){
+    if(state.fedBy==='campus'){
+      const g=state.fedGroup;
+      return CAMPUSES.map(c=>[c+'|'+g, c]).filter(([k])=>T.fed.panel[k]||state.fedMeasure!=='c150');
+    }
+    return Object.keys(FED_GROUP_LBL).map(g=>[state.fedCampus+'|'+g, FED_GROUP_LBL[g]])
+      .filter(([k])=>T.fed.panel[k]);
+  }
+  if(m==='gpa'){
+    const src=T.gpa.counts, pre=state.level+'|'+state.campus+'|'+state.gpaGroupType+'|';
+    const subs=Object.keys(src).filter(k=>k.startsWith(pre)).map(k=>k.slice(pre.length));
+    const out=[];
+    subs.forEach(s=>{ [1,2,3].forEach(b=>out.push([s+'|'+b, (GPA_SUB_LBL[s]||s)+' · band '+b+(b===1?' (low)':b===3?' (high)':'')])); });
+    return out;
+  }
+  if(m==='majors'){
+    return Object.keys(T.majors.titles).sort()
+      .filter(cip=>T.majors.series[state.campus+'|'+cip])
+      .map(cip=>[cip, T.majors.titles[cip].replace(/^\d+ - /,'')]);
+  }
+  if(m==='fgfed'){
+    return [['first_generation','First-generation'],['not_first_generation','Not first-generation']];
+  }
+  return [];
+}
+
+function defaultSelection(){
+  const m=state.mode;
+  if(m==='sys'){
+    const opts=currentOptions().map(o=>o[0]);
+    if(state.slice==='eth') return opts.slice(0,5);
+    if(state.slice==='eth_x_pell') return opts.filter(k=>/hispanic_latino\|pell|hispanic_latino\|non_pell|white\|pell|white\|non_pell/.test(k)).slice(0,4);
+    if(state.slice==='eth_x_fg') return opts.filter(k=>/hispanic_latino|white/.test(k)).slice(0,4);
+    return opts;
+  }
+  if(m==='fed'){
+    if(state.fedBy==='campus') return ['Berkeley','Los Angeles','Merced','Riverside'].map(c=>c+'|'+state.fedGroup).filter(k=>T.fed.panel[k]);
+    return ['overall','pell','no_loan_no_pell','hispanic_latino','white'].map(g=>state.fedCampus+'|'+g).filter(k=>T.fed.panel[k]);
+  }
+  if(m==='hs') return (state.sel.hs&&state.sel.hs.length)?state.sel.hs:defaultSchools('hs');
+  if(m==='ccc') return (state.sel.ccc&&state.sel.ccc.length)?state.sel.ccc:defaultSchools('ccc');
+  if(m==='gpa'){
+    const opts=currentOptions().map(o=>o[0]);
+    if(state.gpaGroupType==='overall') return opts;
+    // default: first two subgroups × extreme bands
+    const subs=[...new Set(opts.map(k=>k.split('|')[0]))].slice(0,2);
+    return opts.filter(k=>{ const p=k.split('|'); return subs.includes(p[0])&&(p[1]==='1'||p[1]==='3'); });
+  }
+  if(m==='majors'){
+    const pref=['14','26','11','45','52','27'];  // engineering, bio, CIS, social sci, business, math
+    const av=currentOptions().map(o=>o[0]);
+    const picks=pref.filter(c=>av.includes(c)).slice(0,4);
+    return picks.length?picks:av.slice(0,4);
+  }
+  if(m==='fgfed') return ['first_generation','not_first_generation'];
+  return [];
+}
+
+function defaultSchools(kind){
+  // largest institutions by latest cohort_n for the selected campus
+  const src=T[kind].series[state.campus]||{};
+  const scored=Object.keys(src).map(id=>{
+    const arr=src[id]; let n=0;
+    for(let i=arr.length-1;i>=0;i--){ if(arr[i][1]){ n=arr[i][1]; break; } }
+    return [id,n];
+  }).sort((a,b)=>b[1]-a[1]);
+  return scored.slice(0,4).map(x=>x[0]);
+}
+
+function getSel(){
+  const m=state.mode;
+  if(!state.sel[m]||!state.sel[m].length) state.sel[m]=defaultSelection();
+  return state.sel[m];
+}
+
+function buildChips(){
+  const box=$('chips'); clear(box);
+  if(state.mode==='money') return;
+  const sel=getSel();
+  const opts=currentOptions();
+  const lblOf={}; opts.forEach(([k,l])=>lblOf[k]=l);
+  if(state.mode==='hs'||state.mode==='ccc'){
+    const names=T[state.mode].names;
+    sel.forEach(id=>{ lblOf[id]=(names[id]?names[id][0]:id); });
+  }
+  sel.forEach((k,i)=>{
+    const c=el('span',{class:'chip'},box);
+    el('span',{class:'sw',style:'background:'+PALETTE[i%PALETTE.length]},c);
+    el('span',{text:lblOf[k]||k},c);
+    el('span',{class:'x',text:'✕'},c);
+    c.addEventListener('click',()=>{ state.sel[state.mode]=sel.filter(x=>x!==k); buildChips(); update(); });
+  });
+  if(state.mode!=='hs'&&state.mode!=='ccc'&&state.mode!=='fgfed'){
+    const remaining=opts.filter(([k])=>!sel.includes(k));
+    if(remaining.length){
+      const addWrap=el('span',{class:'chip add'},box);
+      const s=el('select',{style:'border:0;background:transparent;font-size:12.5px;color:var(--muted);padding:0;min-width:90px;'},addWrap);
+      opt(s,'','+ add…',true);
+      remaining.forEach(([k,l])=>opt(s,k,l));
+      s.addEventListener('change',()=>{ if(s.value){ sel.push(s.value); buildChips(); update(); } });
+    }
+  }
+}
+
+/* ---------- school search ---------- */
+const search=$('search'), suggest=$('suggest');
+search.addEventListener('input',()=>{
+  const q=search.value.trim().toLowerCase();
+  clear(suggest);
+  if(q.length<2){ suggest.style.display='none'; return; }
+  const kind=state.mode, names=T[kind].names, avail=T[kind].series[state.campus]||{};
+  const hits=[];
+  for(const id in avail){
+    const nm=names[id];
+    const hay=(nm?nm.join(' '):id).toLowerCase();
+    if(hay.includes(q)){ hits.push([id,nm]); if(hits.length>=12) break; }
+  }
+  hits.forEach(([id,nm])=>{
+    const d=el('div',{},suggest);
+    d.innerHTML='<b>'+(nm?nm[0]:id)+'</b> <span class="meta">'+(nm&&nm[1]?nm[1]+' · ':'')+(nm&&nm[2]?nm[2]:'')+'</span>';
+    d.addEventListener('mousedown',ev=>{
+      ev.preventDefault();
+      const sel=getSel();
+      if(!sel.includes(id)) sel.push(id);
+      search.value=''; suggest.style.display='none';
+      buildChips(); update();
+    });
+  });
+  suggest.style.display=hits.length?'block':'none';
+});
+search.addEventListener('blur',()=>setTimeout(()=>suggest.style.display='none',150));
+
+/* ---------- data assembly for the chart ---------- */
+function assemble(){
+  const m=state.mode, sel=getSel();
+  const series=[]; // {key,label,color,points:[[x,y,n,extra]]}
+  let title='', sub='', unit='%', universe='uc', xlab='Entering cohort', mask='';
+  const lblOf={}; currentOptions().forEach(([k,l])=>lblOf[k]=l);
+  if(m==='sys'){
+    const meta=SYS_MEASURES[state.level].find(x=>x[0]===state.measure);
+    sel.forEach((k,i)=>{
+      const arr=sysSeries(k,state.measure)||[];
+      series.push({key:k,label:lblOf[k]||k,color:PALETTE[i%PALETTE.length],
+        points:arr.map(p=>[p[0],p[1],p[2]])});
+    });
+    unit = state.measure==='ttd_mean'?'yrs':(state.measure==='gradgpa_mean'?'gpa':'%');
+    title=meta[1]+' — '+(state.level==='FR'?'freshman':'transfer')+' entrants, systemwide';
+    sub=meta[2]+'. Hover for cohort sizes. UC Information Center universe.'+
+      ((state.slice==='pell'||state.slice==='fg')?' Pell and first-generation lines are exact N-weighted combinations of the published ethnicity-by-'+(state.slice==='pell'?'Pell':'first-generation')+' cells (mean and GPA measures are available under the ethnicity splits).':'');
+    mask='Published cohort sizes shown in tooltips.';
+  }
+  else if(m==='fed'){
+    universe='fed'; xlab='Scorecard data year';
+    if(state.fedMeasure==='c150'){
+      sel.forEach((k,i)=>{
+        const arr=T.fed.panel[k]||[];
+        series.push({key:k,label:lblOf[k]||k,color:PALETTE[i%PALETTE.length],
+          points:arr.filter(p=>p[1]!=null).map(p=>[p[0],p[1],p[2]])});
+      });
+      title='Six-year completion at the same campus (federal C150)';
+      sub='First-time, full-time bachelor’s-seeking cohorts; each data year reflects a cohort entering ≈6 years earlier. Denominators in tooltips.';
+    } else {
+      const col=state.fedMeasure==='ret'?1:2;
+      const items=state.fedBy==='campus'?[...new Set(sel.map(k=>k.split('|')[0]))]:[state.fedCampus];
+      items.forEach((c,i)=>{
+        const arr=T.fed.stats[c]||[];
+        series.push({key:c,label:c,color:PALETTE[i%PALETTE.length],
+          points:arr.filter(p=>p[col]!=null).map(p=>[p[0],p[col],p[4]])});
+      });
+      title=state.fedMeasure==='ret'?'Full-time first-year retention (federal)':'Share of undergraduates receiving Pell';
+      sub=state.fedMeasure==='ret'?'Campus-level retention of full-time entrants (IPEDS).':'Campus undergraduate Pell share (composition, not an outcome).';
+    }
+    mask='Federal universe: see Methods for cohort definitions.';
+  }
+  else if(m==='hs'||m==='ccc'){
+    const kind=m, names=T[kind].names, src=T[kind].series[state.campus]||{};
+    const meas=m==='hs'?state.hsMeasure:state.cccMeasure;
+    const col = (m==='ccc') ? {ret1:2,grad2:3,grad3:4,grad4:5}[meas] : {ret1:2,grad4:3,grad5:4,grad6:5}[meas];
+    sel.forEach((id,i)=>{
+      const arr=src[id]||[];
+      const nm=names[id]?names[id][0]:id;
+      series.push({key:id,label:nm,color:PALETTE[i%PALETTE.length],
+        points:arr.filter(p=>p[col]!=null).map(p=>[p[0],p[col],p[1]])});
+    });
+    const mlab=(SCHOOL_MEASURES[kind].find(x=>x[0]===meas)||[])[1];
+    title=mlab+' — by source '+(m==='hs'?'high school':'community college')+
+      (state.campus==='All'?', all UC campuses':', '+state.campus);
+    sub=(m==='hs'?'Freshman entrants from each school; ':'Transfer entrants from each college; ')+
+      'integer percents as published; cells appear only when the entering cohort has at least 10 students.';
+    mask='Source masks cells with fewer than 10 students; gaps are masked or absent years.';
+  }
+  else if(m==='gpa'){
+    const src=T.gpa.counts, meas=state.gpaMeasure;
+    unit = meas==='grads'?'count':'%';
+    sel.forEach((sk,i)=>{
+      const parts=sk.split('|'); const sub_=parts[0], band=+parts[1];
+      const rows=(src[state.level+'|'+state.campus+'|'+state.gpaGroupType+'|'+sub_]||[]).filter(r=>r[1]===band);
+      const pts=[];
+      rows.forEach(r=>{
+        const cohort=r[0],lo=r[2],hi=r[3],c1=r[4],c2=r[5],c3=r[6],r1=r[7],r2=r[8],r3=r[9];
+        const g=(c1||0)+(c2||0)+(c3||0);
+        let v=null, n=g;
+        if(meas==='grads'){ v=g||null; }
+        else if(meas==='share4'||meas==='share2'){ if(g>=25&&c1!=null&&c2!=null&&c3!=null) v=Math.round(1000*c1/g)/10; }
+        else if(meas==='share5'){ if(g>=25&&c1!=null&&c2!=null&&c3!=null) v=Math.round(1000*c2/g)/10; }
+        else if(meas==='share6'){ if(g>=25&&c1!=null&&c2!=null&&c3!=null) v=Math.round(1000*c3/g)/10; }
+        else if(meas==='rate2'){ v=r1; }
+        else if(meas==='rate3'){ v=(r1!=null&&r2!=null)?r1+r2:null; }
+        else if(meas==='rate4'){ v=(r1!=null&&r2!=null&&r3!=null)?r1+r2+r3:null; }
+        if(v!=null) pts.push([cohort,v,n,[lo,hi]]);
+      });
+      series.push({key:sk,label:lblOf[sk]||sk,color:PALETTE[i%PALETTE.length],points:pts});
+    });
+    const mlab=(GPA_MEASURES[state.level].find(x=>x[0]===meas)||[])[1];
+    title=mlab+' — GPA bands, '+(state.campus==='All'?'all UC':state.campus)+', '+(state.level==='FR'?'freshman':'transfer')+' entrants';
+    sub='Bands are terciles of this campus × cohort’s own enrollee '+(state.level==='FR'?'high-school':'transfer')+
+      ' GPA; boundaries move year to year (see below the chart). '+
+      (state.level==='FR'
+        ? 'The source gives graduate counts but no entering-cohort denominators, so shares of graduates by time to degree are shown, not graduation rates.'
+        : 'Band completion rates are published for transfer entrants (integer-rounded; cumulative values sum rounded parts).');
+    mask=state.level==='FR'?'Timing shares hidden when fewer than 25 graduates underlie them.':'Rates as published (integer-rounded).';
+  }
+  else if(m==='majors'){
+    universe='fed'; xlab='Completions year (period start)';
+    const meas=state.majMeasure; unit = meas==='total'?'count':'%';
+    sel.forEach((cip,i)=>{
+      const arr=T.majors.series[state.campus+'|'+cip]||[];
+      series.push({key:cip,label:(T.majors.titles[cip]||cip).replace(/^\d+ - /,''),color:PALETTE[i%PALETTE.length],
+        points:arr.map(p=>[p[0], meas==='total'?p[1]:(p[1]?Math.round(1000*p[2]/p[1])/10:null), p[1]]).filter(p=>p[1]!=null)});
+    });
+    title=(meas==='total'?'Bachelor’s degrees conferred':'Underrepresented share of bachelor’s degrees')+' — '+state.campus;
+    sub='IPEDS completions, first majors only. Degrees conferred are counts of graduates by field, not graduation rates. '+
+      'Underrepresented = Black, Hispanic/Latino, American Indian/Alaska Native, Hawaiian/Pacific Islander (federal categories).';
+    mask='Counts of degrees conferred; a student appears once, under the first major.';
+  }
+  else if(m==='fgfed'){
+    universe='fed'; xlab='Years after entry';
+    sel.forEach((g,i)=>{
+      const src=T.fed.fg[state.campus+'|'+g]||{};
+      const arr=src[state.fgOutcome]||[];
+      series.push({key:g,label:g==='first_generation'?'First-generation':'Not first-generation',
+        color:PALETTE[i%PALETTE.length],points:arr.map(p=>[p[0],p[1],p[2]])});
+    });
+    title={comp_orig:'Completed at this campus',wdraw_orig:'Withdrew without an award',enrl_orig:'Still enrolled',
+      comp_4yr_trans:'Completed after transferring to a four-year',comp_2yr_trans:'Completed after transferring to a two-year'}[state.fgOutcome]
+      +' — '+state.campus+', by years after entry';
+    sub='Scorecard NSLDS pooled cohorts, Title IV (federal aid) recipients only. First-generation here = no parent with any postsecondary schooling — broader than UC’s definition. Cohort counts in tooltips.';
+    mask='Title-IV universe; one pooled cohort per horizon, not a time trend.';
+  }
+  return {series,title,sub,unit,universe,xlab,mask};
+}
+
+function showCutnote(){
+  const cn=$('cutnote');
+  const cuts=T.gpa.cuts[state.level+'|'+state.campus];
+  if(state.mode!=='gpa'||!cuts){ if(cn) cn.style.display='none'; return; }
+  const last=cuts[cuts.length-1], first=cuts[0];
+  cn.style.display='block';
+  cn.textContent='Band boundaries for this selection — '+first[0]+': '+first[1].toFixed(2)+' / '+first[2].toFixed(2)+' / '+first[3].toFixed(2)+' / '+first[4].toFixed(2)+
+    '  →  '+last[0]+': '+last[1].toFixed(2)+' / '+last[2].toFixed(2)+' / '+last[3].toFixed(2)+' / '+last[4].toFixed(2)+
+    ' (min / band 1–2 / band 2–3 / max). Hover points for each cohort’s band range.';
+}
+
+/* ---------- money view (categorical dot plot) ---------- */
+function renderMoney(){
+  const box=$('chart'); clear(box);
+  const metric=state.moneyMetric;
+  let cols, titleTxt, subTxt;
+  if(metric==='earnings'){
+    const h='earnings_'+state.horizon;
+    cols=[['inc_low','Low-income origin ($0–30k)'],['inc_mid','Middle ($30–75k)'],['inc_high','Higher ($75k+)'],['overall','All']];
+    titleTxt='Median earnings '+{p6:'6',p8:'8',p10:'10'}[state.horizon]+' years after entry, by family-income origin';
+    subTxt='Scorecard NSLDS: Title IV recipients working and not enrolled. Pooled cohorts, June 2026 vintage — a snapshot, not a trend.';
+    drawDots(cols.map(([sub,lbl],i)=>({label:lbl,color:PALETTE[i],vals:CAMPUSES.map(c=>{
+      const rec=(T.fed.money[c]||{})[h+'|'+sub]; return rec?rec[0]:null; })})));
+  } else {
+    cols=[['pell','Pell recipients'],['non_pell','Non-Pell'],['first_gen','First-generation'],['overall','All graduates']];
+    titleTxt='Median federal-loan debt of graduates, by group';
+    subTxt='Scorecard: median cumulative federal loan debt among Title IV graduates, June 2026 vintage.';
+    drawDots(cols.map(([sub,lbl],i)=>({label:lbl,color:PALETTE[i],vals:CAMPUSES.map(c=>{
+      const rec=(T.fed.money[c]||{})['debt_grad|'+sub]; return rec?rec[0]:null; })})));
+  }
+  $('plotTitle').innerHTML=titleTxt+' <span class="badge fed">Federal data</span>';
+  $('plotSub').textContent=subTxt;
+  $('maskNote').textContent='Medians; counts in the CSV. Title-IV universe only.';
+  $('cutnote').style.display='none';
+  lastView={money:true,cols,metric};
+}
+
+function drawDots(groups){
+  const box=$('chart');
+  const W=Math.min(box.clientWidth||960,1160), H=Math.max(340, CAMPUSES.length*34+90);
+  const ml=110,mr=30,mt=14,mb=40;
+  const svg=d3.select(box).append('svg').attr('viewBox','0 0 '+W+' '+H);
+  const allVals=groups.flatMap(g=>g.vals).filter(v=>v!=null);
+  const x=d3.scaleLinear().domain([0,d3.max(allVals)*1.06]).range([ml,W-mr]);
+  const y=d3.scalePoint().domain(CAMPUSES).range([mt+18,H-mb]).padding(.5);
+  const ax=d3.axisBottom(x).ticks(6).tickFormat(v=>'$'+d3.format('~s')(v));
+  svg.append('g').attr('class','axis').attr('transform','translate(0,'+(H-mb+6)+')').call(ax);
+  svg.append('g').attr('class','axis').attr('transform','translate('+(ml-8)+',0)')
+    .call(d3.axisLeft(y).tickSize(0)).select('.domain').remove();
+  CAMPUSES.forEach(c=>{
+    svg.append('line').attr('class','gridline').attr('x1',ml).attr('x2',W-mr)
+      .attr('y1',y(c)).attr('y2',y(c));
+  });
+  groups.forEach(g=>{
+    CAMPUSES.forEach((c,ci)=>{
+      const v=g.vals[ci]; if(v==null) return;
+      svg.append('circle').attr('cx',x(v)).attr('cy',y(c)).attr('r',5.5)
+        .attr('fill',g.color).attr('class','pt')
+        .on('mousemove',ev=>showTip(ev, '<b>'+c+'</b><br>'+g.label+'<br>$'+fmtN(v)))
+        .on('mouseleave',hideTip);
+    });
+  });
+  // legend
+  const lg=svg.append('g').attr('transform','translate('+ml+','+(mt+2)+')');
+  let lx=0;
+  groups.forEach(g=>{
+    lg.append('circle').attr('cx',lx+5).attr('cy',0).attr('r',5).attr('fill',g.color);
+    const t=lg.append('text').attr('x',lx+14).attr('y',4).attr('font-size',11.5).attr('fill','#5c6470').text(g.label);
+    let tw=110; try{ tw=t.node().getComputedTextLength(); }catch(e){}
+    lx+=14+tw+16;
+  });
+}
+
+/* ---------- line chart ---------- */
+let lastView=null;
+function update(){
+  if(state.mode==='money'){ renderMoney(); setBadge('fed'); return; }
+  const v=assemble();
+  lastView=v;
+  setBadge(v.universe);
+  $('plotTitle').innerHTML=v.title+' <span class="badge '+(v.universe==='fed'?'fed':'uc')+'">'+(v.universe==='fed'?'Federal data':'UC data')+'</span>';
+  $('plotSub').textContent=v.sub;
+  $('maskNote').textContent=v.mask;
+  showCutnote();
+  drawLines(v);
+  buildChips();
+}
+
+function setBadge(u){
+  const b=$('universeBadge');
+  b.textContent=u==='fed'?'Federal data':'UC data';
+  b.className='badge '+(u==='fed'?'fed':'uc');
+}
+
+function drawLines(v){
+  const box=$('chart'); clear(box);
+  const small=(window.innerWidth||1000)<=700;
+  const W=Math.min(box.clientWidth||960,1160), H=small?360:440;
+  const ml=48,mr=18,mt=12,mb=36;
+  const svg=d3.select(box).append('svg').attr('viewBox','0 0 '+W+' '+H);
+  const pts=v.series.flatMap(s=>s.points);
+  if(!pts.length){
+    svg.append('text').attr('x',W/2).attr('y',H/2).attr('text-anchor','middle')
+      .attr('fill','#5c6470').text('No published data for this selection.');
+    return;
+  }
+  const xs=pts.map(p=>p[0]), ys=pts.map(p=>p[1]);
+  const x=d3.scaleLinear().domain(d3.extent(xs)).range([ml,W-mr]);
+  let ylo=d3.min(ys), yhi=d3.max(ys);
+  if(v.unit==='%'){ ylo=Math.max(0,Math.floor((ylo-4)/10)*10); yhi=Math.min(100,Math.ceil((yhi+2)/10)*10); }
+  else { const pad=(yhi-ylo)*.12||1; ylo-=pad; yhi+=pad; if(v.unit==='count') ylo=Math.max(0,ylo); }
+  const y=d3.scaleLinear().domain([ylo,yhi]).nice().range([H-mb,mt]);
+  // covid band (UC cohort axes only)
+  if(v.universe==='uc'&&v.xlab==='Entering cohort'&&x.domain()[1]>=2020){
+    const x0=Math.max(x.domain()[0],2019.5), x1=Math.min(x.domain()[1],2021.5);
+    if(x1>x0){
+      svg.append('rect').attr('class','covidband').attr('x',x(x0)).attr('width',x(x1)-x(x0))
+        .attr('y',mt).attr('height',H-mb-mt);
+      svg.append('text').attr('class','covidlbl').attr('x',x(Math.min(2020.9,x.domain()[1])))
+        .attr('y',mt+11).attr('text-anchor','middle').text('2020–21');
+    }
+  }
+  const yax=d3.axisLeft(y).ticks(6).tickFormat(t=>v.unit==='%'?t+'%':(v.unit==='count'?d3.format('~s')(t):t));
+  svg.append('g').attr('class','axis').attr('transform','translate('+ml+',0)').call(yax);
+  const xax=d3.axisBottom(x).ticks(Math.min(12,new Set(xs).size)).tickFormat(d3.format('d'));
+  svg.append('g').attr('class','axis').attr('transform','translate(0,'+(H-mb)+')').call(xax);
+  y.ticks(6).forEach(t=>{
+    svg.append('line').attr('class','gridline').attr('x1',ml).attr('x2',W-mr).attr('y1',y(t)).attr('y2',y(t));
+  });
+  svg.append('text').attr('x',W-mr).attr('y',H-8).attr('text-anchor','end')
+    .attr('font-size',11).attr('fill','#5c6470').text(v.xlab);
+  const line=d3.line().defined(p=>p[1]!=null).x(p=>x(p[0])).y(p=>y(p[1]));
+  v.series.forEach(s=>{
+    if(!s.points.length) return;
+    svg.append('path').attr('class','sline').attr('d',line(s.points)).attr('stroke',s.color);
+    const r=s.points.length>30?2.4:3.4;
+    s.points.forEach(p=>{
+      svg.append('circle').attr('class','pt').attr('cx',x(p[0])).attr('cy',y(p[1])).attr('r',r).attr('fill',s.color)
+        .on('mousemove',ev=>{
+          let html='<b>'+s.label+'</b><br><span class="tl">'+v.xlab+':</span> '+p[0]+
+            '<br><span class="tl">value:</span> '+(v.unit==='%'?p[1]+'%':(v.unit==='count'?fmtN(p[1]):p[1]))+
+            (p[2]!=null?'<br><span class="tl">'+(state.mode==='gpa'?'graduates':(state.mode==='majors'?'degrees (all groups)':'N'))+':</span> '+fmtN(p[2]):'');
+          if(p[3]) html+='<br><span class="tl">band range:</span> '+p[3][0].toFixed(2)+'–'+p[3][1].toFixed(2);
+          showTip(ev,html);
+        })
+        .on('mouseleave',hideTip);
+    });
+    // end label for wide charts
+    if(!small&&v.series.length<=8){
+      const lastPt=s.points[s.points.length-1];
+      svg.append('text').attr('x',x(lastPt[0])+6).attr('y',y(lastPt[1])+3.5)
+        .attr('font-size',10.5).attr('fill',s.color).text(shortLbl(s.label));
+    }
+  });
+}
+function shortLbl(l){ return l.length>22?l.slice(0,21)+'…':l; }
+
+function showTip(ev,html){
+  tooltip.innerHTML=html; tooltip.style.display='block';
+  const pad=12, w=tooltip.offsetWidth, h=tooltip.offsetHeight;
+  let X=ev.clientX+pad, Y=ev.clientY+pad;
+  if(X+w>window.innerWidth-8) X=ev.clientX-w-pad;
+  if(Y+h>window.innerHeight-8) Y=ev.clientY-h-pad;
+  tooltip.style.left=X+'px'; tooltip.style.top=Y+'px';
+}
+function hideTip(){ tooltip.style.display='none'; }
+
+/* ---------- CSV download ---------- */
+$('dlcsv').addEventListener('click',()=>{
+  if(!lastView) return;
+  let rows=[];
+  if(lastView.money){
+    rows.push(['campus','series','value_usd']);
+    lastView.cols.forEach(([sub,lbl])=>{
+      CAMPUSES.forEach(c=>{
+        const key=(lastView.metric==='earnings'?('earnings_'+state.horizon):'debt_grad')+'|'+sub;
+        const rec=(T.fed.money[c]||{})[key];
+        if(rec) rows.push([c,lbl,rec[0]]);
+      });
+    });
+  } else {
+    rows.push(['series','x','value','n']);
+    lastView.series.forEach(s=>s.points.forEach(p=>rows.push([s.label,p[0],p[1],p[2]==null?'':p[2]])));
+  }
+  const csv=rows.map(r=>r.map(x=>{
+    x=String(x); return /[",\n]/.test(x)?'"'+x.replace(/"/g,'""')+'"':x;
+  }).join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download='uc_outcomes_view.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+});
+
+/* ---------- glossary & sources ---------- */
+(function(){
+  const g=$('measureGlossary');
+  const parts=[];
+  SYS_MEASURES.FR.forEach(x=>parts.push('<b>'+x[1]+'</b> — '+x[2]+'.'));
+  parts.push('<b>C150</b> — federal six-year (150%-time) completion at the same campus, first-time full-time cohorts.');
+  parts.push('<b>Degrees conferred</b> — IPEDS completion counts by field; not rates.');
+  g.innerHTML=parts.join(' ');
+  $('srcline').textContent='UC series: '+T.meta.sources.uc_ic+'. Federal series: '+T.meta.sources.scorecard+'; '+T.meta.sources.ipeds+'. Site data built '+T.meta.built+'.';
+})();
+
+/* ---------- boot ---------- */
+buildControls();
+update();
+let rto=null;
+window.addEventListener('resize',()=>{ clearTimeout(rto); rto=setTimeout(update,150); });
+})();
+</script>
+</body>
+</html>

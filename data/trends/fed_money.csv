@@ -1,0 +1,181 @@
+campus,metric,subgroup,value,n
+Berkeley,earnings_p6,overall,65914,4719
+Berkeley,earnings_p6,inc_low,62193,2177
+Berkeley,earnings_p6,inc_mid,64546,1405
+Berkeley,earnings_p6,inc_high,75701,1139
+Berkeley,earnings_p8,overall,74225,5343
+Berkeley,earnings_p8,inc_low,72274,2315
+Berkeley,earnings_p8,inc_mid,74428,1688
+Berkeley,earnings_p8,inc_high,76183,1337
+Berkeley,earnings_p10,overall,80364,5882
+Berkeley,earnings_p10,inc_low,78800,2707
+Berkeley,earnings_p10,inc_mid,79307,1811
+Berkeley,earnings_p10,inc_high,84802,1366
+Berkeley,debt_grad,overall,13500,4819
+Berkeley,debt_grad,pell,12034,4282
+Berkeley,debt_grad,non_pell,12972,2577
+Berkeley,debt_grad,inc_low,11952,2466
+Berkeley,debt_grad,inc_mid,11777,1807
+Berkeley,debt_grad,inc_high,13000,2586
+Berkeley,debt_grad,first_gen,12007,3861
+Berkeley,debt_grad,not_first_gen,12828,2998
+Davis,earnings_p6,overall,54621,5849
+Davis,earnings_p6,inc_low,53760,2590
+Davis,earnings_p6,inc_mid,54061,1870
+Davis,earnings_p6,inc_high,56576,1389
+Davis,earnings_p8,overall,63095,5848
+Davis,earnings_p8,inc_low,59890,2362
+Davis,earnings_p8,inc_mid,62903,1891
+Davis,earnings_p8,inc_high,69189,1594
+Davis,earnings_p10,overall,69766,7550
+Davis,earnings_p10,inc_low,66016,3252
+Davis,earnings_p10,inc_mid,68873,2484
+Davis,earnings_p10,inc_high,76325,1813
+Davis,debt_grad,overall,13199,6582
+Davis,debt_grad,pell,11002,6370
+Davis,debt_grad,non_pell,12207,3031
+Davis,debt_grad,inc_low,11000,3538
+Davis,debt_grad,inc_mid,11300,2761
+Davis,debt_grad,inc_high,12790,3102
+Davis,debt_grad,first_gen,11000,6535
+Davis,debt_grad,not_first_gen,12500,2866
+Irvine,earnings_p6,overall,52679,5082
+Irvine,earnings_p6,inc_low,51315,2167
+Irvine,earnings_p6,inc_mid,52624,1676
+Irvine,earnings_p6,inc_high,55720,1240
+Irvine,earnings_p8,overall,63899,5105
+Irvine,earnings_p8,inc_low,61353,1903
+Irvine,earnings_p8,inc_mid,64129,1686
+Irvine,earnings_p8,inc_high,65765,1516
+Irvine,earnings_p10,overall,71961,5998
+Irvine,earnings_p10,inc_low,67563,2314
+Irvine,earnings_p10,inc_mid,72452,1986
+Irvine,earnings_p10,inc_high,76735,1695
+Irvine,debt_grad,overall,15060,6787
+Irvine,debt_grad,pell,13933,6018
+Irvine,debt_grad,non_pell,15000,2543
+Irvine,debt_grad,inc_low,13700,3162
+Irvine,debt_grad,inc_mid,14000,2842
+Irvine,debt_grad,inc_high,15000,2557
+Irvine,debt_grad,first_gen,13700,6103
+Irvine,debt_grad,not_first_gen,15000,2458
+Los Angeles,earnings_p6,overall,55427,5179
+Los Angeles,earnings_p6,inc_low,51313,2272
+Los Angeles,earnings_p6,inc_mid,55754,1559
+Los Angeles,earnings_p6,inc_high,61470,1347
+Los Angeles,earnings_p8,overall,66297,5781
+Los Angeles,earnings_p8,inc_low,63474,2437
+Los Angeles,earnings_p8,inc_mid,67723,1768
+Los Angeles,earnings_p8,inc_high,69668,1575
+Los Angeles,earnings_p10,overall,73744,6327
+Los Angeles,earnings_p10,inc_low,71381,2911
+Los Angeles,earnings_p10,inc_mid,72328,1911
+Los Angeles,earnings_p10,inc_high,79965,1503
+Los Angeles,debt_grad,overall,15000,7279
+Los Angeles,debt_grad,pell,13830,6188
+Los Angeles,debt_grad,non_pell,14667,3504
+Los Angeles,debt_grad,inc_low,13012,3564
+Los Angeles,debt_grad,inc_mid,14071,2694
+Los Angeles,debt_grad,inc_high,15000,3434
+Los Angeles,debt_grad,first_gen,13549,6109
+Los Angeles,debt_grad,not_first_gen,14975,3583
+Riverside,earnings_p6,overall,45632,4706
+Riverside,earnings_p6,inc_low,43513,2140
+Riverside,earnings_p6,inc_mid,45715,1693
+Riverside,earnings_p6,inc_high,50779,871
+Riverside,earnings_p8,overall,52694,5910
+Riverside,earnings_p8,inc_low,49953,2328
+Riverside,earnings_p8,inc_mid,52445,2211
+Riverside,earnings_p8,inc_high,57741,1371
+Riverside,earnings_p10,overall,58880,4870
+Riverside,earnings_p10,inc_low,56595,2013
+Riverside,earnings_p10,inc_mid,58973,1748
+Riverside,earnings_p10,inc_high,62515,1109
+Riverside,debt_grad,overall,18000,5919
+Riverside,debt_grad,pell,15018,6091
+Riverside,debt_grad,non_pell,15197,2169
+Riverside,debt_grad,inc_low,14500,3102
+Riverside,debt_grad,inc_mid,15500,2813
+Riverside,debt_grad,inc_high,15787,2345
+Riverside,debt_grad,first_gen,15000,6107
+Riverside,debt_grad,not_first_gen,16227,2153
+San Diego,earnings_p6,overall,56844,4710
+San Diego,earnings_p6,inc_low,54781,2255
+San Diego,earnings_p6,inc_mid,57677,1444
+San Diego,earnings_p6,inc_high,60369,1011
+San Diego,earnings_p8,overall,67635,5551
+San Diego,earnings_p8,inc_low,65553,2539
+San Diego,earnings_p8,inc_mid,66616,1792
+San Diego,earnings_p8,inc_high,74725,1219
+San Diego,earnings_p10,overall,74771,5827
+San Diego,earnings_p10,inc_low,70495,2561
+San Diego,earnings_p10,inc_mid,76187,1958
+San Diego,earnings_p10,inc_high,79096,1310
+San Diego,debt_grad,overall,16500,6083
+San Diego,debt_grad,pell,15000,5789
+San Diego,debt_grad,non_pell,14500,2635
+San Diego,debt_grad,inc_low,14667,3181
+San Diego,debt_grad,inc_mid,15000,2485
+San Diego,debt_grad,inc_high,15000,2758
+San Diego,debt_grad,first_gen,14800,5469
+San Diego,debt_grad,not_first_gen,15000,2955
+Santa Barbara,earnings_p6,overall,51496,4185
+Santa Barbara,earnings_p6,inc_low,48665,1585
+Santa Barbara,earnings_p6,inc_mid,50666,1368
+Santa Barbara,earnings_p6,inc_high,56687,1232
+Santa Barbara,earnings_p8,overall,59432,5114
+Santa Barbara,earnings_p8,inc_low,56233,1890
+Santa Barbara,earnings_p8,inc_mid,57696,1665
+Santa Barbara,earnings_p8,inc_high,66507,1563
+Santa Barbara,earnings_p10,overall,66491,4790
+Santa Barbara,earnings_p10,inc_low,60925,1703
+Santa Barbara,earnings_p10,inc_mid,67183,1565
+Santa Barbara,earnings_p10,inc_high,71665,1521
+Santa Barbara,debt_grad,overall,14500,4099
+Santa Barbara,debt_grad,pell,12500,5130
+Santa Barbara,debt_grad,non_pell,12500,2341
+Santa Barbara,debt_grad,inc_low,12000,2658
+Santa Barbara,debt_grad,inc_mid,13000,2329
+Santa Barbara,debt_grad,inc_high,12808,2484
+Santa Barbara,debt_grad,first_gen,12847,5224
+Santa Barbara,debt_grad,not_first_gen,12000,2247
+Santa Cruz,earnings_p6,overall,45632,4101
+Santa Cruz,earnings_p6,inc_low,43742,1653
+Santa Cruz,earnings_p6,inc_mid,45627,1335
+Santa Cruz,earnings_p6,inc_high,48395,1113
+Santa Cruz,earnings_p8,overall,54286,4088
+Santa Cruz,earnings_p8,inc_low,51759,1406
+Santa Cruz,earnings_p8,inc_mid,53595,1322
+Santa Cruz,earnings_p8,inc_high,58223,1359
+Santa Cruz,earnings_p10,overall,58112,3953
+Santa Cruz,earnings_p10,inc_low,55048,1409
+Santa Cruz,earnings_p10,inc_mid,58205,1298
+Santa Cruz,earnings_p10,inc_high,61192,1246
+Santa Cruz,debt_grad,overall,17484,4419
+Santa Cruz,debt_grad,pell,15395,4296
+Santa Cruz,debt_grad,non_pell,12859,2350
+Santa Cruz,debt_grad,inc_low,15320,2244
+Santa Cruz,debt_grad,inc_mid,15000,2053
+Santa Cruz,debt_grad,inc_high,13500,2349
+Santa Cruz,debt_grad,first_gen,15000,4471
+Santa Cruz,debt_grad,not_first_gen,14000,2175
+Merced,earnings_p6,overall,44264,1462
+Merced,earnings_p6,inc_low,40082,642
+Merced,earnings_p6,inc_mid,44788,513
+Merced,earnings_p6,inc_high,51369,309
+Merced,earnings_p8,overall,53284,1626
+Merced,earnings_p8,inc_low,51451,672
+Merced,earnings_p8,inc_mid,52959,612
+Merced,earnings_p8,inc_high,58335,341
+Merced,earnings_p10,overall,61148,334
+Merced,earnings_p10,inc_low,57085,123
+Merced,earnings_p10,inc_mid,66024,108
+Merced,earnings_p10,inc_high,60774,103
+Merced,debt_grad,overall,17500,1840
+Merced,debt_grad,pell,12353,2256
+Merced,debt_grad,non_pell,14050,579
+Merced,debt_grad,inc_low,12700,1175
+Merced,debt_grad,inc_mid,11463,1079
+Merced,debt_grad,inc_high,15502,581
+Merced,debt_grad,first_gen,12250,2356
+Merced,debt_grad,not_first_gen,14512,479

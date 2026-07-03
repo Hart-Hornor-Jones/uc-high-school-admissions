@@ -1,0 +1,359 @@
+campus,group,years_after_entry,outcome,rate_pct,cohort_n
+Berkeley,first_generation,2,comp_2yr_trans,4.2,2448
+Berkeley,first_generation,2,comp_orig,29.8,2448
+Berkeley,first_generation,2,enrl_orig,51.7,2448
+Berkeley,first_generation,2,wdraw_orig,6.2,2448
+Berkeley,first_generation,3,comp_2yr_trans,3.2,2301
+Berkeley,first_generation,3,comp_orig,57.1,2301
+Berkeley,first_generation,3,enrl_orig,22.5,2301
+Berkeley,first_generation,3,wdraw_orig,9.5,2301
+Berkeley,first_generation,4,comp_2yr_trans,2.7,2567
+Berkeley,first_generation,4,comp_4yr_trans,1.2,2567
+Berkeley,first_generation,4,comp_orig,72.5,2567
+Berkeley,first_generation,4,enrl_orig,6.7,2567
+Berkeley,first_generation,4,wdraw_orig,10.1,2567
+Berkeley,first_generation,6,comp_2yr_trans,1.9,2449
+Berkeley,first_generation,6,comp_4yr_trans,5.5,2449
+Berkeley,first_generation,6,comp_orig,65.2,2449
+Berkeley,first_generation,6,wdraw_orig,17.3,2449
+Berkeley,first_generation,8,comp_2yr_trans,1.7,2362
+Berkeley,first_generation,8,comp_4yr_trans,10.3,2362
+Berkeley,first_generation,8,comp_orig,49.9,2362
+Berkeley,first_generation,8,wdraw_orig,21.3,2362
+Berkeley,not_first_generation,2,comp_2yr_trans,1.9,1561
+Berkeley,not_first_generation,2,comp_orig,20.6,1561
+Berkeley,not_first_generation,2,enrl_orig,59.3,1561
+Berkeley,not_first_generation,2,wdraw_orig,6.8,1561
+Berkeley,not_first_generation,3,comp_2yr_trans,1.9,1563
+Berkeley,not_first_generation,3,comp_orig,63.6,1563
+Berkeley,not_first_generation,3,enrl_orig,16.6,1563
+Berkeley,not_first_generation,3,wdraw_orig,12.2,1563
+Berkeley,not_first_generation,4,comp_2yr_trans,1.0,1574
+Berkeley,not_first_generation,4,comp_4yr_trans,0.9,1574
+Berkeley,not_first_generation,4,comp_orig,80.4,1574
+Berkeley,not_first_generation,4,enrl_orig,3.3,1574
+Berkeley,not_first_generation,4,wdraw_orig,9.8,1574
+Berkeley,not_first_generation,6,comp_2yr_trans,0.8,1504
+Berkeley,not_first_generation,6,comp_4yr_trans,4.7,1504
+Berkeley,not_first_generation,6,comp_orig,69.8,1504
+Berkeley,not_first_generation,6,wdraw_orig,15.8,1504
+Berkeley,not_first_generation,8,comp_2yr_trans,1.0,1589
+Berkeley,not_first_generation,8,comp_4yr_trans,9.8,1589
+Berkeley,not_first_generation,8,comp_orig,58.3,1589
+Berkeley,not_first_generation,8,wdraw_orig,17.7,1589
+Davis,first_generation,2,comp_2yr_trans,1.8,3925
+Davis,first_generation,2,comp_orig,26.2,3925
+Davis,first_generation,2,enrl_orig,54.0,3925
+Davis,first_generation,2,wdraw_orig,6.0,3925
+Davis,first_generation,3,comp_2yr_trans,2.0,3551
+Davis,first_generation,3,comp_4yr_trans,2.0,3551
+Davis,first_generation,3,comp_orig,55.8,3551
+Davis,first_generation,3,enrl_orig,24.8,3551
+Davis,first_generation,3,wdraw_orig,6.7,3551
+Davis,first_generation,4,comp_2yr_trans,1.9,3822
+Davis,first_generation,4,comp_4yr_trans,2.8,3822
+Davis,first_generation,4,comp_orig,75.1,3822
+Davis,first_generation,4,enrl_orig,5.3,3822
+Davis,first_generation,4,wdraw_orig,6.7,3822
+Davis,first_generation,6,comp_4yr_trans,3.3,3544
+Davis,first_generation,6,comp_orig,81.7,3544
+Davis,first_generation,6,wdraw_orig,6.2,3544
+Davis,first_generation,8,comp_2yr_trans,1.8,3398
+Davis,first_generation,8,comp_4yr_trans,6.4,3398
+Davis,first_generation,8,comp_orig,74.3,3398
+Davis,first_generation,8,wdraw_orig,7.3,3398
+Davis,not_first_generation,2,comp_2yr_trans,1.5,1613
+Davis,not_first_generation,2,comp_orig,22.7,1613
+Davis,not_first_generation,2,enrl_orig,56.5,1613
+Davis,not_first_generation,2,wdraw_orig,5.3,1613
+Davis,not_first_generation,3,comp_2yr_trans,0.9,1480
+Davis,not_first_generation,3,comp_4yr_trans,1.4,1480
+Davis,not_first_generation,3,comp_orig,60.4,1480
+Davis,not_first_generation,3,enrl_orig,23.4,1480
+Davis,not_first_generation,3,wdraw_orig,6.0,1480
+Davis,not_first_generation,4,comp_2yr_trans,1.3,1582
+Davis,not_first_generation,4,comp_4yr_trans,2.4,1582
+Davis,not_first_generation,4,comp_orig,79.3,1582
+Davis,not_first_generation,4,enrl_orig,3.9,1582
+Davis,not_first_generation,4,wdraw_orig,6.1,1582
+Davis,not_first_generation,6,comp_4yr_trans,3.6,1629
+Davis,not_first_generation,6,comp_orig,85.9,1629
+Davis,not_first_generation,6,wdraw_orig,4.8,1629
+Davis,not_first_generation,8,comp_2yr_trans,0.8,1442
+Davis,not_first_generation,8,comp_4yr_trans,6.3,1442
+Davis,not_first_generation,8,comp_orig,79.9,1442
+Davis,not_first_generation,8,wdraw_orig,5.3,1442
+Irvine,first_generation,2,comp_2yr_trans,2.2,3879
+Irvine,first_generation,2,comp_orig,21.6,3879
+Irvine,first_generation,2,enrl_orig,59.9,3879
+Irvine,first_generation,2,wdraw_orig,6.6,3879
+Irvine,first_generation,3,comp_2yr_trans,1.6,3614
+Irvine,first_generation,3,comp_4yr_trans,1.5,3614
+Irvine,first_generation,3,comp_orig,60.0,3614
+Irvine,first_generation,3,enrl_orig,20.6,3614
+Irvine,first_generation,3,wdraw_orig,7.6,3614
+Irvine,first_generation,4,comp_2yr_trans,1.8,3546
+Irvine,first_generation,4,comp_4yr_trans,1.7,3546
+Irvine,first_generation,4,comp_orig,72.6,3546
+Irvine,first_generation,4,enrl_orig,3.8,3546
+Irvine,first_generation,4,wdraw_orig,10.3,3546
+Irvine,first_generation,6,comp_4yr_trans,5.2,3455
+Irvine,first_generation,6,comp_orig,76.1,3455
+Irvine,first_generation,6,wdraw_orig,8.7,3455
+Irvine,first_generation,8,comp_2yr_trans,1.5,2722
+Irvine,first_generation,8,comp_4yr_trans,7.9,2722
+Irvine,first_generation,8,comp_orig,70.6,2722
+Irvine,first_generation,8,wdraw_orig,9.8,2722
+Irvine,not_first_generation,2,comp_2yr_trans,1.5,1504
+Irvine,not_first_generation,2,comp_orig,18.1,1504
+Irvine,not_first_generation,2,enrl_orig,62.5,1504
+Irvine,not_first_generation,2,wdraw_orig,5.1,1504
+Irvine,not_first_generation,3,comp_2yr_trans,1.3,1251
+Irvine,not_first_generation,3,comp_4yr_trans,1.3,1251
+Irvine,not_first_generation,3,comp_orig,64.3,1251
+Irvine,not_first_generation,3,enrl_orig,17.8,1251
+Irvine,not_first_generation,3,wdraw_orig,5.9,1251
+Irvine,not_first_generation,4,comp_2yr_trans,1.2,1341
+Irvine,not_first_generation,4,comp_4yr_trans,3.3,1341
+Irvine,not_first_generation,4,comp_orig,79.0,1341
+Irvine,not_first_generation,4,enrl_orig,3.3,1341
+Irvine,not_first_generation,4,wdraw_orig,7.7,1341
+Irvine,not_first_generation,6,comp_4yr_trans,4.7,1321
+Irvine,not_first_generation,6,comp_orig,80.2,1321
+Irvine,not_first_generation,6,wdraw_orig,8.0,1321
+Irvine,not_first_generation,8,comp_2yr_trans,0.9,1508
+Irvine,not_first_generation,8,comp_4yr_trans,7.8,1508
+Irvine,not_first_generation,8,comp_orig,75.3,1508
+Irvine,not_first_generation,8,wdraw_orig,8.7,1508
+Los Angeles,first_generation,2,comp_2yr_trans,4.0,5291
+Los Angeles,first_generation,2,comp_4yr_trans,0.7,5291
+Los Angeles,first_generation,2,comp_orig,23.5,5291
+Los Angeles,first_generation,2,enrl_orig,58.2,5291
+Los Angeles,first_generation,2,wdraw_orig,6.4,5291
+Los Angeles,first_generation,3,comp_2yr_trans,2.4,3181
+Los Angeles,first_generation,3,comp_4yr_trans,1.6,3181
+Los Angeles,first_generation,3,comp_orig,59.8,3181
+Los Angeles,first_generation,3,enrl_orig,20.1,3181
+Los Angeles,first_generation,3,wdraw_orig,11.0,3181
+Los Angeles,first_generation,4,comp_2yr_trans,2.1,3265
+Los Angeles,first_generation,4,comp_4yr_trans,2.5,3265
+Los Angeles,first_generation,4,comp_orig,74.2,3265
+Los Angeles,first_generation,4,enrl_orig,4.4,3265
+Los Angeles,first_generation,4,wdraw_orig,11.9,3265
+Los Angeles,first_generation,6,comp_4yr_trans,3.9,3142
+Los Angeles,first_generation,6,comp_orig,81.3,3142
+Los Angeles,first_generation,6,wdraw_orig,8.4,3142
+Los Angeles,first_generation,8,comp_4yr_trans,6.7,2875
+Los Angeles,first_generation,8,comp_orig,74.7,2875
+Los Angeles,first_generation,8,wdraw_orig,9.5,2875
+Los Angeles,not_first_generation,2,comp_2yr_trans,2.8,2297
+Los Angeles,not_first_generation,2,comp_4yr_trans,0.7,2297
+Los Angeles,not_first_generation,2,comp_orig,18.4,2297
+Los Angeles,not_first_generation,2,enrl_orig,59.4,2297
+Los Angeles,not_first_generation,2,wdraw_orig,6.0,2297
+Los Angeles,not_first_generation,3,comp_2yr_trans,1.3,1674
+Los Angeles,not_first_generation,3,comp_4yr_trans,1.9,1674
+Los Angeles,not_first_generation,3,comp_orig,68.2,1674
+Los Angeles,not_first_generation,3,enrl_orig,14.6,1674
+Los Angeles,not_first_generation,3,wdraw_orig,9.8,1674
+Los Angeles,not_first_generation,4,comp_2yr_trans,1.5,1822
+Los Angeles,not_first_generation,4,comp_4yr_trans,2.4,1822
+Los Angeles,not_first_generation,4,comp_orig,79.6,1822
+Los Angeles,not_first_generation,4,enrl_orig,2.6,1822
+Los Angeles,not_first_generation,4,wdraw_orig,9.9,1822
+Los Angeles,not_first_generation,6,comp_4yr_trans,3.5,1721
+Los Angeles,not_first_generation,6,comp_orig,86.2,1721
+Los Angeles,not_first_generation,6,wdraw_orig,6.3,1721
+Los Angeles,not_first_generation,8,comp_4yr_trans,6.7,1767
+Los Angeles,not_first_generation,8,comp_orig,79.1,1767
+Los Angeles,not_first_generation,8,wdraw_orig,7.0,1767
+Merced,first_generation,2,comp_orig,5.7,1693
+Merced,first_generation,2,enrl_orig,62.3,1693
+Merced,first_generation,3,comp_orig,40.1,1343
+Merced,first_generation,3,enrl_orig,29.8,1343
+Merced,first_generation,3,wdraw_orig,6.3,1343
+Merced,first_generation,4,comp_4yr_trans,3.2,1152
+Merced,first_generation,4,comp_orig,62.3,1152
+Merced,first_generation,4,enrl_orig,6.8,1152
+Merced,first_generation,4,wdraw_orig,5.5,1152
+Merced,first_generation,6,comp_4yr_trans,6.5,1157
+Merced,first_generation,6,comp_orig,63.6,1157
+Merced,first_generation,6,wdraw_orig,7.4,1157
+Merced,first_generation,8,comp_4yr_trans,9.9,1035
+Merced,first_generation,8,comp_orig,60.2,1035
+Merced,first_generation,8,wdraw_orig,6.7,1035
+Merced,not_first_generation,2,comp_orig,7.7,260
+Merced,not_first_generation,2,enrl_orig,68.5,260
+Merced,not_first_generation,3,comp_orig,49.0,239
+Merced,not_first_generation,3,enrl_orig,26.4,239
+Merced,not_first_generation,3,wdraw_orig,4.6,239
+Merced,not_first_generation,4,comp_4yr_trans,6.5,247
+Merced,not_first_generation,4,comp_orig,68.4,247
+Merced,not_first_generation,4,enrl_orig,4.0,247
+Merced,not_first_generation,4,wdraw_orig,4.9,247
+Merced,not_first_generation,6,comp_4yr_trans,6.8,265
+Merced,not_first_generation,6,comp_orig,73.6,265
+Merced,not_first_generation,6,wdraw_orig,3.8,265
+Merced,not_first_generation,8,comp_4yr_trans,11.9,302
+Merced,not_first_generation,8,comp_orig,68.9,302
+Merced,not_first_generation,8,wdraw_orig,5.0,302
+Riverside,first_generation,2,comp_2yr_trans,1.6,4299
+Riverside,first_generation,2,comp_orig,12.6,4299
+Riverside,first_generation,2,enrl_orig,62.7,4299
+Riverside,first_generation,2,wdraw_orig,9.6,4299
+Riverside,first_generation,3,comp_2yr_trans,3.0,3060
+Riverside,first_generation,3,comp_4yr_trans,2.1,3060
+Riverside,first_generation,3,comp_orig,50.5,3060
+Riverside,first_generation,3,enrl_orig,20.2,3060
+Riverside,first_generation,3,wdraw_orig,12.2,3060
+Riverside,first_generation,4,comp_4yr_trans,2.9,3147
+Riverside,first_generation,4,comp_orig,68.8,3147
+Riverside,first_generation,4,enrl_orig,3.7,3147
+Riverside,first_generation,4,wdraw_orig,11.8,3147
+Riverside,first_generation,6,comp_2yr_trans,1.6,3137
+Riverside,first_generation,6,comp_4yr_trans,4.9,3137
+Riverside,first_generation,6,comp_orig,65.8,3137
+Riverside,first_generation,6,wdraw_orig,15.4,3137
+Riverside,first_generation,8,comp_2yr_trans,2.2,3018
+Riverside,first_generation,8,comp_4yr_trans,9.1,3018
+Riverside,first_generation,8,comp_orig,68.6,3018
+Riverside,first_generation,8,wdraw_orig,7.0,3018
+Riverside,not_first_generation,2,comp_2yr_trans,1.2,1148
+Riverside,not_first_generation,2,comp_orig,9.9,1148
+Riverside,not_first_generation,2,enrl_orig,63.5,1148
+Riverside,not_first_generation,2,wdraw_orig,8.4,1148
+Riverside,not_first_generation,3,comp_2yr_trans,1.1,1027
+Riverside,not_first_generation,3,comp_4yr_trans,1.9,1027
+Riverside,not_first_generation,3,comp_orig,54.8,1027
+Riverside,not_first_generation,3,enrl_orig,20.9,1027
+Riverside,not_first_generation,3,wdraw_orig,9.3,1027
+Riverside,not_first_generation,4,comp_4yr_trans,5.4,1121
+Riverside,not_first_generation,4,comp_orig,72.2,1121
+Riverside,not_first_generation,4,enrl_orig,3.0,1121
+Riverside,not_first_generation,4,wdraw_orig,9.4,1121
+Riverside,not_first_generation,6,comp_2yr_trans,1.1,1034
+Riverside,not_first_generation,6,comp_4yr_trans,8.8,1034
+Riverside,not_first_generation,6,comp_orig,67.0,1034
+Riverside,not_first_generation,6,wdraw_orig,11.7,1034
+Riverside,not_first_generation,8,comp_2yr_trans,1.6,1095
+Riverside,not_first_generation,8,comp_4yr_trans,8.5,1095
+Riverside,not_first_generation,8,comp_orig,71.8,1095
+Riverside,not_first_generation,8,wdraw_orig,7.8,1095
+San Diego,first_generation,2,comp_2yr_trans,3.0,3248
+San Diego,first_generation,2,comp_orig,22.3,3248
+San Diego,first_generation,2,enrl_orig,59.3,3248
+San Diego,first_generation,2,wdraw_orig,5.2,3248
+San Diego,first_generation,3,comp_2yr_trans,1.9,2616
+San Diego,first_generation,3,comp_orig,64.1,2616
+San Diego,first_generation,3,enrl_orig,20.3,2616
+San Diego,first_generation,3,wdraw_orig,6.2,2616
+San Diego,first_generation,4,comp_2yr_trans,1.5,2882
+San Diego,first_generation,4,comp_4yr_trans,1.4,2882
+San Diego,first_generation,4,comp_orig,79.4,2882
+San Diego,first_generation,4,enrl_orig,4.7,2882
+San Diego,first_generation,4,wdraw_orig,6.0,2882
+San Diego,first_generation,6,comp_2yr_trans,1.0,2345
+San Diego,first_generation,6,comp_4yr_trans,4.1,2345
+San Diego,first_generation,6,comp_orig,80.7,2345
+San Diego,first_generation,6,wdraw_orig,6.4,2345
+San Diego,first_generation,8,comp_2yr_trans,1.4,2796
+San Diego,first_generation,8,comp_4yr_trans,6.4,2796
+San Diego,first_generation,8,comp_orig,74.6,2796
+San Diego,first_generation,8,wdraw_orig,8.9,2796
+San Diego,not_first_generation,2,comp_2yr_trans,2.3,1486
+San Diego,not_first_generation,2,comp_orig,18.1,1486
+San Diego,not_first_generation,2,enrl_orig,64.3,1486
+San Diego,not_first_generation,2,wdraw_orig,4.6,1486
+San Diego,not_first_generation,3,comp_2yr_trans,0.9,1535
+San Diego,not_first_generation,3,comp_orig,68.3,1535
+San Diego,not_first_generation,3,enrl_orig,19.7,1535
+San Diego,not_first_generation,3,wdraw_orig,4.8,1535
+San Diego,not_first_generation,4,comp_2yr_trans,0.7,1367
+San Diego,not_first_generation,4,comp_4yr_trans,1.8,1367
+San Diego,not_first_generation,4,comp_orig,82.9,1367
+San Diego,not_first_generation,4,enrl_orig,4.4,1367
+San Diego,not_first_generation,4,wdraw_orig,5.7,1367
+San Diego,not_first_generation,6,comp_2yr_trans,0.7,1513
+San Diego,not_first_generation,6,comp_4yr_trans,3.6,1513
+San Diego,not_first_generation,6,comp_orig,83.9,1513
+San Diego,not_first_generation,6,wdraw_orig,5.8,1513
+San Diego,not_first_generation,8,comp_2yr_trans,1.1,1479
+San Diego,not_first_generation,8,comp_4yr_trans,6.8,1479
+San Diego,not_first_generation,8,comp_orig,77.1,1479
+San Diego,not_first_generation,8,wdraw_orig,7.9,1479
+Santa Barbara,first_generation,2,comp_2yr_trans,4.1,2706
+Santa Barbara,first_generation,2,comp_orig,13.0,2706
+Santa Barbara,first_generation,2,enrl_orig,58.2,2706
+Santa Barbara,first_generation,2,wdraw_orig,11.6,2706
+Santa Barbara,first_generation,3,comp_2yr_trans,2.8,2612
+Santa Barbara,first_generation,3,comp_orig,36.3,2612
+Santa Barbara,first_generation,3,enrl_orig,24.4,2612
+Santa Barbara,first_generation,3,wdraw_orig,24.7,2612
+Santa Barbara,first_generation,4,comp_2yr_trans,2.4,2704
+Santa Barbara,first_generation,4,comp_4yr_trans,3.1,2704
+Santa Barbara,first_generation,4,comp_orig,56.6,2704
+Santa Barbara,first_generation,4,enrl_orig,5.5,2704
+Santa Barbara,first_generation,4,wdraw_orig,21.0,2704
+Santa Barbara,first_generation,6,comp_2yr_trans,1.0,2773
+Santa Barbara,first_generation,6,comp_4yr_trans,7.0,2773
+Santa Barbara,first_generation,6,comp_orig,62.4,2773
+Santa Barbara,first_generation,6,wdraw_orig,15.9,2773
+Santa Barbara,first_generation,8,comp_2yr_trans,1.2,2197
+Santa Barbara,first_generation,8,comp_4yr_trans,8.5,2197
+Santa Barbara,first_generation,8,comp_orig,69.1,2197
+Santa Barbara,first_generation,8,wdraw_orig,9.3,2197
+Santa Barbara,not_first_generation,2,comp_2yr_trans,2.6,1199
+Santa Barbara,not_first_generation,2,comp_orig,11.3,1199
+Santa Barbara,not_first_generation,2,enrl_orig,59.7,1199
+Santa Barbara,not_first_generation,2,wdraw_orig,10.8,1199
+Santa Barbara,not_first_generation,3,comp_2yr_trans,2.2,1115
+Santa Barbara,not_first_generation,3,comp_orig,40.4,1115
+Santa Barbara,not_first_generation,3,enrl_orig,17.8,1115
+Santa Barbara,not_first_generation,3,wdraw_orig,29.9,1115
+Santa Barbara,not_first_generation,4,comp_2yr_trans,1.8,1128
+Santa Barbara,not_first_generation,4,comp_4yr_trans,3.6,1128
+Santa Barbara,not_first_generation,4,comp_orig,62.1,1128
+Santa Barbara,not_first_generation,4,enrl_orig,3.5,1128
+Santa Barbara,not_first_generation,4,wdraw_orig,19.9,1128
+Santa Barbara,not_first_generation,6,comp_2yr_trans,1.2,1204
+Santa Barbara,not_first_generation,6,comp_4yr_trans,6.8,1204
+Santa Barbara,not_first_generation,6,comp_orig,67.2,1204
+Santa Barbara,not_first_generation,6,wdraw_orig,15.2,1204
+Santa Barbara,not_first_generation,8,comp_2yr_trans,0.9,1119
+Santa Barbara,not_first_generation,8,comp_4yr_trans,8.5,1119
+Santa Barbara,not_first_generation,8,comp_orig,69.5,1119
+Santa Barbara,not_first_generation,8,wdraw_orig,10.4,1119
+Santa Cruz,first_generation,2,comp_orig,17.6,2280
+Santa Cruz,first_generation,2,enrl_orig,57.1,2280
+Santa Cruz,first_generation,2,wdraw_orig,9.9,2280
+Santa Cruz,first_generation,3,comp_4yr_trans,1.6,2081
+Santa Cruz,first_generation,3,comp_orig,53.0,2081
+Santa Cruz,first_generation,3,enrl_orig,21.0,2081
+Santa Cruz,first_generation,3,wdraw_orig,10.3,2081
+Santa Cruz,first_generation,4,comp_4yr_trans,2.5,2340
+Santa Cruz,first_generation,4,comp_orig,65.3,2340
+Santa Cruz,first_generation,4,enrl_orig,3.5,2340
+Santa Cruz,first_generation,4,wdraw_orig,12.0,2340
+Santa Cruz,first_generation,6,comp_4yr_trans,5.8,2786
+Santa Cruz,first_generation,6,comp_orig,68.1,2786
+Santa Cruz,first_generation,6,wdraw_orig,9.6,2786
+Santa Cruz,first_generation,8,comp_4yr_trans,7.8,2229
+Santa Cruz,first_generation,8,comp_orig,71.5,2229
+Santa Cruz,first_generation,8,wdraw_orig,7.0,2229
+Santa Cruz,not_first_generation,2,comp_orig,11.8,1153
+Santa Cruz,not_first_generation,2,enrl_orig,60.5,1153
+Santa Cruz,not_first_generation,2,wdraw_orig,7.2,1153
+Santa Cruz,not_first_generation,3,comp_4yr_trans,2.7,1029
+Santa Cruz,not_first_generation,3,comp_orig,56.9,1029
+Santa Cruz,not_first_generation,3,enrl_orig,18.1,1029
+Santa Cruz,not_first_generation,3,wdraw_orig,9.3,1029
+Santa Cruz,not_first_generation,4,comp_4yr_trans,4.6,1140
+Santa Cruz,not_first_generation,4,comp_orig,71.7,1140
+Santa Cruz,not_first_generation,4,enrl_orig,2.0,1140
+Santa Cruz,not_first_generation,4,wdraw_orig,11.1,1140
+Santa Cruz,not_first_generation,6,comp_4yr_trans,6.3,1010
+Santa Cruz,not_first_generation,6,comp_orig,75.9,1010
+Santa Cruz,not_first_generation,6,wdraw_orig,7.7,1010
+Santa Cruz,not_first_generation,8,comp_4yr_trans,5.9,1021
+Santa Cruz,not_first_generation,8,comp_orig,73.7,1021
+Santa Cruz,not_first_generation,8,wdraw_orig,8.6,1021
