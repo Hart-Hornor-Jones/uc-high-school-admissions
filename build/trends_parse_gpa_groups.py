@@ -7,7 +7,9 @@ ethnicity), sheets 'a. HS GPAs' (freshman entrants) and 'b. Transfer GPA';
 '*Overall' variants (no subgroup split) exist for cohorts 2019-2020 only.
 
 The crosstabs give graduate COUNTS by timing per subgroup x GPA band. Bands
-are terciles of that campus x cohort's own enrollee GPA distribution.
+are terciles of the SYSTEMWIDE enrollee GPA distribution per cohort and entry
+type: the published band boundaries are identical across campus selections
+(verified), so campuses draw unevenly from the three bands.
 
 Timing windows differ by entry type; we store them uniformly as first /
 second / third window:
@@ -92,8 +94,9 @@ def main():
         if len(tab) < 3:
             continue
         overall = 'Overall' in sheet
-        subs_row, bands_row = (None, tab[0]) if overall else (tab[0], tab[1])
-        body = tab[1:] if overall else tab[2:]
+        # Overall sheets share the two-header layout (subgroup row is 'Overall').
+        subs_row, bands_row = tab[0], tab[1]
+        body = tab[2:]
         colmeta = {}
         band_count = defaultdict(int)
         for j in range(1, len(bands_row)):

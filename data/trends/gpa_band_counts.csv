@@ -293,6 +293,9 @@ FR,All,2019,first_gen_status,first_gen,3,3.91,4.0,3261,428,63,,,
 FR,All,2019,first_gen_status,not_first_gen,1,1.38,3.69,4767,923,191,,,
 FR,All,2019,first_gen_status,not_first_gen,2,3.69,3.91,6491,843,155,,,
 FR,All,2019,first_gen_status,not_first_gen,3,3.91,4.0,9303,849,127,,,
+FR,All,2019,overall,overall,1,1.38,3.69,9048,1917,395,,,
+FR,All,2019,overall,overall,2,3.69,3.91,10580,1536,273,,,
+FR,All,2019,overall,overall,3,3.91,4.0,12791,1303,194,,,
 FR,All,2019,pell_status,non_pell,1,1.38,3.69,4813,937,185,,,
 FR,All,2019,pell_status,non_pell,2,3.69,3.91,6559,834,144,,,
 FR,All,2019,pell_status,non_pell,3,3.91,4.0,9208,822,116,,,
@@ -323,6 +326,7 @@ FR,All,2020,first_gen_status,first_gen,3,3.91,4.0,3318,342,0,,,
 FR,All,2020,first_gen_status,not_first_gen,1,1.1,3.67,5024,1079,0,,,
 FR,All,2020,first_gen_status,not_first_gen,2,3.67,3.91,7010,861,0,,,
 FR,All,2020,first_gen_status,not_first_gen,3,3.91,4.0,9223,753,0,,,
+FR,All,2020,overall,overall,1,3.91,4.0,12875,1120,0,,,
 FR,All,2020,pell_status,non_pell,1,1.1,3.67,5118,1039,0,,,
 FR,All,2020,pell_status,non_pell,2,3.67,3.91,7113,866,0,,,
 FR,All,2020,pell_status,non_pell,3,3.91,4.0,9227,717,0,,,
@@ -653,6 +657,9 @@ FR,Berkeley,2019,first_gen_status,first_gen,3,3.91,4.0,548,87,17,,,
 FR,Berkeley,2019,first_gen_status,not_first_gen,1,1.38,3.69,276,39,8,,,
 FR,Berkeley,2019,first_gen_status,not_first_gen,2,3.69,3.91,1055,128,33,,,
 FR,Berkeley,2019,first_gen_status,not_first_gen,3,3.91,4.0,2554,257,39,,,
+FR,Berkeley,2019,overall,overall,1,1.38,3.69,397,74,16,,,
+FR,Berkeley,2019,overall,overall,2,3.69,3.91,1417,213,50,,,
+FR,Berkeley,2019,overall,overall,3,3.91,4.0,3154,352,58,,,
 FR,Berkeley,2019,pell_status,non_pell,1,1.38,3.69,255,43,7,,,
 FR,Berkeley,2019,pell_status,non_pell,2,3.69,3.91,1011,118,29,,,
 FR,Berkeley,2019,pell_status,non_pell,3,3.91,4.0,2514,238,35,,,
@@ -683,6 +690,7 @@ FR,Berkeley,2020,first_gen_status,first_gen,3,3.91,4.0,577,68,0,,,
 FR,Berkeley,2020,first_gen_status,not_first_gen,1,1.1,3.67,298,47,0,,,
 FR,Berkeley,2020,first_gen_status,not_first_gen,2,3.67,3.91,1048,166,0,,,
 FR,Berkeley,2020,first_gen_status,not_first_gen,3,3.91,4.0,1997,199,0,,,
+FR,Berkeley,2020,overall,overall,1,3.91,4.0,2650,271,0,,,
 FR,Berkeley,2020,pell_status,non_pell,1,1.1,3.67,285,53,0,,,
 FR,Berkeley,2020,pell_status,non_pell,2,3.67,3.91,1015,168,0,,,
 FR,Berkeley,2020,pell_status,non_pell,3,3.91,4.0,1986,185,0,,,
@@ -1013,6 +1021,9 @@ FR,Davis,2019,first_gen_status,first_gen,3,3.91,4.0,445,113,8,,,
 FR,Davis,2019,first_gen_status,not_first_gen,1,1.38,3.69,498,121,29,,,
 FR,Davis,2019,first_gen_status,not_first_gen,2,3.69,3.91,1069,171,32,,,
 FR,Davis,2019,first_gen_status,not_first_gen,3,3.91,4.0,965,139,18,,,
+FR,Davis,2019,overall,overall,1,1.38,3.69,849,233,54,,,
+FR,Davis,2019,overall,overall,2,3.69,3.91,1755,346,51,,,
+FR,Davis,2019,overall,overall,3,3.91,4.0,1434,257,26,,,
 FR,Davis,2019,pell_status,non_pell,1,1.38,3.69,514,124,30,,,
 FR,Davis,2019,pell_status,non_pell,2,3.69,3.91,1087,180,25,,,
 FR,Davis,2019,pell_status,non_pell,3,3.91,4.0,960,146,20,,,
@@ -1043,6 +1054,7 @@ FR,Davis,2020,first_gen_status,first_gen,3,3.91,4.0,424,76,0,,,
 FR,Davis,2020,first_gen_status,not_first_gen,1,1.1,3.67,615,180,0,,,
 FR,Davis,2020,first_gen_status,not_first_gen,2,3.67,3.91,1099,176,0,,,
 FR,Davis,2020,first_gen_status,not_first_gen,3,3.91,4.0,882,142,0,,,
+FR,Davis,2020,overall,overall,1,3.91,4.0,1337,220,0,,,
 FR,Davis,2020,pell_status,non_pell,1,1.1,3.67,689,185,0,,,
 FR,Davis,2020,pell_status,non_pell,2,3.67,3.91,1130,174,0,,,
 FR,Davis,2020,pell_status,non_pell,3,3.91,4.0,878,127,0,,,
@@ -1373,6 +1385,9 @@ FR,Irvine,2019,first_gen_status,first_gen,3,3.91,4.0,449,53,9,,,
 FR,Irvine,2019,first_gen_status,not_first_gen,1,1.38,3.69,488,85,12,,,
 FR,Irvine,2019,first_gen_status,not_first_gen,2,3.69,3.91,1146,145,20,,,
 FR,Irvine,2019,first_gen_status,not_first_gen,3,3.91,4.0,639,71,9,,,
+FR,Irvine,2019,overall,overall,1,1.38,3.69,1181,228,36,,,
+FR,Irvine,2019,overall,overall,2,3.69,3.91,2059,266,39,,,
+FR,Irvine,2019,overall,overall,3,3.91,4.0,1112,126,19,,,
 FR,Irvine,2019,pell_status,non_pell,1,1.38,3.69,584,91,17,,,
 FR,Irvine,2019,pell_status,non_pell,2,3.69,3.91,1201,140,22,,,
 FR,Irvine,2019,pell_status,non_pell,3,3.91,4.0,685,69,6,,,
@@ -1403,6 +1418,7 @@ FR,Irvine,2020,first_gen_status,first_gen,3,3.91,4.0,602,62,0,,,
 FR,Irvine,2020,first_gen_status,not_first_gen,1,1.1,3.67,529,109,0,,,
 FR,Irvine,2020,first_gen_status,not_first_gen,2,3.67,3.91,720,84,0,,,
 FR,Irvine,2020,first_gen_status,not_first_gen,3,3.91,4.0,661,51,0,,,
+FR,Irvine,2020,overall,overall,1,3.91,4.0,1292,116,0,,,
 FR,Irvine,2020,pell_status,non_pell,1,1.1,3.67,590,113,0,,,
 FR,Irvine,2020,pell_status,non_pell,2,3.67,3.91,891,91,0,,,
 FR,Irvine,2020,pell_status,non_pell,3,3.91,4.0,750,54,0,,,
@@ -1733,6 +1749,9 @@ FR,Los Angeles,2019,first_gen_status,first_gen,3,3.91,4.0,773,39,11,,,
 FR,Los Angeles,2019,first_gen_status,not_first_gen,1,1.38,3.69,218,26,5,,,
 FR,Los Angeles,2019,first_gen_status,not_first_gen,2,3.69,3.91,637,55,5,,,
 FR,Los Angeles,2019,first_gen_status,not_first_gen,3,3.91,4.0,2666,147,25,,,
+FR,Los Angeles,2019,overall,overall,1,1.38,3.69,356,51,8,,,
+FR,Los Angeles,2019,overall,overall,2,3.69,3.91,1002,86,8,,,
+FR,Los Angeles,2019,overall,overall,3,3.91,4.0,3506,188,37,,,
 FR,Los Angeles,2019,pell_status,non_pell,1,1.38,3.69,202,22,6,,,
 FR,Los Angeles,2019,pell_status,non_pell,2,3.69,3.91,595,52,5,,,
 FR,Los Angeles,2019,pell_status,non_pell,3,3.91,4.0,2575,139,24,,,
@@ -1763,6 +1782,7 @@ FR,Los Angeles,2020,first_gen_status,first_gen,3,3.91,4.0,748,37,0,,,
 FR,Los Angeles,2020,first_gen_status,not_first_gen,1,1.1,3.67,201,29,0,,,
 FR,Los Angeles,2020,first_gen_status,not_first_gen,2,3.67,3.91,814,32,0,,,
 FR,Los Angeles,2020,first_gen_status,not_first_gen,3,3.91,4.0,3068,125,0,,,
+FR,Los Angeles,2020,overall,overall,1,3.91,4.0,3916,168,0,,,
 FR,Los Angeles,2020,pell_status,non_pell,1,1.1,3.67,191,21,0,,,
 FR,Los Angeles,2020,pell_status,non_pell,2,3.67,3.91,793,34,0,,,
 FR,Los Angeles,2020,pell_status,non_pell,3,3.91,4.0,2997,126,0,,,
@@ -2086,6 +2106,9 @@ FR,Merced,2019,first_gen_status,first_gen,3,3.91,4.0,40,11,0,,,
 FR,Merced,2019,first_gen_status,not_first_gen,1,1.38,3.69,226,55,18,,,
 FR,Merced,2019,first_gen_status,not_first_gen,2,3.69,3.91,44,2,1,,,
 FR,Merced,2019,first_gen_status,not_first_gen,3,3.91,4.0,21,4,0,,,
+FR,Merced,2019,overall,overall,1,1.38,3.69,891,259,66,,,
+FR,Merced,2019,overall,overall,2,3.69,3.91,158,25,10,,,
+FR,Merced,2019,overall,overall,3,3.91,4.0,64,16,0,,,
 FR,Merced,2019,pell_status,non_pell,1,1.38,3.69,279,81,18,,,
 FR,Merced,2019,pell_status,non_pell,2,3.69,3.91,49,6,2,,,
 FR,Merced,2019,pell_status,non_pell,3,3.91,4.0,19,3,0,,,
@@ -2116,6 +2139,7 @@ FR,Merced,2020,first_gen_status,first_gen,3,3.91,4.0,56,7,0,,,
 FR,Merced,2020,first_gen_status,not_first_gen,1,1.1,3.67,149,59,0,,,
 FR,Merced,2020,first_gen_status,not_first_gen,2,3.67,3.91,52,8,0,,,
 FR,Merced,2020,first_gen_status,not_first_gen,3,3.91,4.0,11,0,0,,,
+FR,Merced,2020,overall,overall,1,3.91,4.0,67,7,0,,,
 FR,Merced,2020,pell_status,non_pell,1,1.1,3.67,196,62,0,,,
 FR,Merced,2020,pell_status,non_pell,2,3.67,3.91,51,11,0,,,
 FR,Merced,2020,pell_status,non_pell,3,3.91,4.0,19,1,0,,,
@@ -2438,6 +2462,9 @@ FR,Riverside,2019,first_gen_status,first_gen,3,3.91,4.0,147,11,1,,,
 FR,Riverside,2019,first_gen_status,not_first_gen,1,1.38,3.69,1171,190,47,,,
 FR,Riverside,2019,first_gen_status,not_first_gen,2,3.69,3.91,290,50,7,,,
 FR,Riverside,2019,first_gen_status,not_first_gen,3,3.91,4.0,106,11,1,,,
+FR,Riverside,2019,overall,overall,1,1.38,3.69,2309,379,78,,,
+FR,Riverside,2019,overall,overall,2,3.69,3.91,622,93,12,,,
+FR,Riverside,2019,overall,overall,3,3.91,4.0,259,22,2,,,
 FR,Riverside,2019,pell_status,non_pell,1,1.38,3.69,1092,166,44,,,
 FR,Riverside,2019,pell_status,non_pell,2,3.69,3.91,298,43,5,,,
 FR,Riverside,2019,pell_status,non_pell,3,3.91,4.0,120,9,0,,,
@@ -2466,6 +2493,7 @@ FR,Riverside,2020,first_gen_status,first_gen,3,3.91,4.0,135,14,0,,,
 FR,Riverside,2020,first_gen_status,not_first_gen,1,1.1,3.67,993,214,0,,,
 FR,Riverside,2020,first_gen_status,not_first_gen,2,3.67,3.91,294,38,0,,,
 FR,Riverside,2020,first_gen_status,not_first_gen,3,3.91,4.0,102,10,0,,,
+FR,Riverside,2020,overall,overall,1,3.91,4.0,243,24,0,,,
 FR,Riverside,2020,pell_status,non_pell,1,1.1,3.67,926,205,0,,,
 FR,Riverside,2020,pell_status,non_pell,2,3.67,3.91,286,37,0,,,
 FR,Riverside,2020,pell_status,non_pell,3,3.91,4.0,112,7,0,,,
@@ -2794,6 +2822,9 @@ FR,San Diego,2019,first_gen_status,first_gen,3,3.91,4.0,490,59,8,,,
 FR,San Diego,2019,first_gen_status,not_first_gen,1,1.38,3.69,548,92,24,,,
 FR,San Diego,2019,first_gen_status,not_first_gen,2,3.69,3.91,962,117,26,,,
 FR,San Diego,2019,first_gen_status,not_first_gen,3,3.91,4.0,1260,105,17,,,
+FR,San Diego,2019,overall,overall,1,1.38,3.69,915,170,46,,,
+FR,San Diego,2019,overall,overall,2,3.69,3.91,1566,214,53,,,
+FR,San Diego,2019,overall,overall,3,3.91,4.0,1784,168,25,,,
 FR,San Diego,2019,pell_status,non_pell,1,1.38,3.69,507,93,19,,,
 FR,San Diego,2019,pell_status,non_pell,2,3.69,3.91,995,111,24,,,
 FR,San Diego,2019,pell_status,non_pell,3,3.91,4.0,1268,107,14,,,
@@ -2824,6 +2855,7 @@ FR,San Diego,2020,first_gen_status,first_gen,3,3.91,4.0,452,42,0,,,
 FR,San Diego,2020,first_gen_status,not_first_gen,1,1.1,3.67,551,98,0,,,
 FR,San Diego,2020,first_gen_status,not_first_gen,2,3.67,3.91,1472,178,0,,,
 FR,San Diego,2020,first_gen_status,not_first_gen,3,3.91,4.0,1459,119,0,,,
+FR,San Diego,2020,overall,overall,1,3.91,4.0,1967,169,0,,,
 FR,San Diego,2020,pell_status,non_pell,1,1.1,3.67,569,93,0,,,
 FR,San Diego,2020,pell_status,non_pell,2,3.67,3.91,1450,182,0,,,
 FR,San Diego,2020,pell_status,non_pell,3,3.91,4.0,1446,111,0,,,
@@ -3154,6 +3186,9 @@ FR,Santa Barbara,2019,first_gen_status,first_gen,3,3.91,4.0,307,40,7,,,
 FR,Santa Barbara,2019,first_gen_status,not_first_gen,1,1.38,3.69,334,84,13,,,
 FR,Santa Barbara,2019,first_gen_status,not_first_gen,2,3.69,3.91,873,103,22,,,
 FR,Santa Barbara,2019,first_gen_status,not_first_gen,3,3.91,4.0,920,91,12,,,
+FR,Santa Barbara,2019,overall,overall,1,1.38,3.69,719,193,33,,,
+FR,Santa Barbara,2019,overall,overall,2,3.69,3.91,1399,185,38,,,
+FR,Santa Barbara,2019,overall,overall,3,3.91,4.0,1239,133,19,,,
 FR,Santa Barbara,2019,pell_status,non_pell,1,1.38,3.69,395,89,11,,,
 FR,Santa Barbara,2019,pell_status,non_pell,2,3.69,3.91,923,110,23,,,
 FR,Santa Barbara,2019,pell_status,non_pell,3,3.91,4.0,924,88,12,,,
@@ -3184,6 +3219,7 @@ FR,Santa Barbara,2020,first_gen_status,first_gen,3,3.91,4.0,254,27,0,,,
 FR,Santa Barbara,2020,first_gen_status,not_first_gen,1,1.1,3.67,498,93,0,,,
 FR,Santa Barbara,2020,first_gen_status,not_first_gen,2,3.67,3.91,1069,106,0,,,
 FR,Santa Barbara,2020,first_gen_status,not_first_gen,3,3.91,4.0,862,86,0,,,
+FR,Santa Barbara,2020,overall,overall,1,3.91,4.0,1142,114,0,,,
 FR,Santa Barbara,2020,pell_status,non_pell,1,1.1,3.67,508,88,0,,,
 FR,Santa Barbara,2020,pell_status,non_pell,2,3.67,3.91,1075,104,0,,,
 FR,Santa Barbara,2020,pell_status,non_pell,3,3.91,4.0,867,86,0,,,
@@ -3513,6 +3549,9 @@ FR,Santa Cruz,2019,first_gen_status,first_gen,3,3.91,4.0,62,15,2,,,
 FR,Santa Cruz,2019,first_gen_status,not_first_gen,1,1.38,3.69,1008,231,35,,,
 FR,Santa Cruz,2019,first_gen_status,not_first_gen,2,3.69,3.91,415,72,9,,,
 FR,Santa Cruz,2019,first_gen_status,not_first_gen,3,3.91,4.0,172,24,6,,,
+FR,Santa Cruz,2019,overall,overall,1,1.38,3.69,1431,330,58,,,
+FR,Santa Cruz,2019,overall,overall,2,3.69,3.91,602,108,12,,,
+FR,Santa Cruz,2019,overall,overall,3,3.91,4.0,239,41,8,,,
 FR,Santa Cruz,2019,pell_status,non_pell,1,1.38,3.69,985,228,33,,,
 FR,Santa Cruz,2019,pell_status,non_pell,2,3.69,3.91,400,74,9,,,
 FR,Santa Cruz,2019,pell_status,non_pell,3,3.91,4.0,143,23,5,,,
@@ -3543,6 +3582,7 @@ FR,Santa Cruz,2020,first_gen_status,first_gen,3,3.91,4.0,70,9,0,,,
 FR,Santa Cruz,2020,first_gen_status,not_first_gen,1,1.1,3.67,1190,250,0,,,
 FR,Santa Cruz,2020,first_gen_status,not_first_gen,2,3.67,3.91,442,73,0,,,
 FR,Santa Cruz,2020,first_gen_status,not_first_gen,3,3.91,4.0,181,21,0,,,
+FR,Santa Cruz,2020,overall,overall,1,3.91,4.0,261,31,0,,,
 FR,Santa Cruz,2020,pell_status,non_pell,1,1.1,3.67,1164,219,0,,,
 FR,Santa Cruz,2020,pell_status,non_pell,2,3.67,3.91,422,65,0,,,
 FR,Santa Cruz,2020,pell_status,non_pell,3,3.91,4.0,172,20,0,,,
@@ -3872,6 +3912,9 @@ TR,All,2019,first_gen_status,first_gen,3,3.73,4.0,2087,623,77,69,21,3
 TR,All,2019,first_gen_status,not_first_gen,1,0.32,3.38,1614,726,125,57,25,4
 TR,All,2019,first_gen_status,not_first_gen,2,3.38,3.73,2055,733,140,64,23,4
 TR,All,2019,first_gen_status,not_first_gen,3,3.73,4.0,2645,810,114,70,21,3
+TR,All,2019,overall,overall,1,0.32,3.38,3823,1692,324,56,25,5
+TR,All,2019,overall,overall,2,3.38,3.73,4227,1507,266,63,23,4
+TR,All,2019,overall,overall,3,3.73,4.0,4912,1482,197,70,21,3
 TR,All,2019,pell_status,non_pell,1,0.32,3.38,1841,645,84,62,22,3
 TR,All,2019,pell_status,non_pell,2,3.38,3.73,2363,647,103,69,19,3
 TR,All,2019,pell_status,non_pell,3,3.73,4.0,3009,779,100,73,19,2
@@ -4230,6 +4273,9 @@ TR,Berkeley,2019,first_gen_status,first_gen,3,3.73,4.0,424,198,28,61,28,4
 TR,Berkeley,2019,first_gen_status,not_first_gen,1,0.32,3.38,63,27,8,55,24,7
 TR,Berkeley,2019,first_gen_status,not_first_gen,2,3.38,3.73,209,70,13,63,21,4
 TR,Berkeley,2019,first_gen_status,not_first_gen,3,3.73,4.0,530,227,38,62,27,4
+TR,Berkeley,2019,overall,overall,1,0.32,3.38,133,67,20,52,26,8
+TR,Berkeley,2019,overall,overall,2,3.38,3.73,394,168,33,59,25,5
+TR,Berkeley,2019,overall,overall,3,3.73,4.0,984,444,68,61,28,4
 TR,Berkeley,2019,pell_status,non_pell,1,0.32,3.38,64,18,3,65,18,3
 TR,Berkeley,2019,pell_status,non_pell,2,3.38,3.73,210,62,8,70,21,3
 TR,Berkeley,2019,pell_status,non_pell,3,3.73,4.0,579,222,28,66,25,3
@@ -4590,6 +4636,9 @@ TR,Davis,2019,first_gen_status,first_gen,3,3.73,4.0,204,57,12,68,19,4
 TR,Davis,2019,first_gen_status,not_first_gen,1,0.32,3.38,276,136,31,52,26,6
 TR,Davis,2019,first_gen_status,not_first_gen,2,3.38,3.73,363,116,36,65,21,6
 TR,Davis,2019,first_gen_status,not_first_gen,3,3.73,4.0,222,74,10,66,22,3
+TR,Davis,2019,overall,overall,1,0.32,3.38,652,326,58,53,26,5
+TR,Davis,2019,overall,overall,2,3.38,3.73,770,243,60,65,20,5
+TR,Davis,2019,overall,overall,3,3.73,4.0,435,133,24,67,20,4
 TR,Davis,2019,pell_status,non_pell,1,0.32,3.38,357,131,13,61,22,2
 TR,Davis,2019,pell_status,non_pell,2,3.38,3.73,442,109,26,71,18,4
 TR,Davis,2019,pell_status,non_pell,3,3.73,4.0,248,56,11,72,16,3
@@ -4948,6 +4997,9 @@ TR,Irvine,2019,first_gen_status,first_gen,3,3.73,4.0,262,81,6,70,22,2
 TR,Irvine,2019,first_gen_status,not_first_gen,1,0.32,3.38,209,106,13,56,28,3
 TR,Irvine,2019,first_gen_status,not_first_gen,2,3.38,3.73,392,163,23,63,26,4
 TR,Irvine,2019,first_gen_status,not_first_gen,3,3.73,4.0,326,81,15,74,18,3
+TR,Irvine,2019,overall,overall,1,0.32,3.38,502,242,31,56,27,3
+TR,Irvine,2019,overall,overall,2,3.38,3.73,846,343,48,63,26,4
+TR,Irvine,2019,overall,overall,3,3.73,4.0,618,173,22,72,20,3
 TR,Irvine,2019,pell_status,non_pell,1,0.32,3.38,235,89,11,62,23,3
 TR,Irvine,2019,pell_status,non_pell,2,3.38,3.73,493,148,14,70,21,2
 TR,Irvine,2019,pell_status,non_pell,3,3.73,4.0,376,75,11,78,15,2
@@ -5307,6 +5359,9 @@ TR,Los Angeles,2019,first_gen_status,first_gen,3,3.73,4.0,744,136,13,78,14,1
 TR,Los Angeles,2019,first_gen_status,not_first_gen,1,0.32,3.38,16,13,2,46,37,6
 TR,Los Angeles,2019,first_gen_status,not_first_gen,2,3.38,3.73,241,65,8,70,19,2
 TR,Los Angeles,2019,first_gen_status,not_first_gen,3,3.73,4.0,984,219,19,77,17,1
+TR,Los Angeles,2019,overall,overall,1,0.32,3.38,70,32,12,56,25,10
+TR,Los Angeles,2019,overall,overall,2,3.38,3.73,601,133,21,73,16,3
+TR,Los Angeles,2019,overall,overall,3,3.73,4.0,1806,360,32,78,15,1
 TR,Los Angeles,2019,pell_status,non_pell,1,0.32,3.38,21,10,0,60,29,0
 TR,Los Angeles,2019,pell_status,non_pell,2,3.38,3.73,268,59,8,75,17,2
 TR,Los Angeles,2019,pell_status,non_pell,3,3.73,4.0,1098,215,18,78,15,1
@@ -5633,6 +5688,9 @@ TR,Merced,2019,first_gen_status,first_gen,3,3.73,4.0,6,4,0,60,40,0
 TR,Merced,2019,first_gen_status,not_first_gen,1,0.32,3.38,13,9,2,48,33,7
 TR,Merced,2019,first_gen_status,not_first_gen,2,3.38,3.73,5,5,1,45,45,9
 TR,Merced,2019,first_gen_status,not_first_gen,3,3.73,4.0,1,0,0,100,0,0
+TR,Merced,2019,overall,overall,1,0.32,3.38,55,45,7,42,34,5
+TR,Merced,2019,overall,overall,2,3.38,3.73,14,12,3,45,39,10
+TR,Merced,2019,overall,overall,3,3.73,4.0,8,4,0,67,33,0
 TR,Merced,2019,pell_status,non_pell,1,0.32,3.38,17,9,0,49,26,0
 TR,Merced,2019,pell_status,non_pell,2,3.38,3.73,7,1,1,78,11,11
 TR,Merced,2019,pell_status,non_pell,3,3.73,4.0,6,1,0,86,14,0
@@ -5980,6 +6038,9 @@ TR,Riverside,2019,first_gen_status,first_gen,3,3.73,4.0,68,17,0,75,19,0
 TR,Riverside,2019,first_gen_status,not_first_gen,1,0.32,3.38,245,109,16,58,26,4
 TR,Riverside,2019,first_gen_status,not_first_gen,2,3.38,3.73,87,23,2,69,18,2
 TR,Riverside,2019,first_gen_status,not_first_gen,3,3.73,4.0,38,15,1,60,24,2
+TR,Riverside,2019,overall,overall,1,0.32,3.38,810,329,62,57,23,4
+TR,Riverside,2019,overall,overall,2,3.38,3.73,230,75,15,63,21,4
+TR,Riverside,2019,overall,overall,3,3.73,4.0,109,32,1,69,20,1
 TR,Riverside,2019,pell_status,non_pell,1,0.32,3.38,321,107,18,60,20,3
 TR,Riverside,2019,pell_status,non_pell,2,3.38,3.73,94,26,3,65,18,2
 TR,Riverside,2019,pell_status,non_pell,3,3.73,4.0,48,12,1,68,17,1
@@ -6335,6 +6396,9 @@ TR,San Diego,2019,first_gen_status,first_gen,3,3.73,4.0,218,92,14,62,26,4
 TR,San Diego,2019,first_gen_status,not_first_gen,1,0.32,3.38,258,105,13,60,24,3
 TR,San Diego,2019,first_gen_status,not_first_gen,2,3.38,3.73,365,147,29,60,24,5
 TR,San Diego,2019,first_gen_status,not_first_gen,3,3.73,4.0,290,113,15,65,26,3
+TR,San Diego,2019,overall,overall,1,0.32,3.38,554,218,39,59,23,4
+TR,San Diego,2019,overall,overall,2,3.38,3.73,688,288,42,60,25,4
+TR,San Diego,2019,overall,overall,3,3.73,4.0,528,213,30,64,26,4
 TR,San Diego,2019,pell_status,non_pell,1,0.32,3.38,269,91,15,65,22,4
 TR,San Diego,2019,pell_status,non_pell,2,3.38,3.73,421,125,19,68,20,3
 TR,San Diego,2019,pell_status,non_pell,3,3.73,4.0,370,126,19,67,23,3
@@ -6695,6 +6759,9 @@ TR,Santa Barbara,2019,first_gen_status,first_gen,3,3.73,4.0,124,26,4,70,15,2
 TR,Santa Barbara,2019,first_gen_status,not_first_gen,1,0.32,3.38,262,105,20,60,24,5
 TR,Santa Barbara,2019,first_gen_status,not_first_gen,2,3.38,3.73,295,114,20,63,24,4
 TR,Santa Barbara,2019,first_gen_status,not_first_gen,3,3.73,4.0,187,63,10,66,22,4
+TR,Santa Barbara,2019,overall,overall,1,0.32,3.38,488,186,45,58,22,5
+TR,Santa Barbara,2019,overall,overall,2,3.38,3.73,511,187,30,63,23,4
+TR,Santa Barbara,2019,overall,overall,3,3.73,4.0,318,90,14,68,19,3
 TR,Santa Barbara,2019,pell_status,non_pell,1,0.32,3.38,279,86,15,64,20,3
 TR,Santa Barbara,2019,pell_status,non_pell,2,3.38,3.73,330,92,18,67,19,4
 TR,Santa Barbara,2019,pell_status,non_pell,3,3.73,4.0,218,55,8,72,18,3
@@ -7051,6 +7118,9 @@ TR,Santa Cruz,2019,first_gen_status,first_gen,3,3.73,4.0,37,12,0,71,23,0
 TR,Santa Cruz,2019,first_gen_status,not_first_gen,1,0.32,3.38,272,116,20,58,25,4
 TR,Santa Cruz,2019,first_gen_status,not_first_gen,2,3.38,3.73,98,30,8,62,19,5
 TR,Santa Cruz,2019,first_gen_status,not_first_gen,3,3.73,4.0,67,18,6,71,19,6
+TR,Santa Cruz,2019,overall,overall,1,0.32,3.38,559,247,50,56,25,5
+TR,Santa Cruz,2019,overall,overall,2,3.38,3.73,173,58,14,60,20,5
+TR,Santa Cruz,2019,overall,overall,3,3.73,4.0,106,33,6,70,22,4
 TR,Santa Cruz,2019,pell_status,non_pell,1,0.32,3.38,278,104,9,62,23,2
 TR,Santa Cruz,2019,pell_status,non_pell,2,3.38,3.73,98,25,6,64,16,4
 TR,Santa Cruz,2019,pell_status,non_pell,3,3.73,4.0,66,17,4,72,18,4

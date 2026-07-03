@@ -51,20 +51,36 @@ Transfer entrants by source CCC: campus × college × entry year 1999–2024; `c
 cumulative `grad2/3/4` (integer percents, same N ≥ 10 masking).
 
 ### `data/trends/gpa_band_counts.csv`, `gpa_cutpoints.csv` — GPA bands (UC IC)
-From the "Grad. rates by GPA groups" dashboard: cohorts 2010–2021 × campus (All + 9) ×
-{Pell, first-generation, ethnicity} × three GPA bands. Bands are **terciles of that
-campus × cohort's own enrollee GPA distribution** (weighted-capped HS GPA for freshmen; transfer
-GPA for transfers), so boundaries move across campuses and years — they are data, shown under
-the chart and in tooltips. The source publishes graduate **counts** by timing (freshmen: within
-4 yrs / 5th yr only / 6th yr only; transfers: within 2 / 3rd only / 4th only) but **no
-entering-cohort denominators**:
 
-- Freshman band **rates are not identified**. The page shows the split of graduates by time to
-  degree — `share4 = c_first ÷ (c_first+c_second+c_third)`, etc. — masked below 25 graduates.
+From the "Grad. rates by GPA groups" dashboard: cohorts 2010–2021 × campus (All + 9) ×
+{Pell, first-generation, ethnicity} × three GPA bands. Bands are **terciles of the systemwide
+enrollee GPA distribution per cohort and entry type** (weighted-capped HS GPA for freshmen;
+transfer GPA for transfers). Verified: the published boundaries are identical across campus
+selections, so the same three bands apply everywhere and campuses draw unevenly from them —
+transfer sheets (which publish rates alongside counts) imply Berkeley's 2015 transfer entrants
+split ≈200/520/1,450 across bands while Merced's split ≈73/12/10. Boundaries move across years
+and are data, shown under the chart and in tooltips. The source publishes graduate **counts**
+by timing (freshmen: within 4 yrs / 5th yr only / 6th yr only; transfers: within 2 / 3rd only /
+4th only) but **no entering-cohort denominators**:
+
+- **Estimated freshman band rates, systemwide only:** because the bands are systemwide terciles
+  by construction, each band's systemwide entering denominator is cohort N ÷ 3. The page's
+  "(est.)" measures compute graduates ÷ (N ÷ 3), with graduates summed over the Pell × band
+  cells (verified to reproduce the source's own `*Overall` sheets exactly). The UC cohort N
+  includes students without usable HS GPA, so levels are understated ≈3.5 pp (measured at 2019
+  vs the published systemwide 6-yr rate); band-to-band gaps share the denominator and are
+  unaffected. Per-campus and subgroup × band rates remain unidentified (the distribution of a
+  campus/subgroup across the systemwide bands is unpublished for freshmen).
+- Freshman subgroup views therefore show the split of graduates by time to degree —
+  `share4 = c_first ÷ (c_first+c_second+c_third)`, etc. — masked below 25 graduates, and gated
+  to cohorts whose 6-year window has closed (≤2019 currently): later cohorts have only early
+  completions recorded, which would push the shares artificially toward "finished in 4".
 - Transfer sheets additionally publish the band-level completion **rates** (integer-rounded);
-  cumulative values shown are sums of rounded parts (±1 pp per part).
+  cumulative values shown are sums of rounded parts (±1 pp per part). All published transfer
+  windows are closed.
 - "Avg" rows in freshman sheets are Tableau-rounded to 0/1 and discarded.
-- `*Overall` (no-subgroup) sheets exist only for cohorts 2019–2020.
+- `*Overall` (no-subgroup) sheets exist only for cohorts 2019–2020 (both entry types; used as
+  a QA cross-check for the partition sums).
 
 ### `data/trends/fed_campus_panel.csv` — campus completion panel (federal)
 From the College Scorecard merged institution files (June 10 2026 vintage), UC's nine
