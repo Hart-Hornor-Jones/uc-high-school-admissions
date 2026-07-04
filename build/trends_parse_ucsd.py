@@ -92,6 +92,53 @@ def main():
             continue
         best[k] = (prio, round(rate * 100, 2), numer, den)
     rows = [[*k, v[1], v[2], v[3]] for k, v in best.items()]
+
+    # --- synthesized STEM / non-STEM aggregates -------------------------------
+    # Exact sums of numerators and denominators over member schools. Suppressed
+    # member cells (< dashboard threshold, i.e. <= 9 students) are absent; a
+    # combined point is emitted only when those hidden cells could not move the
+    # aggregate rate by more than 1 pp in either direction. A school counts as
+    # 'expected' for a cell if it reports that measure for that cohort for any
+    # group (so schools that did not exist yet, e.g. HDSI before 2020, are not
+    # treated as missing). Public Health (Wertheim), 'Special' and Medicine are
+    # left unclassified (mixed or non-degree populations).
+    STEM = {'Biology', 'Engineering', 'Physical Sciences',
+            'Scripps Institution of Oceanography', 'Halicioğlu Data Science Institute'}
+    NONSTEM = {'Arts & Humanities', 'Social Sciences', 'Global Policy & Strategy'}
+    CAP = 9  # max students in a suppressed cell
+    exists = set()
+    for (level, fam, sub, school, cohort, meas) in best:
+        exists.add((school, level, cohort, meas))
+    from collections import defaultdict
+    agg = defaultdict(lambda: [0, 0, []])   # (bucketname,...) -> [num, den, present schools]
+    for (level, fam, sub, school, cohort, meas), v in best.items():
+        for bucket, bname in ((STEM, 'All STEM schools'), (NONSTEM, 'All non-STEM schools')):
+            if school in bucket:
+                k = (level, fam, sub, bname, cohort, meas)
+                if v[3] == '':
+                    continue
+                agg[k][0] += v[2]
+                agg[k][1] += v[3]
+                agg[k][2].append(school)
+    n_added = n_gated = 0
+    for (level, fam, sub, bname, cohort, meas), (num, den, present) in sorted(agg.items()):
+        bucket = STEM if bname.startswith('All STEM') else NONSTEM
+        expected = [sc for sc in bucket if (sc, level, cohort, meas) in exists]
+        missing = [sc for sc in expected if sc not in present]
+        m = len(missing)
+        if den <= 0:
+            continue
+        r0 = num / den
+        hi = (num + CAP * m) / (den + CAP * m)
+        lo = num / (den + CAP * m)
+        if m > 0 and max(hi - r0, r0 - lo) * 100 > 1.0:
+            n_gated += 1
+            continue
+        rows.append([level, fam, sub, bname, cohort, meas,
+                     round(100.0 * r0, 2), num, den])
+        n_added += 1
+    stats['combined_added'] = n_added
+    stats['combined_gated_suppression'] = n_gated
     rows.sort()
     os.makedirs(a.out, exist_ok=True)
     with open(os.path.join(a.out, 'ucsd_rates.csv'), 'w', newline='') as fh:

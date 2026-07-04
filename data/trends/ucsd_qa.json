@@ -1,12 +1,16 @@
 {
- "rows": 6450,
+ "rows": 7669,
  "stats": {
   "suppressed_or_missing": 1584,
   "skipped_metric": 2088,
   "dropped_filter": 462,
-  "dupe_lower_prio": 1057
+  "dupe_lower_prio": 1057,
+  "combined_added": 1219,
+  "combined_gated_suppression": 538
  },
  "schools": [
+  "All STEM schools",
+  "All non-STEM schools",
   "Arts & Humanities",
   "Biology",
   "Engineering",
@@ -19,16 +23,16 @@
   "Special"
  ],
  "measures": {
-  "FR|ret1": 999,
-  "FR|grad4": 703,
-  "FR|grad5": 627,
-  "FR|grad6": 544,
-  "FR|ret2": 900,
-  "TR|grad2": 622,
-  "TR|ret1": 752,
-  "TR|grad3": 602,
-  "TR|grad4": 528,
-  "TR|grad5": 173
+  "FR|ret1": 1179,
+  "FR|grad4": 837,
+  "FR|grad5": 749,
+  "FR|grad6": 651,
+  "FR|ret2": 1064,
+  "TR|grad2": 742,
+  "TR|ret1": 894,
+  "TR|grad5": 206,
+  "TR|grad3": 717,
+  "TR|grad4": 630
  },
  "cohorts": [
   2013,

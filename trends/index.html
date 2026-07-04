@@ -619,7 +619,7 @@ function defaultSelection(){
   if(m==='ucsd'){
     const opts=currentOptions().map(o=>o[0]);
     if(state.ucsdBy==='schools')
-      return ['Engineering','Biology','Social Sciences','Arts & Humanities'].filter(sc=>opts.includes(sc));
+      return ['All STEM schools','All non-STEM schools','Engineering','Social Sciences'].filter(sc=>opts.includes(sc));
     return ['pell|pell','pell|non_pell','fg|first_gen','fg|not_first_gen'].filter(k=>opts.includes(k));
   }
   if(m==='majors'){
@@ -823,6 +823,8 @@ function assemble(){
     title=um[1]+' — UC San Diego, '+scope+', '+(state.level==='FR'?'first-year':'transfer')+' entrants';
     sub='UC San Diego’s institutional-research dashboards, by the school/division of the student’s major. Cohort and group definitions are UCSD’s own (ethnicity keeps Hawaiian/Pacific Islander and Unknown as separate categories); rates are full precision, denominators in tooltips.';
     mask='Cells under the dashboard’s reporting threshold are suppressed at source — small schools and groups have gaps rather than zeros.';
+    const hasComb=sel.some(k=>String(k).startsWith('All STEM')||String(k).startsWith('All non-STEM'))||String(state.ucsdSchool).startsWith('All ');
+    if(hasComb) gate='Combined lines sum graduates and cohort sizes over member schools — STEM: Biology, Engineering, Physical Sciences, Scripps, Data Science; non-STEM: Arts & Humanities, Social Sciences, Global Policy (Public Health left unclassified). A point is drawn only when suppressed member cells (each under 10 students) could not move the rate by more than 1 pp.';
   }
   else if(m==='majors'){
     universe='fed'; xlab='Completions year'; xpill='completions year (period start)';

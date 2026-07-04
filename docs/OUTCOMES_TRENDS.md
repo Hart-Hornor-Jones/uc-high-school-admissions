@@ -90,6 +90,18 @@ universe, never mixed with UC IC or federal series in one chart. The FR time-to-
 distribution worksheet (program-time buckets) is not carried. School names deduped (Halicioğlu
 unicode variants); "School of Medicine" has no unsuppressed undergraduate cells.
 
+**Synthesized STEM / non-STEM aggregates.** Because every cell carries a numerator and a
+denominator, the build adds two combined "schools": *All STEM schools* (Biology, Engineering,
+Physical Sciences, Scripps, Halicioğlu Data Science) and *All non-STEM schools* (Arts &
+Humanities, Social Sciences, Global Policy & Strategy) — exact sums of graduates and cohort
+sizes over member schools. Public Health (Wertheim), "Special," and Medicine are left
+unclassified (mixed or non-degree populations). Suppressed member cells hold at most 9
+students, so each combined point is emitted only when the hidden cells could not move the
+aggregate rate by more than 1 pp in either direction (1,219 points pass; 538 are withheld,
+mostly small ethnic groups × early cohorts). A school counts as expected for a cell only if it
+reports that measure for that cohort for any group, so schools that did not yet exist (e.g.
+Data Science before 2020) are not treated as missing.
+
 ### `data/trends/fed_campus_panel.csv` — campus completion panel (federal)
 From the College Scorecard merged institution files (June 10 2026 vintage), UC's nine
 undergraduate campuses, data years 1996-97 to 2025-26: `C150_4` overall and by federal race,
