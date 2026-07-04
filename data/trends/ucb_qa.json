@@ -1,0 +1,96 @@
+{
+ "rows": 1097,
+ "qa": {
+  "calviz_no_rate": 33,
+  "calviz_gated_window": 3,
+  "calviz_skipped_metric": 14,
+  "calviz_rows": 631,
+  "ourb_small_cell": 52,
+  "ourb_rows": 466
+ },
+ "dims": {
+  "eop": [
+   "EOP Eligible",
+   "Not EOP Eligible",
+   "One EOP Eligibility Marker",
+   "Three EOP Eligibility Markers",
+   "Two EOP Eligibility Markers"
+  ],
+  "eth_detail": [
+   "African American",
+   "Asian Non-Underrepresented",
+   "Asian Underrepresented",
+   "Chicano/Latino",
+   "Chinese",
+   "Filipino",
+   "International",
+   "Japanese",
+   "Korean",
+   "Mexican American/Chicano",
+   "Native American/Alaska Native",
+   "Other Asian",
+   "Other Hispanic/Latino",
+   "Other/Decline to State Ethnicity",
+   "Pacific Islander",
+   "South Asian",
+   "Underrepresented Minority",
+   "Vietnamese",
+   "White"
+  ],
+  "firstgen": [
+   "First Generation College",
+   "Not First Generation College",
+   "Unknown Parental Education"
+  ],
+  "gender": [
+   "Decline to State Gender",
+   "Man",
+   "Nonbinary",
+   "Woman"
+  ],
+  "overall": [
+   "Overall"
+  ],
+  "ret_college": [
+   "Clg of Chemistry",
+   "Clg of Engineering",
+   "Clg of Environmental Design",
+   "Clg of Letters & Science",
+   "Haas School of Business",
+   "Other",
+   "Rausser Clg Natural Resources"
+  ],
+  "ret_eth": [
+   "Asian Non-Underrepresented",
+   "International",
+   "Underrepresented Minority",
+   "White/Other"
+  ],
+  "ret_ethgen": [
+   "Asian Non-Underrepresented × Man",
+   "Asian Non-Underrepresented × Nonbinary/Decline",
+   "Asian Non-Underrepresented × Woman",
+   "International × Man",
+   "International × Nonbinary/Decline",
+   "International × Woman",
+   "Underrepresented Minority × Man",
+   "Underrepresented Minority × Nonbinary/Decline",
+   "Underrepresented Minority × Woman",
+   "White/Other × Man",
+   "White/Other × Nonbinary/Decline",
+   "White/Other × Woman"
+  ],
+  "ret_gender": [
+   "Man",
+   "Nonbinary/Decline",
+   "Woman"
+  ],
+  "ret_overall": [
+   "Overall"
+  ]
+ },
+ "cohorts": [
+  2010,
+  2023
+ ]
+}

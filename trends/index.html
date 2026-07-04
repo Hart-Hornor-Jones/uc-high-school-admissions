@@ -48,6 +48,7 @@
   .badge.fed{border-color:#e6cfc0;color:#a3512b;background:#fcf6f1;}
   .badge.sem{border-color:#d9d2ea;color:#6b5cae;background:#f8f6fc;}
   .badge.ucsd{border-color:#b9dcd6;color:#1f7a6f;background:#effaf7;}
+  .badge.ucb{border-color:#e2d3ae;color:#9c6f1f;background:#fdf8ec;}
   .badge.xax{border-color:#e0d6bd;color:#8a6d1a;background:#fcf9f0;text-transform:none;letter-spacing:0;margin-left:0;margin-right:8px;}
   .card{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);}
   .chartcard{padding:10px 10px 6px;position:relative;}
@@ -161,6 +162,13 @@
           <td>UCSD's categories: ethnicity keeps Hawaiian/Pacific Islander and Unknown/decline separate;
               first-generation and Pell as flagged by UCSD.</td>
           <td>UC San Diego deep dive</td></tr>
+      <tr><td><span class="badge ucb">UC Berkeley data</span> UCB Office of Planning &amp; Analysis</td>
+          <td>Berkeley's own freshman and transfer entering cohorts (2010&ndash;2023 for graduation; retention
+              through 2023), from the campus "Disaggregated Grad Rates" dashboard and Our Berkeley downloads.</td>
+          <td>Berkeley's categories: disaggregated Asian (Chinese, Filipino, Japanese, Korean, South Asian,
+              Vietnamese&hellip;) and Latinx subgroups, gender incl. nonbinary, first-generation, and the campus's
+              EOP-eligibility markers. Retention splits use coarser groups and entry college.</td>
+          <td>UC Berkeley deep dive</td></tr>
     </table>
     <h3>Measures</h3>
     <p id="measureGlossary" style="margin:4px 0"></p>
@@ -212,6 +220,7 @@
       <a href="../data/trends/gpa_band_counts.csv">GPA band counts</a> &middot;
       <a href="../data/trends/gpa_cutpoints.csv">GPA cutpoints</a> &middot;
       <a href="../data/trends/ucsd_rates.csv">UC San Diego deep dive</a> &middot;
+      <a href="../data/trends/ucb_rates.csv">UC Berkeley deep dive</a> &middot;
       <a href="../data/trends/fed_campus_panel.csv">federal campus panel</a> &middot;
       <a href="../data/trends/majors_cip2.csv">majors</a> &middot;
       <a href="../data/trends/fed_money.csv">earnings &amp; debt</a> &middot;
@@ -312,6 +321,19 @@ const UCSD_MEASURES = {
       ['ret1','First-year retention','cohort']]
 };
 const UCSD_FAM = {eth:'Ethnicity', fg:'First generation', pell:'Pell'};
+const UCB_DIMS = [
+  ['eth_detail','Race/ethnicity (detailed)'],
+  ['gender','Gender'],
+  ['firstgen','First generation'],
+  ['eop','EOP eligibility'],
+  ['ret_college','Entry college — retention'],
+  ['ret_eth','Ethnicity — retention'],
+  ['ret_ethgen','Ethnicity × gender — retention'],
+  ['ret_gender','Gender — retention']];
+const UCB_MEASURES = {
+  FR:[['grad6','Graduated within 6 years','cohort'],['grad4','Graduated within 4 years','cohort']],
+  TR:[['grad4','Graduated within 4 years','cohort'],['grad2','Graduated within 2 years','cohort']],
+  ret:[['ret1','First-year retention','cohort']]};
 const UCSD_SUB_LBL = {black:'African American/Black', aian:'American Indian/AK Native',
   asian:'Asian/Asian American', hispanic_latino:'Chicanx/Latinx', international:'International',
   nhpi:'Hawaiian/Pac. Islander', unknown:'Unknown/decline', white:'White',
@@ -355,6 +377,7 @@ const state = {
   gpaGroupType:'pell_status', horizon:'p10', moneyMetric:'earnings',
   fgOutcome:'comp_orig',
   ucsdBy:'groups', ucsdSchool:'Engineering', ucsdGroup:'pell|pell',
+  ucbDim:'eth_detail',
   sel:{}
 };
 
@@ -365,6 +388,7 @@ const MODES = [
   ['ccc','Community colleges (transfer entrants)'],
   ['gpa','GPA bands (terciles at entry)'],
   ['ucsd','UC San Diego deep dive (school × group)'],
+  ['ucb','UC Berkeley deep dive (disaggregated groups)'],
   ['majors','Majors (degrees conferred)'],
   ['money','Earnings & debt (federal)'],
   ['fgfed','First-generation (federal, years after entry)']
@@ -447,6 +471,7 @@ $('level').addEventListener('click',ev=>{
   if(state.mode==='sys'){ if(!SYS_MEASURES[state.level].some(m=>m[0]===state.measure)) state.measure = state.level==='FR'?'grad6':'grad4'; state.sel.sys=null; }
   if(state.mode==='gpa'){ state.sel.gpa=null; state.gpaMeasure=null; }
   if(state.mode==='ucsd'){ state.sel.ucsd=null; state.ucsdMeasure=null; }
+  if(state.mode==='ucb'){ state.sel.ucb=null; state.ucbMeasure=null; }
   buildControls(); update();
 });
 
@@ -466,6 +491,7 @@ measureSel.addEventListener('change',()=>{
   else if(state.mode==='ccc') state.cccMeasure=measureSel.value;
   else if(state.mode==='gpa') state.gpaMeasure=measureSel.value;
   else if(state.mode==='ucsd') state.ucsdMeasure=measureSel.value;
+  else if(state.mode==='ucb') state.ucbMeasure=measureSel.value;
   else if(state.mode==='majors') state.majMeasure=measureSel.value;
   else if(state.mode==='money') state.moneyMetric=measureSel.value;
   else if(state.mode==='fgfed') state.fgOutcome=measureSel.value;
@@ -475,6 +501,7 @@ horizonSel.addEventListener('change',()=>{
   else if(state.mode==='fed'){ state.fedBy=horizonSel.value; state.sel.fed=null; }
   else if(state.mode==='gpa'){ state.gpaGroupType=horizonSel.value; state.sel.gpa=null; }
   else if(state.mode==='ucsd'){ state.ucsdBy=horizonSel.value; state.sel.ucsd=null; }
+  else if(state.mode==='ucb'){ state.ucbDim=horizonSel.value; state.sel.ucb=null; state.ucbMeasure=null; }
   else if(state.mode==='money') state.horizon=horizonSel.value;
   buildControls(); update(); });
 
@@ -482,10 +509,14 @@ function buildControls(){
   const m=state.mode;
   if(m==='gpa') state.gpaMeasure = state.gpaMeasure || (state.level==='FR'?'cum6':'cum4');
   if(m==='ucsd') state.ucsdMeasure = state.ucsdMeasure || (state.level==='FR'?'grad6':'grad4');
-  $('ctlLevel').classList.toggle('hide', !(m==='sys'||m==='gpa'||m==='ucsd'));
+  if(m==='ucb'){
+    const md=state.ucbDim.startsWith('ret_')?UCB_MEASURES.ret:UCB_MEASURES[state.level];
+    if(!state.ucbMeasure||!md.some(x=>x[0]===state.ucbMeasure)) state.ucbMeasure=md[0][0];
+  }
+  $('ctlLevel').classList.toggle('hide', !(m==='sys'||m==='gpa'||m==='ucsd'||m==='ucb'));
   $('ctlCampus').classList.toggle('hide', !(m==='hs'||m==='ccc'||m==='gpa'||m==='majors'||m==='fgfed'||m==='ucsd'||(m==='fed'&&state.fedBy==='group')));
   $('ctlSearch').classList.toggle('hide', !(m==='hs'||m==='ccc'));
-  $('ctlHorizon').classList.toggle('hide', !(m==='sys'||m==='fed'||m==='gpa'||m==='ucsd'||m==='money'));
+  $('ctlHorizon').classList.toggle('hide', !(m==='sys'||m==='fed'||m==='gpa'||m==='ucsd'||m==='ucb'||m==='money'));
   $('ctlSeries').classList.toggle('hide', m==='money');
   $('seriesLabel').textContent = (m==='hs'||m==='ccc')?'Institutions shown':'Groups shown';
   clear(campusSel);
@@ -518,6 +549,7 @@ function buildControls(){
   else if(m==='ccc'){ state.cccMeasure=state.cccMeasure||'grad4'; fillMeasures(SCHOOL_MEASURES.ccc, state.cccMeasure); }
   else if(m==='gpa'){ fillMeasures(GPA_MEASURES[state.level], state.gpaMeasure); }
   else if(m==='ucsd'){ fillMeasures(UCSD_MEASURES[state.level], state.ucsdMeasure); }
+  else if(m==='ucb'){ fillMeasures(state.ucbDim.startsWith('ret_')?UCB_MEASURES.ret:UCB_MEASURES[state.level], state.ucbMeasure); }
   else if(m==='majors'){ state.majMeasure=state.majMeasure||'total'; fillMeasures(MAJ_MEASURES, state.majMeasure); }
   else if(m==='money'){ fillMeasures(MONEY_MEASURES, state.moneyMetric); }
   else if(m==='fgfed'){ fillMeasures(FG_MEASURES, state.fgOutcome); }
@@ -541,6 +573,9 @@ function buildControls(){
     hz.textContent='Lines are';
     [['groups','Groups (one school)'],['schools','Schools (one group)']]
       .forEach(([v,l])=>opt(horizonSel,v,l,v===state.ucsdBy));
+  } else if(m==='ucb'){
+    hz.textContent='Split by';
+    UCB_DIMS.forEach(([v,l])=>opt(horizonSel,v,l,v===state.ucbDim));
   } else if(m==='money'){
     hz.textContent='Years after entry';
     [['p6','6 years'],['p8','8 years'],['p10','10 years']]
@@ -592,6 +627,14 @@ function currentOptions(){
   if(m==='fgfed'){
     return [['first_generation','First-generation'],['not_first_generation','Not first-generation']];
   }
+  if(m==='ucb'){
+    const pre=state.level+'|'+state.ucbDim+'|';
+    const out=[['__ov__','All entrants']];
+    Object.keys(T.ucb.series).filter(k=>k.startsWith(pre))
+      .map(k=>k.slice(pre.length)).sort()
+      .forEach(sub=>out.push([sub,sub]));
+    return out;
+  }
   return [];
 }
 
@@ -629,6 +672,19 @@ function defaultSelection(){
     return picks.length?picks:av.slice(0,4);
   }
   if(m==='fgfed') return ['first_generation','not_first_generation'];
+  if(m==='ucb'){
+    const opts=currentOptions().map(o=>o[0]);
+    const prefs={
+      eth_detail:['__ov__','Underrepresented Minority','Asian Non-Underrepresented','Chicano/Latino','African American'],
+      gender:['__ov__','Woman','Man'],
+      firstgen:['__ov__','First Generation College','Not First Generation College'],
+      eop:['__ov__','EOP Eligible','Not EOP Eligible'],
+      ret_college:['Clg of Letters & Science','Clg of Engineering','Clg of Chemistry','Haas School of Business'],
+      ret_eth:['__ov__','Underrepresented Minority','Asian Non-Underrepresented','White/Other'],
+      ret_ethgen:['Underrepresented Minority × Man','Underrepresented Minority × Woman','Asian Non-Underrepresented × Man','Asian Non-Underrepresented × Woman'],
+      ret_gender:['__ov__','Woman','Man']};
+    return (prefs[state.ucbDim]||opts.slice(0,4)).filter(k=>opts.includes(k));
+  }
   return [];
 }
 
@@ -826,6 +882,22 @@ function assemble(){
     const hasComb=sel.some(k=>String(k).startsWith('All STEM')||String(k).startsWith('All non-STEM'))||String(state.ucsdSchool).startsWith('All ');
     if(hasComb) gate='Combined lines sum graduates and cohort sizes over member schools — STEM: Biology, Engineering, Physical Sciences, Scripps, Data Science; non-STEM: Arts & Humanities, Social Sciences, Global Policy (Public Health left unclassified). A point is drawn only when suppressed member cells (each under 10 students) could not move the rate by more than 1 pp.';
   }
+  else if(m==='ucb'){
+    universe='ucb';
+    const md=(state.ucbDim.startsWith('ret_')?UCB_MEASURES.ret:UCB_MEASURES[state.level]).find(x=>x[0]===state.ucbMeasure)||UCB_MEASURES.ret[0];
+    sel.forEach((k,i)=>{
+      let key;
+      if(k==='__ov__') key=state.level+'|'+(state.ucbDim.startsWith('ret_')?'ret_overall':'overall')+'|Overall';
+      else key=state.level+'|'+state.ucbDim+'|'+k;
+      const arr=(T.ucb.series[key]||{})[md[0]]||[];
+      series.push({key:k,label:k==='__ov__'?'All entrants':(lblOf[k]||k),color:PALETTE[i%PALETTE.length],
+        points:arr.map(pp=>[pp[0],pp[1],pp[2]])});
+    });
+    const dimLbl=(UCB_DIMS.find(d=>d[0]===state.ucbDim)||[])[1]||'';
+    title=md[1]+' — UC Berkeley, by '+dimLbl.replace(' — retention','')+', '+(state.level==='FR'?'freshman':'transfer')+' entrants';
+    sub='UC Berkeley’s Office of Planning & Analysis "Disaggregated Grad Rates" dashboard and the campus’s Our Berkeley data downloads. Berkeley’s own universe and categories — including disaggregated Asian and Latinx subgroups and the campus’s EOP-eligibility markers. Full-precision rates; denominators in tooltips.';
+    mask='Detailed subgroups can be small (Pacific Islander, Nonbinary) — read with their Ns. Retention cells under N=20 hidden; retention aggregates residency.';
+  }
   else if(m==='majors'){
     universe='fed'; xlab='Completions year'; xpill='completions year (period start)';
     const meas=state.majMeasure;
@@ -939,7 +1011,7 @@ function update(){
   const v=assemble();
   lastView=v;
   setBadge(v.universe);
-  $('plotTitle').innerHTML=v.title+' <span class="badge '+(v.universe==='fed'?'fed':v.universe==='ucsd'?'ucsd':'uc')+'">'+(U_TXT[v.universe]||v.universe)+'</span>'+
+  $('plotTitle').innerHTML=v.title+' <span class="badge '+(v.universe==='fed'?'fed':v.universe==='ucsd'?'ucsd':v.universe==='ucb'?'ucb':'uc')+'">'+(U_TXT[v.universe]||v.universe)+'</span>'+
     '<span class="badge sem">'+(SEM_TAG[v.sem]||v.sem)+'</span>';
   $('plotSub').innerHTML='<span class="badge xax">x: '+v.xpill+'</span> '+v.sub;
   $('maskNote').textContent=v.mask;
@@ -950,11 +1022,11 @@ function update(){
   buildChips();
 }
 
-const U_TXT={uc:'UC data', fed:'Federal data', ucsd:'UC San Diego data'};
+const U_TXT={uc:'UC data', fed:'Federal data', ucsd:'UC San Diego data', ucb:'UC Berkeley data'};
 function setBadge(u){
   const b=$('universeBadge');
   b.textContent=U_TXT[u]||u;
-  b.className='badge '+(u==='fed'?'fed':u==='ucsd'?'ucsd':'uc');
+  b.className='badge '+(u==='fed'?'fed':u==='ucsd'?'ucsd':u==='ucb'?'ucb':'uc');
 }
 
 function drawLines(v){
@@ -982,7 +1054,7 @@ function drawLines(v){
   if(v.unit==='%'){ ylo=Math.max(0,Math.floor((ylo-4)/10)*10); yhi=Math.min(100,Math.ceil((yhi+2)/10)*10); }
   else { const pad=(yhi-ylo)*.12||1; ylo-=pad; yhi+=pad; if(v.unit==='count') ylo=Math.max(0,ylo); }
   const y=d3.scaleLinear().domain([ylo,yhi]).nice().range([H-mb,mt]);
-  if((v.universe==='uc'||v.universe==='ucsd')&&v.xlab==='Entering cohort'&&x.domain()[1]>=2020){
+  if((v.universe==='uc'||v.universe==='ucsd'||v.universe==='ucb')&&v.xlab==='Entering cohort'&&x.domain()[1]>=2020){
     const x0=Math.max(x.domain()[0],2019.5), x1=Math.min(x.domain()[1],2021.5);
     if(x1>x0){
       svg.append('rect').attr('class','covidband').attr('x',x(x0)).attr('width',x(x1)-x(x0))
@@ -1083,10 +1155,11 @@ $('dlcsv').addEventListener('click',()=>{
   SYS_MEASURES.FR.forEach(x=>parts.push('<b>'+x[1]+'</b> — '+x[3]+'.'));
   parts.push('<b>GPA-band rates</b> — share of a band’s entrants (students with usable GPA) earning a UC degree within the stated window; full-precision dashboard data with per-cell denominators.');
   parts.push('<b>UC San Diego deep dive</b> — UCSD IR cohort rates by school/division of major × group; UCSD’s own universe and categories.');
+  parts.push('<b>UC Berkeley deep dive</b> — UCB OPAP cohort graduation rates by disaggregated group, and Our-Berkeley first-year retention by entry college and ethnicity × gender.');
   parts.push('<b>C150</b> — federal six-year (150%-time) completion at the same campus, first-time full-time cohorts.');
   parts.push('<b>Degrees conferred</b> — IPEDS completion counts by field; not rates.');
   g.innerHTML=parts.join(' ');
-  $('srcline').textContent='UC series: '+T.meta.sources.uc_ic+'. Federal series: '+T.meta.sources.scorecard+'; '+T.meta.sources.ipeds+'. UCSD series: '+(T.meta.sources.ucsd||'')+'. Site data built '+T.meta.built+'.';
+  $('srcline').textContent='UC series: '+T.meta.sources.uc_ic+'. Federal series: '+T.meta.sources.scorecard+'; '+T.meta.sources.ipeds+'. UCSD series: '+(T.meta.sources.ucsd||'')+'. UC Berkeley series: '+(T.meta.sources.ucb||'')+'. Site data built '+T.meta.built+'.';
 })();
 
 /* ---------- boot ---------- */

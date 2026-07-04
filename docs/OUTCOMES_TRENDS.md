@@ -102,6 +102,29 @@ mostly small ethnic groups × early cohorts). A school counts as expected for a 
 reports that measure for that cohort for any group, so schools that did not yet exist (e.g.
 Data Science before 2020) are not treated as missing.
 
+### `data/trends/ucb_rates.csv` — UC Berkeley deep dive (UCB OPAP)
+
+Primary: `berkeley_disaggregated_grad_rates_final/normalized_rates.csv` — a VizQL extraction of
+UC Berkeley OPAP's "Disaggregated Grad Rates" dashboard (calviz.berkeley.edu): freshman and
+transfer entrants 2010–2023 with full-precision graduation rates, numerators and denominators,
+by Overall, **detailed race/ethnicity** (URM; African American; Chicano/Latino with Mexican
+American/Chicano and Other Hispanic/Latino separately; Native American; Pacific Islander; Asian
+Non-Underrepresented with Chinese, Filipino, Japanese, Korean, South Asian, Vietnamese, Other
+Asian; Asian Underrepresented; White; Other/Decline; International), gender (incl. nonbinary),
+first-generation, and the campus's **EOP-eligibility markers** (eligible / not / 1–3 markers).
+Year-by-Year mode only (the dashboard's 5-yr moving average is a derivable smoothing). Window
+gates vs the 2025 vintage: FR 6-yr ≤ 2019, 4-yr ≤ 2021; TR 2-yr ≤ 2023, 4-yr ≤ 2021.
+
+Secondary: `UCB Students - Graduation & Retention Rates.xlsx` (Our Berkeley download): one-year
+retention counts by ethnicity × gender × residency and by **entry college** (L&S, Engineering,
+Chemistry, Environmental Design, Haas, Rausser/CNR, Other). Rates = retained ÷ (retained + not),
+aggregated over residency; marginals and the ethnicity × gender cross are carried; cells under
+N = 20 hidden. A fourth universe (Berkeley's own cohorts and categories), never mixed with the
+others in one chart. The other Our Berkeley workbooks (majors, GPA by major, admissions, degree
+recipients) and the Grad-Rates time-to-degree bucket table (redundant with calviz at coarser
+ethnicity) are catalogued but not carried; the "Dashboard Help & Notes" docx holds the
+methodology text.
+
 ### `data/trends/fed_campus_panel.csv` — campus completion panel (federal)
 From the College Scorecard merged institution files (June 10 2026 vintage), UC's nine
 undergraduate campuses, data years 1996-97 to 2025-26: `C150_4` overall and by federal race,
@@ -153,6 +176,7 @@ python build/trends_parse_fed.py        --corpus "<corpus>" --out data/trends
 python build/trends_parse_majors.py     --corpus "<corpus>" --out data/trends
 python build/trends_parse_gpa_api.py    --corpus "<corpus>" --out data/trends
 python build/trends_parse_ucsd.py       --corpus "<corpus>" --out data/trends
+python build/trends_parse_ucb.py        --corpus "<corpus>" --out data/trends
 python scripts/make_trends_data.py
 ```
 

@@ -1,0 +1,1098 @@
+level,dimension,subgroup,cohort,measure,rate_pct,numer,denom
+FR,eop,EOP Eligible,2010,grad6,88.67,1236,1394
+FR,eop,EOP Eligible,2011,grad6,89.25,1403,1572
+FR,eop,EOP Eligible,2012,grad6,86.81,1330,1532
+FR,eop,EOP Eligible,2013,grad6,89.15,1512,1696
+FR,eop,EOP Eligible,2014,grad6,88.74,1884,2123
+FR,eop,EOP Eligible,2015,grad6,88.53,1667,1883
+FR,eop,EOP Eligible,2016,grad6,89.5,1765,1972
+FR,eop,EOP Eligible,2017,grad6,89.44,1872,2093
+FR,eop,EOP Eligible,2018,grad6,88.49,1875,2119
+FR,eop,EOP Eligible,2019,grad6,89.73,1966,2191
+FR,eop,Not EOP Eligible,2010,grad6,93.02,2531,2721
+FR,eop,Not EOP Eligible,2011,grad6,91.74,2643,2881
+FR,eop,Not EOP Eligible,2012,grad6,93.48,2481,2654
+FR,eop,Not EOP Eligible,2013,grad6,94.33,2861,3033
+FR,eop,Not EOP Eligible,2014,grad6,94.29,3172,3364
+FR,eop,Not EOP Eligible,2015,grad6,94.62,3484,3682
+FR,eop,Not EOP Eligible,2016,grad6,95.83,4112,4291
+FR,eop,Not EOP Eligible,2017,grad6,94.45,4052,4290
+FR,eop,Not EOP Eligible,2018,grad6,95.02,3704,3898
+FR,eop,Not EOP Eligible,2019,grad6,95.65,4088,4274
+FR,eop,One EOP Eligibility Marker,2010,grad6,90.88,648,713
+FR,eop,One EOP Eligibility Marker,2011,grad6,92.34,796,862
+FR,eop,One EOP Eligibility Marker,2012,grad6,90.13,648,719
+FR,eop,One EOP Eligibility Marker,2013,grad6,91.8,772,841
+FR,eop,One EOP Eligibility Marker,2014,grad6,90.23,942,1044
+FR,eop,One EOP Eligibility Marker,2015,grad6,91.7,862,940
+FR,eop,One EOP Eligibility Marker,2016,grad6,93.27,943,1011
+FR,eop,One EOP Eligibility Marker,2017,grad6,92.63,980,1058
+FR,eop,One EOP Eligibility Marker,2018,grad6,92.65,970,1047
+FR,eop,One EOP Eligibility Marker,2019,grad6,93.56,1017,1087
+FR,eop,Three EOP Eligibility Markers,2010,grad6,83.15,227,273
+FR,eop,Three EOP Eligibility Markers,2011,grad6,79.82,182,228
+FR,eop,Three EOP Eligibility Markers,2012,grad6,80.12,266,332
+FR,eop,Three EOP Eligibility Markers,2013,grad6,78.7,266,338
+FR,eop,Three EOP Eligibility Markers,2014,grad6,82.34,317,385
+FR,eop,Three EOP Eligibility Markers,2015,grad6,80.87,279,345
+FR,eop,Three EOP Eligibility Markers,2016,grad6,80.49,330,410
+FR,eop,Three EOP Eligibility Markers,2017,grad6,81.03,329,406
+FR,eop,Three EOP Eligibility Markers,2018,grad6,79.07,340,430
+FR,eop,Three EOP Eligibility Markers,2019,grad6,83.99,383,456
+FR,eop,Two EOP Eligibility Markers,2010,grad6,88.48,361,408
+FR,eop,Two EOP Eligibility Markers,2011,grad6,88.17,425,482
+FR,eop,Two EOP Eligibility Markers,2012,grad6,86.49,416,481
+FR,eop,Two EOP Eligibility Markers,2013,grad6,91.68,474,517
+FR,eop,Two EOP Eligibility Markers,2014,grad6,90.06,625,694
+FR,eop,Two EOP Eligibility Markers,2015,grad6,87.96,526,598
+FR,eop,Two EOP Eligibility Markers,2016,grad6,89.29,492,551
+FR,eop,Two EOP Eligibility Markers,2017,grad6,89.51,563,629
+FR,eop,Two EOP Eligibility Markers,2018,grad6,88.01,565,642
+FR,eop,Two EOP Eligibility Markers,2019,grad6,87.35,566,648
+FR,eth_detail,African American,2010,grad6,75.0,93,124
+FR,eth_detail,African American,2011,grad6,82.31,107,130
+FR,eth_detail,African American,2012,grad6,72.6,106,146
+FR,eth_detail,African American,2013,grad6,78.2,104,133
+FR,eth_detail,African American,2014,grad6,83.65,133,159
+FR,eth_detail,African American,2015,grad6,79.75,126,158
+FR,eth_detail,African American,2016,grad6,79.75,126,158
+FR,eth_detail,African American,2017,grad6,84.41,157,186
+FR,eth_detail,African American,2018,grad6,81.38,153,188
+FR,eth_detail,African American,2019,grad6,81.46,145,178
+FR,eth_detail,Asian Non-Underrepresented,2010,grad6,94.82,1594,1681
+FR,eth_detail,Asian Non-Underrepresented,2011,grad6,93.35,1769,1895
+FR,eth_detail,Asian Non-Underrepresented,2012,grad6,95.03,1721,1811
+FR,eth_detail,Asian Non-Underrepresented,2013,grad6,96.85,1815,1874
+FR,eth_detail,Asian Non-Underrepresented,2014,grad6,95.09,2132,2242
+FR,eth_detail,Asian Non-Underrepresented,2015,grad6,95.35,2274,2385
+FR,eth_detail,Asian Non-Underrepresented,2016,grad6,95.94,2527,2634
+FR,eth_detail,Asian Non-Underrepresented,2017,grad6,95.77,2557,2670
+FR,eth_detail,Asian Non-Underrepresented,2018,grad6,95.65,2399,2508
+FR,eth_detail,Asian Non-Underrepresented,2019,grad6,96.51,2681,2778
+FR,eth_detail,Asian Underrepresented,2016,grad6,83.33,5,6
+FR,eth_detail,Asian Underrepresented,2017,grad6,88.89,8,9
+FR,eth_detail,Asian Underrepresented,2018,grad6,83.33,5,6
+FR,eth_detail,Asian Underrepresented,2019,grad6,66.67,8,12
+FR,eth_detail,Chicano/Latino,2010,grad6,88.63,374,422
+FR,eth_detail,Chicano/Latino,2011,grad6,87.84,419,477
+FR,eth_detail,Chicano/Latino,2012,grad6,84.33,425,504
+FR,eth_detail,Chicano/Latino,2013,grad6,84.44,456,540
+FR,eth_detail,Chicano/Latino,2014,grad6,86.21,644,747
+FR,eth_detail,Chicano/Latino,2015,grad6,85.73,595,694
+FR,eth_detail,Chicano/Latino,2016,grad6,87.51,736,841
+FR,eth_detail,Chicano/Latino,2017,grad6,87.39,762,872
+FR,eth_detail,Chicano/Latino,2018,grad6,85.29,754,884
+FR,eth_detail,Chicano/Latino,2019,grad6,88.21,860,975
+FR,eth_detail,Chinese,2010,grad6,96.18,831,864
+FR,eth_detail,Chinese,2011,grad6,94.8,894,943
+FR,eth_detail,Chinese,2012,grad6,95.93,848,884
+FR,eth_detail,Chinese,2013,grad6,97.64,870,891
+FR,eth_detail,Chinese,2014,grad6,96.94,1045,1078
+FR,eth_detail,Chinese,2015,grad6,96.12,1041,1083
+FR,eth_detail,Chinese,2016,grad6,97.2,1181,1215
+FR,eth_detail,Chinese,2017,grad6,97.22,1152,1185
+FR,eth_detail,Chinese,2018,grad6,97.49,1048,1075
+FR,eth_detail,Chinese,2019,grad6,97.05,1086,1119
+FR,eth_detail,Filipino,2010,grad6,93.26,83,89
+FR,eth_detail,Filipino,2011,grad6,83.33,90,108
+FR,eth_detail,Filipino,2012,grad6,93.52,101,108
+FR,eth_detail,Filipino,2013,grad6,91.89,102,111
+FR,eth_detail,Filipino,2014,grad6,94.27,148,157
+FR,eth_detail,Filipino,2015,grad6,93.9,154,164
+FR,eth_detail,Filipino,2016,grad6,94.27,181,192
+FR,eth_detail,Filipino,2017,grad6,93.6,190,203
+FR,eth_detail,Filipino,2018,grad6,89.3,167,187
+FR,eth_detail,Filipino,2019,grad6,94.5,206,218
+FR,eth_detail,International,2010,grad6,89.22,389,436
+FR,eth_detail,International,2011,grad6,88.79,523,589
+FR,eth_detail,International,2012,grad6,87.17,462,530
+FR,eth_detail,International,2013,grad6,91.37,752,823
+FR,eth_detail,International,2014,grad6,89.44,635,710
+FR,eth_detail,International,2015,grad6,91.49,613,670
+FR,eth_detail,International,2016,grad6,93.56,697,745
+FR,eth_detail,International,2017,grad6,91.67,682,744
+FR,eth_detail,International,2018,grad6,94.44,782,828
+FR,eth_detail,International,2019,grad6,92.97,767,825
+FR,eth_detail,Japanese,2010,grad6,97.1,67,69
+FR,eth_detail,Japanese,2011,grad6,95.65,66,69
+FR,eth_detail,Japanese,2012,grad6,95.52,64,67
+FR,eth_detail,Japanese,2013,grad6,95.24,60,63
+FR,eth_detail,Japanese,2014,grad6,93.2,96,103
+FR,eth_detail,Japanese,2015,grad6,97.14,102,105
+FR,eth_detail,Japanese,2016,grad6,96.55,84,87
+FR,eth_detail,Japanese,2017,grad6,95.74,90,94
+FR,eth_detail,Japanese,2018,grad6,92.68,76,82
+FR,eth_detail,Japanese,2019,grad6,92.71,89,96
+FR,eth_detail,Korean,2010,grad6,89.55,180,201
+FR,eth_detail,Korean,2011,grad6,91.15,237,260
+FR,eth_detail,Korean,2012,grad6,91.15,206,226
+FR,eth_detail,Korean,2013,grad6,95.62,240,251
+FR,eth_detail,Korean,2014,grad6,90.08,218,242
+FR,eth_detail,Korean,2015,grad6,91.45,246,269
+FR,eth_detail,Korean,2016,grad6,94.52,276,292
+FR,eth_detail,Korean,2017,grad6,91.75,267,291
+FR,eth_detail,Korean,2018,grad6,94.76,235,248
+FR,eth_detail,Korean,2019,grad6,97.07,298,307
+FR,eth_detail,Mexican American/Chicano,2010,grad6,88.57,279,315
+FR,eth_detail,Mexican American/Chicano,2011,grad6,86.2,281,326
+FR,eth_detail,Mexican American/Chicano,2012,grad6,83.91,313,373
+FR,eth_detail,Mexican American/Chicano,2013,grad6,82.37,327,397
+FR,eth_detail,Mexican American/Chicano,2014,grad6,85.66,478,558
+FR,eth_detail,Mexican American/Chicano,2015,grad6,84.43,423,501
+FR,eth_detail,Mexican American/Chicano,2016,grad6,86.8,546,629
+FR,eth_detail,Mexican American/Chicano,2017,grad6,85.96,545,634
+FR,eth_detail,Mexican American/Chicano,2018,grad6,83.77,547,653
+FR,eth_detail,Mexican American/Chicano,2019,grad6,87.6,650,742
+FR,eth_detail,Native American/Alaska Native,2010,grad6,85.71,24,28
+FR,eth_detail,Native American/Alaska Native,2011,grad6,97.06,33,34
+FR,eth_detail,Native American/Alaska Native,2012,grad6,89.66,26,29
+FR,eth_detail,Native American/Alaska Native,2013,grad6,94.44,17,18
+FR,eth_detail,Native American/Alaska Native,2014,grad6,76.74,33,43
+FR,eth_detail,Native American/Alaska Native,2015,grad6,88.89,24,27
+FR,eth_detail,Native American/Alaska Native,2016,grad6,95.45,21,22
+FR,eth_detail,Native American/Alaska Native,2017,grad6,70.83,17,24
+FR,eth_detail,Native American/Alaska Native,2018,grad6,75.0,15,20
+FR,eth_detail,Native American/Alaska Native,2019,grad6,79.17,19,24
+FR,eth_detail,Other Asian,2010,grad6,94.83,55,58
+FR,eth_detail,Other Asian,2011,grad6,93.48,43,46
+FR,eth_detail,Other Asian,2012,grad6,93.33,42,45
+FR,eth_detail,Other Asian,2013,grad6,93.59,73,78
+FR,eth_detail,Other Asian,2014,grad6,90.0,72,80
+FR,eth_detail,Other Asian,2015,grad6,95.6,87,91
+FR,eth_detail,Other Asian,2016,grad6,92.73,51,55
+FR,eth_detail,Other Asian,2017,grad6,93.1,54,58
+FR,eth_detail,Other Asian,2018,grad6,98.51,66,67
+FR,eth_detail,Other Asian,2019,grad6,91.14,72,79
+FR,eth_detail,Other Hispanic/Latino,2010,grad6,88.79,95,107
+FR,eth_detail,Other Hispanic/Latino,2011,grad6,91.39,138,151
+FR,eth_detail,Other Hispanic/Latino,2012,grad6,85.5,112,131
+FR,eth_detail,Other Hispanic/Latino,2013,grad6,90.21,129,143
+FR,eth_detail,Other Hispanic/Latino,2014,grad6,87.83,166,189
+FR,eth_detail,Other Hispanic/Latino,2015,grad6,89.12,172,193
+FR,eth_detail,Other Hispanic/Latino,2016,grad6,89.62,190,212
+FR,eth_detail,Other Hispanic/Latino,2017,grad6,91.18,217,238
+FR,eth_detail,Other Hispanic/Latino,2018,grad6,89.61,207,231
+FR,eth_detail,Other Hispanic/Latino,2019,grad6,90.13,210,233
+FR,eth_detail,Other/Decline to State Ethnicity,2010,grad6,90.62,232,256
+FR,eth_detail,Other/Decline to State Ethnicity,2011,grad6,89.91,98,109
+FR,eth_detail,Other/Decline to State Ethnicity,2012,grad6,98.55,136,138
+FR,eth_detail,Other/Decline to State Ethnicity,2013,grad6,93.12,149,160
+FR,eth_detail,Other/Decline to State Ethnicity,2014,grad6,96.68,204,211
+FR,eth_detail,Other/Decline to State Ethnicity,2015,grad6,94.42,254,269
+FR,eth_detail,Other/Decline to State Ethnicity,2016,grad6,95.34,307,322
+FR,eth_detail,Other/Decline to State Ethnicity,2017,grad6,94.33,283,300
+FR,eth_detail,Other/Decline to State Ethnicity,2018,grad6,94.79,273,288
+FR,eth_detail,Other/Decline to State Ethnicity,2019,grad6,96.31,287,298
+FR,eth_detail,Pacific Islander,2010,grad6,75.0,6,8
+FR,eth_detail,Pacific Islander,2011,grad6,81.82,9,11
+FR,eth_detail,Pacific Islander,2012,grad6,80.0,8,10
+FR,eth_detail,Pacific Islander,2013,grad6,55.56,5,9
+FR,eth_detail,Pacific Islander,2014,grad6,100.0,5,5
+FR,eth_detail,Pacific Islander,2015,grad6,88.89,8,9
+FR,eth_detail,Pacific Islander,2016,grad6,100.0,12,12
+FR,eth_detail,Pacific Islander,2017,grad6,90.91,10,11
+FR,eth_detail,Pacific Islander,2018,grad6,90.91,10,11
+FR,eth_detail,Pacific Islander,2019,grad6,100.0,8,8
+FR,eth_detail,South Asian,2010,grad6,94.07,254,270
+FR,eth_detail,South Asian,2011,grad6,94.8,310,327
+FR,eth_detail,South Asian,2012,grad6,94.99,322,339
+FR,eth_detail,South Asian,2013,grad6,97.73,344,352
+FR,eth_detail,South Asian,2014,grad6,95.38,392,411
+FR,eth_detail,South Asian,2015,grad6,96.78,481,497
+FR,eth_detail,South Asian,2016,grad6,95.94,591,616
+FR,eth_detail,South Asian,2017,grad6,95.78,636,664
+FR,eth_detail,South Asian,2018,grad6,95.38,620,650
+FR,eth_detail,South Asian,2019,grad6,96.92,723,746
+FR,eth_detail,Underrepresented Minority,2010,grad6,85.4,497,582
+FR,eth_detail,Underrepresented Minority,2011,grad6,87.12,568,652
+FR,eth_detail,Underrepresented Minority,2012,grad6,82.0,565,689
+FR,eth_detail,Underrepresented Minority,2013,grad6,83.14,582,700
+FR,eth_detail,Underrepresented Minority,2014,grad6,85.43,815,954
+FR,eth_detail,Underrepresented Minority,2015,grad6,84.8,753,888
+FR,eth_detail,Underrepresented Minority,2016,grad6,86.62,900,1039
+FR,eth_detail,Underrepresented Minority,2017,grad6,86.57,954,1102
+FR,eth_detail,Underrepresented Minority,2018,grad6,84.49,937,1109
+FR,eth_detail,Underrepresented Minority,2019,grad6,86.88,1040,1197
+FR,eth_detail,Vietnamese,2010,grad6,95.38,124,130
+FR,eth_detail,Vietnamese,2011,grad6,90.85,129,142
+FR,eth_detail,Vietnamese,2012,grad6,97.18,138,142
+FR,eth_detail,Vietnamese,2013,grad6,98.44,126,128
+FR,eth_detail,Vietnamese,2014,grad6,94.15,161,171
+FR,eth_detail,Vietnamese,2015,grad6,92.61,163,176
+FR,eth_detail,Vietnamese,2016,grad6,92.09,163,177
+FR,eth_detail,Vietnamese,2017,grad6,96.0,168,175
+FR,eth_detail,Vietnamese,2018,grad6,93.97,187,199
+FR,eth_detail,Vietnamese,2019,grad6,97.18,207,213
+FR,eth_detail,White,2010,grad6,90.95,1055,1160
+FR,eth_detail,White,2011,grad6,90.07,1088,1208
+FR,eth_detail,White,2012,grad6,91.06,927,1018
+FR,eth_detail,White,2013,grad6,91.72,1075,1172
+FR,eth_detail,White,2014,grad6,92.7,1270,1370
+FR,eth_detail,White,2015,grad6,92.9,1257,1353
+FR,eth_detail,White,2016,grad6,94.94,1446,1523
+FR,eth_detail,White,2017,grad6,92.41,1448,1567
+FR,eth_detail,White,2018,grad6,92.52,1188,1284
+FR,eth_detail,White,2019,grad6,93.56,1279,1367
+FR,firstgen,First Generation College,2010,grad6,89.27,832,932
+FR,firstgen,First Generation College,2011,grad6,87.54,836,955
+FR,firstgen,First Generation College,2012,grad6,86.29,894,1036
+FR,firstgen,First Generation College,2013,grad6,88.84,1051,1183
+FR,firstgen,First Generation College,2014,grad6,88.27,1249,1415
+FR,firstgen,First Generation College,2015,grad6,87.24,1060,1215
+FR,firstgen,First Generation College,2016,grad6,87.74,1081,1232
+FR,firstgen,First Generation College,2017,grad6,88.5,1170,1322
+FR,firstgen,First Generation College,2018,grad6,86.79,1176,1355
+FR,firstgen,First Generation College,2019,grad6,88.32,1255,1421
+FR,firstgen,Not First Generation College,2010,grad6,92.23,2658,2882
+FR,firstgen,Not First Generation College,2011,grad6,91.89,3150,3428
+FR,firstgen,Not First Generation College,2012,grad6,92.73,2857,3081
+FR,firstgen,Not First Generation College,2013,grad6,93.94,3257,3467
+FR,firstgen,Not First Generation College,2014,grad6,93.49,3703,3961
+FR,firstgen,Not First Generation College,2015,grad6,94.11,4025,4277
+FR,firstgen,Not First Generation College,2016,grad6,95.32,4682,4912
+FR,firstgen,Not First Generation College,2017,grad6,94.01,4649,4945
+FR,firstgen,Not First Generation College,2018,grad6,94.42,4294,4548
+FR,firstgen,Not First Generation College,2019,grad6,95.15,4689,4928
+FR,firstgen,Unknown Parental Education,2010,grad6,92.03,277,301
+FR,firstgen,Unknown Parental Education,2011,grad6,85.71,60,70
+FR,firstgen,Unknown Parental Education,2012,grad6,86.96,60,69
+FR,firstgen,Unknown Parental Education,2013,grad6,82.28,65,79
+FR,firstgen,Unknown Parental Education,2014,grad6,93.69,104,111
+FR,firstgen,Unknown Parental Education,2015,grad6,90.41,66,73
+FR,firstgen,Unknown Parental Education,2016,grad6,95.8,114,119
+FR,firstgen,Unknown Parental Education,2017,grad6,90.52,105,116
+FR,firstgen,Unknown Parental Education,2018,grad6,95.61,109,114
+FR,firstgen,Unknown Parental Education,2019,grad6,94.83,110,116
+FR,gender,Decline to State Gender,2015,grad6,100.0,4,4
+FR,gender,Decline to State Gender,2016,grad6,94.42,186,197
+FR,gender,Decline to State Gender,2017,grad6,93.75,30,32
+FR,gender,Decline to State Gender,2018,grad6,92.68,38,41
+FR,gender,Decline to State Gender,2019,grad6,91.67,44,48
+FR,gender,Man,2010,grad6,89.52,1699,1898
+FR,gender,Man,2011,grad6,89.11,1907,2140
+FR,gender,Man,2012,grad6,89.13,1829,2052
+FR,gender,Man,2013,grad6,91.14,2098,2302
+FR,gender,Man,2014,grad6,90.52,2311,2553
+FR,gender,Man,2015,grad6,91.55,2449,2675
+FR,gender,Man,2016,grad6,92.3,2624,2843
+FR,gender,Man,2017,grad6,91.76,2685,2926
+FR,gender,Man,2018,grad6,91.84,2408,2622
+FR,gender,Man,2019,grad6,92.87,2672,2877
+FR,gender,Woman,2010,grad6,93.28,2068,2217
+FR,gender,Woman,2011,grad6,92.48,2139,2313
+FR,gender,Woman,2012,grad6,92.88,1982,2134
+FR,gender,Woman,2013,grad6,93.74,2275,2427
+FR,gender,Woman,2014,grad6,93.56,2745,2934
+FR,gender,Woman,2015,grad6,93.49,2698,2886
+FR,gender,Woman,2016,grad6,95.16,3067,3223
+FR,gender,Woman,2017,grad6,93.69,3209,3425
+FR,gender,Woman,2018,grad6,93.41,3133,3354
+FR,gender,Woman,2019,grad6,94.29,3338,3540
+FR,overall,Overall,2010,grad4,75.82,3120,4115
+FR,overall,Overall,2011,grad4,75.48,3361,4453
+FR,overall,Overall,2012,grad4,74.1,3102,4186
+FR,overall,Overall,2013,grad4,75.66,3578,4729
+FR,overall,Overall,2014,grad4,75.69,4153,5487
+FR,overall,Overall,2015,grad4,78.56,4372,5565
+FR,overall,Overall,2016,grad4,81.35,5095,6263
+FR,overall,Overall,2017,grad4,80.67,5149,6383
+FR,overall,Overall,2018,grad4,79.76,4799,6017
+FR,overall,Overall,2019,grad4,81.16,5247,6465
+FR,overall,Overall,2020,grad4,78.69,4820,6125
+FR,overall,Overall,2021,grad4,80.58,5596,6945
+FR,overall,Overall,2010,grad6,91.54,3767,4115
+FR,overall,Overall,2011,grad6,90.86,4046,4453
+FR,overall,Overall,2012,grad6,91.04,3811,4186
+FR,overall,Overall,2013,grad6,92.47,4373,4729
+FR,overall,Overall,2014,grad6,92.15,5056,5487
+FR,overall,Overall,2015,grad6,92.56,5151,5565
+FR,overall,Overall,2016,grad6,93.84,5877,6263
+FR,overall,Overall,2017,grad6,92.81,5924,6383
+FR,overall,Overall,2018,grad6,92.72,5579,6017
+FR,overall,Overall,2019,grad6,93.64,6054,6465
+FR,ret_college,Clg of Chemistry,2014,ret1,96.48,192,199
+FR,ret_college,Clg of Chemistry,2015,ret1,99.09,217,219
+FR,ret_college,Clg of Chemistry,2016,ret1,98.52,200,203
+FR,ret_college,Clg of Chemistry,2017,ret1,98.21,219,223
+FR,ret_college,Clg of Chemistry,2018,ret1,98.13,210,214
+FR,ret_college,Clg of Chemistry,2019,ret1,94.8,255,269
+FR,ret_college,Clg of Chemistry,2020,ret1,95.95,237,247
+FR,ret_college,Clg of Chemistry,2021,ret1,94.8,237,250
+FR,ret_college,Clg of Chemistry,2022,ret1,96.03,242,252
+FR,ret_college,Clg of Chemistry,2023,ret1,97.76,218,223
+FR,ret_college,Clg of Engineering,2014,ret1,98.2,655,667
+FR,ret_college,Clg of Engineering,2015,ret1,97.45,688,706
+FR,ret_college,Clg of Engineering,2016,ret1,97.47,733,752
+FR,ret_college,Clg of Engineering,2017,ret1,97.36,810,832
+FR,ret_college,Clg of Engineering,2018,ret1,96.9,750,774
+FR,ret_college,Clg of Engineering,2019,ret1,96.74,772,798
+FR,ret_college,Clg of Engineering,2020,ret1,95.92,823,858
+FR,ret_college,Clg of Engineering,2021,ret1,94.51,844,893
+FR,ret_college,Clg of Engineering,2022,ret1,95.66,970,1014
+FR,ret_college,Clg of Engineering,2023,ret1,97.38,891,915
+FR,ret_college,Clg of Environmental Design,2014,ret1,96.75,119,123
+FR,ret_college,Clg of Environmental Design,2015,ret1,94.92,112,118
+FR,ret_college,Clg of Environmental Design,2016,ret1,94.55,104,110
+FR,ret_college,Clg of Environmental Design,2017,ret1,98.25,112,114
+FR,ret_college,Clg of Environmental Design,2018,ret1,97.37,111,114
+FR,ret_college,Clg of Environmental Design,2019,ret1,92.68,114,123
+FR,ret_college,Clg of Environmental Design,2020,ret1,94.19,146,155
+FR,ret_college,Clg of Environmental Design,2021,ret1,96.15,150,156
+FR,ret_college,Clg of Environmental Design,2022,ret1,96.51,166,172
+FR,ret_college,Clg of Environmental Design,2023,ret1,94.41,135,143
+FR,ret_college,Clg of Letters & Science,2014,ret1,96.14,3490,3630
+FR,ret_college,Clg of Letters & Science,2015,ret1,96.39,3442,3571
+FR,ret_college,Clg of Letters & Science,2016,ret1,97.1,4661,4800
+FR,ret_college,Clg of Letters & Science,2017,ret1,96.76,4692,4849
+FR,ret_college,Clg of Letters & Science,2018,ret1,96.89,4244,4380
+FR,ret_college,Clg of Letters & Science,2019,ret1,96.13,4525,4707
+FR,ret_college,Clg of Letters & Science,2020,ret1,96.31,4071,4227
+FR,ret_college,Clg of Letters & Science,2021,ret1,96.36,4742,4921
+FR,ret_college,Clg of Letters & Science,2022,ret1,96.99,4480,4619
+FR,ret_college,Clg of Letters & Science,2023,ret1,96.62,4572,4732
+FR,ret_college,Haas School of Business,2018,ret1,93.94,31,33
+FR,ret_college,Haas School of Business,2019,ret1,100.0,28,28
+FR,ret_college,Haas School of Business,2020,ret1,100.0,31,31
+FR,ret_college,Haas School of Business,2021,ret1,100.0,30,30
+FR,ret_college,Haas School of Business,2022,ret1,100.0,36,36
+FR,ret_college,Haas School of Business,2023,ret1,100.0,33,33
+FR,ret_college,Other,2014,ret1,98.08,716,730
+FR,ret_college,Other,2015,ret1,96.92,723,746
+FR,ret_college,Other,2017,ret1,67.8,40,59
+FR,ret_college,Other,2018,ret1,82.54,52,63
+FR,ret_college,Other,2019,ret1,92.31,48,52
+FR,ret_college,Other,2020,ret1,86.36,57,66
+FR,ret_college,Other,2021,ret1,74.65,53,71
+FR,ret_college,Other,2022,ret1,79.37,50,63
+FR,ret_college,Other,2023,ret1,84.48,49,58
+FR,ret_college,Rausser Clg Natural Resources,2014,ret1,96.19,353,367
+FR,ret_college,Rausser Clg Natural Resources,2015,ret1,96.26,360,374
+FR,ret_college,Rausser Clg Natural Resources,2016,ret1,97.37,445,457
+FR,ret_college,Rausser Clg Natural Resources,2017,ret1,95.96,451,470
+FR,ret_college,Rausser Clg Natural Resources,2018,ret1,97.21,453,466
+FR,ret_college,Rausser Clg Natural Resources,2019,ret1,96.12,496,516
+FR,ret_college,Rausser Clg Natural Resources,2020,ret1,94.51,534,565
+FR,ret_college,Rausser Clg Natural Resources,2021,ret1,95.91,609,635
+FR,ret_college,Rausser Clg Natural Resources,2022,ret1,97.08,599,617
+FR,ret_college,Rausser Clg Natural Resources,2023,ret1,97.63,577,591
+FR,ret_eth,Asian Non-Underrepresented,2014,ret1,97.55,2268,2325
+FR,ret_eth,Asian Non-Underrepresented,2015,ret1,98.09,2408,2455
+FR,ret_eth,Asian Non-Underrepresented,2016,ret1,98.01,2608,2661
+FR,ret_eth,Asian Non-Underrepresented,2017,ret1,97.95,2674,2730
+FR,ret_eth,Asian Non-Underrepresented,2018,ret1,97.97,2462,2513
+FR,ret_eth,Asian Non-Underrepresented,2019,ret1,97.38,2713,2786
+FR,ret_eth,Asian Non-Underrepresented,2020,ret1,97.65,2491,2551
+FR,ret_eth,Asian Non-Underrepresented,2021,ret1,97.68,2774,2840
+FR,ret_eth,Asian Non-Underrepresented,2022,ret1,97.9,2839,2900
+FR,ret_eth,Asian Non-Underrepresented,2023,ret1,98.15,2753,2805
+FR,ret_eth,International,2014,ret1,96.22,688,715
+FR,ret_eth,International,2015,ret1,95.25,641,673
+FR,ret_eth,International,2016,ret1,96.53,723,749
+FR,ret_eth,International,2017,ret1,95.96,736,767
+FR,ret_eth,International,2018,ret1,97.73,818,837
+FR,ret_eth,International,2019,ret1,92.65,769,830
+FR,ret_eth,International,2020,ret1,93.56,654,699
+FR,ret_eth,International,2021,ret1,95.52,853,893
+FR,ret_eth,International,2022,ret1,96.05,656,683
+FR,ret_eth,International,2023,ret1,95.8,593,619
+FR,ret_eth,Underrepresented Minority,2014,ret1,94.79,964,1017
+FR,ret_eth,Underrepresented Minority,2015,ret1,94.46,870,921
+FR,ret_eth,Underrepresented Minority,2016,ret1,94.88,1000,1054
+FR,ret_eth,Underrepresented Minority,2017,ret1,94.63,1075,1136
+FR,ret_eth,Underrepresented Minority,2018,ret1,93.72,1045,1115
+FR,ret_eth,Underrepresented Minority,2019,ret1,96.51,1163,1205
+FR,ret_eth,Underrepresented Minority,2020,ret1,92.89,1464,1576
+FR,ret_eth,Underrepresented Minority,2021,ret1,92.09,1502,1631
+FR,ret_eth,Underrepresented Minority,2022,ret1,94.27,1531,1624
+FR,ret_eth,Underrepresented Minority,2023,ret1,95.48,1691,1771
+FR,ret_eth,White/Other,2014,ret1,96.75,1605,1659
+FR,ret_eth,White/Other,2015,ret1,96.32,1623,1685
+FR,ret_eth,White/Other,2016,ret1,97.21,1813,1865
+FR,ret_eth,White/Other,2017,ret1,96.08,1839,1914
+FR,ret_eth,White/Other,2018,ret1,96.64,1526,1579
+FR,ret_eth,White/Other,2019,ret1,95.28,1593,1672
+FR,ret_eth,White/Other,2020,ret1,97.51,1290,1323
+FR,ret_eth,White/Other,2021,ret1,96.48,1536,1592
+FR,ret_eth,White/Other,2022,ret1,96.87,1517,1566
+FR,ret_eth,White/Other,2023,ret1,95.87,1438,1500
+FR,ret_ethgen,Asian Non-Underrepresented × Man,2014,ret1,97.09,1069,1101
+FR,ret_ethgen,Asian Non-Underrepresented × Man,2015,ret1,97.72,1198,1226
+FR,ret_ethgen,Asian Non-Underrepresented × Man,2016,ret1,97.71,1239,1268
+FR,ret_ethgen,Asian Non-Underrepresented × Man,2017,ret1,97.88,1293,1321
+FR,ret_ethgen,Asian Non-Underrepresented × Man,2018,ret1,97.89,1115,1139
+FR,ret_ethgen,Asian Non-Underrepresented × Man,2019,ret1,97.45,1301,1335
+FR,ret_ethgen,Asian Non-Underrepresented × Man,2020,ret1,97.31,1159,1191
+FR,ret_ethgen,Asian Non-Underrepresented × Man,2021,ret1,96.99,1192,1229
+FR,ret_ethgen,Asian Non-Underrepresented × Man,2022,ret1,98.14,1160,1182
+FR,ret_ethgen,Asian Non-Underrepresented × Man,2023,ret1,98.02,1191,1215
+FR,ret_ethgen,Asian Non-Underrepresented × Nonbinary/Decline,2022,ret1,91.3,42,46
+FR,ret_ethgen,Asian Non-Underrepresented × Nonbinary/Decline,2023,ret1,96.3,52,54
+FR,ret_ethgen,Asian Non-Underrepresented × Woman,2014,ret1,97.96,1199,1224
+FR,ret_ethgen,Asian Non-Underrepresented × Woman,2015,ret1,98.45,1210,1229
+FR,ret_ethgen,Asian Non-Underrepresented × Woman,2016,ret1,98.25,1351,1375
+FR,ret_ethgen,Asian Non-Underrepresented × Woman,2017,ret1,98.01,1376,1404
+FR,ret_ethgen,Asian Non-Underrepresented × Woman,2018,ret1,98.03,1344,1371
+FR,ret_ethgen,Asian Non-Underrepresented × Woman,2019,ret1,97.31,1410,1449
+FR,ret_ethgen,Asian Non-Underrepresented × Woman,2020,ret1,97.93,1325,1353
+FR,ret_ethgen,Asian Non-Underrepresented × Woman,2021,ret1,98.18,1565,1594
+FR,ret_ethgen,Asian Non-Underrepresented × Woman,2022,ret1,97.91,1637,1672
+FR,ret_ethgen,Asian Non-Underrepresented × Woman,2023,ret1,98.31,1510,1536
+FR,ret_ethgen,International × Man,2014,ret1,95.21,338,355
+FR,ret_ethgen,International × Man,2015,ret1,96.15,300,312
+FR,ret_ethgen,International × Man,2016,ret1,95.78,363,379
+FR,ret_ethgen,International × Man,2017,ret1,95.78,363,379
+FR,ret_ethgen,International × Man,2018,ret1,98.34,414,421
+FR,ret_ethgen,International × Man,2019,ret1,92.36,387,419
+FR,ret_ethgen,International × Man,2020,ret1,91.76,334,364
+FR,ret_ethgen,International × Man,2021,ret1,94.34,417,442
+FR,ret_ethgen,International × Man,2022,ret1,96.1,320,333
+FR,ret_ethgen,International × Man,2023,ret1,95.45,273,286
+FR,ret_ethgen,International × Nonbinary/Decline,2016,ret1,95.45,21,22
+FR,ret_ethgen,International × Woman,2014,ret1,97.22,350,360
+FR,ret_ethgen,International × Woman,2015,ret1,94.46,341,361
+FR,ret_ethgen,International × Woman,2016,ret1,97.41,339,348
+FR,ret_ethgen,International × Woman,2017,ret1,96.13,373,388
+FR,ret_ethgen,International × Woman,2018,ret1,97.32,400,411
+FR,ret_ethgen,International × Woman,2019,ret1,92.75,371,400
+FR,ret_ethgen,International × Woman,2020,ret1,95.28,303,318
+FR,ret_ethgen,International × Woman,2021,ret1,96.61,427,442
+FR,ret_ethgen,International × Woman,2022,ret1,96.18,327,340
+FR,ret_ethgen,International × Woman,2023,ret1,95.94,307,320
+FR,ret_ethgen,Underrepresented Minority × Man,2014,ret1,94.78,363,383
+FR,ret_ethgen,Underrepresented Minority × Man,2015,ret1,92.33,337,365
+FR,ret_ethgen,Underrepresented Minority × Man,2016,ret1,92.7,381,411
+FR,ret_ethgen,Underrepresented Minority × Man,2017,ret1,93.72,373,398
+FR,ret_ethgen,Underrepresented Minority × Man,2018,ret1,90.66,369,407
+FR,ret_ethgen,Underrepresented Minority × Man,2019,ret1,95.69,400,418
+FR,ret_ethgen,Underrepresented Minority × Man,2020,ret1,91.95,617,671
+FR,ret_ethgen,Underrepresented Minority × Man,2021,ret1,93.62,543,580
+FR,ret_ethgen,Underrepresented Minority × Man,2022,ret1,93.02,480,516
+FR,ret_ethgen,Underrepresented Minority × Man,2023,ret1,93.7,535,571
+FR,ret_ethgen,Underrepresented Minority × Nonbinary/Decline,2021,ret1,84.0,21,25
+FR,ret_ethgen,Underrepresented Minority × Nonbinary/Decline,2022,ret1,93.02,40,43
+FR,ret_ethgen,Underrepresented Minority × Nonbinary/Decline,2023,ret1,88.52,54,61
+FR,ret_ethgen,Underrepresented Minority × Woman,2014,ret1,94.79,601,634
+FR,ret_ethgen,Underrepresented Minority × Woman,2015,ret1,95.86,533,556
+FR,ret_ethgen,Underrepresented Minority × Woman,2016,ret1,96.24,615,639
+FR,ret_ethgen,Underrepresented Minority × Woman,2017,ret1,95.12,701,737
+FR,ret_ethgen,Underrepresented Minority × Woman,2018,ret1,95.47,674,706
+FR,ret_ethgen,Underrepresented Minority × Woman,2019,ret1,96.95,762,786
+FR,ret_ethgen,Underrepresented Minority × Woman,2020,ret1,93.56,842,900
+FR,ret_ethgen,Underrepresented Minority × Woman,2021,ret1,91.42,938,1026
+FR,ret_ethgen,Underrepresented Minority × Woman,2022,ret1,94.93,1011,1065
+FR,ret_ethgen,Underrepresented Minority × Woman,2023,ret1,96.75,1102,1139
+FR,ret_ethgen,White/Other × Man,2014,ret1,96.52,776,804
+FR,ret_ethgen,White/Other × Man,2015,ret1,95.78,817,853
+FR,ret_ethgen,White/Other × Man,2016,ret1,96.31,782,812
+FR,ret_ethgen,White/Other × Man,2017,ret1,96.34,868,901
+FR,ret_ethgen,White/Other × Man,2018,ret1,96.86,647,668
+FR,ret_ethgen,White/Other × Man,2019,ret1,96.4,697,723
+FR,ret_ethgen,White/Other × Man,2020,ret1,97.18,586,603
+FR,ret_ethgen,White/Other × Man,2021,ret1,96.69,642,664
+FR,ret_ethgen,White/Other × Man,2022,ret1,96.69,585,605
+FR,ret_ethgen,White/Other × Man,2023,ret1,94.88,537,566
+FR,ret_ethgen,White/Other × Nonbinary/Decline,2016,ret1,96.82,152,157
+FR,ret_ethgen,White/Other × Nonbinary/Decline,2017,ret1,92.31,24,26
+FR,ret_ethgen,White/Other × Nonbinary/Decline,2018,ret1,100.0,32,32
+FR,ret_ethgen,White/Other × Nonbinary/Decline,2019,ret1,97.06,33,34
+FR,ret_ethgen,White/Other × Nonbinary/Decline,2020,ret1,100.0,48,48
+FR,ret_ethgen,White/Other × Nonbinary/Decline,2021,ret1,95.83,69,72
+FR,ret_ethgen,White/Other × Nonbinary/Decline,2022,ret1,96.61,57,59
+FR,ret_ethgen,White/Other × Nonbinary/Decline,2023,ret1,93.33,98,105
+FR,ret_ethgen,White/Other × Woman,2014,ret1,96.96,829,855
+FR,ret_ethgen,White/Other × Woman,2015,ret1,96.86,802,828
+FR,ret_ethgen,White/Other × Woman,2016,ret1,98.1,879,896
+FR,ret_ethgen,White/Other × Woman,2017,ret1,95.95,947,987
+FR,ret_ethgen,White/Other × Woman,2018,ret1,96.36,847,879
+FR,ret_ethgen,White/Other × Woman,2019,ret1,94.32,863,915
+FR,ret_ethgen,White/Other × Woman,2020,ret1,97.62,656,672
+FR,ret_ethgen,White/Other × Woman,2021,ret1,96.38,825,856
+FR,ret_ethgen,White/Other × Woman,2022,ret1,97.01,875,902
+FR,ret_ethgen,White/Other × Woman,2023,ret1,96.86,803,829
+FR,ret_gender,Man,2014,ret1,96.33,2546,2643
+FR,ret_gender,Man,2015,ret1,96.23,2652,2756
+FR,ret_gender,Man,2016,ret1,96.34,2765,2870
+FR,ret_gender,Man,2017,ret1,96.6,2897,2999
+FR,ret_gender,Man,2018,ret1,96.58,2545,2635
+FR,ret_gender,Man,2019,ret1,96.2,2785,2895
+FR,ret_gender,Man,2020,ret1,95.3,2696,2829
+FR,ret_gender,Man,2021,ret1,95.85,2794,2915
+FR,ret_gender,Man,2022,ret1,96.55,2545,2636
+FR,ret_gender,Man,2023,ret1,96.13,2536,2638
+FR,ret_gender,Nonbinary/Decline,2016,ret1,97.01,195,201
+FR,ret_gender,Nonbinary/Decline,2017,ret1,93.75,30,32
+FR,ret_gender,Nonbinary/Decline,2018,ret1,97.62,41,42
+FR,ret_gender,Nonbinary/Decline,2019,ret1,97.92,47,48
+FR,ret_gender,Nonbinary/Decline,2020,ret1,100.0,77,77
+FR,ret_gender,Nonbinary/Decline,2021,ret1,94.31,116,123
+FR,ret_gender,Nonbinary/Decline,2022,ret1,93.67,148,158
+FR,ret_gender,Nonbinary/Decline,2023,ret1,93.13,217,233
+FR,ret_gender,Woman,2014,ret1,96.94,2979,3073
+FR,ret_gender,Woman,2015,ret1,97.04,2886,2974
+FR,ret_gender,Woman,2016,ret1,97.73,3184,3258
+FR,ret_gender,Woman,2017,ret1,96.62,3397,3516
+FR,ret_gender,Woman,2018,ret1,96.97,3265,3367
+FR,ret_gender,Woman,2019,ret1,95.94,3406,3550
+FR,ret_gender,Woman,2020,ret1,96.39,3126,3243
+FR,ret_gender,Woman,2021,ret1,95.84,3755,3918
+FR,ret_gender,Woman,2022,ret1,96.76,3850,3979
+FR,ret_gender,Woman,2023,ret1,97.33,3722,3824
+FR,ret_overall,Overall,2014,ret1,96.66,5525,5716
+FR,ret_overall,Overall,2015,ret1,96.65,5542,5734
+FR,ret_overall,Overall,2016,ret1,97.08,6144,6329
+FR,ret_overall,Overall,2017,ret1,96.59,6324,6547
+FR,ret_overall,Overall,2018,ret1,96.81,5851,6044
+FR,ret_overall,Overall,2019,ret1,96.07,6238,6493
+FR,ret_overall,Overall,2020,ret1,95.93,5899,6149
+FR,ret_overall,Overall,2021,ret1,95.82,6665,6956
+FR,ret_overall,Overall,2022,ret1,96.6,6543,6773
+FR,ret_overall,Overall,2023,ret1,96.71,6475,6695
+TR,eop,EOP Eligible,2012,grad4,90.52,1299,1435
+TR,eop,EOP Eligible,2013,grad4,91.69,1369,1493
+TR,eop,EOP Eligible,2014,grad4,90.78,1339,1475
+TR,eop,EOP Eligible,2015,grad4,91.14,1316,1444
+TR,eop,EOP Eligible,2016,grad4,90.3,1526,1690
+TR,eop,EOP Eligible,2017,grad4,91.47,1619,1770
+TR,eop,EOP Eligible,2018,grad4,91.42,1386,1516
+TR,eop,EOP Eligible,2019,grad4,90.3,1517,1680
+TR,eop,EOP Eligible,2020,grad4,87.98,1434,1630
+TR,eop,EOP Eligible,2021,grad4,90.24,1618,1793
+TR,eop,Not EOP Eligible,2012,grad4,90.04,678,753
+TR,eop,Not EOP Eligible,2013,grad4,90.85,695,765
+TR,eop,Not EOP Eligible,2014,grad4,94.53,691,731
+TR,eop,Not EOP Eligible,2015,grad4,92.28,681,738
+TR,eop,Not EOP Eligible,2016,grad4,92.44,831,899
+TR,eop,Not EOP Eligible,2017,grad4,93.68,890,950
+TR,eop,Not EOP Eligible,2018,grad4,93.63,764,816
+TR,eop,Not EOP Eligible,2019,grad4,92.91,812,874
+TR,eop,Not EOP Eligible,2020,grad4,92.85,792,853
+TR,eop,Not EOP Eligible,2021,grad4,91.58,794,867
+TR,eop,One EOP Eligibility Marker,2012,grad4,92.09,640,695
+TR,eop,One EOP Eligibility Marker,2013,grad4,92.52,631,682
+TR,eop,One EOP Eligibility Marker,2014,grad4,91.4,627,686
+TR,eop,One EOP Eligibility Marker,2015,grad4,92.21,663,719
+TR,eop,One EOP Eligibility Marker,2016,grad4,91.07,714,784
+TR,eop,One EOP Eligibility Marker,2017,grad4,94.11,799,849
+TR,eop,One EOP Eligibility Marker,2018,grad4,93.8,666,710
+TR,eop,One EOP Eligibility Marker,2019,grad4,90.92,701,771
+TR,eop,One EOP Eligibility Marker,2020,grad4,90.72,655,722
+TR,eop,One EOP Eligibility Marker,2021,grad4,91.42,725,793
+TR,eop,Three EOP Eligibility Markers,2012,grad4,85.0,153,180
+TR,eop,Three EOP Eligibility Markers,2013,grad4,87.96,190,216
+TR,eop,Three EOP Eligibility Markers,2014,grad4,87.44,181,207
+TR,eop,Three EOP Eligibility Markers,2015,grad4,86.89,179,206
+TR,eop,Three EOP Eligibility Markers,2016,grad4,89.2,256,287
+TR,eop,Three EOP Eligibility Markers,2017,grad4,84.96,226,266
+TR,eop,Three EOP Eligibility Markers,2018,grad4,86.26,182,211
+TR,eop,Three EOP Eligibility Markers,2019,grad4,86.39,254,294
+TR,eop,Three EOP Eligibility Markers,2020,grad4,82.01,278,339
+TR,eop,Three EOP Eligibility Markers,2021,grad4,88.58,287,324
+TR,eop,Two EOP Eligibility Markers,2012,grad4,90.36,506,560
+TR,eop,Two EOP Eligibility Markers,2013,grad4,92.1,548,595
+TR,eop,Two EOP Eligibility Markers,2014,grad4,91.24,531,582
+TR,eop,Two EOP Eligibility Markers,2015,grad4,91.33,474,519
+TR,eop,Two EOP Eligibility Markers,2016,grad4,89.82,556,619
+TR,eop,Two EOP Eligibility Markers,2017,grad4,90.69,594,655
+TR,eop,Two EOP Eligibility Markers,2018,grad4,90.42,538,595
+TR,eop,Two EOP Eligibility Markers,2019,grad4,91.38,562,615
+TR,eop,Two EOP Eligibility Markers,2020,grad4,88.05,501,569
+TR,eop,Two EOP Eligibility Markers,2021,grad4,89.64,606,676
+TR,eth_detail,African American,2012,grad4,84.93,62,73
+TR,eth_detail,African American,2013,grad4,84.38,81,96
+TR,eth_detail,African American,2014,grad4,90.72,88,97
+TR,eth_detail,African American,2015,grad4,88.89,80,90
+TR,eth_detail,African American,2016,grad4,87.93,102,116
+TR,eth_detail,African American,2017,grad4,86.05,111,129
+TR,eth_detail,African American,2018,grad4,87.27,96,110
+TR,eth_detail,African American,2019,grad4,85.61,119,139
+TR,eth_detail,African American,2020,grad4,85.59,101,118
+TR,eth_detail,African American,2021,grad4,90.4,113,125
+TR,eth_detail,Asian Non-Underrepresented,2012,grad4,92.31,504,546
+TR,eth_detail,Asian Non-Underrepresented,2013,grad4,90.64,513,566
+TR,eth_detail,Asian Non-Underrepresented,2014,grad4,94.78,527,556
+TR,eth_detail,Asian Non-Underrepresented,2015,grad4,91.73,477,520
+TR,eth_detail,Asian Non-Underrepresented,2016,grad4,94.16,564,599
+TR,eth_detail,Asian Non-Underrepresented,2017,grad4,92.82,685,738
+TR,eth_detail,Asian Non-Underrepresented,2018,grad4,93.13,583,626
+TR,eth_detail,Asian Non-Underrepresented,2019,grad4,93.19,725,778
+TR,eth_detail,Asian Non-Underrepresented,2020,grad4,92.6,651,703
+TR,eth_detail,Asian Non-Underrepresented,2021,grad4,91.7,784,855
+TR,eth_detail,Asian Underrepresented,2016,grad4,100.0,2,2
+TR,eth_detail,Asian Underrepresented,2017,grad4,100.0,3,3
+TR,eth_detail,Asian Underrepresented,2019,grad4,100.0,1,1
+TR,eth_detail,Asian Underrepresented,2020,grad4,100.0,5,5
+TR,eth_detail,Asian Underrepresented,2021,grad4,100.0,6,6
+TR,eth_detail,Chicano/Latino,2012,grad4,89.88,311,346
+TR,eth_detail,Chicano/Latino,2013,grad4,91.09,317,348
+TR,eth_detail,Chicano/Latino,2014,grad4,89.24,315,353
+TR,eth_detail,Chicano/Latino,2015,grad4,90.75,314,346
+TR,eth_detail,Chicano/Latino,2016,grad4,89.29,425,476
+TR,eth_detail,Chicano/Latino,2017,grad4,90.43,444,491
+TR,eth_detail,Chicano/Latino,2018,grad4,90.87,388,427
+TR,eth_detail,Chicano/Latino,2019,grad4,89.4,464,519
+TR,eth_detail,Chicano/Latino,2020,grad4,85.64,489,571
+TR,eth_detail,Chicano/Latino,2021,grad4,90.48,551,609
+TR,eth_detail,Chinese,2012,grad4,93.64,206,220
+TR,eth_detail,Chinese,2013,grad4,92.34,205,222
+TR,eth_detail,Chinese,2014,grad4,97.32,254,261
+TR,eth_detail,Chinese,2015,grad4,93.94,186,198
+TR,eth_detail,Chinese,2016,grad4,94.62,211,223
+TR,eth_detail,Chinese,2017,grad4,94.98,265,279
+TR,eth_detail,Chinese,2018,grad4,94.25,246,261
+TR,eth_detail,Chinese,2019,grad4,93.94,279,297
+TR,eth_detail,Chinese,2020,grad4,93.91,262,279
+TR,eth_detail,Chinese,2021,grad4,90.77,354,390
+TR,eth_detail,Filipino,2012,grad4,86.67,39,45
+TR,eth_detail,Filipino,2013,grad4,84.75,50,59
+TR,eth_detail,Filipino,2014,grad4,93.55,58,62
+TR,eth_detail,Filipino,2015,grad4,85.96,49,57
+TR,eth_detail,Filipino,2016,grad4,92.68,76,82
+TR,eth_detail,Filipino,2017,grad4,95.96,95,99
+TR,eth_detail,Filipino,2018,grad4,88.46,69,78
+TR,eth_detail,Filipino,2019,grad4,94.29,99,105
+TR,eth_detail,Filipino,2020,grad4,91.25,73,80
+TR,eth_detail,Filipino,2021,grad4,88.31,68,77
+TR,eth_detail,International,2012,grad4,89.18,379,425
+TR,eth_detail,International,2013,grad4,90.61,463,511
+TR,eth_detail,International,2014,grad4,91.8,448,488
+TR,eth_detail,International,2015,grad4,91.03,416,457
+TR,eth_detail,International,2016,grad4,90.53,497,549
+TR,eth_detail,International,2017,grad4,93.88,506,539
+TR,eth_detail,International,2018,grad4,91.65,373,407
+TR,eth_detail,International,2019,grad4,92.35,338,366
+TR,eth_detail,International,2020,grad4,91.28,314,344
+TR,eth_detail,International,2021,grad4,89.83,362,403
+TR,eth_detail,Japanese,2012,grad4,93.18,41,44
+TR,eth_detail,Japanese,2013,grad4,88.24,30,34
+TR,eth_detail,Japanese,2014,grad4,100.0,26,26
+TR,eth_detail,Japanese,2015,grad4,93.33,28,30
+TR,eth_detail,Japanese,2016,grad4,92.86,26,28
+TR,eth_detail,Japanese,2017,grad4,86.67,26,30
+TR,eth_detail,Japanese,2018,grad4,87.1,27,31
+TR,eth_detail,Japanese,2019,grad4,88.24,30,34
+TR,eth_detail,Japanese,2020,grad4,96.43,27,28
+TR,eth_detail,Japanese,2021,grad4,96.55,28,29
+TR,eth_detail,Korean,2012,grad4,89.74,70,78
+TR,eth_detail,Korean,2013,grad4,88.57,62,70
+TR,eth_detail,Korean,2014,grad4,90.54,67,74
+TR,eth_detail,Korean,2015,grad4,90.14,64,71
+TR,eth_detail,Korean,2016,grad4,95.45,84,88
+TR,eth_detail,Korean,2017,grad4,89.58,86,96
+TR,eth_detail,Korean,2018,grad4,93.75,60,64
+TR,eth_detail,Korean,2019,grad4,89.11,90,101
+TR,eth_detail,Korean,2020,grad4,86.9,73,84
+TR,eth_detail,Korean,2021,grad4,91.46,75,82
+TR,eth_detail,Mexican American/Chicano,2012,grad4,90.08,218,242
+TR,eth_detail,Mexican American/Chicano,2013,grad4,88.7,212,239
+TR,eth_detail,Mexican American/Chicano,2014,grad4,89.24,224,251
+TR,eth_detail,Mexican American/Chicano,2015,grad4,90.68,214,236
+TR,eth_detail,Mexican American/Chicano,2016,grad4,88.2,299,339
+TR,eth_detail,Mexican American/Chicano,2017,grad4,90.22,323,358
+TR,eth_detail,Mexican American/Chicano,2018,grad4,90.48,285,315
+TR,eth_detail,Mexican American/Chicano,2019,grad4,88.2,329,373
+TR,eth_detail,Mexican American/Chicano,2020,grad4,84.41,352,417
+TR,eth_detail,Mexican American/Chicano,2021,grad4,91.18,393,431
+TR,eth_detail,Native American/Alaska Native,2012,grad4,91.3,21,23
+TR,eth_detail,Native American/Alaska Native,2013,grad4,93.33,14,15
+TR,eth_detail,Native American/Alaska Native,2014,grad4,91.67,22,24
+TR,eth_detail,Native American/Alaska Native,2015,grad4,85.71,18,21
+TR,eth_detail,Native American/Alaska Native,2016,grad4,89.47,17,19
+TR,eth_detail,Native American/Alaska Native,2017,grad4,100.0,14,14
+TR,eth_detail,Native American/Alaska Native,2018,grad4,75.0,9,12
+TR,eth_detail,Native American/Alaska Native,2019,grad4,88.24,15,17
+TR,eth_detail,Native American/Alaska Native,2020,grad4,84.21,16,19
+TR,eth_detail,Native American/Alaska Native,2021,grad4,75.0,12,16
+TR,eth_detail,Other Asian,2012,grad4,97.22,35,36
+TR,eth_detail,Other Asian,2013,grad4,92.31,48,52
+TR,eth_detail,Other Asian,2014,grad4,89.66,26,29
+TR,eth_detail,Other Asian,2015,grad4,87.88,29,33
+TR,eth_detail,Other Asian,2016,grad4,90.32,28,31
+TR,eth_detail,Other Asian,2017,grad4,96.15,25,26
+TR,eth_detail,Other Asian,2018,grad4,93.55,29,31
+TR,eth_detail,Other Asian,2019,grad4,84.09,37,44
+TR,eth_detail,Other Asian,2020,grad4,87.1,27,31
+TR,eth_detail,Other Asian,2021,grad4,95.35,41,43
+TR,eth_detail,Other Hispanic/Latino,2012,grad4,89.42,93,104
+TR,eth_detail,Other Hispanic/Latino,2013,grad4,96.33,105,109
+TR,eth_detail,Other Hispanic/Latino,2014,grad4,89.22,91,102
+TR,eth_detail,Other Hispanic/Latino,2015,grad4,90.91,100,110
+TR,eth_detail,Other Hispanic/Latino,2016,grad4,91.97,126,137
+TR,eth_detail,Other Hispanic/Latino,2017,grad4,90.98,121,133
+TR,eth_detail,Other Hispanic/Latino,2018,grad4,91.96,103,112
+TR,eth_detail,Other Hispanic/Latino,2019,grad4,92.47,135,146
+TR,eth_detail,Other Hispanic/Latino,2020,grad4,88.96,137,154
+TR,eth_detail,Other Hispanic/Latino,2021,grad4,88.76,158,178
+TR,eth_detail,Other/Decline to State Ethnicity,2012,grad4,94.05,79,84
+TR,eth_detail,Other/Decline to State Ethnicity,2013,grad4,94.81,73,77
+TR,eth_detail,Other/Decline to State Ethnicity,2014,grad4,83.64,46,55
+TR,eth_detail,Other/Decline to State Ethnicity,2015,grad4,88.33,53,60
+TR,eth_detail,Other/Decline to State Ethnicity,2016,grad4,86.05,74,86
+TR,eth_detail,Other/Decline to State Ethnicity,2017,grad4,90.32,56,62
+TR,eth_detail,Other/Decline to State Ethnicity,2018,grad4,94.94,75,79
+TR,eth_detail,Other/Decline to State Ethnicity,2019,grad4,86.25,69,80
+TR,eth_detail,Other/Decline to State Ethnicity,2020,grad4,87.8,72,82
+TR,eth_detail,Other/Decline to State Ethnicity,2021,grad4,89.29,50,56
+TR,eth_detail,Pacific Islander,2012,grad4,87.5,7,8
+TR,eth_detail,Pacific Islander,2013,grad4,100.0,4,4
+TR,eth_detail,Pacific Islander,2014,grad4,88.89,8,9
+TR,eth_detail,Pacific Islander,2015,grad4,90.91,10,11
+TR,eth_detail,Pacific Islander,2016,grad4,100.0,8,8
+TR,eth_detail,Pacific Islander,2017,grad4,80.0,4,5
+TR,eth_detail,Pacific Islander,2018,grad4,80.0,4,5
+TR,eth_detail,Pacific Islander,2019,grad4,75.0,3,4
+TR,eth_detail,Pacific Islander,2020,grad4,83.33,5,6
+TR,eth_detail,Pacific Islander,2021,grad4,100.0,5,5
+TR,eth_detail,South Asian,2012,grad4,87.1,54,62
+TR,eth_detail,South Asian,2013,grad4,93.44,57,61
+TR,eth_detail,South Asian,2014,grad4,92.31,48,52
+TR,eth_detail,South Asian,2015,grad4,93.75,60,64
+TR,eth_detail,South Asian,2016,grad4,97.4,75,77
+TR,eth_detail,South Asian,2017,grad4,91.3,105,115
+TR,eth_detail,South Asian,2018,grad4,95.51,85,89
+TR,eth_detail,South Asian,2019,grad4,96.15,100,104
+TR,eth_detail,South Asian,2020,grad4,95.73,112,117
+TR,eth_detail,South Asian,2021,grad4,93.43,128,137
+TR,eth_detail,Underrepresented Minority,2012,grad4,89.11,401,450
+TR,eth_detail,Underrepresented Minority,2013,grad4,89.85,416,463
+TR,eth_detail,Underrepresented Minority,2014,grad4,89.65,433,483
+TR,eth_detail,Underrepresented Minority,2015,grad4,90.17,422,468
+TR,eth_detail,Underrepresented Minority,2016,grad4,89.21,554,621
+TR,eth_detail,Underrepresented Minority,2017,grad4,89.72,576,642
+TR,eth_detail,Underrepresented Minority,2018,grad4,89.71,497,554
+TR,eth_detail,Underrepresented Minority,2019,grad4,88.53,602,680
+TR,eth_detail,Underrepresented Minority,2020,grad4,85.67,616,719
+TR,eth_detail,Underrepresented Minority,2021,grad4,90.28,687,761
+TR,eth_detail,Vietnamese,2012,grad4,96.72,59,61
+TR,eth_detail,Vietnamese,2013,grad4,89.71,61,68
+TR,eth_detail,Vietnamese,2014,grad4,92.31,48,52
+TR,eth_detail,Vietnamese,2015,grad4,91.04,61,67
+TR,eth_detail,Vietnamese,2016,grad4,91.43,64,70
+TR,eth_detail,Vietnamese,2017,grad4,89.25,83,93
+TR,eth_detail,Vietnamese,2018,grad4,93.06,67,72
+TR,eth_detail,Vietnamese,2019,grad4,96.77,90,93
+TR,eth_detail,Vietnamese,2020,grad4,91.67,77,84
+TR,eth_detail,Vietnamese,2021,grad4,92.78,90,97
+TR,eth_detail,White,2012,grad4,89.9,614,683
+TR,eth_detail,White,2013,grad4,93.45,599,641
+TR,eth_detail,White,2014,grad4,92.31,576,624
+TR,eth_detail,White,2015,grad4,92.91,629,677
+TR,eth_detail,White,2016,grad4,91.01,668,734
+TR,eth_detail,White,2017,grad4,92.83,686,739
+TR,eth_detail,White,2018,grad4,93.39,622,666
+TR,eth_detail,White,2019,grad4,91.54,595,650
+TR,eth_detail,White,2020,grad4,90.24,573,635
+TR,eth_detail,White,2021,grad4,90.43,529,585
+TR,firstgen,First Generation College,2012,grad4,89.87,852,948
+TR,firstgen,First Generation College,2013,grad4,91.64,975,1064
+TR,firstgen,First Generation College,2014,grad4,90.67,923,1018
+TR,firstgen,First Generation College,2015,grad4,90.44,880,973
+TR,firstgen,First Generation College,2016,grad4,91.06,1059,1163
+TR,firstgen,First Generation College,2017,grad4,90.42,1095,1211
+TR,firstgen,First Generation College,2018,grad4,90.94,903,993
+TR,firstgen,First Generation College,2019,grad4,91.14,1029,1129
+TR,firstgen,First Generation College,2020,grad4,88.08,975,1107
+TR,firstgen,First Generation College,2021,grad4,89.92,1115,1240
+TR,firstgen,Not First Generation College,2012,grad4,91.0,1062,1167
+TR,firstgen,Not First Generation College,2013,grad4,91.54,1039,1135
+TR,firstgen,Not First Generation College,2014,grad4,93.29,1043,1118
+TR,firstgen,Not First Generation College,2015,grad4,92.64,1057,1141
+TR,firstgen,Not First Generation College,2016,grad4,91.18,1230,1349
+TR,firstgen,Not First Generation College,2017,grad4,93.92,1345,1432
+TR,firstgen,Not First Generation College,2018,grad4,93.45,1184,1267
+TR,firstgen,Not First Generation College,2019,grad4,91.72,1240,1352
+TR,firstgen,Not First Generation College,2020,grad4,91.13,1212,1330
+TR,firstgen,Not First Generation College,2021,grad4,91.38,1240,1357
+TR,firstgen,Unknown Parental Education,2012,grad4,86.3,63,73
+TR,firstgen,Unknown Parental Education,2013,grad4,84.75,50,59
+TR,firstgen,Unknown Parental Education,2014,grad4,91.43,64,70
+TR,firstgen,Unknown Parental Education,2015,grad4,88.24,60,68
+TR,firstgen,Unknown Parental Education,2016,grad4,88.31,68,77
+TR,firstgen,Unknown Parental Education,2017,grad4,89.61,69,77
+TR,firstgen,Unknown Parental Education,2018,grad4,87.5,63,72
+TR,firstgen,Unknown Parental Education,2019,grad4,82.19,60,73
+TR,firstgen,Unknown Parental Education,2020,grad4,84.78,39,46
+TR,firstgen,Unknown Parental Education,2021,grad4,90.48,57,63
+TR,gender,Decline to State Gender,2015,grad4,100.0,2,2
+TR,gender,Decline to State Gender,2016,grad4,93.88,46,49
+TR,gender,Decline to State Gender,2017,grad4,83.87,26,31
+TR,gender,Decline to State Gender,2018,grad4,88.57,31,35
+TR,gender,Decline to State Gender,2019,grad4,83.33,20,24
+TR,gender,Decline to State Gender,2020,grad4,80.39,41,51
+TR,gender,Decline to State Gender,2021,grad4,83.33,25,30
+TR,gender,Man,2012,grad4,88.31,1020,1155
+TR,gender,Man,2013,grad4,89.42,1048,1172
+TR,gender,Man,2014,grad4,89.06,1018,1143
+TR,gender,Man,2015,grad4,89.04,967,1086
+TR,gender,Man,2016,grad4,89.21,1133,1270
+TR,gender,Man,2017,grad4,90.85,1201,1322
+TR,gender,Man,2018,grad4,90.05,987,1096
+TR,gender,Man,2019,grad4,90.4,1064,1177
+TR,gender,Man,2020,grad4,87.93,1027,1168
+TR,gender,Man,2021,grad4,89.11,1088,1221
+TR,gender,Nonbinary,2020,grad4,100.0,2,2
+TR,gender,Nonbinary,2021,grad4,74.42,32,43
+TR,gender,Woman,2012,grad4,92.64,957,1033
+TR,gender,Woman,2013,grad4,93.55,1016,1086
+TR,gender,Woman,2014,grad4,95.2,1012,1063
+TR,gender,Woman,2015,grad4,93.97,1028,1094
+TR,gender,Woman,2016,grad4,92.76,1178,1270
+TR,gender,Woman,2017,grad4,93.78,1282,1367
+TR,gender,Woman,2018,grad4,94.25,1132,1201
+TR,gender,Woman,2019,grad4,92.02,1245,1353
+TR,gender,Woman,2020,grad4,91.6,1156,1262
+TR,gender,Woman,2021,grad4,92.75,1267,1366
+TR,overall,Overall,2010,grad2,60.99,1343,2202
+TR,overall,Overall,2011,grad2,58.79,1378,2344
+TR,overall,Overall,2012,grad2,57.91,1267,2188
+TR,overall,Overall,2013,grad2,60.1,1357,2258
+TR,overall,Overall,2014,grad2,59.2,1306,2206
+TR,overall,Overall,2015,grad2,60.63,1323,2182
+TR,overall,Overall,2016,grad2,60.87,1576,2589
+TR,overall,Overall,2017,grad2,62.72,1706,2720
+TR,overall,Overall,2018,grad2,63.04,1470,2332
+TR,overall,Overall,2019,grad2,59.83,1528,2554
+TR,overall,Overall,2020,grad2,56.71,1408,2483
+TR,overall,Overall,2021,grad2,59.74,1589,2660
+TR,overall,Overall,2022,grad2,59.61,1597,2679
+TR,overall,Overall,2023,grad2,59.82,1666,2785
+TR,overall,Overall,2010,grad4,92.69,2041,2202
+TR,overall,Overall,2011,grad4,91.04,2134,2344
+TR,overall,Overall,2012,grad4,90.36,1977,2188
+TR,overall,Overall,2013,grad4,91.41,2064,2258
+TR,overall,Overall,2014,grad4,92.02,2030,2206
+TR,overall,Overall,2015,grad4,91.52,1997,2182
+TR,overall,Overall,2016,grad4,91.04,2357,2589
+TR,overall,Overall,2017,grad4,92.24,2509,2720
+TR,overall,Overall,2018,grad4,92.2,2150,2332
+TR,overall,Overall,2019,grad4,91.19,2329,2554
+TR,overall,Overall,2020,grad4,89.65,2226,2483
+TR,overall,Overall,2021,grad4,90.68,2412,2660
+TR,ret_college,Clg of Chemistry,2014,ret1,98.65,73,74
+TR,ret_college,Clg of Chemistry,2015,ret1,93.24,69,74
+TR,ret_college,Clg of Chemistry,2016,ret1,97.26,71,73
+TR,ret_college,Clg of Chemistry,2017,ret1,98.61,71,72
+TR,ret_college,Clg of Chemistry,2018,ret1,95.38,62,65
+TR,ret_college,Clg of Chemistry,2019,ret1,88.89,56,63
+TR,ret_college,Clg of Chemistry,2020,ret1,95.65,66,69
+TR,ret_college,Clg of Chemistry,2021,ret1,92.59,75,81
+TR,ret_college,Clg of Chemistry,2022,ret1,94.44,51,54
+TR,ret_college,Clg of Chemistry,2023,ret1,98.7,76,77
+TR,ret_college,Clg of Engineering,2014,ret1,94.51,172,182
+TR,ret_college,Clg of Engineering,2015,ret1,95.45,168,176
+TR,ret_college,Clg of Engineering,2016,ret1,96.41,188,195
+TR,ret_college,Clg of Engineering,2017,ret1,94.81,201,212
+TR,ret_college,Clg of Engineering,2018,ret1,95.87,209,218
+TR,ret_college,Clg of Engineering,2019,ret1,94.35,217,230
+TR,ret_college,Clg of Engineering,2020,ret1,94.19,227,241
+TR,ret_college,Clg of Engineering,2021,ret1,95.9,234,244
+TR,ret_college,Clg of Engineering,2022,ret1,95.61,218,228
+TR,ret_college,Clg of Engineering,2023,ret1,95.13,215,226
+TR,ret_college,Clg of Environmental Design,2014,ret1,90.36,75,83
+TR,ret_college,Clg of Environmental Design,2015,ret1,94.19,81,86
+TR,ret_college,Clg of Environmental Design,2016,ret1,92.31,84,91
+TR,ret_college,Clg of Environmental Design,2017,ret1,98.82,84,85
+TR,ret_college,Clg of Environmental Design,2018,ret1,96.97,64,66
+TR,ret_college,Clg of Environmental Design,2019,ret1,96.97,64,66
+TR,ret_college,Clg of Environmental Design,2020,ret1,88.0,44,50
+TR,ret_college,Clg of Environmental Design,2021,ret1,91.18,62,68
+TR,ret_college,Clg of Environmental Design,2022,ret1,100.0,50,50
+TR,ret_college,Clg of Environmental Design,2023,ret1,98.21,55,56
+TR,ret_college,Clg of Letters & Science,2014,ret1,94.76,1882,1986
+TR,ret_college,Clg of Letters & Science,2015,ret1,93.78,1779,1897
+TR,ret_college,Clg of Letters & Science,2016,ret1,93.43,2177,2330
+TR,ret_college,Clg of Letters & Science,2017,ret1,94.72,2226,2350
+TR,ret_college,Clg of Letters & Science,2018,ret1,95.24,1981,2080
+TR,ret_college,Clg of Letters & Science,2019,ret1,92.35,2088,2261
+TR,ret_college,Clg of Letters & Science,2020,ret1,92.34,2038,2207
+TR,ret_college,Clg of Letters & Science,2021,ret1,93.43,2163,2315
+TR,ret_college,Clg of Letters & Science,2022,ret1,94.96,2301,2423
+TR,ret_college,Clg of Letters & Science,2023,ret1,94.41,2281,2416
+TR,ret_college,Haas School of Business,2014,ret1,98.78,81,82
+TR,ret_college,Haas School of Business,2015,ret1,95.45,84,88
+TR,ret_college,Haas School of Business,2016,ret1,96.0,96,100
+TR,ret_college,Haas School of Business,2017,ret1,97.94,95,97
+TR,ret_college,Haas School of Business,2018,ret1,100.0,91,91
+TR,ret_college,Haas School of Business,2019,ret1,98.97,96,97
+TR,ret_college,Haas School of Business,2020,ret1,100.0,99,99
+TR,ret_college,Haas School of Business,2021,ret1,100.0,100,100
+TR,ret_college,Haas School of Business,2022,ret1,99.01,100,101
+TR,ret_college,Haas School of Business,2023,ret1,99.03,102,103
+TR,ret_college,Rausser Clg Natural Resources,2014,ret1,96.04,97,101
+TR,ret_college,Rausser Clg Natural Resources,2015,ret1,98.28,114,116
+TR,ret_college,Rausser Clg Natural Resources,2016,ret1,95.28,121,127
+TR,ret_college,Rausser Clg Natural Resources,2017,ret1,93.98,125,133
+TR,ret_college,Rausser Clg Natural Resources,2018,ret1,96.49,110,114
+TR,ret_college,Rausser Clg Natural Resources,2019,ret1,90.62,116,128
+TR,ret_college,Rausser Clg Natural Resources,2020,ret1,95.12,117,123
+TR,ret_college,Rausser Clg Natural Resources,2021,ret1,97.71,128,131
+TR,ret_college,Rausser Clg Natural Resources,2022,ret1,100.0,122,122
+TR,ret_college,Rausser Clg Natural Resources,2023,ret1,98.46,128,130
+TR,ret_eth,Asian Non-Underrepresented,2014,ret1,95.85,600,626
+TR,ret_eth,Asian Non-Underrepresented,2015,ret1,94.89,557,587
+TR,ret_eth,Asian Non-Underrepresented,2016,ret1,95.0,665,700
+TR,ret_eth,Asian Non-Underrepresented,2017,ret1,95.5,764,800
+TR,ret_eth,Asian Non-Underrepresented,2018,ret1,96.72,679,702
+TR,ret_eth,Asian Non-Underrepresented,2019,ret1,93.66,798,852
+TR,ret_eth,Asian Non-Underrepresented,2020,ret1,94.45,732,775
+TR,ret_eth,Asian Non-Underrepresented,2021,ret1,93.91,879,936
+TR,ret_eth,Asian Non-Underrepresented,2022,ret1,94.96,886,933
+TR,ret_eth,Asian Non-Underrepresented,2023,ret1,95.91,939,979
+TR,ret_eth,International,2014,ret1,92.73,459,495
+TR,ret_eth,International,2015,ret1,89.63,415,463
+TR,ret_eth,International,2016,ret1,89.09,498,559
+TR,ret_eth,International,2017,ret1,93.21,522,560
+TR,ret_eth,International,2018,ret1,91.65,384,419
+TR,ret_eth,International,2019,ret1,84.64,314,371
+TR,ret_eth,International,2020,ret1,85.37,321,376
+TR,ret_eth,International,2021,ret1,89.26,374,419
+TR,ret_eth,International,2022,ret1,91.55,390,426
+TR,ret_eth,International,2023,ret1,88.62,397,448
+TR,ret_eth,Underrepresented Minority,2014,ret1,95.35,574,602
+TR,ret_eth,Underrepresented Minority,2015,ret1,95.06,539,567
+TR,ret_eth,Underrepresented Minority,2016,ret1,93.33,700,750
+TR,ret_eth,Underrepresented Minority,2017,ret1,94.11,671,713
+TR,ret_eth,Underrepresented Minority,2018,ret1,94.38,655,694
+TR,ret_eth,Underrepresented Minority,2019,ret1,94.45,749,793
+TR,ret_eth,Underrepresented Minority,2020,ret1,92.77,783,844
+TR,ret_eth,Underrepresented Minority,2021,ret1,95.48,824,863
+TR,ret_eth,Underrepresented Minority,2022,ret1,96.15,824,857
+TR,ret_eth,Underrepresented Minority,2023,ret1,94.49,771,816
+TR,ret_eth,White/Other,2014,ret1,95.16,747,785
+TR,ret_eth,White/Other,2015,ret1,95.61,784,820
+TR,ret_eth,White/Other,2016,ret1,94.59,875,925
+TR,ret_eth,White/Other,2017,ret1,94.74,847,894
+TR,ret_eth,White/Other,2018,ret1,96.39,800,830
+TR,ret_eth,White/Other,2019,ret1,92.82,776,836
+TR,ret_eth,White/Other,2020,ret1,93.67,755,806
+TR,ret_eth,White/Other,2021,ret1,93.97,686,730
+TR,ret_eth,White/Other,2022,ret1,95.74,742,775
+TR,ret_eth,White/Other,2023,ret1,96.4,750,778
+TR,ret_ethgen,Asian Non-Underrepresented × Man,2014,ret1,95.47,274,287
+TR,ret_ethgen,Asian Non-Underrepresented × Man,2015,ret1,92.78,244,263
+TR,ret_ethgen,Asian Non-Underrepresented × Man,2016,ret1,93.57,320,342
+TR,ret_ethgen,Asian Non-Underrepresented × Man,2017,ret1,94.33,366,388
+TR,ret_ethgen,Asian Non-Underrepresented × Man,2018,ret1,96.23,306,318
+TR,ret_ethgen,Asian Non-Underrepresented × Man,2019,ret1,94.47,359,380
+TR,ret_ethgen,Asian Non-Underrepresented × Man,2020,ret1,92.48,332,359
+TR,ret_ethgen,Asian Non-Underrepresented × Man,2021,ret1,91.52,410,448
+TR,ret_ethgen,Asian Non-Underrepresented × Man,2022,ret1,94.52,397,420
+TR,ret_ethgen,Asian Non-Underrepresented × Man,2023,ret1,95.32,448,470
+TR,ret_ethgen,Asian Non-Underrepresented × Nonbinary/Decline,2023,ret1,96.43,27,28
+TR,ret_ethgen,Asian Non-Underrepresented × Woman,2014,ret1,96.17,326,339
+TR,ret_ethgen,Asian Non-Underrepresented × Woman,2015,ret1,96.6,313,324
+TR,ret_ethgen,Asian Non-Underrepresented × Woman,2016,ret1,96.36,344,357
+TR,ret_ethgen,Asian Non-Underrepresented × Woman,2017,ret1,96.59,396,410
+TR,ret_ethgen,Asian Non-Underrepresented × Woman,2018,ret1,97.12,371,382
+TR,ret_ethgen,Asian Non-Underrepresented × Woman,2019,ret1,93.16,436,468
+TR,ret_ethgen,Asian Non-Underrepresented × Woman,2020,ret1,96.1,394,410
+TR,ret_ethgen,Asian Non-Underrepresented × Woman,2021,ret1,96.85,461,476
+TR,ret_ethgen,Asian Non-Underrepresented × Woman,2022,ret1,95.77,475,496
+TR,ret_ethgen,Asian Non-Underrepresented × Woman,2023,ret1,96.47,464,481
+TR,ret_ethgen,International × Man,2014,ret1,89.74,245,273
+TR,ret_ethgen,International × Man,2015,ret1,87.34,207,237
+TR,ret_ethgen,International × Man,2016,ret1,85.87,243,283
+TR,ret_ethgen,International × Man,2017,ret1,93.82,258,275
+TR,ret_ethgen,International × Man,2018,ret1,89.19,198,222
+TR,ret_ethgen,International × Man,2019,ret1,81.91,154,188
+TR,ret_ethgen,International × Man,2020,ret1,84.18,149,177
+TR,ret_ethgen,International × Man,2021,ret1,89.39,177,198
+TR,ret_ethgen,International × Man,2022,ret1,89.95,197,219
+TR,ret_ethgen,International × Man,2023,ret1,86.85,218,251
+TR,ret_ethgen,International × Woman,2014,ret1,96.4,214,222
+TR,ret_ethgen,International × Woman,2015,ret1,91.96,206,224
+TR,ret_ethgen,International × Woman,2016,ret1,92.86,247,266
+TR,ret_ethgen,International × Woman,2017,ret1,93.53,260,278
+TR,ret_ethgen,International × Woman,2018,ret1,94.82,183,193
+TR,ret_ethgen,International × Woman,2019,ret1,87.28,151,173
+TR,ret_ethgen,International × Woman,2020,ret1,86.77,164,189
+TR,ret_ethgen,International × Woman,2021,ret1,90.52,191,211
+TR,ret_ethgen,International × Woman,2022,ret1,92.93,184,198
+TR,ret_ethgen,International × Woman,2023,ret1,92.7,165,178
+TR,ret_ethgen,Underrepresented Minority × Man,2014,ret1,94.08,286,304
+TR,ret_ethgen,Underrepresented Minority × Man,2015,ret1,94.35,267,283
+TR,ret_ethgen,Underrepresented Minority × Man,2016,ret1,92.53,322,348
+TR,ret_ethgen,Underrepresented Minority × Man,2017,ret1,92.56,311,336
+TR,ret_ethgen,Underrepresented Minority × Man,2018,ret1,92.57,274,296
+TR,ret_ethgen,Underrepresented Minority × Man,2019,ret1,94.6,333,352
+TR,ret_ethgen,Underrepresented Minority × Man,2020,ret1,91.3,378,414
+TR,ret_ethgen,Underrepresented Minority × Man,2021,ret1,94.26,345,366
+TR,ret_ethgen,Underrepresented Minority × Man,2022,ret1,95.83,345,360
+TR,ret_ethgen,Underrepresented Minority × Man,2023,ret1,92.68,342,369
+TR,ret_ethgen,Underrepresented Minority × Nonbinary/Decline,2021,ret1,95.83,23,24
+TR,ret_ethgen,Underrepresented Minority × Nonbinary/Decline,2022,ret1,87.5,28,32
+TR,ret_ethgen,Underrepresented Minority × Nonbinary/Decline,2023,ret1,100.0,37,37
+TR,ret_ethgen,Underrepresented Minority × Woman,2014,ret1,96.64,288,298
+TR,ret_ethgen,Underrepresented Minority × Woman,2015,ret1,95.77,272,284
+TR,ret_ethgen,Underrepresented Minority × Woman,2016,ret1,93.97,374,398
+TR,ret_ethgen,Underrepresented Minority × Woman,2017,ret1,95.45,357,374
+TR,ret_ethgen,Underrepresented Minority × Woman,2018,ret1,95.66,375,392
+TR,ret_ethgen,Underrepresented Minority × Woman,2019,ret1,94.31,414,439
+TR,ret_ethgen,Underrepresented Minority × Woman,2020,ret1,94.13,401,426
+TR,ret_ethgen,Underrepresented Minority × Woman,2021,ret1,96.41,456,473
+TR,ret_ethgen,Underrepresented Minority × Woman,2022,ret1,96.99,451,465
+TR,ret_ethgen,Underrepresented Minority × Woman,2023,ret1,95.61,392,410
+TR,ret_ethgen,White/Other × Man,2014,ret1,94.66,390,412
+TR,ret_ethgen,White/Other × Man,2015,ret1,94.16,387,411
+TR,ret_ethgen,White/Other × Man,2016,ret1,94.68,427,451
+TR,ret_ethgen,White/Other × Man,2017,ret1,94.34,400,424
+TR,ret_ethgen,White/Other × Man,2018,ret1,95.11,389,409
+TR,ret_ethgen,White/Other × Man,2019,ret1,93.38,367,393
+TR,ret_ethgen,White/Other × Man,2020,ret1,92.9,327,352
+TR,ret_ethgen,White/Other × Man,2021,ret1,92.24,309,335
+TR,ret_ethgen,White/Other × Man,2022,ret1,94.17,339,360
+TR,ret_ethgen,White/Other × Man,2023,ret1,95.65,352,368
+TR,ret_ethgen,White/Other × Nonbinary/Decline,2016,ret1,92.5,37,40
+TR,ret_ethgen,White/Other × Nonbinary/Decline,2017,ret1,95.24,20,21
+TR,ret_ethgen,White/Other × Nonbinary/Decline,2018,ret1,100.0,26,26
+TR,ret_ethgen,White/Other × Nonbinary/Decline,2020,ret1,90.0,36,40
+TR,ret_ethgen,White/Other × Nonbinary/Decline,2021,ret1,87.5,35,40
+TR,ret_ethgen,White/Other × Nonbinary/Decline,2022,ret1,95.83,46,48
+TR,ret_ethgen,White/Other × Nonbinary/Decline,2023,ret1,95.18,79,83
+TR,ret_ethgen,White/Other × Woman,2014,ret1,95.71,357,373
+TR,ret_ethgen,White/Other × Woman,2015,ret1,97.07,397,409
+TR,ret_ethgen,White/Other × Woman,2016,ret1,94.7,411,434
+TR,ret_ethgen,White/Other × Woman,2017,ret1,95.1,427,449
+TR,ret_ethgen,White/Other × Woman,2018,ret1,97.47,385,395
+TR,ret_ethgen,White/Other × Woman,2019,ret1,92.34,398,431
+TR,ret_ethgen,White/Other × Woman,2020,ret1,94.69,392,414
+TR,ret_ethgen,White/Other × Woman,2021,ret1,96.34,342,355
+TR,ret_ethgen,White/Other × Woman,2022,ret1,97.28,357,367
+TR,ret_ethgen,White/Other × Woman,2023,ret1,97.55,319,327
+TR,ret_gender,Man,2014,ret1,93.65,1195,1276
+TR,ret_gender,Man,2015,ret1,92.55,1105,1194
+TR,ret_gender,Man,2016,ret1,92.13,1312,1424
+TR,ret_gender,Man,2017,ret1,93.82,1335,1423
+TR,ret_gender,Man,2018,ret1,93.73,1167,1245
+TR,ret_gender,Man,2019,ret1,92.38,1213,1313
+TR,ret_gender,Man,2020,ret1,91.09,1186,1302
+TR,ret_gender,Man,2021,ret1,92.13,1241,1347
+TR,ret_gender,Man,2022,ret1,94.04,1278,1359
+TR,ret_gender,Man,2023,ret1,93.28,1360,1458
+TR,ret_gender,Nonbinary/Decline,2016,ret1,90.91,50,55
+TR,ret_gender,Nonbinary/Decline,2017,ret1,87.88,29,33
+TR,ret_gender,Nonbinary/Decline,2018,ret1,97.37,37,38
+TR,ret_gender,Nonbinary/Decline,2019,ret1,89.29,25,28
+TR,ret_gender,Nonbinary/Decline,2020,ret1,90.0,54,60
+TR,ret_gender,Nonbinary/Decline,2021,ret1,83.72,72,86
+TR,ret_gender,Nonbinary/Decline,2022,ret1,91.51,97,106
+TR,ret_gender,Nonbinary/Decline,2023,ret1,94.01,157,167
+TR,ret_gender,Woman,2014,ret1,96.19,1185,1232
+TR,ret_gender,Woman,2015,ret1,95.73,1188,1241
+TR,ret_gender,Woman,2016,ret1,94.57,1376,1455
+TR,ret_gender,Woman,2017,ret1,95.3,1440,1511
+TR,ret_gender,Woman,2018,ret1,96.48,1314,1362
+TR,ret_gender,Woman,2019,ret1,92.59,1399,1511
+TR,ret_gender,Woman,2020,ret1,93.88,1351,1439
+TR,ret_gender,Woman,2021,ret1,95.71,1450,1515
+TR,ret_gender,Woman,2022,ret1,96.13,1467,1526
+TR,ret_gender,Woman,2023,ret1,95.99,1340,1396
+TR,ret_overall,Overall,2014,ret1,94.9,2380,2508
+TR,ret_overall,Overall,2015,ret1,94.17,2295,2437
+TR,ret_overall,Overall,2016,ret1,93.32,2738,2934
+TR,ret_overall,Overall,2017,ret1,94.51,2804,2967
+TR,ret_overall,Overall,2018,ret1,95.2,2518,2645
+TR,ret_overall,Overall,2019,ret1,92.46,2637,2852
+TR,ret_overall,Overall,2020,ret1,92.5,2591,2801
+TR,ret_overall,Overall,2021,ret1,93.72,2763,2948
+TR,ret_overall,Overall,2022,ret1,95.02,2842,2991
+TR,ret_overall,Overall,2023,ret1,94.57,2857,3021

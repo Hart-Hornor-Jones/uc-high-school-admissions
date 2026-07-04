@@ -157,6 +157,17 @@ for k in usd:
         usd[k][mm].sort()
 out['ucsd'] = {'schools': sorted(uschools), 'series': usd}
 
+# ---- UC Berkeley deep dive ----
+ucb = {}
+for r in rd('ucb_rates.csv'):
+    key = '|'.join([r['level'], r['dimension'], r['subgroup']])
+    ucb.setdefault(key, {}).setdefault(r['measure'], []).append(
+        [int(r['cohort']), fnum(r['rate_pct']), fnum(r['denom'])])
+for k in ucb:
+    for mm in ucb[k]:
+        ucb[k][mm].sort()
+out['ucb'] = {'series': ucb}
+
 # ---- majors ----
 titles, mseries = {}, {}
 for r in rd('majors_cip2.csv'):
@@ -175,6 +186,7 @@ out['meta'] = {
         'scorecard': 'College Scorecard institution files, June 10 2026 vintage',
         'ipeds': 'IPEDS Completions C2012-C2024 (provisional 2023-24)',
         'ucsd': 'UC San Diego Institutional Research retention/graduation dashboards (harvested June 2026)',
+        'ucb': 'UC Berkeley OPAP Disaggregated Grad Rates dashboard + Our Berkeley data downloads (harvested July 2026)',
     },
 }
 
