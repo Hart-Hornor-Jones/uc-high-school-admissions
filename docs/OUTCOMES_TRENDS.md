@@ -50,37 +50,45 @@ the same UC universe the outcomes table was name-matched against (all 1,428 CEEB
 Transfer entrants by source CCC: campus × college × entry year 1999–2024; `cohort_n`, `ret1`,
 cumulative `grad2/3/4` (integer percents, same N ≥ 10 masking).
 
-### `data/trends/gpa_band_counts.csv`, `gpa_cutpoints.csv` — GPA bands (UC IC)
+### `data/trends/gpa_rates.csv` (+ legacy `gpa_band_counts.csv`, `gpa_cutpoints.csv`) — GPA bands (UC IC)
 
-From the "Grad. rates by GPA groups" dashboard: cohorts 2010–2021 × campus (All + 9) ×
-{Pell, first-generation, ethnicity} × three GPA bands. Bands are **terciles of the systemwide
-enrollee GPA distribution per cohort and entry type** (weighted-capped HS GPA for freshmen;
-transfer GPA for transfers). Verified: the published boundaries are identical across campus
-selections, so the same three bands apply everywhere and campuses draw unevenly from them —
-transfer sheets (which publish rates alongside counts) imply Berkeley's 2015 transfer entrants
-split ≈200/520/1,450 across bands while Merced's split ≈73/12/10. Boundaries move across years
-and are data, shown under the chart and in tooltips. The source publishes graduate **counts**
-by timing (freshmen: within 4 yrs / 5th yr only / 6th yr only; transfers: within 2 / 3rd only /
-4th only) but **no entering-cohort denominators**:
+Primary source is now a **summary-API extraction** of the "Grad. rates by GPA groups" dashboard
+(`ug_outcomes_gpa_groups_summary_api_full/vizql_long.csv`), which exposes the underlying
+full-precision band **rates** and their **denominators** (numerator ÷ rate; the harvest's
+internal check agrees to ~1e-12) for every campus × group × band × cohort cell — including the
+per-campus and subgroup × band rates the crosstab export left unidentified. 7,187 tidy rows:
+cohorts 2010–2021 × campus (All + 9) × {Pell, first-gen, ethnicity, Overall} × 3 bands, with
+numerators, denominators, and increment rates per timing window (FR: within-4 / 5th-only /
+6th-only; TR: within-2 / 3rd-only / 4th-only). Cumulative rates are exact sums (shared
+denominator).
 
-- **Estimated freshman band rates, systemwide only:** because the bands are systemwide terciles
-  by construction, each band's systemwide entering denominator is cohort N ÷ 3. The page's
-  "(est.)" measures compute graduates ÷ (N ÷ 3), with graduates summed over the Pell × band
-  cells (verified to reproduce the source's own `*Overall` sheets exactly). The UC cohort N
-  includes students without usable HS GPA, so levels are understated ≈3.5 pp (measured at 2019
-  vs the published systemwide 6-yr rate); band-to-band gaps share the denominator and are
-  unaffected. Per-campus and subgroup × band rates remain unidentified (the distribution of a
-  campus/subgroup across the systemwide bands is unpublished for freshmen).
-- Freshman subgroup views therefore show the split of graduates by time to degree —
-  `share4 = c_first ÷ (c_first+c_second+c_third)`, etc. — masked below 25 graduates, and gated
-  to cohorts whose 6-year window has closed (≤2019 currently): later cohorts have only early
-  completions recorded, which would push the shares artificially toward "finished in 4".
-- Transfer sheets additionally publish the band-level completion **rates** (integer-rounded);
-  cumulative values shown are sums of rounded parts (±1 pp per part). All published transfer
-  windows are closed.
-- "Avg" rows in freshman sheets are Tableau-rounded to 0/1 and discarded.
-- `*Overall` (no-subgroup) sheets exist only for cohorts 2019–2020 (both entry types; used as
-  a QA cross-check for the partition sums).
+Key facts, all verified in the build:
+- Bands are terciles of the **systemwide** enrollee GPA distribution per cohort and entry type
+  (identical boundaries across campus states). Campuses draw very unevenly from them — e.g.
+  Berkeley's 2015 freshman entrants split 438 / 1,323 / 3,474 across bands 1/2/3.
+- Denominators are the dashboard's own universe: students with a usable GPA — systemwide
+  44,173 of the published 46,023 entering cohort at 2019 (≈96%).
+- The dashboard's native `*Overall` sheets exist only for cohorts 2019–2020; the build
+  synthesizes "Overall" for **all** cohorts as the exact union of the Pell partition
+  (numerators and denominators sum; matches the native sheets where both exist).
+- Immature cohorts carry real zeros in the later windows; the site omits those cohorts from
+  cumulative-5/6-year (and timing-share) measures. Data-driven closure: FR 6-yr through 2019,
+  FR 5-yr through 2020; all published transfer windows are closed.
+- The legacy crosstab-derived counts (`gpa_band_counts.csv`) and the cutpoint table remain in
+  the repo for provenance; the page reads `gpa_rates.csv`.
+
+### `data/trends/ucsd_rates.csv` — UC San Diego deep dive (UCSD IR)
+
+From `ucsd_retention_full_grid/normalized_rates.csv` — a VizQL extraction of UC San Diego's
+institutional-research retention/graduation dashboards on the grid demographic family
+(ethnicity / first-generation / Pell) × subgroup × **UCSD school/division of major** × entering
+cohort (2013–2024). 6,450 unsuppressed cells: FR ret1/ret2 + grad4/5/6; TR ret1 + grad2/3/4/5.
+Rates full precision; count = numerator; denominator inferred = cohort cell size. Cells under
+the dashboard's reporting threshold are suppressed at source and dropped (1,584). UCSD's own
+universe and categories (ethnicity keeps NHPI and Unknown separate; "Chicanx/Latinx") — a third
+universe, never mixed with UC IC or federal series in one chart. The FR time-to-degree
+distribution worksheet (program-time buckets) is not carried. School names deduped (Halicioğlu
+unicode variants); "School of Medicine" has no unsuppressed undergraduate cells.
 
 ### `data/trends/fed_campus_panel.csv` — campus completion panel (federal)
 From the College Scorecard merged institution files (June 10 2026 vintage), UC's nine
@@ -131,6 +139,8 @@ python build/trends_parse_gpa_groups.py --corpus "<corpus>" --out data/trends
 python build/trends_parse_schools.py    --repo . --corpus "<corpus>"
 python build/trends_parse_fed.py        --corpus "<corpus>" --out data/trends
 python build/trends_parse_majors.py     --corpus "<corpus>" --out data/trends
+python build/trends_parse_gpa_api.py    --corpus "<corpus>" --out data/trends
+python build/trends_parse_ucsd.py       --corpus "<corpus>" --out data/trends
 python scripts/make_trends_data.py
 ```
 

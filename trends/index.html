@@ -47,6 +47,7 @@
   .badge.uc{border-color:#bcd2ea;color:#2b6cb0;background:#f2f7fc;}
   .badge.fed{border-color:#e6cfc0;color:#a3512b;background:#fcf6f1;}
   .badge.sem{border-color:#d9d2ea;color:#6b5cae;background:#f8f6fc;}
+  .badge.ucsd{border-color:#b9dcd6;color:#1f7a6f;background:#effaf7;}
   .badge.xax{border-color:#e0d6bd;color:#8a6d1a;background:#fcf9f0;text-transform:none;letter-spacing:0;margin-left:0;margin-right:8px;}
   .card{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);}
   .chartcard{padding:10px 10px 6px;position:relative;}
@@ -153,6 +154,13 @@
               parent with <em>any</em> postsecondary schooling (broader than UC's definition); family-income
               terciles at entry.</td>
           <td>Campuses, majors, earnings &amp; debt, first-generation (federal)</td></tr>
+      <tr><td><span class="badge ucsd">UC San Diego data</span> UCSD Institutional Research</td>
+          <td>UCSD's own first-year and transfer entering cohorts (2013&ndash;2024), broken out by the school or
+              division of the student's major. Cells under the dashboard's reporting threshold are suppressed at
+              source.</td>
+          <td>UCSD's categories: ethnicity keeps Hawaiian/Pacific Islander and Unknown/decline separate;
+              first-generation and Pell as flagged by UCSD.</td>
+          <td>UC San Diego deep dive</td></tr>
     </table>
     <h3>Measures</h3>
     <p id="measureGlossary" style="margin:4px 0"></p>
@@ -170,17 +178,15 @@
     from them: transfer sheets, which publish band rates alongside counts, imply that Berkeley's 2015 transfer
     entrants split roughly 200&nbsp;/&nbsp;520&nbsp;/&nbsp;1,450 across the three bands while Merced's split
     73&nbsp;/&nbsp;12&nbsp;/&nbsp;10.</p>
-    <p><b>Estimated band rates (systemwide only).</b> The source publishes graduate counts per band but no
-    entering-cohort denominators. Because the bands are terciles of the systemwide distribution <em>by
-    construction</em>, each band's entering denominator systemwide is one third of the cohort, so the page computes
-    "graduated within 4/6 years (est.)" per band as graduates &divide; (systemwide cohort&nbsp;N&nbsp;&divide;&nbsp;3),
-    with graduate counts summed across the published Pell&nbsp;&times;&nbsp;band cells (verified to match the
-    source's own Overall sheets exactly where both exist). The UC cohort N includes students without a usable HS
-    GPA, so levels are understated &mdash; by about 3.5&nbsp;pp at 2019 against the published systemwide six-year
-    rate; band-to-band gaps are unaffected since all bands share the denominator. Per-campus and
-    subgroup&nbsp;&times;&nbsp;band rates remain unidentified (how a campus or subgroup distributes across the
-    systemwide bands is not published for freshmen), which is why those views show timing-of-degree splits among
-    graduates instead, clearly tagged.</p>
+    <p><b>True band rates.</b> The page now draws these views from a summary-API extraction of the same
+    dashboard, which exposes the underlying full-precision band rates and their denominators (numerator &divide;
+    rate; the harvest's internal consistency check agrees to ~10<sup>&minus;12</sup>) for every campus &times;
+    group &times; band &times; cohort cell, including per-campus and subgroup&nbsp;&times;&nbsp;band rates that the
+    crosstab export left unidentified. Denominators are the dashboard's own universe &mdash; students with a
+    usable GPA (systemwide &asymp;96% of the published entering cohort at 2019). Later windows are published as
+    increments sharing the band denominator, so cumulative rates are exact sums. Rates for cohorts whose 5th/6th-
+    year (transfer: 3rd/4th-year) windows haven't closed appear as real zeros in the source; those cohorts are
+    omitted from the affected measures rather than plotted.</p>
     <p><b>Maturity.</b> A cohort's 5th/6th-year completions only exist once those years have passed. Freshman
     timing shares and six-year estimates are therefore shown only for cohorts old enough for the full window
     (through 2019 in the current data); later cohorts are omitted rather than plotted as artificial spikes.
@@ -202,8 +208,10 @@
       <a href="../data/trends/sys_rates.csv">systemwide rates</a> &middot;
       <a href="../data/trends/hs_series.csv">by high school</a> &middot;
       <a href="../data/trends/ccc_series.csv">by community college</a> &middot;
-      <a href="../data/trends/gpa_band_counts.csv">GPA bands</a> &middot;
+      <a href="../data/trends/gpa_rates.csv">GPA band rates</a> &middot;
+      <a href="../data/trends/gpa_band_counts.csv">GPA band counts</a> &middot;
       <a href="../data/trends/gpa_cutpoints.csv">GPA cutpoints</a> &middot;
+      <a href="../data/trends/ucsd_rates.csv">UC San Diego deep dive</a> &middot;
       <a href="../data/trends/fed_campus_panel.csv">federal campus panel</a> &middot;
       <a href="../data/trends/majors_cip2.csv">majors</a> &middot;
       <a href="../data/trends/fed_money.csv">earnings &amp; debt</a> &middot;
@@ -280,18 +288,35 @@ const SCHOOL_MEASURES = {
        ['grad3','Graduated within 3 years','cohort'],['grad4','Graduated within 4 years','cohort']]
 };
 const GPA_MEASURES = {
-  FR:[['rate6_est','Graduated within 6 years (est., systemwide)','cohort'],
-      ['rate4_est','Graduated within 4 years (est., systemwide)','cohort'],
-      ['share4','Of graduates: finished in 4 years','grads'],
-      ['share5','Of graduates: needed a 5th year','grads'],
-      ['share6','Of graduates: needed a 6th year','grads'],
+  FR:[['cum6','Graduated within 6 years','cohort'],
+      ['cum5','Graduated within 5 years','cohort'],
+      ['cum4','Graduated within 4 years','cohort'],
+      ['share1','Of graduates: finished in 4 years','grads'],
       ['grads','Graduates (count)','count']],
-  TR:[['rate2','Graduated within 2 years','cohort'],
-      ['rate3','Graduated within 3 years','cohort'],
-      ['rate4','Graduated within 4 years','cohort'],
-      ['share2','Of graduates: finished in 2 years','grads'],
+  TR:[['cum4','Graduated within 4 years','cohort'],
+      ['cum3','Graduated within 3 years','cohort'],
+      ['cum2','Graduated within 2 years','cohort'],
+      ['share1','Of graduates: finished in 2 years','grads'],
       ['grads','Graduates (count)','count']]
 };
+const UCSD_MEASURES = {
+  FR:[['grad6','Graduated within 6 years','cohort'],
+      ['grad5','Graduated within 5 years','cohort'],
+      ['grad4','Graduated within 4 years','cohort'],
+      ['ret1','First-year retention','cohort'],
+      ['ret2','Two-year retention','cohort']],
+  TR:[['grad4','Graduated within 4 years','cohort'],
+      ['grad3','Graduated within 3 years','cohort'],
+      ['grad2','Graduated within 2 years','cohort'],
+      ['grad5','Graduated within 5 years','cohort'],
+      ['ret1','First-year retention','cohort']]
+};
+const UCSD_FAM = {eth:'Ethnicity', fg:'First generation', pell:'Pell'};
+const UCSD_SUB_LBL = {black:'African American/Black', aian:'American Indian/AK Native',
+  asian:'Asian/Asian American', hispanic_latino:'Chicanx/Latinx', international:'International',
+  nhpi:'Hawaiian/Pac. Islander', unknown:'Unknown/decline', white:'White',
+  first_gen:'First generation', not_first_gen:'Not first generation',
+  pell:'Pell recipients', non_pell:'Not Pell'};
 const FED_MEASURES = [
   ['c150','Completed within 6 yrs at same campus (C150)','cohort'],
   ['ret','Full-time retention (campus overall)','cohort'],
@@ -314,10 +339,13 @@ const SYS_N = {FR:{},TR:{}};
 ['FR','TR'].forEach(L=>{
   ((T.sys[L+'|all|all|all|all']||{}).ret1||[]).forEach(p=>{ if(p[2]) SYS_N[L][p[0]]=p[2]; });
 });
-let FR_MAT6 = 0;   // last freshman cohort whose 6-year window has closed (data-driven)
-for(const k in T.gpa.counts){
-  if(!k.startsWith('FR|')) continue;
-  T.gpa.counts[k].forEach(r=>{ if((r[6]||0)>0 && r[0]>FR_MAT6) FR_MAT6=r[0]; });
+const GPA_MAT = {FR:{m2:0,m3:0}, TR:{m2:0,m3:0}};  // last cohorts with closed 2nd/3rd windows
+for(const k in T.gpa.rates){
+  const e=k.slice(0,2);
+  T.gpa.rates[k].forEach(r=>{
+    if((r[6]||0)>0 && r[0]>GPA_MAT[e].m2) GPA_MAT[e].m2=r[0];
+    if((r[7]||0)>0 && r[0]>GPA_MAT[e].m3) GPA_MAT[e].m3=r[0];
+  });
 }
 
 /* ---------- state ---------- */
@@ -326,6 +354,7 @@ const state = {
   fedBy:'campus', fedGroup:'pell', fedCampus:'Berkeley', fedMeasure:'c150',
   gpaGroupType:'pell_status', horizon:'p10', moneyMetric:'earnings',
   fgOutcome:'comp_orig',
+  ucsdBy:'groups', ucsdSchool:'Engineering', ucsdGroup:'pell|pell',
   sel:{}
 };
 
@@ -335,6 +364,7 @@ const MODES = [
   ['hs','High schools (freshman entrants)'],
   ['ccc','Community colleges (transfer entrants)'],
   ['gpa','GPA bands (terciles at entry)'],
+  ['ucsd','UC San Diego deep dive (school × group)'],
   ['majors','Majors (degrees conferred)'],
   ['money','Earnings & debt (federal)'],
   ['fgfed','First-generation (federal, years after entry)']
@@ -343,8 +373,7 @@ const MODES = [
 /* ---------- helpers ---------- */
 function sysKey(level, slice, eth, pell, fg){ return [level,slice,eth,pell,fg].join('|'); }
 function sysSeries(key, measure){ const s = T.sys[key]; return s ? s[measure] : null; }
-function gpaEstOn(){ return state.mode==='gpa' && state.level==='FR' &&
-  (state.gpaMeasure==='rate6_est'||state.gpaMeasure==='rate4_est'); }
+
 
 function sysSubgroups(slice, level){
   const out = [];
@@ -417,12 +446,16 @@ $('level').addEventListener('click',ev=>{
   [...$('level').children].forEach(x=>x.classList.toggle('on',x===b));
   if(state.mode==='sys'){ if(!SYS_MEASURES[state.level].some(m=>m[0]===state.measure)) state.measure = state.level==='FR'?'grad6':'grad4'; state.sel.sys=null; }
   if(state.mode==='gpa'){ state.sel.gpa=null; state.gpaMeasure=null; }
+  if(state.mode==='ucsd'){ state.sel.ucsd=null; state.ucsdMeasure=null; }
   buildControls(); update();
 });
 
 const campusSel=$('campus'), measureSel=$('measure'), horizonSel=$('horizon');
 campusSel.addEventListener('change',()=>{
   if(state.mode==='fed'&&state.fedBy==='group'){ state.fedCampus=campusSel.value; state.sel.fed=null; }
+  else if(state.mode==='ucsd'){
+    if(state.ucsdBy==='groups') state.ucsdSchool=campusSel.value; else state.ucsdGroup=campusSel.value;
+  }
   else state.campus=campusSel.value;
   if(state.mode==='gpa') state.sel.gpa=null;
   update(); });
@@ -431,11 +464,8 @@ measureSel.addEventListener('change',()=>{
   else if(state.mode==='fed') state.fedMeasure=measureSel.value;
   else if(state.mode==='hs') state.hsMeasure=measureSel.value;
   else if(state.mode==='ccc') state.cccMeasure=measureSel.value;
-  else if(state.mode==='gpa'){
-    const wasEst=gpaEstOn();
-    state.gpaMeasure=measureSel.value;
-    if(gpaEstOn()!==wasEst){ state.sel.gpa=null; buildControls(); }
-  }
+  else if(state.mode==='gpa') state.gpaMeasure=measureSel.value;
+  else if(state.mode==='ucsd') state.ucsdMeasure=measureSel.value;
   else if(state.mode==='majors') state.majMeasure=measureSel.value;
   else if(state.mode==='money') state.moneyMetric=measureSel.value;
   else if(state.mode==='fgfed') state.fgOutcome=measureSel.value;
@@ -444,21 +474,37 @@ horizonSel.addEventListener('change',()=>{
   if(state.mode==='sys'){ state.slice=horizonSel.value; state.sel.sys=null; }
   else if(state.mode==='fed'){ state.fedBy=horizonSel.value; state.sel.fed=null; }
   else if(state.mode==='gpa'){ state.gpaGroupType=horizonSel.value; state.sel.gpa=null; }
+  else if(state.mode==='ucsd'){ state.ucsdBy=horizonSel.value; state.sel.ucsd=null; }
   else if(state.mode==='money') state.horizon=horizonSel.value;
   buildControls(); update(); });
 
 function buildControls(){
   const m=state.mode;
-  if(m==='gpa') state.gpaMeasure = state.gpaMeasure || (state.level==='FR'?'rate6_est':'rate4');
-  const est=gpaEstOn();
-  $('ctlLevel').classList.toggle('hide', !(m==='sys'||m==='gpa'));
-  $('ctlCampus').classList.toggle('hide', !(m==='hs'||m==='ccc'||(m==='gpa'&&!est)||m==='majors'||m==='fgfed'||(m==='fed'&&state.fedBy==='group')));
+  if(m==='gpa') state.gpaMeasure = state.gpaMeasure || (state.level==='FR'?'cum6':'cum4');
+  if(m==='ucsd') state.ucsdMeasure = state.ucsdMeasure || (state.level==='FR'?'grad6':'grad4');
+  $('ctlLevel').classList.toggle('hide', !(m==='sys'||m==='gpa'||m==='ucsd'));
+  $('ctlCampus').classList.toggle('hide', !(m==='hs'||m==='ccc'||m==='gpa'||m==='majors'||m==='fgfed'||m==='ucsd'||(m==='fed'&&state.fedBy==='group')));
   $('ctlSearch').classList.toggle('hide', !(m==='hs'||m==='ccc'));
-  $('ctlHorizon').classList.toggle('hide', !(m==='sys'||m==='fed'||(m==='gpa'&&!est)||m==='money'));
+  $('ctlHorizon').classList.toggle('hide', !(m==='sys'||m==='fed'||m==='gpa'||m==='ucsd'||m==='money'));
   $('ctlSeries').classList.toggle('hide', m==='money');
-  $('seriesLabel').textContent = est?'Bands shown':(m==='hs'||m==='ccc')?'Institutions shown':'Groups shown';
+  $('seriesLabel').textContent = (m==='hs'||m==='ccc')?'Institutions shown':'Groups shown';
   clear(campusSel);
-  if(m==='hs'||m==='ccc'||m==='gpa'){
+  const campusLbl=$('ctlCampus').querySelector('label');
+  campusLbl.textContent='Campus';
+  if(m==='ucsd'){
+    if(state.ucsdBy==='groups'){
+      campusLbl.textContent='School / division';
+      T.ucsd.schools.forEach(sc=>opt(campusSel,sc,sc,sc===state.ucsdSchool));
+    } else {
+      campusLbl.textContent='Group';
+      Object.keys(UCSD_FAM).forEach(f=>{
+        const og=el('optgroup',{label:UCSD_FAM[f]},campusSel);
+        [...new Set(Object.keys(T.ucsd.series).filter(k=>k.startsWith(state.level+'|'+f+'|')).map(k=>k.split('|')[2]))]
+          .forEach(sub=>{ const o=el('option',{value:f+'|'+sub,text:UCSD_SUB_LBL[sub]||sub},og);
+            if(f+'|'+sub===state.ucsdGroup) o.selected=true; });
+      });
+    }
+  } else if(m==='hs'||m==='ccc'||m==='gpa'){
     ['All'].concat(CAMPUSES).forEach(c=>opt(campusSel,c,c==='All'?'All UC (systemwide)':c,c===state.campus));
   } else if(m==='majors'||m==='fgfed'){
     CAMPUSES.forEach(c=>opt(campusSel,c,c,c===(CAMPUSES.includes(state.campus)?state.campus:'Berkeley')));
@@ -471,6 +517,7 @@ function buildControls(){
   else if(m==='hs'){ state.hsMeasure=state.hsMeasure||'grad6'; fillMeasures(SCHOOL_MEASURES.hs, state.hsMeasure); }
   else if(m==='ccc'){ state.cccMeasure=state.cccMeasure||'grad4'; fillMeasures(SCHOOL_MEASURES.ccc, state.cccMeasure); }
   else if(m==='gpa'){ fillMeasures(GPA_MEASURES[state.level], state.gpaMeasure); }
+  else if(m==='ucsd'){ fillMeasures(UCSD_MEASURES[state.level], state.ucsdMeasure); }
   else if(m==='majors'){ state.majMeasure=state.majMeasure||'total'; fillMeasures(MAJ_MEASURES, state.majMeasure); }
   else if(m==='money'){ fillMeasures(MONEY_MEASURES, state.moneyMetric); }
   else if(m==='fgfed'){ fillMeasures(FG_MEASURES, state.fgOutcome); }
@@ -488,8 +535,12 @@ function buildControls(){
   } else if(m==='gpa'){
     hz.textContent='Population';
     [['pell_status','By Pell status'],['first_gen_status','By first-generation'],
-     ['ethnicity','By ethnicity'],['overall','All entrants (2019–20 only)']]
+     ['ethnicity','By ethnicity'],['overall','All entrants']]
       .forEach(([v,l])=>opt(horizonSel,v,l,v===state.gpaGroupType));
+  } else if(m==='ucsd'){
+    hz.textContent='Lines are';
+    [['groups','Groups (one school)'],['schools','Schools (one group)']]
+      .forEach(([v,l])=>opt(horizonSel,v,l,v===state.ucsdBy));
   } else if(m==='money'){
     hz.textContent='Years after entry';
     [['p6','6 years'],['p8','8 years'],['p10','10 years']]
@@ -513,11 +564,24 @@ function currentOptions(){
       .filter(([k])=>T.fed.panel[k]);
   }
   if(m==='gpa'){
-    if(gpaEstOn()) return [['b1',BAND_LBL[1]],['b2',BAND_LBL[2]],['b3',BAND_LBL[3]]];
-    const src=T.gpa.counts, pre=state.level+'|'+state.campus+'|'+state.gpaGroupType+'|';
+    const src=T.gpa.rates, pre=state.level+'|'+state.campus+'|'+state.gpaGroupType+'|';
     const subs=Object.keys(src).filter(k=>k.startsWith(pre)).map(k=>k.slice(pre.length));
     const out=[];
     subs.forEach(s=>{ [1,2,3].forEach(b=>out.push([s+'|'+b, (GPA_SUB_LBL[s]||s)+' · band '+b+(b===1?' (low)':b===3?' (high)':'')])); });
+    return out;
+  }
+  if(m==='ucsd'){
+    if(state.ucsdBy==='schools'){
+      const [f,sub]=state.ucsdGroup.split('|');
+      return T.ucsd.schools.filter(sc=>T.ucsd.series[state.level+'|'+f+'|'+sub+'|'+sc])
+        .map(sc=>[sc,sc]);
+    }
+    const out=[];
+    Object.keys(UCSD_FAM).forEach(f=>{
+      [...new Set(Object.keys(T.ucsd.series).filter(k=>k.startsWith(state.level+'|'+f+'|')).map(k=>k.split('|')[2]))]
+        .forEach(sub=>{ if(T.ucsd.series[state.level+'|'+f+'|'+sub+'|'+state.ucsdSchool])
+          out.push([f+'|'+sub, UCSD_SUB_LBL[sub]||sub]); });
+    });
     return out;
   }
   if(m==='majors'){
@@ -548,9 +612,15 @@ function defaultSelection(){
   if(m==='ccc') return (state.sel.ccc&&state.sel.ccc.length)?state.sel.ccc:defaultSchools('ccc');
   if(m==='gpa'){
     const opts=currentOptions().map(o=>o[0]);
-    if(gpaEstOn()||state.gpaGroupType==='overall') return opts;
+    if(state.gpaGroupType==='overall') return opts;
     const subs=[...new Set(opts.map(k=>k.split('|')[0]))].slice(0,2);
     return opts.filter(k=>{ const p=k.split('|'); return subs.includes(p[0])&&(p[1]==='1'||p[1]==='3'); });
+  }
+  if(m==='ucsd'){
+    const opts=currentOptions().map(o=>o[0]);
+    if(state.ucsdBy==='schools')
+      return ['Engineering','Biology','Social Sciences','Arts & Humanities'].filter(sc=>opts.includes(sc));
+    return ['pell|pell','pell|non_pell','fg|first_gen','fg|not_first_gen'].filter(k=>opts.includes(k));
   }
   if(m==='majors'){
     const pref=['14','26','11','45','52','27'];
@@ -703,75 +773,56 @@ function assemble(){
     sem=gm[2];
     unit = meas==='grads'?'count':'%';
     const entryWord = state.level==='FR'?'freshman':'transfer';
-    if(gpaEstOn()){
-      // Bands are terciles of the SYSTEMWIDE freshman GPA distribution per cohort
-      // (cutpoints are identical across campus states), so equal thirds — and hence
-      // denominators — exist only systemwide. Band totals come from the Pell
-      // partition (validated exactly against the *Overall sheets).
-      const totals={1:{},2:{},3:{}};
-      ['pell','non_pell'].forEach(s=>{
-        (T.gpa.counts['FR|All|pell_status|'+s]||[]).forEach(r=>{
-          const o=totals[r[1]][r[0]]=totals[r[1]][r[0]]||{g4:0,g6:0,lo:r[2],hi:r[3]};
-          o.g4+=r[4]||0; o.g6+=(r[4]||0)+(r[5]||0)+(r[6]||0);
-        });
+    const MAT=GPA_MAT[state.level];
+    const needWin = meas==='cum6'||(meas==='cum4'&&state.level==='TR')?3:
+                    (meas==='cum5'||(meas==='cum3'&&state.level==='TR'))?2:
+                    meas==='share1'?3:1;
+    const winGate = needWin===3?MAT.m3:needWin===2?MAT.m2:9999;
+    const rows0=T.gpa.rates;
+    sel.forEach((sk,i)=>{
+      const parts=sk.split('|'); const sub_=parts[0], band=+parts[1];
+      const rows=(rows0[state.level+'|'+state.campus+'|'+state.gpaGroupType+'|'+sub_]||[]).filter(r=>r[1]===band);
+      const pts=[];
+      rows.forEach(r=>{
+        const [cohort,b,lo,hi,den,n1,n2,n3,r1,r2,r3]=r;
+        if(cohort>winGate) return;
+        let v=null, n=den, extraN=null;
+        const g=(n1||0)+(n2||0)+(n3||0);
+        if(meas==='grads'){ v=g||null; n=g; }
+        else if(meas==='share1'){ if(g>=25) v=Math.round(1000*(n1||0)/g)/10; n=g; }
+        else if(meas==='cum4'&&state.level==='FR'||meas==='cum2'){ v=r1; }
+        else if(meas==='cum5'||meas==='cum3'){ v=(r1!=null&&r2!=null)?Math.round((r1+r2)*10)/10:null; }
+        else if(meas==='cum6'||(meas==='cum4'&&state.level==='TR')){ v=(r1!=null&&r2!=null&&r3!=null)?Math.round((r1+r2+r3)*10)/10:null; }
+        if(v!=null&&typeof v==='number') v=Math.round(v*10)/10;
+        if(v!=null) pts.push([cohort,v,n,[band,lo,hi]]);
       });
-      const denomThird=(c)=>{ const n=SYS_N.FR[c]; return n?n/3:null; };
-      sel.forEach((bk,i)=>{
-        const b=+bk.charAt(1), pts=[];
-        Object.keys(totals[b]).map(Number).sort((a,z)=>a-z).forEach(c=>{
-          if(meas==='rate6_est'&&c>FR_MAT6) return;
-          const den=denomThird(c); if(!den) return;
-          const o=totals[b][c];
-          const g=meas==='rate6_est'?o.g6:o.g4;
-          pts.push([c, Math.round(1000*g/den)/10, g, [b,o.lo,o.hi], Math.round(den)]);
-        });
-        series.push({key:bk,label:BAND_LBL[b],color:PALETTE[i%PALETTE.length],points:pts});
-      });
-      title=gm[1]+' — GPA bands, all UC freshman entrants';
-      sub='Share of each band’s entering third earning a UC degree within '+(meas==='rate6_est'?'6':'4')+
-        ' years. Bands are terciles of the systemwide freshman GPA distribution for each cohort, so systemwide each band’s denominator is one third of the entering cohort by construction; graduate counts are summed across the published Pell × band cells. Per-campus rates are not identified — campuses draw very unevenly from the systemwide bands — so this measure exists only systemwide.';
-      const gateBits=[];
-      if(meas==='rate6_est') gateBits.push('Cohorts after '+FR_MAT6+' are omitted: their six-year windows haven’t closed.');
-      let wedge='';
-      const g19=(totals[1][2019]?totals[1][2019].g6:0)+(totals[2][2019]?totals[2][2019].g6:0)+(totals[3][2019]?totals[3][2019].g6:0);
-      const pub=(sysSeries(sysKey('FR','all','all','all','all'),'grad6')||[]).find(p=>p[0]===2019);
-      if(g19&&SYS_N.FR[2019]&&pub) wedge=' Measured at 2019, this understates the published systemwide six-year rate ('+pub[1]+'%) by ≈'+(pub[1]-Math.round(1000*g19/SYS_N.FR[2019])/10).toFixed(1)+' pp; band-to-band gaps are unaffected (all bands share the denominator).';
-      gateBits.push('Denominator: UC systemwide entering cohort ÷ 3 — it includes students without a usable HS GPA, so levels are slightly understated.'+wedge);
-      gate=gateBits.join(' ');
-    } else {
-      const src=T.gpa.counts;
-      sel.forEach((sk,i)=>{
-        const parts=sk.split('|'); const sub_=parts[0], band=+parts[1];
-        const rows=(src[state.level+'|'+state.campus+'|'+state.gpaGroupType+'|'+sub_]||[]).filter(r=>r[1]===band);
-        const pts=[];
-        rows.forEach(r=>{
-          const cohort=r[0],lo=r[2],hi=r[3],c1=r[4],c2=r[5],c3=r[6],r1=r[7],r2=r[8],r3=r[9];
-          if(state.level==='FR'&&meas!=='grads'&&cohort>FR_MAT6) return;   // immature: 5th/6th-yr windows open
-          const g=(c1||0)+(c2||0)+(c3||0);
-          let v=null, n=g;
-          if(meas==='grads'){ v=g||null; }
-          else if(meas==='share4'||meas==='share2'){ if(g>=25) v=Math.round(1000*c1/g)/10; }
-          else if(meas==='share5'){ if(g>=25) v=Math.round(1000*(c2||0)/g)/10; }
-          else if(meas==='share6'){ if(g>=25) v=Math.round(1000*(c3||0)/g)/10; }
-          else if(meas==='rate2'){ v=r1; }
-          else if(meas==='rate3'){ v=(r1!=null&&r2!=null)?r1+r2:null; }
-          else if(meas==='rate4'){ v=(r1!=null&&r2!=null&&r3!=null)?r1+r2+r3:null; }
-          if(v!=null) pts.push([cohort,v,n,[band,lo,hi]]);
-        });
-        series.push({key:sk,label:lblOf[sk]||sk,color:PALETTE[i%PALETTE.length],points:pts});
-      });
-      title=gm[1]+' — GPA bands, '+(state.campus==='All'?'all UC':state.campus)+', '+entryWord+' entrants';
-      sub='Bands are terciles of the systemwide '+(state.level==='FR'?'freshman high-school':'transfer')+
-        '-GPA distribution for each cohort (the same boundaries apply at every campus — selective campuses draw mostly from the top band); the boundaries are printed below. '+
-        (state.level==='FR'
-          ? (sem==='grads'
-             ? 'This measure splits graduates by time to degree — it says how fast those who finished did so, not how many finished; for band-level graduation rates use the "(est.)" measures.'
-             : 'Graduate counts per band as published (no denominators).')
-          : 'Band completion rates are published for transfer entrants (integer-rounded; cumulative values sum rounded parts).');
-      if(state.level==='FR'&&sem==='grads') gate='Freshman cohorts after '+FR_MAT6+' are omitted: their 5th/6th-year completion windows haven’t closed, so timing splits would be artificially pushed toward “finished in 4 years.”';
-      mask=state.level==='FR'?'Timing shares hidden when fewer than 25 graduates underlie them.':'Rates as published (integer-rounded).';
-    }
-    if(!mask) mask='Graduate counts as published; denominators as stated above.';
+      series.push({key:sk,label:lblOf[sk]||sk,color:PALETTE[i%PALETTE.length],points:pts});
+    });
+    title=gm[1]+' — GPA bands, '+(state.campus==='All'?'all UC':state.campus)+', '+entryWord+' entrants';
+    sub='True band rates from the dashboard’s underlying full-precision data: the share of each band’s entrants '+
+      (sem==='cohort'?'earning a UC degree within the stated window.':'')+
+      (sem==='grads'?'— here, of those who graduated, the share finishing in the first window.':'')+
+      (sem==='count'?'— here, graduate counts.':'')+
+      ' Bands are terciles of the systemwide '+(state.level==='FR'?'freshman high-school':'transfer')+
+      '-GPA distribution per cohort (the same boundaries at every campus — selective campuses draw mostly from the top band). Denominators are the dashboard’s own: students with a usable GPA (systemwide ≈96% of the published cohort at 2019).';
+    if(winGate!==9999) gate='Cohorts after '+winGate+' are omitted for this measure: the later completion windows haven’t closed yet.';
+    mask='Hover for each band’s entering denominator; sparse cells (small groups at small campuses) are absent at source.';
+    
+  }
+  else if(m==='ucsd'){
+    universe='ucsd';
+    const um=UCSD_MEASURES[state.level].find(x=>x[0]===state.ucsdMeasure)||UCSD_MEASURES[state.level][0];
+    sel.forEach((k,i)=>{
+      let key,label;
+      if(state.ucsdBy==='schools'){ const fs=state.ucsdGroup.split('|'); key=state.level+'|'+fs[0]+'|'+fs[1]+'|'+k; label=k; }
+      else { const fs=k.split('|'); key=state.level+'|'+fs[0]+'|'+fs[1]+'|'+state.ucsdSchool; label=lblOf[k]||k; }
+      const arr=(T.ucsd.series[key]||{})[um[0]]||[];
+      series.push({key:k,label:label,color:PALETTE[i%PALETTE.length],points:arr.map(pp=>[pp[0],pp[1],pp[2]])});
+    });
+    const scope = state.ucsdBy==='schools' ? (UCSD_SUB_LBL[state.ucsdGroup.split('|')[1]]||'') : state.ucsdSchool;
+    title=um[1]+' — UC San Diego, '+scope+', '+(state.level==='FR'?'first-year':'transfer')+' entrants';
+    sub='UC San Diego’s institutional-research dashboards, by the school/division of the student’s major. Cohort and group definitions are UCSD’s own (ethnicity keeps Hawaiian/Pacific Islander and Unknown as separate categories); rates are full precision, denominators in tooltips.';
+    mask='Cells under the dashboard’s reporting threshold are suppressed at source — small schools and groups have gaps rather than zeros.';
   }
   else if(m==='majors'){
     universe='fed'; xlab='Completions year'; xpill='completions year (period start)';
@@ -886,7 +937,7 @@ function update(){
   const v=assemble();
   lastView=v;
   setBadge(v.universe);
-  $('plotTitle').innerHTML=v.title+' <span class="badge '+(v.universe==='fed'?'fed':'uc')+'">'+(v.universe==='fed'?'Federal data':'UC data')+'</span>'+
+  $('plotTitle').innerHTML=v.title+' <span class="badge '+(v.universe==='fed'?'fed':v.universe==='ucsd'?'ucsd':'uc')+'">'+(U_TXT[v.universe]||v.universe)+'</span>'+
     '<span class="badge sem">'+(SEM_TAG[v.sem]||v.sem)+'</span>';
   $('plotSub').innerHTML='<span class="badge xax">x: '+v.xpill+'</span> '+v.sub;
   $('maskNote').textContent=v.mask;
@@ -897,10 +948,11 @@ function update(){
   buildChips();
 }
 
+const U_TXT={uc:'UC data', fed:'Federal data', ucsd:'UC San Diego data'};
 function setBadge(u){
   const b=$('universeBadge');
-  b.textContent=u==='fed'?'Federal data':'UC data';
-  b.className='badge '+(u==='fed'?'fed':'uc');
+  b.textContent=U_TXT[u]||u;
+  b.className='badge '+(u==='fed'?'fed':u==='ucsd'?'ucsd':'uc');
 }
 
 function drawLines(v){
@@ -928,7 +980,7 @@ function drawLines(v){
   if(v.unit==='%'){ ylo=Math.max(0,Math.floor((ylo-4)/10)*10); yhi=Math.min(100,Math.ceil((yhi+2)/10)*10); }
   else { const pad=(yhi-ylo)*.12||1; ylo-=pad; yhi+=pad; if(v.unit==='count') ylo=Math.max(0,ylo); }
   const y=d3.scaleLinear().domain([ylo,yhi]).nice().range([H-mb,mt]);
-  if(v.universe==='uc'&&v.xlab==='Entering cohort'&&x.domain()[1]>=2020){
+  if((v.universe==='uc'||v.universe==='ucsd')&&v.xlab==='Entering cohort'&&x.domain()[1]>=2020){
     const x0=Math.max(x.domain()[0],2019.5), x1=Math.min(x.domain()[1],2021.5);
     if(x1>x0){
       svg.append('rect').attr('class','covidband').attr('x',x(x0)).attr('width',x(x1)-x(x0))
@@ -1027,11 +1079,12 @@ $('dlcsv').addEventListener('click',()=>{
   const g=$('measureGlossary');
   const parts=[];
   SYS_MEASURES.FR.forEach(x=>parts.push('<b>'+x[1]+'</b> — '+x[3]+'.'));
-  parts.push('<b>Graduated within 4/6 years (est.), GPA bands</b> — graduates in the band ÷ one third of the systemwide entering cohort (bands are systemwide terciles by construction); systemwide only.');
+  parts.push('<b>GPA-band rates</b> — share of a band’s entrants (students with usable GPA) earning a UC degree within the stated window; full-precision dashboard data with per-cell denominators.');
+  parts.push('<b>UC San Diego deep dive</b> — UCSD IR cohort rates by school/division of major × group; UCSD’s own universe and categories.');
   parts.push('<b>C150</b> — federal six-year (150%-time) completion at the same campus, first-time full-time cohorts.');
   parts.push('<b>Degrees conferred</b> — IPEDS completion counts by field; not rates.');
   g.innerHTML=parts.join(' ');
-  $('srcline').textContent='UC series: '+T.meta.sources.uc_ic+'. Federal series: '+T.meta.sources.scorecard+'; '+T.meta.sources.ipeds+'. Site data built '+T.meta.built+'.';
+  $('srcline').textContent='UC series: '+T.meta.sources.uc_ic+'. Federal series: '+T.meta.sources.scorecard+'; '+T.meta.sources.ipeds+'. UCSD series: '+(T.meta.sources.ucsd||'')+'. Site data built '+T.meta.built+'.';
 })();
 
 /* ---------- boot ---------- */

@@ -1,0 +1,27 @@
+{
+ "rows": 7837,
+ "n_fails": 0,
+ "fails": [],
+ "anchor_all2010_pell_b3": [
+  "FR",
+  "All",
+  2010,
+  "pell_status",
+  "pell",
+  3,
+  3.79,
+  4.0,
+  4444,
+  2972,
+  952,
+  73,
+  66.88,
+  21.42,
+  1.64
+ ],
+ "max_cohort_with_third_window": {
+  "FR": 2019,
+  "TR": 2021
+ },
+ "fr_all_2019_pell_partition_denom": 44173
+}

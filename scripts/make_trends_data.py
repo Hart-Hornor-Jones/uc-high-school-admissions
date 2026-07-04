@@ -127,22 +127,35 @@ for c in cseries:
         cseries[c][s].sort()
 out['ccc'] = {'names': cnames, 'series': cseries}
 
-# ---- GPA bands ----
-gcounts, gcuts = {}, {}
-for r in rd('gpa_band_counts.csv'):
+# ---- GPA bands: true rates from the summary-API harvest ----
+grates, gcuts = {}, {}
+for r in rd('gpa_rates.csv'):
     key = '|'.join([r['entry'], r['campus'], r['group_type'], r['subgroup']])
-    gcounts.setdefault(key, []).append(
+    grates.setdefault(key, []).append(
         [int(r['cohort']), int(r['band']), fnum(r['band_lo']), fnum(r['band_hi']),
-         fnum(r['c_first']), fnum(r['c_second']), fnum(r['c_third']),
+         fnum(r['denom']), fnum(r['n_first']), fnum(r['n_second']), fnum(r['n_third']),
          fnum(r['r_first_pct']), fnum(r['r_second_pct']), fnum(r['r_third_pct'])])
-for k in gcounts:
-    gcounts[k].sort()
+for k in grates:
+    grates[k].sort()
 for r in rd('gpa_cutpoints.csv'):
     gcuts.setdefault(r['entry'] + '|' + r['campus'], []).append(
         [int(r['cohort']), fnum(r['q_lo']), fnum(r['q1_hi']), fnum(r['q2_hi']), fnum(r['q_hi'])])
 for k in gcuts:
     gcuts[k].sort()
-out['gpa'] = {'counts': gcounts, 'cuts': gcuts}
+out['gpa'] = {'rates': grates, 'cuts': gcuts}
+
+# ---- UCSD deep dive ----
+usd = {}
+uschools = set()
+for r in rd('ucsd_rates.csv'):
+    key = '|'.join([r['level'], r['family'], r['subgroup'], r['school']])
+    usd.setdefault(key, {}).setdefault(r['measure'], []).append(
+        [int(r['cohort']), fnum(r['rate_pct']), fnum(r['denom'])])
+    uschools.add(r['school'])
+for k in usd:
+    for mm in usd[k]:
+        usd[k][mm].sort()
+out['ucsd'] = {'schools': sorted(uschools), 'series': usd}
 
 # ---- majors ----
 titles, mseries = {}, {}
@@ -161,6 +174,7 @@ out['meta'] = {
         'uc_ic': 'UC Information Center UG Outcomes & Admissions-by-source-school dashboards (harvested June 2026)',
         'scorecard': 'College Scorecard institution files, June 10 2026 vintage',
         'ipeds': 'IPEDS Completions C2012-C2024 (provisional 2023-24)',
+        'ucsd': 'UC San Diego Institutional Research retention/graduation dashboards (harvested June 2026)',
     },
 }
 

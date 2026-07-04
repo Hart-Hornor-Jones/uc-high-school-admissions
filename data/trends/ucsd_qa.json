@@ -1,0 +1,37 @@
+{
+ "rows": 6450,
+ "stats": {
+  "suppressed_or_missing": 1584,
+  "skipped_metric": 2088,
+  "dropped_filter": 462,
+  "dupe_lower_prio": 1057
+ },
+ "schools": [
+  "Arts & Humanities",
+  "Biology",
+  "Engineering",
+  "Global Policy & Strategy",
+  "Halicio\u011flu Data Science Institute",
+  "Physical Sciences",
+  "Public Health (Wertheim)",
+  "Scripps Institution of Oceanography",
+  "Social Sciences",
+  "Special"
+ ],
+ "measures": {
+  "FR|ret1": 999,
+  "FR|grad4": 703,
+  "FR|grad5": 627,
+  "FR|grad6": 544,
+  "FR|ret2": 900,
+  "TR|grad2": 622,
+  "TR|ret1": 752,
+  "TR|grad3": 602,
+  "TR|grad4": 528,
+  "TR|grad5": 173
+ },
+ "cohorts": [
+  2013,
+  2024
+ ]
+}
