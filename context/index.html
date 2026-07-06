@@ -109,8 +109,10 @@
   <header>
     <div class="backlink"><a href="../">&larr; Back to the main explorer</a> &middot; <a href="../trends/">outcomes over time</a></div>
     <h1>Neighborhood context, achievement &amp; UC admissions</h1>
-    <p class="sub">Each dot is a California public high school. The x-axis describes the school's
-    <b>surroundings</b> &mdash; American Community Survey measures for the census tract where the school sits.
+    <p class="sub">Each dot is a California public high school. The x-axis describes the school's context &mdash; its
+    <b>surroundings</b> (American Community Survey measures for the census tract where the school sits) or its
+    <b>student body</b> (unduplicated high-need share, and the grade-11 shares socioeconomically disadvantaged
+    and English learner).
     The dot's <b>color</b> is its students' measured achievement (CAASPP grade&nbsp;11, A&ndash;G completion).
     The y-axis is the <b>admissions outcome</b> at the selected UC campus. Drag a band on the rail below the
     chart to hold neighborhood roughly fixed, and see how much achievement still separates schools inside it.</p>
@@ -121,17 +123,17 @@
     <div class="ctl"><label for="period">Year / period</label><select id="period"></select></div>
     <div class="ctl"><label>View</label>
       <div class="seg" id="view">
-        <button data-v="cond" class="on" title="Scatter of neighborhood vs outcome; brush a band to condition on neighborhood">Hold neighborhood fixed</button>
+        <button data-v="cond" class="on" title="Scatter of context vs outcome; brush a band to condition on it">Hold context fixed</button>
         <button data-v="twins" title="Pairs of schools in near-identical surroundings with very different achievement">Twin schools</button>
         <button data-v="decomp" title="How much of the school-to-school variance each factor explains, campus by campus">What explains more?</button>
       </div>
     </div>
-    <div class="ctl"><label for="ctxMetric">Neighborhood (x)</label><select id="ctxMetric"></select></div>
+    <div class="ctl"><label for="ctxMetric">Context (x)</label><select id="ctxMetric"></select></div>
     <div class="ctl"><label for="achMetric">Achievement (color)</label><select id="achMetric"></select></div>
     <div class="ctl"><label for="outMetric">Outcome (y)</label><select id="outMetric"></select></div>
     <div class="ctl" id="ctlMatch"><label for="matchMode">Twins share</label>
       <select id="matchMode">
-        <option value="band">Similar neighborhood (&plusmn;4 pctile)</option>
+        <option value="band">Similar context (&plusmn;4 pctile)</option>
         <option value="zcta">The same ZIP (ZCTA)</option>
         <option value="tract">The same census tract</option>
       </select>
@@ -192,6 +194,15 @@
         <li><b>The SES index</b> is a plain z-score composite &mdash; income, adult BA share, home value, minus
           poverty, minus unemployment &mdash; standardized each year over all California public high schools, so
           0 is the average school's surroundings and &plusmn;1 is one standard deviation.</li>
+        <li><b>School-level student measures.</b> Three context variables describe the student body rather
+          than the tract. <b>UPP</b> is the CALPADS unduplicated share of grade 9&ndash;12 students who are
+          FRPM-eligible, English learners, or foster youth &mdash; taken, as in the main explorer, from the
+          entering class's senior year. <b>% SED</b> and <b>% EL</b> are the shares of the school's grade-11
+          CAASPP-reported enrollment that are socioeconomically disadvantaged (FRPM-eligible or neither parent a
+          HS graduate) and English learners &mdash; taken from the class's grade-11 year like the test scores.
+          These are enrollment counts, not test outcomes, so they exist even in low-participation years;
+          they start in 2016 (the 2015 files do not report per-group enrollment), and classes entering 2016
+          use their senior-year value. A school with no reported group row counts as 0%.</li>
         <li><b>Statistics are school-level and unweighted</b> (each school counts once), computed on schools
           passing the min-applicants filter. Pooled periods use ratio-of-sums for funnel rates, as in the main
           explorer, with the same reliability gate for suppression-distorted rates. Partial correlation and the
@@ -238,6 +249,9 @@
 
   // ---- metric catalogues ----
   const CTX_METRICS = [
+    {key:'upp', label:'Unduplicated pupils — UPP % (FRPM/EL/foster, gr 9–12)', short:'UPP %', fmt:'pct', src:'panel', group:'School — its students'},
+    {key:'sed', label:'Socioeconomically disadvantaged — % of grade 11', short:'% SED (gr 11)', fmt:'pct', src:'sch', group:'School — its students'},
+    {key:'el',  label:'English learners — % of grade 11', short:'% EL (gr 11)', fmt:'pct', src:'sch', group:'School — its students'},
     {key:'ses',    label:'Neighborhood SES index (composite)', short:'SES index', fmt:'z',
      desc:'z-score composite: income, adult BA share, home value, − poverty, − unemployment (0 = average CA high school)'},
     {key:'inc',    label:'Median household income', short:'median income', fmt:'usd'},
@@ -252,7 +266,7 @@
     {key:'white',  label:'White (non-Hispanic) residents (%)', short:'% White (NH)', fmt:'pct'},
     {key:'black',  label:'Black (non-Hispanic) residents (%)', short:'% Black (NH)', fmt:'pct'},
     {key:'asian',  label:'Asian (non-Hispanic) residents (%)', short:'% Asian (NH)', fmt:'pct'},
-  ];
+  ].map(m=>{ if(!m.group){ m.group='Neighborhood — the tract around the school'; m.src='acs'; } return m; });
   const ACH_METRICS = [
     {key:'avg',      label:'CAASPP proficiency — avg % met (gr 11)', short:'CAASPP avg % met', fmt:'pct'},
     {key:'ela',      label:'CAASPP ELA — % met (gr 11)', short:'CAASPP ELA % met', fmt:'pct'},
@@ -295,7 +309,11 @@
   D.campuses.forEach((c,i)=>{ const o=document.createElement('option'); o.value=i; o.textContent=c; $('campus').appendChild(o); });
   D.periods.forEach(p=>{ const o=document.createElement('option'); o.value=p.key; o.textContent=p.label; $('period').appendChild(o); });
   function fillSel(sel,arr,val){ sel.innerHTML=''; arr.forEach(m=>{ const o=document.createElement('option'); o.value=m.key; o.textContent=m.label; sel.appendChild(o); }); sel.value=val; }
-  fillSel($('ctxMetric'),CTX_METRICS,state.ctx);
+  function fillSelGrouped(sel,arr,val){ sel.innerHTML=''; let g=null,og=null;
+    arr.forEach(m=>{ if(m.group!==g){ g=m.group; og=document.createElement('optgroup'); og.label=g; sel.appendChild(og); }
+      const o=document.createElement('option'); o.value=m.key; o.textContent=m.label; (og||sel).appendChild(o); });
+    sel.value=val; }
+  fillSelGrouped($('ctxMetric'),CTX_METRICS,state.ctx);
   fillSel($('achMetric'),ACH_METRICS,state.ach);
   fillSel($('outMetric'),OUT_METRICS,state.out);
   $('campus').value=state.campus; $('period').value=state.period;
@@ -333,20 +351,29 @@
       const chosen={};
       for(const y of years){ const r=byY[y-1]||byY[y]||byY[y-2]; if(r) chosen[r[0]]=r; }
       const crows=Object.values(chosen);
+      const sbyY={}; ((X.sch||{})[ceeb]||[]).forEach(r=>{ sbyY[r[0]]=r; });
+      const schosen={};
+      for(const y of years){ const r=sbyY[y-1]||sbyY[y]||sbyY[y-2]; if(r) schosen[r[0]]=r; }
+      const srows=Object.values(schosen);
       const mm = X.means[ceeb]||{};
       let se=0,ne=0,sm=0,nm=0;
       for(const y of years){ const v=mm[String(y-1)]; if(!v) continue;
         if(v[0]!=null){se+=v[0];ne++;} if(v[1]!=null){sm+=v[1];nm++;} }
-      arr.push({ceeb,rows,apps,crows,name:md[0],city:md[1],county:md[2],cds:md[3],
+      arr.push({ceeb,rows,apps,crows,srows,name:md[0],city:md[1],county:md[2],cds:md[3],
                 elaMean:ne?se/ne:null, mathMean:nm?sm/nm:null,
                 geo:X.geo[ceeb]||null, _c:{}});
     }
     cache[ck]=arr; return arr;
   }
+  const SIX={sed:1,el:2};
   function ctxVal(s,key){ if(key in s._c) return s._c[key];
-    const idx=CIX[key]; let v=null;
-    if(idx!=null && s.crows.length){ let sum=0,n=0;
-      for(const r of s.crows){ if(r[idx]!=null){sum+=r[idx];n++;} } v=n?sum/n:null; }
+    const cm=CTXBy[key]; let v=null;
+    if(cm&&cm.src==='panel'){ v=meanIdx(s.rows,IX.upp); }
+    else if(cm&&cm.src==='sch'){ const idx=SIX[key]; let sum=0,n=0;
+      for(const r of s.srows){ if(r[idx]!=null){sum+=r[idx];n++;} } v=n?sum/n:null; }
+    else { const idx=CIX[key];
+      if(idx!=null && s.crows.length){ let sum=0,n=0;
+        for(const r of s.crows){ if(r[idx]!=null){sum+=r[idx];n++;} } v=n?sum/n:null; } }
     s._c[key]=v; return v; }
   function valOf(s,key){
     if(CTXBy[key]) return ctxVal(s,key);
@@ -462,6 +489,10 @@
       rows.push('<tr><td class="k">'+CTXBy[k].short+'</td><td class="v">'+fmtCtxFull(ctxVal(s,k),k)+'</td></tr>');
     }
     if(s.geo) rows.push('<tr><td class="k">tract / ZCTA</td><td class="v">'+(s.geo[0]||'—')+' / '+(s.geo[1]||'—')+'</td></tr>');
+    rows.push('<tr class="sec"><td colspan="2">Students (school-level)</td></tr>');
+    for(const k of ['upp','sed','el']){
+      rows.push('<tr><td class="k">'+CTXBy[k].short+'</td><td class="v">'+fmtCtxFull(ctxVal(s,k),k)+'</td></tr>');
+    }
     rows.push('<tr class="sec"><td colspan="2">Achievement</td></tr>');
     for(const k of ['avg','ela_mean','math_mean','ag']){
       rows.push('<tr><td class="k">'+ACHBy[k].short+'</td><td class="v">'+fmtAch(valOf(s,k),k)+'</td></tr>');
@@ -482,7 +513,7 @@
     const m = {top:14,right:16,bottom:40+RAIL,left:56};
     svg.attr('viewBox','0 0 '+w+' '+h).attr('height',null); svg.selectAll('*').remove();
     $('plotTitle').textContent = ctxShort().replace(/^%/,'Share of ')+' (x) vs '+MByKey[state.out].short.toLowerCase()+' at '+campusName()+' (y) — dots colored by '+achShort();
-    $('plotSub').textContent = periodLabel()+' · each dot one high school · brush the rail below the x-axis to hold neighborhood fixed';
+    $('plotSub').textContent = periodLabel()+' · each dot one high school · brush the rail below the x-axis to hold the context variable fixed';
     if(!pts.length){ svg.append('text').attr('x',w/2).attr('y',h/2).attr('text-anchor','middle')
         .attr('fill','#5c6470').attr('font-size',13).text('No schools match the current filters.');
       renderCondStats(pts,[]); return; }
@@ -499,7 +530,7 @@
     svg.append('g').attr('class','axis').attr('transform','translate('+m.left+',0)')
       .call(d3.axisLeft(y).ticks(7).tickFormat(v=>(100*v).toFixed(0)+'%'));
     svg.append('text').attr('x',(m.left+w-m.right)/2).attr('y',h-6).attr('text-anchor','middle')
-      .attr('fill','#5c6470').attr('font-size',11.5).text(CTXBy[state.ctx].label+(CTXBy[state.ctx].fmt==='usd'?' (tract)':CTXBy[state.ctx].key==='ses'?'':' (tract)'));
+      .attr('fill','#5c6470').attr('font-size',11.5).text(CTXBy[state.ctx].label+(CTXBy[state.ctx].src!=='acs'||CTXBy[state.ctx].key==='ses'?'':' (tract)'));
     svg.append('text').attr('transform','rotate(-90)').attr('x',-(m.top+(H-m.bottom+RAIL))/2).attr('y',14)
       .attr('text-anchor','middle').attr('fill','#5c6470').attr('font-size',11.5)
       .text(MByKey[state.out].short+' — '+campusName());
@@ -537,7 +568,7 @@
       });
     const brushG = svg.append('g').attr('class','brush').call(brush);
     svg.append('text').attr('x',m.left).attr('y',railY+14).attr('fill','#8a93a1').attr('font-size',10)
-      .text('neighborhood band — drag to select, click away to clear');
+      .text('context band — drag to select, click away to clear');
 
     // default band: middle quintile, first render only
     if(state.band===null && pts.length>=15){
@@ -570,7 +601,7 @@
     html+='<span class="grad" style="background:linear-gradient(90deg,'+achInterp(0)+','+achInterp(.5)+','+achInterp(1)+')"></span>';
     html+='<span style="font-variant-numeric:tabular-nums">'+fmtAch(col.hi,state.ach)+'</span>';
     html+='<span><span class="sw" style="background:#bbb"></span>not available</span>';
-    html+='<span>line: least-squares fit of outcome on neighborhood</span>';
+    html+='<span>line: least-squares fit of outcome on the context variable</span>';
     lg.innerHTML=html;
     if(caasppMissing()) $('plotSub').textContent += ' · CAASPP is unavailable for this period (COVID years) — dots are gray; pick another year or an A–G axis';
   }
@@ -586,11 +617,11 @@
     let part=null;
     if(rAO3.r!=null&&rCO3.r!=null&&rCA.r!=null) part=partialR(rAO3.r,rCA.r,rCO3.r);
     let html='';
-    html+='<div><span class="bigr">'+fmtR(rCO.r)+'<span class="lbl">r — neighborhood → outcome</span></span></div>';
+    html+='<div><span class="bigr">'+fmtR(rCO.r)+'<span class="lbl">r — '+ctxShort()+' → outcome</span></span></div>';
     html+='<div class="statline"><span class="k">Schools shown</span><span class="v">'+pts.length+'</span></div>';
     html+='<div class="statline"><span class="k">r: '+achShort()+' → outcome</span><span class="v">'+fmtR(rAO.r)+'</span></div>';
-    html+='<div class="statline"><span class="k">r: neighborhood ↔ achievement</span><span class="v">'+fmtR(rCA.r)+'</span></div>';
-    html+='<div class="statline"><span class="k" title="Correlation of achievement with the outcome after linearly removing the neighborhood variable from both — computed over the '+tri.length+' schools with all three values.">Partial r: achievement → outcome, neighborhood held fixed</span><span class="v">'+fmtR(part)+'</span></div>';
+    html+='<div class="statline"><span class="k">r: '+ctxShort()+' ↔ achievement</span><span class="v">'+fmtR(rCA.r)+'</span></div>';
+    html+='<div class="statline"><span class="k" title="Correlation of achievement with the outcome after linearly removing the context variable from both — computed over the '+tri.length+' schools with all three values.">Partial r: achievement → outcome, context held fixed</span><span class="v">'+fmtR(part)+'</span></div>';
     if(band.length){
       const bt=band.filter(d=>d.a!=null);
       const rB=pearson(bt.map(d=>[d.a,d.y]));
@@ -599,17 +630,17 @@
       html+='<div class="statline"><span class="k">Band: r achievement → outcome</span><span class="v">'+fmtR(rB.r)+' <span style="font-weight:400;color:var(--muted)">(n='+rB.n+')</span></span></div>';
       html+='<div id="insetWrap"><svg id="inset" height="180"></svg></div>';
     } else {
-      html+='<div class="interp">Drag a band on the rail to condition on neighborhood.</div>';
+      html+='<div class="interp">Drag a band on the rail to condition on the context variable.</div>';
     }
     // interpretation
     let interp='';
     if(rCO.r!=null&&rAO.r!=null&&part!=null){
       const raw=Math.abs(rAO.r), pr=Math.abs(part);
-      if(raw>=0.1&&pr<raw*0.45) interp='Across all schools, '+achShort()+' and '+outShort()+' move together (r '+fmtR(rAO.r)+'). Hold the neighborhood variable fixed and most of that association goes away (partial r '+fmtR(part)+') — schools’ surroundings and their admissions outcomes overlap heavily here.';
-      else if(raw>=0.1&&pr>=raw*0.8) interp='Holding the neighborhood variable fixed barely changes the achievement–outcome association ('+fmtR(rAO.r)+' → '+fmtR(part)+'): achievement carries information about '+outShort()+' beyond this measure of surroundings.';
-      else if(raw>=0.1) interp='Holding the neighborhood variable fixed weakens the achievement–outcome association ('+fmtR(rAO.r)+' → '+fmtR(part)+'), but does not remove it.';
+      if(raw>=0.1&&pr<raw*0.45) interp='Across all schools, '+achShort()+' and '+outShort()+' move together (r '+fmtR(rAO.r)+'). Hold the context variable fixed and most of that association goes away (partial r '+fmtR(part)+') — this context measure and admissions outcomes overlap heavily here.';
+      else if(raw>=0.1&&pr>=raw*0.8) interp='Holding the context variable fixed barely changes the achievement–outcome association ('+fmtR(rAO.r)+' → '+fmtR(part)+'): achievement carries information about '+outShort()+' beyond this measure of surroundings.';
+      else if(raw>=0.1) interp='Holding the context variable fixed weakens the achievement–outcome association ('+fmtR(rAO.r)+' → '+fmtR(part)+'), but does not remove it.';
       else interp='Achievement and '+outShort()+' are only weakly related here to begin with (r '+fmtR(rAO.r)+').';
-      interp+=' One neighborhood variable at a time — try others, or the composite.';
+      interp+=' One context variable at a time — try others, or the composite.';
     }
     html+='<div class="interp">'+interp+'</div>';
     $('statsBody').innerHTML=html;
@@ -821,15 +852,15 @@
       if(!r.d){ gg.append('text').attr('x',m.left+6).attr('y',rowH/2+4).attr('fill','#8a93a1').attr('font-size',11)
           .text('too few schools'); return; }
       const y0=(rowH-bh)/2;
-      const segs=[ {v:r.d.uC,c:C_U,t:'uniquely neighborhood'},
+      const segs=[ {v:r.d.uC,c:C_U,t:'uniquely '+ctxShort()},
                    {v:Math.max(r.d.shared,0),c:C_S,t:'joint (inseparable)'},
-                   {v:r.d.uA,c:C_A,t:'uniquely achievement'} ];
+                   {v:r.d.uA,c:C_A,t:'uniquely '+achShort()} ];
       let acc=0;
       for(const s of segs){
         gg.append('rect').attr('x',x(acc)).attr('y',y0).attr('height',bh)
           .attr('width',Math.max(0,x(acc+s.v)-x(acc))).attr('fill',s.c)
           .on('mousemove',ev=>showTip(ev,'<b>'+r.name+'</b><br>'+s.t+': '+(100*s.v).toFixed(1)+'% of variance'
-            +'<br><span class="tl">R² neighborhood alone: '+(100*r.d.r2c).toFixed(1)+'% · achievement alone: '
+            +'<br><span class="tl">R² '+ctxShort()+' alone: '+(100*r.d.r2c).toFixed(1)+'% · achievement alone: '
             +(100*r.d.r2a).toFixed(1)+'% · both: '+(100*r.d.r2b).toFixed(1)+'% · n='+r.d.n+'</span>'))
           .on('mouseleave',hideTip);
         acc+=s.v;
@@ -838,9 +869,9 @@
         .text('R² '+(100*r.d.r2b).toFixed(0)+'% · n='+r.d.n);
       if(r.d.shared<0) gg.append('text').attr('class','decomp-val').attr('x',m.left+2).attr('y',rowH/2+16)
         .text('suppression: joint share < 0'); });
-    $('legend').innerHTML='<span><span class="sw" style="background:'+C_U+';border-radius:2px"></span>uniquely neighborhood</span>'
+    $('legend').innerHTML='<span><span class="sw" style="background:'+C_U+';border-radius:2px"></span>uniquely '+ctxShort()+'</span>'
       +'<span><span class="sw" style="background:'+C_S+';border-radius:2px"></span>joint — cannot be attributed to either alone</span>'
-      +'<span><span class="sw" style="background:'+C_A+';border-radius:2px"></span>uniquely achievement</span>';
+      +'<span><span class="sw" style="background:'+C_A+';border-radius:2px"></span>uniquely '+achShort()+'</span>';
     renderDecompStats(res);
   }
 
@@ -857,7 +888,7 @@
       html+='<div class="statline"><span class="k">joint (inseparable)</span><span class="v">'+(100*r.d.shared).toFixed(1)+'%</span></div>';
       html+='<div class="statline"><span class="k">uniquely achievement</span><span class="v">'+(100*r.d.uA).toFixed(1)+'%</span></div>';
     }
-    html+='<div class="interp">The gray middle is the crux: variance that neighborhood and achievement explain jointly, because the two travel together across schools. A large gray share means the data cannot, by itself, say which one "does the work." Click a campus name to focus it.'+(caasppMissing()?' CAASPP is unavailable for this period — pick another year or use A–G completion as the achievement axis.':'')+'</div>';
+    html+='<div class="interp">The gray middle is the crux: variance that the context and achievement variables explain jointly, because the two travel together across schools. A large gray share means the data cannot, by itself, say which one "does the work." Click a campus name to focus it.'+(caasppMissing()?' CAASPP is unavailable for this period — pick another year or use A–G completion as the achievement axis.':'')+'</div>';
     $('statsBody').innerHTML=html;
   }
 

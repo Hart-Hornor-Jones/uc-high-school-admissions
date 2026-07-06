@@ -38,10 +38,12 @@ The visual design is modeled on the San Francisco Chronicle's UC-admissions expl
 **independent project, not affiliated with or endorsed by the Chronicle**, and contains none of
 the Chronicle's content.
 
-**Companion page — [`context/`](context/):** adds each school's *surroundings* — tract-level
-American Community Survey measures (median income, adult education, poverty, unemployment, home
-values, race/ethnicity, and a composite SES index) assigned from the school's coordinates via the
-Census Geocoder — and asks how much of the achievement–admissions association they carry. Three
+**Companion page — [`context/`](context/):** adds each school's *context* — tract-level
+American Community Survey measures of its surroundings (median income, adult education, poverty,
+unemployment, home values, race/ethnicity, and a composite SES index) assigned from the school's
+coordinates via the Census Geocoder, plus school-level student measures (UPP, and the grade-11
+shares socioeconomically disadvantaged and English learner) — and asks how much of the
+achievement–admissions association it carries. Three
 views: a conditioning scatter (brush a band of similar neighborhoods; watch the within-band
 achievement→outcome correlation), matched "twin schools" (near-identical surroundings, large
 achievement gaps — do outcomes differ?), and a per-campus variance decomposition (R² unique to
@@ -134,6 +136,7 @@ time shift helps separate a possible school-level effect from static self-select
 │   └── make_trends_data.py     # data/trends/*.csv  →  trends/data_trends.js
 ├── build/                      # documented upstream pipeline (raw public files → data/)
 │   ├── extract_dv_all9.py      #   the one step needing the ~12 GB raw dump → dv_admissions_all9.csv
+│   ├── parse_caaspp_groups.py  #   CAASPP research files → grade-11 SED/EL composition (context page)
 │   └── README.md               #   runbook
 └── docs/                       # methodology & data dictionary
 ```

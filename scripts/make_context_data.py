@@ -126,6 +126,16 @@ def build():
             zs.append(sgn * (v - st[0]) / st[1])
         return round(sum(zs) / len(zs), 2) if len(zs) >= 3 else None
 
+    # school-level grade-11 composition: cds14 -> {year: [sed_pct, el_pct]}
+    sch = defaultdict(dict)
+    sgc = os.path.join(COMP, "school_group_context.csv")
+    if os.path.exists(sgc):
+        with open(sgc, encoding="utf-8") as fh:
+            for r in csv.DictReader(fh):
+                sp = fnum(r.get("sed_pct")); ep = fnum(r.get("el_pct"))
+                if sp is None and ep is None: continue
+                sch[r["cds14"]][int(r["year"])] = [sp, ep]
+
     # CAASPP mean scale scores: cds14 -> {year: [ela_mean, math_mean]}
     means = defaultdict(dict)
     for fn in sorted(os.listdir(COMP)):
@@ -141,7 +151,7 @@ def build():
 
     # assemble per-CEEB
     CVARS = [k for _, k in KEEP] + ["ses"]
-    out_ctx = {}; out_geo = {}; out_means = {}
+    out_ctx = {}; out_geo = {}; out_means = {}; out_sch = {}
     yrs_seen = sorted({y for _, y in ctx})
     n_ok = 0
     for ce, cds in ceeb_cds.items():
@@ -162,6 +172,9 @@ def build():
         m = means.get(cds)
         if m:
             out_means[ce] = {str(y): v for y, v in sorted(m.items())}
+        sc = sch.get(cds)
+        if sc:
+            out_sch[ce] = [[y] + v for y, v in sorted(sc.items())]
 
     UCCTX = {
         "generated": datetime.date.today().isoformat(),
@@ -173,6 +186,8 @@ def build():
         "ctx": out_ctx,        # ceeb -> [[year, inc, pov, ba, hs, unemp, homeval, rent, own, hisp, white, black, asian, pop, ses], ...]
         "geo": out_geo,        # ceeb -> [tract_geoid, zcta]
         "means": out_means,    # ceeb -> {year: [ela_mean, math_mean]}
+        "svars": ["year", "sed", "el"],
+        "sch": out_sch,        # ceeb -> [[year, sed_pct, el_pct], ...]  grade-11 composition (CAASPP-reported enrollment), 2016+
     }
     os.makedirs(OUTDIR, exist_ok=True)
     dest = os.path.join(OUTDIR, "data_context.js")
@@ -182,8 +197,8 @@ def build():
         json.dump(UCCTX, fh, separators=(",", ":"), ensure_ascii=False)
         fh.write(";\n")
     print(f"build: {n_ok}/{len(ceeb_cds)} site schools with tract context; "
-          f"{len(out_means)} with CAASPP means -> {os.path.relpath(dest, REPO)} "
-          f"({os.path.getsize(dest)/1e6:.2f} MB)")
+          f"{len(out_means)} with CAASPP means; {len(out_sch)} with grade-11 composition "
+          f"-> {os.path.relpath(dest, REPO)} ({os.path.getsize(dest)/1e6:.2f} MB)")
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()

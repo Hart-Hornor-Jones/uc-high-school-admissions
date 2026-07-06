@@ -1,9 +1,10 @@
 # Neighborhood-context companion (`context/`) — data & methods
 
-The companion page at `context/` relates three school-level quantities: the **surroundings**
-of each California high school (tract-level American Community Survey measures), its students'
-**measured achievement** (CAASPP grade 11, A–G completion), and its **UC admissions outcomes**
-(the same funnel rates as the main explorer). Its motivating question: how much of the
+The companion page at `context/` relates three school-level quantities: the **context** of each
+California high school — its *surroundings* (tract-level American Community Survey measures) or
+its *student body* (UPP, and the grade-11 shares socioeconomically disadvantaged and English
+learner) — its students' **measured achievement** (CAASPP grade 11, A–G completion), and its
+**UC admissions outcomes** (the same funnel rates as the main explorer). Its motivating question: how much of the
 achievement–admissions association is carried by where the school sits?
 
 ## Data lineage
@@ -20,16 +21,28 @@ achievement–admissions association is carried by where the school sits?
    release). Variables kept: median household income; poverty rate; adult (25+) BA-or-more and
    HS-or-more shares; unemployment rate; median home value; median gross rent; owner-occupancy;
    Hispanic, non-Hispanic White/Black/Asian shares; tract population.
-3. **Site data layer.** `scripts/make_context_data.py` joins the slim CSV to the site's school
-   universe (CEEB ↔ CDS from the panel) plus CAASPP **mean scale scores** from
+3. **School-level composition.** `build/parse_caaspp_groups.py` reads the CAASPP research files
+   and extracts, per school and test year (2016+), the grade-11 **CAASPP-reported enrollment** for
+   three student groups — all students, socioeconomically disadvantaged (SED: FRPM-eligible or
+   neither parent a high-school graduate), and English learner (excluding reclassified) — yielding
+   `data/components/school_group_context.csv` with `sed_pct` and `el_pct`. These are enrollment
+   (census) counts, not test outcomes, so they exist even in low-participation years; the 2015
+   files do not report per-group enrollment, so the series starts in 2016. A third school-level
+   measure, **UPP** (the CALPADS unduplicated FRPM/EL/foster share of grades 9–12), comes directly
+   from the main explorer's panel.
+4. **Site data layer.** `scripts/make_context_data.py` joins the slim CSV and the composition CSV
+   to the site's school universe (CEEB ↔ CDS from the panel) plus CAASPP **mean scale scores** from
    `data/components/caaspp_*.csv`, and writes `context/data_context.js` (`window.UCCTX`).
    The page loads it alongside the root `data.js`, so every admissions number is *identical*
    to the main explorer's.
 
 ## Alignment & composites
 
-- **Year alignment.** All context and test measures for an admission year *Y* are taken from
-  the entering class's grade-11 year (*Y*−1), matching the main explorer's CAASPP convention.
+- **Year alignment.** Context and test measures for an admission year *Y* are taken from
+  the entering class's grade-11 year (*Y*−1), matching the main explorer's CAASPP convention;
+  grade-11 SED/EL shares follow the same rule (with the same nearest-year fallback, so classes
+  entering 2016 use their senior-year value), while UPP keeps the main explorer's senior-year
+  alignment.
   Where that year's join is unavailable — there are no 2020 entity files, affecting classes
   entering in 2021 — the nearest available year substitutes (*Y*−1 → *Y* → *Y*−2; ACS 5-year
   values move slowly, so the substitution is mild). Pooled periods average context over their
@@ -81,8 +94,11 @@ All statistics are school-level and unweighted, over schools passing the min-app
 ## Rebuild
 
 ```bash
-# with the upstream enrichment file available (writes the slim CSV, then the JS):
+# grade-11 composition from the CAASPP research files (only when refreshing the component):
+python3 build/parse_caaspp_groups.py --caaspp-dir "/path/to/CAASPP Data" \
+    --out data/components/school_group_context.csv
+# with the upstream ACS enrichment file available (writes the slim CSV, then the JS):
 python3 scripts/make_context_data.py --acs-file /path/to/ca_high_school_rows_with_acs_context.csv
-# from the committed slim CSV only:
+# from the committed CSVs only:
 python3 scripts/make_context_data.py --skip-extract
 ```

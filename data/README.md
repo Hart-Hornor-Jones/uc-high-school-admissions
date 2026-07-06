@@ -9,7 +9,7 @@ Derived from public UC and CDE records (see repo `README.md` → "Data sources")
 | `panel_all9_by_year.csv` | campus × school × year | **Master per-year panel**, all 9 campuses, 2015–2025. Funnel + covariates. Powers the site. |
 | `dv_admissions_all9.csv` | campus × school × year | Admissions funnel only (applicants/admits/enrollees + admit GPA), all 9 campuses, **1994–2025**. |
 | `cross_section_all9.csv` | campus × school | Tidy pooled cross-section for the default period (2023–2025) with every rate computed. |
-| `components/` | school × year | Per-year covariates: `caaspp_YYYY.csv` (gr-11 % met), `ag_eligibility.csv` (cohort + UC/CSU-eligible), `upp_lcff.csv` (UPP % + grade 9–12 enrollment), `tract_context.csv` (tract-level ACS context per CDS × year — powers `context/`, see `docs/NEIGHBORHOOD_CONTEXT.md`). |
+| `components/` | school × year | Per-year covariates: `caaspp_YYYY.csv` (gr-11 % met), `ag_eligibility.csv` (cohort + UC/CSU-eligible), `upp_lcff.csv` (UPP % + grade 9–12 enrollment), `tract_context.csv` (tract-level ACS context per CDS × year), `school_group_context.csv` (grade-11 SED/EL composition per CDS × year) — both power `context/`, see `docs/NEIGHBORHOOD_CONTEXT.md`. |
 | `ceeb_cds_crosswalk.csv` | school | UC CEEB ↔ CDE CDS bridge (~98% hand-verified). |
 | `school_year_panel.csv` | campus × school × year | Berkeley & San Diego long panel (verified; includes admit GPA). Superseded for the site by the all-9 panel. |
 | `cross_section_summary.csv` | campus | Published per-campus correlations / OLS — the **verification target**. |
