@@ -57,13 +57,27 @@ achievement–admissions association is carried by where the school sits?
   finer-grained achievement axis; the spring-2021 administration is excluded (non-representative),
   as in the panel.
 
-## The three views
+## The four views
 
-- **Hold neighborhood fixed** — scatter of context (x) vs outcome (y), dots colored by
+- **Hold context fixed** — scatter of context (x) vs outcome (y), dots colored by
   achievement; a brushable band on the x-rail conditions on context. Reported: bivariate r's,
   and the **partial correlation** of achievement with the outcome given the context variable
   (residualizing both on context, equivalently the standard partial-r formula), over schools
   with all three values.
+- **Local correlation** — the conditional correlation function ρ(achievement, outcome | context = t),
+  estimated by kernel-weighted correlation: schools are ranked by the context variable, and at each
+  point of a percentile grid (5th–95th, step 2.5) the achievement–outcome correlation is computed
+  with Gaussian weights on the context percentile (bandwidth ±12 points by default; slider 6–25).
+  Working in rank space keeps the effective sample comparable across a skewed x. Displayed with a
+  pointwise 95% interval (Fisher z with kernel effective n = (Σw)²/Σw²), a **no-variation
+  envelope** (pointwise 2.5–97.5% band of the curve under 200 seeded permutations of the
+  (achievement, outcome) pairs against context ranks — the null of an everywhere-equal
+  association), a **linear moderation** summary (standardized OLS zy ~ za + zu + za·zu on the
+  context percentile u; the interaction β and t), and optional overlay of all nine campuses.
+  `scripts/scan_local_correlation.py` runs the same estimator (independent implementation,
+  cross-checked to 4 decimals against the page) over every campus × period × context variable for
+  the admit rate and writes `data/local_correlation_scan.csv` — the systematic table behind the
+  view.
 - **Twin schools** — pairs in near-identical surroundings (within ±4 percentile points of the
   chosen context variable, or sharing a ZCTA / a census tract) whose achievement differs by at
   least a chosen gap; dumbbells compare their outcomes. Pairing is greedy without replacement
@@ -94,6 +108,8 @@ All statistics are school-level and unweighted, over schools passing the min-app
 ## Rebuild
 
 ```bash
+# systematic conditional-correlation table (after any data change):
+python3 scripts/scan_local_correlation.py
 # grade-11 composition from the CAASPP research files (only when refreshing the component):
 python3 build/parse_caaspp_groups.py --caaspp-dir "/path/to/CAASPP Data" \
     --out data/components/school_group_context.csv

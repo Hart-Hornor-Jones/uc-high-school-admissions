@@ -43,11 +43,12 @@ American Community Survey measures of its surroundings (median income, adult edu
 unemployment, home values, race/ethnicity, and a composite SES index) assigned from the school's
 coordinates via the Census Geocoder, plus school-level student measures (UPP, and the grade-11
 shares socioeconomically disadvantaged and English learner) — and asks how much of the
-achievement–admissions association it carries. Three
-views: a conditioning scatter (brush a band of similar neighborhoods; watch the within-band
-achievement→outcome correlation), matched "twin schools" (near-identical surroundings, large
-achievement gaps — do outcomes differ?), and a per-campus variance decomposition (R² unique to
-neighborhood, unique to achievement, and joint). Methods & caveats:
+achievement–admissions association it carries. Four
+views: a conditioning scatter (brush a band of similar contexts; watch the within-band
+achievement→outcome correlation), a local-correlation curve (the conditional correlation function,
+kernel-estimated across the context distribution, with a permutation no-variation envelope),
+matched "twin schools" (near-identical contexts, large achievement gaps — do outcomes differ?),
+and a per-campus variance decomposition (R² unique to context, unique to achievement, and joint). Methods & caveats:
 [docs/NEIGHBORHOOD_CONTEXT.md](docs/NEIGHBORHOOD_CONTEXT.md).
 
 **Companion page — [`trends/`](trends/):** what happens *after* admission, across entering
@@ -114,7 +115,7 @@ time shift helps separate a possible school-level effect from static self-select
 ├── index.html                  # the interactive explorer (self-contained, D3)
 ├── data.js                     # generated app data (window.UCDATA, per-year panel); rebuilt by scripts/
 ├── context/                    # companion page: neighborhood context (see docs/NEIGHBORHOOD_CONTEXT.md)
-│   ├── index.html              #   conditioning scatter · twin schools · variance decomposition
+│   ├── index.html              #   conditioning scatter · local correlation · twin schools · variance decomposition
 │   └── data_context.js         #   generated (window.UCCTX): tract ACS + CAASPP means; rebuilt by scripts/
 ├── trends/                     # companion page: undergraduate outcomes over time (see docs/OUTCOMES_TRENDS.md)
 │   ├── index.html              #   cohort trend explorer: groups · campuses · schools · GPA bands · majors · money

@@ -124,6 +124,7 @@
     <div class="ctl"><label>View</label>
       <div class="seg" id="view">
         <button data-v="cond" class="on" title="Scatter of context vs outcome; brush a band to condition on it">Hold context fixed</button>
+        <button data-v="curve" title="The conditional correlation function: how the achievement–outcome association changes across the context distribution">Local correlation</button>
         <button data-v="twins" title="Pairs of schools in near-identical surroundings with very different achievement">Twin schools</button>
         <button data-v="decomp" title="How much of the school-to-school variance each factor explains, campus by campus">What explains more?</button>
       </div>
@@ -131,6 +132,15 @@
     <div class="ctl"><label for="ctxMetric">Context (x)</label><select id="ctxMetric"></select></div>
     <div class="ctl"><label for="achMetric">Achievement (color)</label><select id="achMetric"></select></div>
     <div class="ctl"><label for="outMetric">Outcome (y)</label><select id="outMetric"></select></div>
+    <div class="ctl" id="ctlBw"><label for="bw">Smoothing bandwidth</label>
+      <div class="rangewrap"><input type="range" id="bw" min="6" max="25" step="1" value="12" /><span class="rangeval" id="bwVal">&plusmn;12</span></div>
+    </div>
+    <div class="ctl" id="ctlEnv"><label for="envchk">Reference band</label>
+      <label class="chk"><input type="checkbox" id="envchk" checked /> <span>No-variation envelope</span></label>
+    </div>
+    <div class="ctl" id="ctlAllc"><label for="allcamp">Overlay</label>
+      <label class="chk"><input type="checkbox" id="allcamp" /> <span>All campuses</span></label>
+    </div>
     <div class="ctl" id="ctlMatch"><label for="matchMode">Twins share</label>
       <select id="matchMode">
         <option value="band">Similar context (&plusmn;4 pctile)</option>
@@ -175,8 +185,10 @@
       <ul>
         <li><b>The question.</b> The main explorer shows that a school's measured achievement relates to its UC
           admissions outcomes. This page asks the follow-up: is that relationship its own thing, or is it mostly
-          the neighborhood? <b>Hold neighborhood fixed</b> conditions directly (brush a band of similar
-          neighborhoods and look at the spread inside). <b>Twin schools</b> makes it concrete (near-identical
+          the neighborhood? <b>Hold context fixed</b> conditions directly (brush a band of similar
+          contexts and look at the spread inside). <b>Local correlation</b> formalizes the band: it traces the
+          conditional correlation function &mdash; a kernel-weighted correlation of achievement with the outcome
+          computed at every point of the context distribution. <b>Twin schools</b> makes it concrete (near-identical
           surroundings, very different achievement &mdash; do outcomes differ?). <b>What explains more?</b>
           summarizes with a variance decomposition, campus by campus.</li>
         <li><b>Neighborhood = the school's tract, not its students.</b> Each school is assigned the American
@@ -203,6 +215,17 @@
           These are enrollment counts, not test outcomes, so they exist even in low-participation years;
           they start in 2016 (the 2015 files do not report per-group enrollment), and classes entering 2016
           use their senior-year value. A school with no reported group row counts as 0%.</li>
+        <li><b>Reading the local-correlation curve.</b> Schools are ranked by the context variable
+          (percentile scale, so skewed dollars behave); at each grid point the correlation between achievement
+          and the outcome is computed with Gaussian weights (bandwidth in percentile points &mdash; the slider).
+          The blue ribbon is a 95% interval using the kernel's effective sample size; the gray band is a
+          <i>no-variation envelope</i>: the middle 95% of curves obtained when schools' (achievement, outcome)
+          pairs are randomly shuffled against their context ranks 200 times &mdash; the wiggle pure noise would
+          produce if the association were the same everywhere. Both are pointwise: judge the curve's overall
+          shape, not one bump. "Linear moderation &beta;" is the interaction coefficient from a standardized
+          regression of the outcome on achievement, context percentile, and their product &mdash; the one-number
+          linear summary of how the association trends across the distribution. Near the edges the kernel is
+          one-sided; the grid stops at the 5th/95th percentiles.</li>
         <li><b>Statistics are school-level and unweighted</b> (each school counts once), computed on schools
           passing the min-applicants filter. Pooled periods use ratio-of-sums for funnel rates, as in the main
           explorer, with the same reliability gate for suppression-distorted rates. Partial correlation and the
@@ -284,21 +307,26 @@
   const state = { campus:0, period:D.defaultPeriod, view:'cond',
                   ctx:'ses', ach:'avg', out:'admit_rate',
                   minApps:30, dropOut:false, matchMode:'band', gapMin:15,
+                  bw:12, env:true, allc:false,
                   band:null,          // [c0,c1] in context units, or null
                   sel:null, selPair:null };
 
   // ---- URL hash state (shareable) ----
   const HASHKEYS = [['c','campus',parseInt],['p','period',String],['v','view',String],['x','ctx',String],
-                    ['a','ach',String],['y','out',String],['n','minApps',parseInt],['m','matchMode',String],['g','gapMin',parseInt]];
+                    ['a','ach',String],['y','out',String],['n','minApps',parseInt],['m','matchMode',String],['g','gapMin',parseInt],['b','bw',parseInt]];
   (function readHash(){ try{
     const h = new URLSearchParams(location.hash.replace(/^#/,''));
     for(const [k,sk,cast] of HASHKEYS){ if(h.has(k)){ const v=cast(h.get(k)); if(v===v&&v!=='') state[sk]=v; } }
     if(h.get('o')==='1') state.dropOut=true;
+    if(h.get('e')==='0') state.env=false;
+    if(h.get('A')==='1') state.allc=true;
   }catch(e){} })();
   function writeHash(){ try{
     const h = new URLSearchParams();
     for(const [k,sk] of HASHKEYS) h.set(k,state[sk]);
     if(state.dropOut) h.set('o','1');
+    if(!state.env) h.set('e','0');
+    if(state.allc) h.set('A','1');
     history.replaceState(null,'','#'+h.toString());
   }catch(e){} }
 
@@ -319,6 +347,8 @@
   $('campus').value=state.campus; $('period').value=state.period;
   $('minapps').value=state.minApps; $('minappsval').textContent=state.minApps;
   $('matchMode').value=state.matchMode; $('gapMin').value=state.gapMin; $('gapMinVal').textContent=state.gapMin;
+  $('bw').value=state.bw; $('bwVal').textContent='\u00b1'+state.bw;
+  $('envchk').checked=state.env; $('allcamp').checked=state.allc;
   $('dropout').checked=state.dropOut;
   $('genstamp').textContent = 'Data layers generated '+(D.generated||'')+' / '+(X.generated||'')+'.';
 
@@ -892,16 +922,235 @@
     $('statsBody').innerHTML=html;
   }
 
+
+  // ============================ VIEW: local (conditional) correlation ============================
+  // rho(achievement, outcome | context = t), estimated with a Gaussian kernel on the
+  // PERCENTILE RANK of the context variable (uniform effective sample across a skewed x).
+  function mulberry32(seed){ let t=seed>>>0; return function(){ t+=0x6D2B79F5;
+    let r=Math.imul(t^(t>>>15),1|t); r^=r+Math.imul(r^(r>>>7),61|r); return ((r^(r>>>14))>>>0)/4294967296; }; }
+  function pctRanks(vals){ const n=vals.length, idx=vals.map((v,i)=>[v,i]).sort((a,b)=>a[0]-b[0]);
+    const out=new Array(n); let i=0;
+    while(i<n){ let j=i; while(j+1<n && idx[j+1][0]===idx[i][0]) j++;
+      const r=(i+j)/2; for(let k=i;k<=j;k++) out[idx[k][1]]=100*(r+0.5)/n; i=j+1; }
+    return out; }
+  const CURVE_GRID=[]; for(let t=5;t<=95.01;t+=2.5) CURVE_GRID.push(t);
+  function kernelWindows(u,h){ // per grid point: indices within 3h + weights (ranks fixed under permutation)
+    return CURVE_GRID.map(t=>{ const I=[],W=[]; let sw=0,sw2=0;
+      for(let i=0;i<u.length;i++){ const z=(u[i]-t)/h; if(z<-3||z>3) continue;
+        const w=Math.exp(-0.5*z*z); I.push(i); W.push(w); sw+=w; sw2+=w*w; }
+      return {t,I,W,sw,neff:sw>0?sw*sw/sw2:0}; }); }
+  function wcorrAt(win,a,y,perm){ const {I,W,sw}=win; if(sw<=0||I.length<8) return null;
+    let ma=0,my=0;
+    for(let k=0;k<I.length;k++){ const i=perm?perm[I[k]]:I[k]; ma+=W[k]*a[i]; my+=W[k]*y[i]; }
+    ma/=sw; my/=sw;
+    let vaa=0,vyy=0,vay=0;
+    for(let k=0;k<I.length;k++){ const i=perm?perm[I[k]]:I[k], w=W[k], da=a[i]-ma, dy=y[i]-my;
+      vaa+=w*da*da; vyy+=w*dy*dy; vay+=w*da*dy; }
+    if(vaa<=0||vyy<=0) return null;
+    return {r:vay/Math.sqrt(vaa*vyy), slope:vay/vaa};
+  }
+  function fisherCI(r,neff){ if(r==null||neff==null||neff<=4) return [null,null];
+    const rr=Math.max(-0.999,Math.min(0.999,r)), z=Math.atanh(rr), s=1.96/Math.sqrt(neff-3);
+    return [Math.tanh(z-s),Math.tanh(z+s)]; }
+  function inv4(M){ // gauss-jordan inverse of 4x4
+    const A=M.map((row,i)=>row.concat([0,0,0,0].map((_,j)=>i===j?1:0)));
+    for(let c=0;c<4;c++){ let p=c; for(let r=c+1;r<4;r++) if(Math.abs(A[r][c])>Math.abs(A[p][c])) p=r;
+      if(Math.abs(A[p][c])<1e-12) return null;
+      [A[c],A[p]]=[A[p],A[c]];
+      const d=A[c][c]; for(let j=0;j<8;j++) A[c][j]/=d;
+      for(let r=0;r<4;r++){ if(r===c) continue; const f=A[r][c];
+        for(let j=0;j<8;j++) A[r][j]-=f*A[c][j]; } }
+    return A.map(row=>row.slice(4)); }
+  function moderation(u,a,y){ // zy ~ za + zu + za*zu (all standardized; u = context percentile)
+    const n=u.length; if(n<12) return null;
+    const z=v=>{ const m=d3.mean(v), sd=Math.sqrt(d3.mean(v.map(x=>(x-m)*(x-m))))||1; return v.map(x=>(x-m)/sd); };
+    const zu=z(u), za=z(a), zy=z(y), zi=za.map((v,i)=>v*zu[i]);
+    const X=[za.map(()=>1),za,zu,zi];
+    const XtX=[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], Xty=[0,0,0,0];
+    for(let i=0;i<n;i++) for(let r=0;r<4;r++){ Xty[r]+=X[r][i]*zy[i];
+      for(let c=r;c<4;c++) XtX[r][c]+=X[r][i]*X[c][i]; }
+    for(let r=0;r<4;r++) for(let c=0;c<r;c++) XtX[r][c]=XtX[c][r];
+    const Vi=inv4(XtX); if(!Vi) return null;
+    const b=[0,1,2,3].map(r=>Vi[r].reduce((s,v,c)=>s+v*Xty[c],0));
+    let rss=0; for(let i=0;i<n;i++){ const f=b[0]+b[1]*za[i]+b[2]*zu[i]+b[3]*zi[i]; const e=zy[i]-f; rss+=e*e; }
+    const sig2=rss/(n-4), se=Math.sqrt(sig2*Vi[3][3]);
+    return {b:b[3], t:se>0?b[3]/se:null, n};
+  }
+  function curveData(tri){
+    const c=tri.map(d=>d.c), a=tri.map(d=>d.a), y=tri.map(d=>d.y);
+    const u=pctRanks(c), wins=kernelWindows(u,state.bw);
+    const pts=wins.map(w=>{ const e=wcorrAt(w,a,y,null);
+      if(!e||w.neff<25) return {t:w.t,r:null};
+      const [lo,hi]=fisherCI(e.r,w.neff);
+      return {t:w.t,r:e.r,lo,hi,neff:w.neff,slope:e.slope}; });
+    let env=null;
+    if(state.env){
+      const REPS=200, rng=mulberry32(42), n=u.length;
+      const bands=wins.map(()=>[]);
+      const perm=new Array(n);
+      for(let rep=0;rep<REPS;rep++){
+        for(let i=0;i<n;i++) perm[i]=i;
+        for(let i=n-1;i>0;i--){ const j=Math.floor(rng()*(i+1)); const t=perm[i]; perm[i]=perm[j]; perm[j]=t; }
+        for(let g=0;g<wins.length;g++){ const e=wcorrAt(wins[g],a,y,perm); if(e) bands[g].push(e.r); }
+      }
+      env=bands.map((arr,g)=>{ if(arr.length<50||pts[g].r==null) return {t:wins[g].t,lo:null,hi:null};
+        arr.sort(d3.ascending);
+        return {t:wins[g].t, lo:d3.quantileSorted(arr,.025), hi:d3.quantileSorted(arr,.975)}; });
+    }
+    const mod=moderation(u,a,y);
+    const csort=c.slice().sort(d3.ascending);
+    return {pts, env, mod, u, csort, n:tri.length};
+  }
+  function renderCurve(){
+    const tri=triples();
+    const w = Math.max(320, document.querySelector('.chartcard').clientWidth-16);
+    const small = window.innerWidth<=700, h = small? 400 : 480;
+    svg.attr('viewBox','0 0 '+w+' '+h).attr('height',null); svg.selectAll('*').remove();
+    $('plotTitle').textContent='Local correlation: '+achShort()+' → '+MByKey[state.out].short.toLowerCase()+' at '+campusName()+', across the '+ctxShort()+' distribution';
+    $('plotSub').textContent=periodLabel()+' · Gaussian kernel on the '+ctxShort()+' percentile (bandwidth ±'+state.bw+' pctile pts) · the formal version of dragging the band';
+    $('legend').innerHTML='';
+    if(caasppMissing()){ svg.append('text').attr('x',w/2).attr('y',h/2).attr('text-anchor','middle')
+        .attr('fill','#5c6470').attr('font-size',13).text('CAASPP is unavailable for this period — pick another year or an A–G axis.');
+      $('statsBody').innerHTML=''; return; }
+    if(tri.length<60){ svg.append('text').attr('x',w/2).attr('y',h/2).attr('text-anchor','middle')
+        .attr('fill','#5c6470').attr('font-size',13).text('Too few schools with all three values ('+tri.length+') — lower the min-applicants filter or pick a pooled period.');
+      $('statsBody').innerHTML=''; return; }
+    const cd=curveData(tri);
+    const m={top:16,right:16,bottom:52,left:56};
+    const x=d3.scaleLinear().domain([0,100]).range([m.left,w-m.right]);
+    let yv=[0]; cd.pts.forEach(p=>{ if(p.r!=null){ yv.push(p.lo,p.hi); } });
+    if(cd.env) cd.env.forEach(e=>{ if(e.lo!=null) yv.push(e.lo,e.hi); });
+    yv=yv.filter(v=>v!=null&&isFinite(v));
+    const pad=0.06, ymin=Math.max(-1,d3.min(yv)-pad), ymax=Math.min(1,d3.max(yv)+pad);
+    const yy=d3.scaleLinear().domain([ymin,ymax]).nice().range([h-m.bottom,m.top]);
+    // grid + axes
+    svg.append('g').selectAll('line').data(yy.ticks(7)).join('line').attr('class','gridline')
+      .attr('x1',m.left).attr('x2',w-m.right).attr('y1',d=>yy(d)).attr('y2',d=>yy(d));
+    const q=pp=>{ const v=d3.quantileSorted(cd.csort,pp/100); return v==null?'':fmtCtx(v,state.ctx); };
+    svg.append('g').attr('class','axis').attr('transform','translate(0,'+(h-m.bottom)+')')
+      .call(d3.axisBottom(x).tickValues([10,25,50,75,90]).tickFormat(t=>t+'th · '+q(t)));
+    svg.append('g').attr('class','axis').attr('transform','translate('+m.left+',0)')
+      .call(d3.axisLeft(yy).ticks(7).tickFormat(v=>(v>0?'+':'')+v.toFixed(1)));
+    svg.append('text').attr('x',(m.left+w-m.right)/2).attr('y',h-8).attr('text-anchor','middle')
+      .attr('fill','#5c6470').attr('font-size',11.5).text(ctxShort()+' — percentile among shown schools (tick labels: percentile · value)');
+    svg.append('text').attr('transform','rotate(-90)').attr('x',-(m.top+h-m.bottom)/2).attr('y',14)
+      .attr('text-anchor','middle').attr('fill','#5c6470').attr('font-size',11.5)
+      .text('local r: '+achShort()+' → '+MByKey[state.out].short.toLowerCase());
+    const defined=p=>p.r!=null;
+    // no-variation envelope
+    if(cd.env){ const area=d3.area().defined((e,i)=>e.lo!=null&&cd.pts[i].r!=null)
+        .x(e=>x(e.t)).y0(e=>yy(e.lo)).y1(e=>yy(e.hi));
+      svg.append('path').datum(cd.env).attr('d',area).attr('fill','#8a93a1').attr('fill-opacity',.16); }
+    // CI ribbon
+    const ribbon=d3.area().defined(defined).x(p=>x(p.t)).y0(p=>yy(p.lo)).y1(p=>yy(p.hi));
+    svg.append('path').datum(cd.pts).attr('d',ribbon).attr('fill','var(--accent)').attr('fill-opacity',.14);
+    // zero + overall r
+    svg.append('line').attr('x1',m.left).attr('x2',w-m.right).attr('y1',yy(0)).attr('y2',yy(0))
+      .attr('stroke','#9aa6b5').attr('stroke-width',1);
+    const rAll=pearson(tri.map(d=>[d.a,d.y])).r;
+    if(rAll!=null&&rAll>=ymin&&rAll<=ymax){
+      svg.append('line').attr('class','avgline').attr('x1',m.left).attr('x2',w-m.right).attr('y1',yy(rAll)).attr('y2',yy(rAll));
+      svg.append('text').attr('class','avglabel').attr('x',w-m.right-2).attr('y',yy(rAll)-4).attr('text-anchor','end')
+        .text('overall r '+fmtR(rAll)); }
+    // all-campus overlay
+    if(state.allc){ for(let ci=0;ci<D.campuses.length;ci++){ if(ci===+state.campus) continue;
+        const tr2=triples(ci); if(tr2.length<60) continue;
+        const u2=pctRanks(tr2.map(d=>d.c)), wins2=kernelWindows(u2,state.bw);
+        const a2=tr2.map(d=>d.a), y2=tr2.map(d=>d.y);
+        const p2=wins2.map(wn=>{ const e=wcorrAt(wn,a2,y2,null); return {t:wn.t,r:(e&&wn.neff>=25)?e.r:null}; });
+        svg.append('path').datum(p2).attr('d',d3.line().defined(defined).x(p=>x(p.t)).y(p=>yy(p.r)))
+          .attr('fill','none').attr('stroke','#b8c0cc').attr('stroke-width',1.1); } }
+    // band marker from the cond view
+    if(state.band){ const bu=v=>100*d3.bisectLeft(cd.csort,v)/cd.csort.length;
+      const b0=bu(state.band[0]), b1=bu(state.band[1]);
+      svg.append('rect').attr('class','bandrect').attr('x',x(Math.max(0,b0))).attr('width',Math.max(0,x(Math.min(100,b1))-x(Math.max(0,b0))))
+        .attr('y',m.top).attr('height',h-m.bottom-m.top); }
+    // main curve
+    svg.append('path').datum(cd.pts).attr('d',d3.line().defined(defined).x(p=>x(p.t)).y(p=>yy(p.r)))
+      .attr('fill','none').attr('stroke','#111').attr('stroke-width',2.2);
+    // density rug
+    svg.append('g').selectAll('line').data(cd.u).join('line').attr('class','railtick')
+      .attr('x1',d=>x(d)).attr('x2',d=>x(d)).attr('y1',h-m.bottom+30).attr('y2',h-m.bottom+38);
+    // hover
+    const focus=svg.append('g').style('display','none');
+    focus.append('line').attr('stroke','#666').attr('stroke-dasharray','3 3').attr('y1',m.top).attr('y2',h-m.bottom);
+    focus.append('circle').attr('r',4).attr('fill','#111');
+    svg.append('rect').attr('x',m.left).attr('y',m.top).attr('width',w-m.left-m.right).attr('height',h-m.top-m.bottom)
+      .attr('fill','transparent')
+      .on('mousemove',ev=>{ const mx=d3.pointer(ev,svg.node())[0], t=x.invert(mx);
+        let best=null; for(const p of cd.pts){ if(p.r==null) continue;
+          if(!best||Math.abs(p.t-t)<Math.abs(best.t-t)) best=p; }
+        if(!best){ focus.style('display','none'); hideTip(); return; }
+        focus.style('display',null);
+        focus.select('line').attr('x1',x(best.t)).attr('x2',x(best.t));
+        focus.select('circle').attr('cx',x(best.t)).attr('cy',yy(best.r));
+        const slopeTxt = ACHBy[state.ach].fmt==='score'
+          ? (100*best.slope*10).toFixed(2)+' pp outcome per +10 points'
+          : (100*best.slope).toFixed(2)+' pp outcome per +1 pp';
+        showTip(ev,'<b>'+Math.round(best.t)+'th percentile</b> of '+ctxShort()+' (≈ '+q(best.t)+')<br>'
+          +'local r = '+fmtR(best.r)+' · 95% CI '+fmtR(best.lo)+' to '+fmtR(best.hi)
+          +'<br><span class="tl">effective n ≈ '+Math.round(best.neff)+' · local slope ≈ '+slopeTxt+'</span>'); })
+      .on('mouseleave',()=>{ focus.style('display','none'); hideTip(); });
+    // legend
+    let lg='<span><span style="display:inline-block;width:18px;height:0;border-top:2.2px solid #111;vertical-align:3px"></span> local r (kernel-weighted)</span>';
+    lg+='<span><span style="display:inline-block;width:14px;height:10px;background:var(--accent);opacity:.2"></span> 95% CI (effective n)</span>';
+    if(cd.env) lg+='<span><span style="display:inline-block;width:14px;height:10px;background:#8a93a1;opacity:.22"></span> no-variation envelope (200 permutations)</span>';
+    if(state.allc) lg+='<span><span style="display:inline-block;width:18px;height:0;border-top:1.1px solid #b8c0cc;vertical-align:3px"></span> other campuses</span>';
+    lg+='<span>ticks below axis: one school each</span>';
+    $('legend').innerHTML=lg;
+    renderCurveStats(cd,tri,rAll);
+  }
+  function renderCurveStats(cd,tri,rAll){
+    $('statHead').textContent=campusName()+' · '+periodLabel();
+    const at=t=>{ let best=null; for(const p of cd.pts){ if(p.r==null) continue;
+      if(!best||Math.abs(p.t-t)<Math.abs(best.t-t)) best=p; } return best; };
+    const p20=at(20),p50=at(50),p80=at(80);
+    const ok=cd.pts.filter(p=>p.r!=null);
+    let hiP=null,loP=null;
+    ok.forEach(p=>{ if(!hiP||p.r>hiP.r) hiP=p; if(!loP||p.r<loP.r) loP=p; });
+    let exceed=null;
+    if(cd.env){ let out=0,tot=0; cd.pts.forEach((p,i)=>{ const e=cd.env[i];
+        if(p.r==null||e.lo==null) return; tot++; if(p.r<e.lo||p.r>e.hi) out++; });
+      exceed=tot?out/tot:null; }
+    let html='';
+    html+='<div><span class="bigr">'+(loP?fmtR(loP.r):'—')+' → '+(hiP?fmtR(hiP.r):'—')
+      +'<span class="lbl">range of the local correlation</span></span></div>';
+    html+='<div class="statline"><span class="k">Schools (all three values)</span><span class="v">'+cd.n+'</span></div>';
+    html+='<div class="statline"><span class="k">Overall r (unconditional)</span><span class="v">'+fmtR(rAll)+'</span></div>';
+    if(p20) html+='<div class="statline"><span class="k">Local r at 20th pctile</span><span class="v">'+fmtR(p20.r)+'</span></div>';
+    if(p50) html+='<div class="statline"><span class="k">Local r at median</span><span class="v">'+fmtR(p50.r)+'</span></div>';
+    if(p80) html+='<div class="statline"><span class="k">Local r at 80th pctile</span><span class="v">'+fmtR(p80.r)+'</span></div>';
+    if(loP&&hiP) html+='<div class="statline"><span class="k">Extremes at</span><span class="v">'+Math.round(loP.t)+'th / '+Math.round(hiP.t)+'th pctile</span></div>';
+    if(cd.mod&&cd.mod.t!=null) html+='<div class="statline"><span class="k" title="OLS of standardized outcome on standardized achievement, context percentile, and their product; the interaction coefficient is the linear trend in the association across the distribution.">Linear moderation β (interaction)</span><span class="v">'+fmtR(cd.mod.b)+' (t '+cd.mod.t.toFixed(1)+')</span></div>';
+    if(exceed!=null) html+='<div class="statline"><span class="k">Outside the no-variation envelope</span><span class="v">'+(100*exceed).toFixed(0)+'% of the curve</span></div>';
+    let interp='';
+    if(loP&&hiP&&rAll!=null){
+      const spread=hiP.r-loP.r;
+      if(exceed!=null&&exceed<0.05&&spread<0.25) interp='The local correlation stays close to the overall value across the whole distribution — the association does not vary much with '+ctxShort()+' here.';
+      else{ const dir=(cd.mod&&cd.mod.b>0)?'strengthens (toward +1)':'weakens (toward −1)';
+        interp='The '+achShort()+' → '+outShort()+' association changes across the '+ctxShort()+' distribution: from '+fmtR(loP.r)+' near the '+Math.round(loP.t)+'th percentile to '+fmtR(hiP.r)+' near the '+Math.round(hiP.t)+'th.'
+          +(cd.mod&&cd.mod.t!=null&&Math.abs(cd.mod.t)>2?' The linear trend is '+dir+' as context rises (t '+cd.mod.t.toFixed(1)+').':'')
+          +(exceed!=null?' The curve sits outside the no-variation envelope over '+(100*exceed).toFixed(0)+'% of the range'+(exceed>0.2?' — more variation than kernel noise alone would produce.':'.'):''); }
+      interp+=' Pointwise bands; read shapes, not single bumps.';
+    }
+    html+='<div class="interp">'+interp+'</div>';
+    $('statsBody').innerHTML=html;
+  }
+
   // ---- render dispatch + events ----
   function updateCtlVisibility(){
     $('ctlMatch').classList.toggle('hide',state.view!=='twins');
     $('ctlGap').classList.toggle('hide',state.view!=='twins');
+    $('ctlBw').classList.toggle('hide',state.view!=='curve');
+    $('ctlEnv').classList.toggle('hide',state.view!=='curve');
+    $('ctlAllc').classList.toggle('hide',state.view!=='curve');
     $('gapMinVal').textContent = ACHBy[state.ach].fmt==='score' ? Math.round(state.gapMin*2.5)+' pts' : state.gapMin+' pp';
   }
   function update(){
     writeHash(); updateCtlVisibility();
     document.querySelectorAll('#view button').forEach(b=>b.classList.toggle('on',b.dataset.v===state.view));
     if(state.view==='cond') renderCond();
+    else if(state.view==='curve') renderCurve();
     else if(state.view==='twins') renderTwins();
     else renderDecomp();
   }
@@ -911,6 +1160,10 @@
   $('achMetric').addEventListener('change',e=>{ state.ach=e.target.value; update(); });
   $('outMetric').addEventListener('change',e=>{ state.out=e.target.value; update(); });
   $('matchMode').addEventListener('change',e=>{ state.matchMode=e.target.value; state.selPair=null; update(); });
+  $('bw').addEventListener('input',e=>{ $('bwVal').textContent='\u00b1'+e.target.value; });
+  $('bw').addEventListener('change',e=>{ state.bw=+e.target.value; update(); });
+  $('envchk').addEventListener('change',e=>{ state.env=e.target.checked; update(); });
+  $('allcamp').addEventListener('change',e=>{ state.allc=e.target.checked; update(); });
   $('gapMin').addEventListener('input',e=>{ state.gapMin=+e.target.value; updateCtlVisibility(); });
   $('gapMin').addEventListener('change',e=>{ state.gapMin=+e.target.value; state.selPair=null; update(); });
   $('minapps').addEventListener('input',e=>{ $('minappsval').textContent=e.target.value; });
