@@ -238,6 +238,12 @@
           closed or relocated campuses without current coordinates). CAASPP is missing for classes entering in
           2021 (spring-2020 test cancelled) and 2022 (spring-2021 test non-representative); those periods show
           context-only dots in gray.</li>
+        <li><b>School composition variables.</b> % SED and % EL are grade-11 shares from the CAASPP research
+          files (2016+). The racial/ethnic composition variables are CDE Census Day enrollment shares for
+          grades 9&ndash;12 (2014+; Asian and Filipino are separate CDE categories, combined here; "URG"
+          follows UC's underrepresented-group definition: Hispanic/Latino, Black or African American, American
+          Indian). All are aligned to each entering class's grade-11 year, like SED/EL, and describe the
+          school's students &mdash; not its applicants to any campus.</li>
       </ul>
     </div>
   </details>
@@ -245,8 +251,9 @@
   <footer id="footer">
     <b>Sources.</b> UC admissions funnel: University of California Information Center (admissions by source
     school). Achievement: CDE CAASPP research files (Smarter Balanced grade 11), CDE A&ndash;G completion.
-    Neighborhood: U.S. Census Bureau ACS 5-year estimates (detailed tables) at the census-tract level, assigned
-    via CDE school coordinates and the Census Geocoder. Built by <code>scripts/make_context_data.py</code> in the
+    School composition: CDE annual/Census Day enrollment by race/ethnicity (grades 9&ndash;12) and CAASPP-reported
+    grade-11 group enrollment. Neighborhood: U.S. Census Bureau ACS 5-year estimates (detailed tables) at the
+    census-tract level, assigned via CDE school coordinates and the Census Geocoder. Built by <code>scripts/make_context_data.py</code> in the
     same repository as the <a href="../">main explorer</a>; admissions numbers here are identical to the main
     explorer's data layer. <span id="genstamp"></span>
   </footer>
@@ -275,6 +282,11 @@
     {key:'upp', label:'Unduplicated pupils — UPP % (FRPM/EL/foster, gr 9–12)', short:'UPP %', fmt:'pct', src:'panel', group:'School — its students'},
     {key:'sed', label:'Socioeconomically disadvantaged — % of grade 11', short:'% SED (gr 11)', fmt:'pct', src:'sch', group:'School — its students'},
     {key:'el',  label:'English learners — % of grade 11', short:'% EL (gr 11)', fmt:'pct', src:'sch', group:'School — its students'},
+    {key:'r_hisp',  label:'Hispanic or Latino students (%, gr 9–12)', short:'% Hispanic (school)', fmt:'pct', src:'sch', group:'School — its students'},
+    {key:'r_white', label:'White students (%, gr 9–12)', short:'% White (school)', fmt:'pct', src:'sch', group:'School — its students'},
+    {key:'r_asian', label:'Asian or Filipino students (%, gr 9–12)', short:'% Asian+Fil. (school)', fmt:'pct', src:'sch', group:'School — its students'},
+    {key:'r_black', label:'Black or African American students (%, gr 9–12)', short:'% Black (school)', fmt:'pct', src:'sch', group:'School — its students'},
+    {key:'r_urg',   label:'Underrepresented-group students (%, gr 9–12: Hispanic/Latino, Black, American Indian)', short:'% URG (school)', fmt:'pct', src:'sch', group:'School — its students'},
     {key:'ses',    label:'Neighborhood SES index (composite)', short:'SES index', fmt:'z',
      desc:'z-score composite: income, adult BA share, home value, − poverty, − unemployment (0 = average CA high school)'},
     {key:'inc',    label:'Median household income', short:'median income', fmt:'usd'},
@@ -395,7 +407,7 @@
     }
     cache[ck]=arr; return arr;
   }
-  const SIX={sed:1,el:2};
+  const SIX={sed:1,el:2,r_hisp:3,r_white:4,r_asian:5,r_black:6,r_urg:7};
   function ctxVal(s,key){ if(key in s._c) return s._c[key];
     const cm=CTXBy[key]; let v=null;
     if(cm&&cm.src==='panel'){ v=meanIdx(s.rows,IX.upp); }
@@ -520,7 +532,7 @@
     }
     if(s.geo) rows.push('<tr><td class="k">tract / ZCTA</td><td class="v">'+(s.geo[0]||'—')+' / '+(s.geo[1]||'—')+'</td></tr>');
     rows.push('<tr class="sec"><td colspan="2">Students (school-level)</td></tr>');
-    for(const k of ['upp','sed','el']){
+    for(const k of ['upp','sed','el','r_urg','r_hisp','r_asian','r_white','r_black']){
       rows.push('<tr><td class="k">'+CTXBy[k].short+'</td><td class="v">'+fmtCtxFull(ctxVal(s,k),k)+'</td></tr>');
     }
     rows.push('<tr class="sec"><td colspan="2">Achievement</td></tr>');

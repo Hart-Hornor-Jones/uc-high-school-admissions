@@ -126,15 +126,36 @@ def build():
             zs.append(sgn * (v - st[0]) / st[1])
         return round(sum(zs) / len(zs), 2) if len(zs) >= 3 else None
 
-    # school-level grade-11 composition: cds14 -> {year: [sed_pct, el_pct]}
-    sch = defaultdict(dict)
+    # school-level composition: cds14 -> {year: [sed, el, r_hisp, r_white, r_asian, r_black, r_urg]}
+    # sed/el = grade-11 shares from the CAASPP research files (year = test spring, 2016+);
+    # r_* = racial composition from CDE enrollment, grades 9-12 (school_race_context.csv,
+    #       keyed by academic start year; stored here under its SPRING year, start+1, so the
+    #       page's existing grade-11 alignment [admission year Y -> sch year Y-1] applies unchanged).
+    sed_el = defaultdict(dict)
     sgc = os.path.join(COMP, "school_group_context.csv")
     if os.path.exists(sgc):
         with open(sgc, encoding="utf-8") as fh:
             for r in csv.DictReader(fh):
                 sp = fnum(r.get("sed_pct")); ep = fnum(r.get("el_pct"))
                 if sp is None and ep is None: continue
-                sch[r["cds14"]][int(r["year"])] = [sp, ep]
+                sed_el[r["cds14"]][int(r["year"])] = [sp, ep]
+    RACE_COLS = ["race_hisp_pct", "race_white_pct", "race_asian_incl_fil_pct",
+                 "race_black_pct", "race_urg_pct"]
+    race = defaultdict(dict)
+    src_race = os.path.join(COMP, "school_race_context.csv")
+    if os.path.exists(src_race):
+        with open(src_race, encoding="utf-8") as fh:
+            for r in csv.DictReader(fh):
+                vals = [fnum(r.get(c)) for c in RACE_COLS]
+                if all(v is None for v in vals): continue
+                race[r["cds14"]][int(r["start_year"]) + 1] = [
+                    None if v is None else round(v, 1) for v in vals]
+    sch = defaultdict(dict)
+    for cds in set(sed_el) | set(race):
+        for yr in set(sed_el.get(cds, {})) | set(race.get(cds, {})):
+            se = sed_el.get(cds, {}).get(yr, [None, None])
+            rc = race.get(cds, {}).get(yr, [None] * 5)
+            sch[cds][yr] = se + rc
 
     # CAASPP mean scale scores: cds14 -> {year: [ela_mean, math_mean]}
     means = defaultdict(dict)
@@ -186,8 +207,10 @@ def build():
         "ctx": out_ctx,        # ceeb -> [[year, inc, pov, ba, hs, unemp, homeval, rent, own, hisp, white, black, asian, pop, ses], ...]
         "geo": out_geo,        # ceeb -> [tract_geoid, zcta]
         "means": out_means,    # ceeb -> {year: [ela_mean, math_mean]}
-        "svars": ["year", "sed", "el"],
-        "sch": out_sch,        # ceeb -> [[year, sed_pct, el_pct], ...]  grade-11 composition (CAASPP-reported enrollment), 2016+
+        "svars": ["year", "sed", "el", "r_hisp", "r_white", "r_asian", "r_black", "r_urg"],
+        "sch": out_sch,        # ceeb -> [[year, sed, el, r_hisp, r_white, r_asian, r_black, r_urg], ...]
+                               # sed/el: grade-11 (CAASPP-reported enrollment), 2016+;
+                               # r_*: CDE enrollment shares gr 9-12, keyed by spring year, 2014+
     }
     os.makedirs(OUTDIR, exist_ok=True)
     dest = os.path.join(OUTDIR, "data_context.js")

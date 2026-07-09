@@ -29,7 +29,15 @@ achievement–admissions association is carried by where the school sits?
    (census) counts, not test outcomes, so they exist even in low-participation years; the 2015
    files do not report per-group enrollment, so the series starts in 2016. A third school-level
    measure, **UPP** (the CALPADS unduplicated FRPM/EL/foster share of grades 9–12), comes directly
-   from the main explorer's panel.
+   from the main explorer's panel. **Racial/ethnic composition** (added 2026-07): five shares of
+   grade 9–12 enrollment from the CDE annual/Census Day enrollment files — Hispanic/Latino, White,
+   Asian-or-Filipino (two separate CDE categories, combined for comparability with the ACS tract
+   variable), Black/African American, and "URG" (UC's underrepresented-group definition:
+   Hispanic/Latino + Black + American Indian) — from `data/components/school_race_context.csv`
+   (built by `build/build_school_race_context.py`; series starts spring 2014). Composition shares
+   sum over CDE's exclusive categories and reconcile with the CUPC grade-9–12 headcounts
+   (median ratio 1.0000 across 29,110 overlapping school-years). These describe a school's
+   *students*, not its *applicants* to any campus.
 4. **Site data layer.** `scripts/make_context_data.py` joins the slim CSV and the composition CSV
    to the site's school universe (CEEB ↔ CDS from the panel) plus CAASPP **mean scale scores** from
    `data/components/caaspp_*.csv`, and writes `context/data_context.js` (`window.UCCTX`).
