@@ -87,6 +87,8 @@
   .decomp-name{font-size:12px;fill:#3a4150;cursor:pointer;}
   .decomp-name.sel{font-weight:700;fill:#000;}
   .decomp-val{font-size:10.5px;fill:#5c6470;font-variant-numeric:tabular-nums;}
+  .note{background:#fdf6e7;border:1px solid #ead9b0;border-radius:8px;padding:8px 10px;
+    font-size:12.5px;color:#5a4a20;margin-top:10px;line-height:1.45;}
   @media (max-width:700px){
     .wrap{padding:12px 10px 40px;}
     header h1{font-size:19px;}
@@ -112,10 +114,11 @@
     <p class="sub">Each dot is a California public high school. The x-axis describes the school's context &mdash; its
     <b>surroundings</b> (American Community Survey measures for the census tract where the school sits) or its
     <b>student body</b> (unduplicated high-need share, and the grade-11 shares socioeconomically disadvantaged
-    and English learner).
+    and English learner) &mdash; or its <b>application behavior</b> (how much of the eligible class applies to the
+    selected campus, and in what numbers).
     The dot's <b>color</b> is its students' measured achievement (CAASPP grade&nbsp;11, A&ndash;G completion).
     The y-axis is the <b>admissions outcome</b> at the selected UC campus. Drag a band on the rail below the
-    chart to hold neighborhood roughly fixed, and see how much achievement still separates schools inside it.</p>
+    chart to hold that variable roughly fixed, and see how much achievement still separates schools inside it.</p>
   </header>
 
   <div class="controls">
@@ -132,6 +135,7 @@
     <div class="ctl"><label for="ctxMetric">Context (x)</label><select id="ctxMetric"></select></div>
     <div class="ctl"><label for="achMetric">Achievement (color)</label><select id="achMetric"></select></div>
     <div class="ctl"><label for="outMetric">Outcome (y)</label><select id="outMetric"></select></div>
+    <div class="ctl" id="ctlCtx2"><label for="ctx2Metric">Also hold fixed (2nd)</label><select id="ctx2Metric"></select></div>
     <div class="ctl" id="ctlBw"><label for="bw">Smoothing bandwidth</label>
       <div class="rangewrap"><input type="range" id="bw" min="6" max="25" step="1" value="12" /><span class="rangeval" id="bwVal">&plusmn;12</span></div>
     </div>
@@ -238,6 +242,32 @@
           closed or relocated campuses without current coordinates). CAASPP is missing for classes entering in
           2021 (spring-2020 test cancelled) and 2022 (spring-2021 test non-representative); those periods show
           context-only dots in gray.</li>
+        <li><b>Application behavior.</b> Three x-variables describe who applies rather than where the
+          school sits or whom it enrolls: the school's <b>application rate to the selected campus</b>
+          (applicants &divide; A&ndash;G-eligible graduates), its <b>application rate to the other eight UC
+          campuses</b> (all applications sent to them &divide; eligible &mdash; this can exceed 1, since one
+          student can apply to several), and its raw <b>applicant volume</b> (applicants over the period; drawn
+          on a log axis). These support a standing question about admit-rate patterns: if only a school's
+          strongest students apply, its admit rate could reflect who chose to apply rather than how its
+          applications were read. Holding application behavior fixed &mdash; the band, the curve, the twin
+          match, the partial correlation &mdash; asks what remains. Three cautions. (1) The own-campus
+          application rate and any outcome built on applicants (the admit rate above all) share the applicant
+          count, so part of any association between them is mechanical; the other-8 rate is the
+          shared-term-free alternative and tracks the own-campus rate closely. (2) Per-eligible outcomes are
+          flat-to-positive across schools unconditionally; inside application-rate bands they can turn
+          negative &mdash; a composition effect of the conditioning itself. (3) Applicant counts under 3 are
+          suppressed in the source, so the other-8 sum can slightly undercount at very small schools.</li>
+        <li><b>Applicant-pool GPA outcomes.</b> Applicant GPA and admit GPA are UC-recalculated
+          weighted-capped GPAs (grades 10&ndash;11, A&ndash;G coursework), averaged over the school's
+          applicants and admitted students respectively. Applicant GPA tests the self-selection premise
+          directly: if thin applicant pools were elite subsets, schools where few apply would send
+          stronger-GPA pools. Admit GPA is partly downstream of the decision being studied &mdash; read it as
+          the GPA level accepted at the school, not as school strength. On GPA axes the y-scale starts near
+          the data, not at zero.</li>
+        <li><b>Holding two things fixed.</b> The "Also hold fixed" control adds a second context variable to
+          the conditioning: the side panel then also reports the partial correlation with <i>both</i>
+          variables removed (OLS residuals), and twin pairs must sit within &plusmn;4 percentile points on
+          both. The chart's band and the local-correlation curve continue to show the first variable only.</li>
         <li><b>School composition variables.</b> % SED and % EL are grade-11 shares from the CAASPP research
           files (2016+). The racial/ethnic composition variables are CDE Census Day enrollment shares for
           grades 9&ndash;12 (2014+; Asian and Filipino are separate CDE categories, combined here; "URG"
@@ -301,6 +331,9 @@
     {key:'white',  label:'White (non-Hispanic) residents (%)', short:'% White (NH)', fmt:'pct'},
     {key:'black',  label:'Black (non-Hispanic) residents (%)', short:'% Black (NH)', fmt:'pct'},
     {key:'asian',  label:'Asian (non-Hispanic) residents (%)', short:'% Asian (NH)', fmt:'pct'},
+    {key:'app_rate_own', label:'Application rate to this campus (applicants ÷ A–G eligible)', short:'app rate (this campus)', fmt:'rpct', src:'app', group:'Application behavior — who applies'},
+    {key:'app_rate_oth', label:'Application rate to the other 8 UC campuses (applications ÷ A–G eligible)', short:'app rate (other 8 UCs)', fmt:'x', src:'app', group:'Application behavior — who applies'},
+    {key:'app_vol', label:'Applicant volume — applicants to this campus over the period', short:'applicant volume', fmt:'n', src:'app', logx:true, group:'Application behavior — who applies'},
   ].map(m=>{ if(!m.group){ m.group='Neighborhood — the tract around the school'; m.src='acs'; } return m; });
   const ACH_METRICS = [
     {key:'avg',      label:'CAASPP proficiency — avg % met (gr 11)', short:'CAASPP avg % met', fmt:'pct'},
@@ -312,12 +345,15 @@
   ];
   // outcome metrics: reuse the main explorer's funnel definitions (num/den) verbatim
   const OUT_KEYS = ['admit_rate','yield','app_rate','adm_per_elig','enr_per_elig','app_per_head','adm_per_head','enr_per_head'];
-  const OUT_METRICS = OUT_KEYS.map(k=>MByKey[k]).filter(Boolean);
+  const OUT_METRICS = OUT_KEYS.map(k=>MByKey[k]).filter(Boolean)
+      .map(m=>Object.assign({},m,{group:'Admissions funnel — this campus'}))
+    .concat(['app_gpa','adm_gpa'].map(k=>MByKey[k]).filter(Boolean)
+      .map(m=>Object.assign({},m,{group:'Applicant pool strength (UC weighted-capped GPA)'})));
   const CTXBy = Object.fromEntries(CTX_METRICS.map(m=>[m.key,m]));
   const ACHBy = Object.fromEntries(ACH_METRICS.map(m=>[m.key,m]));
 
   const state = { campus:0, period:D.defaultPeriod, view:'cond',
-                  ctx:'ses', ach:'avg', out:'admit_rate',
+                  ctx:'ses', ctx2:'none', ach:'avg', out:'admit_rate',
                   minApps:30, dropOut:false, matchMode:'band', gapMin:15,
                   bw:12, env:true, allc:false,
                   band:null,          // [c0,c1] in context units, or null
@@ -325,7 +361,7 @@
 
   // ---- URL hash state (shareable) ----
   const HASHKEYS = [['c','campus',parseInt],['p','period',String],['v','view',String],['x','ctx',String],
-                    ['a','ach',String],['y','out',String],['n','minApps',parseInt],['m','matchMode',String],['g','gapMin',parseInt],['b','bw',parseInt]];
+                    ['x2','ctx2',String],['a','ach',String],['y','out',String],['n','minApps',parseInt],['m','matchMode',String],['g','gapMin',parseInt],['b','bw',parseInt]];
   (function readHash(){ try{
     const h = new URLSearchParams(location.hash.replace(/^#/,''));
     for(const [k,sk,cast] of HASHKEYS){ if(h.has(k)){ const v=cast(h.get(k)); if(v===v&&v!=='') state[sk]=v; } }
@@ -355,7 +391,13 @@
     sel.value=val; }
   fillSelGrouped($('ctxMetric'),CTX_METRICS,state.ctx);
   fillSel($('achMetric'),ACH_METRICS,state.ach);
-  fillSel($('outMetric'),OUT_METRICS,state.out);
+  fillSelGrouped($('outMetric'),OUT_METRICS,state.out);
+  (function(){ const sel=$('ctx2Metric'); sel.innerHTML='';
+    const o=document.createElement('option'); o.value='none'; o.textContent='None'; sel.appendChild(o);
+    let g=null,og=null;
+    CTX_METRICS.forEach(m=>{ if(m.group!==g){ g=m.group; og=document.createElement('optgroup'); og.label=g; sel.appendChild(og); }
+      const oo=document.createElement('option'); oo.value=m.key; oo.textContent=m.label; og.appendChild(oo); });
+    sel.value = (state.ctx2!=='none'&&CTXBy[state.ctx2]) ? state.ctx2 : 'none'; })();
   $('campus').value=state.campus; $('period').value=state.period;
   $('minapps').value=state.minApps; $('minappsval').textContent=state.minApps;
   $('matchMode').value=state.matchMode; $('gapMin').value=state.gapMin; $('gapMinVal').textContent=state.gapMin;
@@ -401,7 +443,7 @@
       let se=0,ne=0,sm=0,nm=0;
       for(const y of years){ const v=mm[String(y-1)]; if(!v) continue;
         if(v[0]!=null){se+=v[0];ne++;} if(v[1]!=null){sm+=v[1];nm++;} }
-      arr.push({ceeb,rows,apps,crows,srows,name:md[0],city:md[1],county:md[2],cds:md[3],
+      arr.push({ceeb,rows,apps,ci:+ci,crows,srows,name:md[0],city:md[1],county:md[2],cds:md[3],
                 elaMean:ne?se/ne:null, mathMean:nm?sm/nm:null,
                 geo:X.geo[ceeb]||null, _c:{}});
     }
@@ -410,7 +452,23 @@
   const SIX={sed:1,el:2,r_hisp:3,r_white:4,r_asian:5,r_black:6,r_urg:7};
   function ctxVal(s,key){ if(key in s._c) return s._c[key];
     const cm=CTXBy[key]; let v=null;
-    if(cm&&cm.src==='panel'){ v=meanIdx(s.rows,IX.upp); }
+    if(cm&&cm.src==='app'){
+      if(key==='app_vol'){ v = s.apps>0 ? s.apps : null; }
+      else if(key==='app_rate_own'){ const j=jsum(s.rows,'A','Gp'); v=(j&&j.cov>=COV_MIN)?j.sn/j.sd:null; }
+      else { // app_rate_oth: applications sent to the other 8 campuses ÷ this school's A–G eligible
+        const yrs=periodByKey[state.period].years;
+        const gpBy={}; for(const r of s.rows){ if(r[IX.Gp]!=null) gpBy[r[IX.year]]=r[IX.Gp]; }
+        let oa=0,og=0,got=false;
+        for(const y of yrs){ const gp=gpBy[y]; if(gp==null) continue;
+          let tot=null;
+          for(let cj=0;cj<D.campuses.length;cj++){ if(cj===s.ci) continue;
+            const rr=D.panel[cj+'|'+s.ceeb]; if(!rr) continue;
+            for(const r2 of rr){ if(r2[IX.year]===y&&r2[IX.A]!=null){ tot=(tot==null?0:tot)+r2[IX.A]; } } }
+          if(tot!=null){ oa+=tot; og+=gp; got=true; } }
+        v=(got&&og>0)?oa/og:null;
+      }
+    }
+    else if(cm&&cm.src==='panel'){ v=meanIdx(s.rows,IX.upp); }
     else if(cm&&cm.src==='sch'){ const idx=SIX[key]; let sum=0,n=0;
       for(const r of s.srows){ if(r[idx]!=null){sum+=r[idx];n++;} } v=n?sum/n:null; }
     else { const idx=CIX[key];
@@ -426,6 +484,8 @@
     if(key==='ela_mean')  return s.elaMean;
     if(key==='math_mean') return s.mathMean;
     if(key==='ag'){ const j=jsum(s.rows,'G','C'); return j?100*j.sn/j.sd:null; }
+    if(key==='app_gpa') return meanIdx(s.rows,IX.agpa);
+    if(key==='adm_gpa') return meanIdx(s.rows,IX.dgpa);
     const m=MByKey[key];
     if(m&&m.num&&m.den){ const j=jsum(s.rows,m.num,m.den); return j?j.sn/j.sd:null; }
     return null;
@@ -453,6 +513,17 @@
   }
   function partialR(rxy,rxz,ryz){ // r(x,y | z)
     const d=Math.sqrt((1-rxz*rxz)*(1-ryz*ryz)); return d?(rxy-rxz*ryz)/d:null; }
+  function ctx2Key(){ return (state.ctx2&&state.ctx2!=='none'&&state.ctx2!==state.ctx&&CTXBy[state.ctx2]) ? state.ctx2 : null; }
+  function residOn2(tr){ // tr: [[x1,x2,t],...] -> residuals of t on x1,x2 (linear)
+    const f=ols2(tr); if(!f) return null;
+    const m1=d3.mean(tr,t=>t[0]), m2=d3.mean(tr,t=>t[1]), my=d3.mean(tr,t=>t[2]);
+    return tr.map(t=> t[2]-(my+f.b1*(t[0]-m1)+f.b2*(t[1]-m2)) ); }
+  function partial2(quad){ // quad: [[a,y,z1,z2],...] -> r(a,y | z1,z2)
+    if(quad.length<8) return null;
+    const ra=residOn2(quad.map(q=>[q[2],q[3],q[0]]));
+    const ry=residOn2(quad.map(q=>[q[2],q[3],q[1]]));
+    if(!ra||!ry) return null;
+    return pearson(ra.map((v,i)=>[v,ry[i]])).r; }
   function tukeyBounds(vals){ const v=vals.filter(x=>x!=null).slice().sort(d3.ascending); if(v.length<4) return null;
     const q1=d3.quantileSorted(v,.25), q3=d3.quantileSorted(v,.75), iqr=q3-q1;
     return [q1-1.5*iqr, q3+1.5*iqr]; }
@@ -465,8 +536,10 @@
                  .filter(d=>d.c!=null && d.y!=null && reliable(d.s,state.out));
     if(state.dropOut){
       const full=pts.filter(d=>d.a!=null);
-      const bc=tukeyBounds(pts.map(d=>d.c)), by=tukeyBounds(pts.map(d=>d.y)), ba=tukeyBounds(full.map(d=>d.a));
-      pts = pts.filter(d=>!isOut(d.c,bc)&&!isOut(d.y,by)&&!(d.a!=null&&isOut(d.a,ba)));
+      const clog = !!(CTXBy[state.ctx]&&CTXBy[state.ctx].logx);
+      const cv = d=> clog? Math.log10(Math.max(d.c,1e-9)) : d.c;
+      const bc=tukeyBounds(pts.map(cv)), by=tukeyBounds(pts.map(d=>d.y)), ba=tukeyBounds(full.map(d=>d.a));
+      pts = pts.filter(d=>!isOut(cv(d),bc)&&!isOut(d.y,by)&&!(d.a!=null&&isOut(d.a,ba)));
     }
     return pts;
   }
@@ -479,20 +552,51 @@
   function fmtCtx(v,key){ const m=CTXBy[key]; if(v==null) return '—';
     if(m.fmt==='usd') return fmtUSD(v);
     if(m.fmt==='z') return (v>0?'+':'')+v.toFixed(2);
+    if(m.fmt==='rpct') return (100*v).toFixed(1)+'%';
+    if(m.fmt==='x') return v.toFixed(2);
+    if(m.fmt==='n') return fmtN(Math.round(v));
     return v.toFixed(1)+'%'; }
   function fmtCtxFull(v,key){ const m=CTXBy[key]; if(v==null) return '—';
-    if(m.fmt==='usd') return fmtUSDfull(v); return fmtCtx(v,key); }
+    if(m.fmt==='usd') return fmtUSDfull(v);
+    if(m.fmt==='x') return v.toFixed(2)+' per eligible';
+    return fmtCtx(v,key); }
   function fmtAch(v,key){ const m=ACHBy[key]; if(v==null) return '—';
     return m.fmt==='score' ? Math.round(v).toString() : v.toFixed(1)+'%'; }
-  function fmtOut(v){ return v==null?'—':(100*v).toFixed(1)+'%'; }
+  function outIsGpa(){ const m=MByKey[state.out]; return !!(m&&m.fmt==='gpa'); }
+  function fmtOut(v){ if(v==null) return '—'; return outIsGpa()? v.toFixed(2) : (100*v).toFixed(1)+'%'; }
+  function outAxisFmt(){ return outIsGpa()? (v=>(+v).toFixed(1)) : (v=>(100*v).toFixed(0)+'%'); }
   function fmtR(r){ return r==null?'—':(r>0?'+':'−')+Math.abs(r).toFixed(2); }
   function axisCtx(key){ const m=CTXBy[key];
-    if(m.fmt==='usd') return fmtUSD; if(m.fmt==='z') return v=>(v>0?'+':'')+v; return v=>v+'%'; }
+    if(m.fmt==='usd') return fmtUSD; if(m.fmt==='z') return v=>(v>0?'+':'')+v;
+    if(m.fmt==='rpct') return v=>Math.round(100*v)+'%';
+    if(m.fmt==='x') return v=>(+v).toFixed(1);
+    if(m.fmt==='n') return d3.format('.2~s');
+    return v=>v+'%'; }
   const periodLabel = ()=>periodByKey[state.period].label;
   const campusName = ()=>D.campuses[state.campus];
-  const outShort = ()=>MByKey[state.out].short.toLowerCase();
+  const outShort = ()=>{ const t=MByKey[state.out].short; return /GPA/.test(t)? t : t.toLowerCase(); };
   const ctxShort = k=>CTXBy[k||state.ctx].short;
   const achShort = k=>ACHBy[k||state.ach].short;
+
+  // application-behavior caution notes (shared applicant count; conditioning side-effects)
+  function appNote(){
+    const cm=CTXBy[state.ctx], om=MByKey[state.out], notes=[];
+    if(cm&&cm.src==='app'){
+      if(state.ctx==='app_rate_own'&&state.out==='app_rate'){
+        notes.push('These two are the same measure — the x and y axes show the variable against itself.');
+      } else if(state.ctx==='app_rate_oth'){
+        const pts=dots(), rr=pearson(pts.map(d=>[ctxVal(d.s,'app_rate_own'),d.c]));
+        notes.push('The other-8 rate is a stand-in for application propensity that shares no count with this campus\u2019s rates'
+          +(rr.r!=null?(' \u2014 here it tracks the own-campus rate at r '+fmtR(rr.r)):'')+'.');
+      } else if(om&&(om.num==='A'||om.den==='A')){
+        notes.push('Caution: '+om.short.toLowerCase()+' and '+cm.short+' are built from the same applicant count, so part of any association between them is mechanical. For conditioning, the other-8 application rate shares no term with this campus\u2019s rates.');
+      }
+      if(om&&om.den==='Gp'&&om.num!=='A'){
+        notes.push('Per-eligible outcomes are flat-to-positive across schools unconditionally; if they turn negative inside application-rate bands, that is a composition effect of the conditioning itself \u2014 not independent evidence.');
+      }
+    }
+    return notes.length? '<div class="note">'+notes.join(' ')+'</div>' : '';
+  }
 
   // achievement color scale (low = warm red, high = cool blue; gray when missing)
   const achInterp = d3.interpolateRgbBasis(['#b2182b','#f4e08a','#2166ac']);
@@ -541,6 +645,8 @@
     }
     rows.push('<tr class="sec"><td colspan="2">'+campusName()+' · '+periodLabel()+'</td></tr>');
     rows.push('<tr><td class="k">applicants</td><td class="v">'+fmtN(s.apps)+'</td></tr>');
+    rows.push('<tr><td class="k">app rate (this campus)</td><td class="v">'+fmtCtxFull(ctxVal(s,'app_rate_own'),'app_rate_own')+'</td></tr>');
+    rows.push('<tr><td class="k">app rate (other 8 UCs)</td><td class="v">'+fmtCtxFull(ctxVal(s,'app_rate_oth'),'app_rate_oth')+'</td></tr>');
     rows.push('<tr><td class="k">'+MByKey[state.out].short+'</td><td class="v">'+fmtOut(valOf(s,state.out))+'</td></tr>');
     el.innerHTML='<h3>'+s.name+'</h3><div class="ploc">'+(s.city||'')+' · '+(s.county||'')+' County · CEEB '+s.ceeb+'</div>'
       +'<table class="ptable">'+rows.join('')+'</table>';
@@ -554,23 +660,24 @@
     const H = small? 400 : 470, RAIL=34, h = H+RAIL;
     const m = {top:14,right:16,bottom:40+RAIL,left:56};
     svg.attr('viewBox','0 0 '+w+' '+h).attr('height',null); svg.selectAll('*').remove();
-    $('plotTitle').textContent = ctxShort().replace(/^%/,'Share of ')+' (x) vs '+MByKey[state.out].short.toLowerCase()+' at '+campusName()+' (y) — dots colored by '+achShort();
+    $('plotTitle').textContent = ctxShort().replace(/^%/,'Share of ')+' (x) vs '+outShort()+' at '+campusName()+' (y) — dots colored by '+achShort();
     $('plotSub').textContent = periodLabel()+' · each dot one high school · brush the rail below the x-axis to hold the context variable fixed';
     if(!pts.length){ svg.append('text').attr('x',w/2).attr('y',h/2).attr('text-anchor','middle')
         .attr('fill','#5c6470').attr('font-size',13).text('No schools match the current filters.');
       renderCondStats(pts,[]); return; }
 
     const col = achScale(pts);
-    const x = d3.scaleLinear().domain(d3.extent(pts,d=>d.c)).nice().range([m.left+8,w-m.right-8]);
-    const y = d3.scaleLinear().domain([0,d3.max(pts,d=>d.y)||1]).nice().range([H-m.bottom+RAIL,m.top]);
+    const logx = !!CTXBy[state.ctx].logx;
+    const x = (logx? d3.scaleLog() : d3.scaleLinear()).domain(d3.extent(pts,d=>d.c)).nice().range([m.left+8,w-m.right-8]);
+    const y = d3.scaleLinear().domain(outIsGpa()? d3.extent(pts,d=>d.y) : [0,d3.max(pts,d=>d.y)||1]).nice().range([H-m.bottom+RAIL,m.top]);
     // grid + axes
     const g=svg.append('g');
     g.selectAll('line.gy').data(y.ticks(7)).join('line').attr('class','gridline')
       .attr('x1',m.left).attr('x2',w-m.right).attr('y1',d=>y(d)).attr('y2',d=>y(d));
     svg.append('g').attr('class','axis').attr('transform','translate(0,'+(H-m.bottom+RAIL)+')')
-      .call(d3.axisBottom(x).ticks(7).tickFormat(axisCtx(state.ctx)));
+      .call(logx? d3.axisBottom(x).ticks(6,'.2~s') : d3.axisBottom(x).ticks(7).tickFormat(axisCtx(state.ctx)));
     svg.append('g').attr('class','axis').attr('transform','translate('+m.left+',0)')
-      .call(d3.axisLeft(y).ticks(7).tickFormat(v=>(100*v).toFixed(0)+'%'));
+      .call(d3.axisLeft(y).ticks(7).tickFormat(outAxisFmt()));
     svg.append('text').attr('x',(m.left+w-m.right)/2).attr('y',h-6).attr('text-anchor','middle')
       .attr('fill','#5c6470').attr('font-size',11.5).text(CTXBy[state.ctx].label+(CTXBy[state.ctx].src!=='acs'||CTXBy[state.ctx].key==='ses'?'':' (tract)'));
     svg.append('text').attr('transform','rotate(-90)').attr('x',-(m.top+(H-m.bottom+RAIL))/2).attr('y',14)
@@ -664,6 +771,12 @@
     html+='<div class="statline"><span class="k">r: '+achShort()+' → outcome</span><span class="v">'+fmtR(rAO.r)+'</span></div>';
     html+='<div class="statline"><span class="k">r: '+ctxShort()+' ↔ achievement</span><span class="v">'+fmtR(rCA.r)+'</span></div>';
     html+='<div class="statline"><span class="k" title="Correlation of achievement with the outcome after linearly removing the context variable from both — computed over the '+tri.length+' schools with all three values.">Partial r: achievement → outcome, context held fixed</span><span class="v">'+fmtR(part)+'</span></div>';
+    const c2k=ctx2Key();
+    if(c2k){
+      const quad=tri.map(d=>[d.a,d.y,d.c,ctxVal(d.s,c2k)]).filter(q=>q[3]!=null);
+      const p2=partial2(quad);
+      html+='<div class="statline"><span class="k" title="Partial correlation of achievement with the outcome after linearly removing BOTH context variables (OLS residuals on residuals) — over the '+quad.length+' schools with all four values.">Partial r: '+ctxShort()+' and '+ctxShort(c2k)+' both held fixed</span><span class="v">'+fmtR(p2)+' <span style="font-weight:400;color:var(--muted)">(n='+quad.length+')</span></span></div>';
+    }
     if(band.length){
       const bt=band.filter(d=>d.a!=null);
       const rB=pearson(bt.map(d=>[d.a,d.y]));
@@ -685,6 +798,7 @@
       interp+=' One context variable at a time — try others, or the composite.';
     }
     html+='<div class="interp">'+interp+'</div>';
+    html+=appNote();
     $('statsBody').innerHTML=html;
     if(band.length) renderInset(band);
   }
@@ -704,7 +818,7 @@
     s.append('g').attr('class','axis').attr('transform','translate(0,'+(bh-m.bottom)+')')
       .call(d3.axisBottom(x).ticks(4).tickFormat(v=>ACHBy[state.ach].fmt==='score'?v:v+'%'));
     s.append('g').attr('class','axis').attr('transform','translate('+m.left+',0)')
-      .call(d3.axisLeft(y).ticks(4).tickFormat(v=>(100*v).toFixed(0)+'%'));
+      .call(d3.axisLeft(y).ticks(4).tickFormat(outAxisFmt()));
     const col=achScale(bt);
     s.append('g').selectAll('circle').data(bt).join('circle')
       .attr('class','dot').attr('r',3.4).attr('cx',d=>x(d.a)).attr('cy',d=>y(d.y)).attr('fill',d=>col(d.a))
@@ -729,15 +843,20 @@
     return out; }
 
   function buildPairs(){
-    const tri = triples();
+    let tri = triples();
     const out=[];
     const gap = ACHBy[state.ach].fmt==='score' ? state.gapMin*2.5 : state.gapMin;  // scale-score units ≈ 2.5×pp
+    const c2k=ctx2Key();
+    if(c2k){ tri=tri.filter(d=>{ d.c2=ctxVal(d.s,c2k); return d.c2!=null; });
+      const pr2=percentileRanks(tri.map(d=>d.c2)); tri.forEach(d=>d._p2=pr2(d.c2)); }
+    const okC2=(u,v)=> !c2k || Math.abs(u._p2-v._p2)<=4;
     if(state.matchMode==='band'){
       const pr=percentileRanks(tri.map(d=>d.c));
       tri.forEach(d=>d._p=pr(d.c));
       const byP=tri.slice().sort((a,b)=>a._p-b._p);
       for(let i=0;i<byP.length;i++) for(let j=i+1;j<byP.length;j++){
         if(byP[j]._p-byP[i]._p>4) break;
+        if(!okC2(byP[i],byP[j])) continue;
         const ga=Math.abs(byP[i].a-byP[j].a);
         if(ga>=gap) out.push({a:byP[i],b:byP[j],gap:ga});
       }
@@ -748,6 +867,7 @@
         if(!groups.has(g)) groups.set(g,[]); groups.get(g).push(d); });
       for(const arr of groups.values()) if(arr.length>1)
         for(let i=0;i<arr.length;i++) for(let j=i+1;j<arr.length;j++){
+          if(!okC2(arr[i],arr[j])) continue;
           const ga=Math.abs(arr[i].a-arr[j].a);
           if(ga>=gap) out.push({a:arr[i],b:arr[j],gap:ga});
         }
@@ -771,10 +891,11 @@
     const shown = pop.length>TWIN_SHOW_MAX ? evenSample(pop,TWIN_SHOW_MAX) : pop;   // even sample -> drawn rows
     const w = Math.max(320, document.querySelector('.chartcard').clientWidth-16);
     $('plotTitle').textContent='Twin schools — '+(state.matchMode==='band'?'near-identical '+ctxShort():state.matchMode==='zcta'?'the same ZIP (ZCTA)':'the same census tract')
+      +(ctx2Key()?' + similar '+ctxShort(ctx2Key()):'')
       +', '+achShort()+' gap ≥ '+(ACHBy[state.ach].fmt==='score'?Math.round(state.gapMin*2.5)+' points':state.gapMin+' pp');
     $('plotSub').textContent=campusName()+' · '+periodLabel()+' · '+pop.length+' qualifying pair'+(pop.length===1?'':'s')
       +(pop.length>shown.length?' · showing '+shown.length+' spread evenly across '+ctxShort()+' (stats cover all '+pop.length+')':'')
-      +' · x-position: '+MByKey[state.out].short.toLowerCase()+' · red = lower-achievement school, blue = higher';
+      +' · x-position: '+outShort()+' · red = lower-achievement school, blue = higher';
     $('legend').innerHTML='<span><span class="sw" style="background:#b2182b"></span>lower '+achShort()+'</span>'
       +'<span><span class="sw" style="background:#2166ac"></span>higher '+achShort()+'</span>'
       +'<span>schools are paired without replacement; every pair with a gap ≥ the slider is counted</span>';
@@ -788,9 +909,9 @@
     const h=m.top+rowH*shown.length+m.bottom;
     svg.attr('viewBox','0 0 '+w+' '+h).attr('height',null); svg.selectAll('*').remove();
     const allY=shown.flatMap(p=>[p.a.y,p.b.y]);
-    const x=d3.scaleLinear().domain([0,d3.max(allY)||1]).nice().range([m.left,w-m.right]);
+    const x=d3.scaleLinear().domain(outIsGpa()? d3.extent(allY) : [0,d3.max(allY)||1]).nice().range([m.left,w-m.right]);
     svg.append('g').attr('class','axis').attr('transform','translate(0,'+(h-m.bottom+6)+')')
-      .call(d3.axisBottom(x).ticks(6).tickFormat(v=>(100*v).toFixed(0)+'%'));
+      .call(d3.axisBottom(x).ticks(6).tickFormat(outAxisFmt()));
     svg.append('text').attr('x',(m.left+w-m.right)/2).attr('y',h-4).attr('text-anchor','middle')
       .attr('fill','#5c6470').attr('font-size',11.5).text(MByKey[state.out].short+' — '+campusName());
     svg.append('g').selectAll('line.g').data(x.ticks(6)).join('line').attr('class','gridline')
@@ -832,10 +953,12 @@
     let html='';
     html+='<div><span class="bigr">'+upWins+'/'+pairs.length+'<span class="lbl">pairs where the higher-achievement school has the higher '+outShort()+'</span></span></div>';
     if(ties) html+='<div class="statline"><span class="k">exact ties</span><span class="v">'+ties+'</span></div>';
-    html+='<div class="statline"><span class="k">median outcome gap (higher − lower)</span><span class="v">'+(med>=0?'+':'')+(100*med).toFixed(1)+' pp</span></div>';
+    html+='<div class="statline"><span class="k">median outcome gap (higher − lower)</span><span class="v">'+(outIsGpa()? (med>=0?'+':'')+med.toFixed(2)+' GPA' : (med>=0?'+':'')+(100*med).toFixed(1)+' pp')+'</span></div>';
     html+='<div class="statline"><span class="k">median achievement gap</span><span class="v">'+(ACHBy[state.ach].fmt==='score'?Math.round(medAch)+' pts':medAch.toFixed(1)+' pp')+'</span></div>';
     html+='<div class="interp">Pairs share '+(state.matchMode==='band'?'a nearly identical value of '+ctxShort()+' (within ±4 percentile points)':state.matchMode==='zcta'?'a ZIP code (ZCTA)':'a census tract')+
-      ' but differ widely in '+achShort()+'. If surroundings were the whole story, red and blue dots would sit on top of each other. Click a pair for details.</div>';
+      (ctx2Key()?' and a nearly identical value of '+ctxShort(ctx2Key())+' (±4 percentile points)':'')+
+      ' but differ widely in '+achShort()+'. If what is held fixed were the whole story, red and blue dots would sit on top of each other. Click a pair for details.</div>';
+    html+=appNote();
     $('statsBody').innerHTML=html;
   }
 
@@ -846,6 +969,7 @@
       return '<tr class="sec"><td colspan="2">'+s.name+'</td></tr>'
         +'<tr><td class="k">city</td><td class="v">'+(s.city||'—')+'</td></tr>'
         +'<tr><td class="k">'+ctxShort()+'</td><td class="v">'+fmtCtxFull(d.c,state.ctx)+'</td></tr>'
+        +(ctx2Key()?'<tr><td class="k">'+ctxShort(ctx2Key())+'</td><td class="v">'+fmtCtxFull(ctxVal(s,ctx2Key()),ctx2Key())+'</td></tr>':'')
         +'<tr><td class="k">median income / poverty</td><td class="v">'+fmtUSD(ctxVal(s,'inc'))+' / '+fmtCtx(ctxVal(s,'pov'),'pov')+'</td></tr>'
         +'<tr><td class="k">'+achShort()+'</td><td class="v">'+fmtAch(d.a,state.ach)+'</td></tr>'
         +'<tr><td class="k">applicants</td><td class="v">'+fmtN(s.apps)+'</td></tr>'
@@ -871,7 +995,7 @@
     const rowH=42, m={top:30,right:120,bottom:40,left:110};
     const h=m.top+rowH*D.campuses.length+m.bottom;
     svg.attr('viewBox','0 0 '+w+' '+h).attr('height',null); svg.selectAll('*').remove();
-    $('plotTitle').textContent='What explains the school-to-school spread in '+MByKey[state.out].short.toLowerCase()+'? — '+ctxShort()+' vs '+achShort();
+    $('plotTitle').textContent='What explains the school-to-school spread in '+outShort()+'? — '+ctxShort()+' vs '+achShort();
     $('plotSub').textContent=periodLabel()+' · bar length = R² of a two-variable linear fit · split into what each factor explains uniquely and what they explain jointly';
     const res=D.campuses.map((c,i)=>({name:c,i,d:decompose(i)}));
     const maxR2=d3.max(res,r=>r.d?r.d.r2b:0)||.5;
@@ -926,11 +1050,12 @@
       html+='<div class="statline"><span class="k">'+ctxShort()+' alone (R²)</span><span class="v">'+(100*r.d.r2c).toFixed(1)+'%</span></div>';
       html+='<div class="statline"><span class="k">'+achShort()+' alone (R²)</span><span class="v">'+(100*r.d.r2a).toFixed(1)+'%</span></div>';
       html+='<div class="statline"><span class="k">both together (R²)</span><span class="v">'+(100*r.d.r2b).toFixed(1)+'%</span></div>';
-      html+='<div class="statline"><span class="k">uniquely neighborhood</span><span class="v">'+(100*r.d.uC).toFixed(1)+'%</span></div>';
+      html+='<div class="statline"><span class="k">uniquely '+ctxShort()+'</span><span class="v">'+(100*r.d.uC).toFixed(1)+'%</span></div>';
       html+='<div class="statline"><span class="k">joint (inseparable)</span><span class="v">'+(100*r.d.shared).toFixed(1)+'%</span></div>';
       html+='<div class="statline"><span class="k">uniquely achievement</span><span class="v">'+(100*r.d.uA).toFixed(1)+'%</span></div>';
     }
     html+='<div class="interp">The gray middle is the crux: variance that the context and achievement variables explain jointly, because the two travel together across schools. A large gray share means the data cannot, by itself, say which one "does the work." Click a campus name to focus it.'+(caasppMissing()?' CAASPP is unavailable for this period — pick another year or use A–G completion as the achievement axis.':'')+'</div>';
+    html+=appNote();
     $('statsBody').innerHTML=html;
   }
 
@@ -1018,7 +1143,7 @@
     const w = Math.max(320, document.querySelector('.chartcard').clientWidth-16);
     const small = window.innerWidth<=700, h = small? 400 : 480;
     svg.attr('viewBox','0 0 '+w+' '+h).attr('height',null); svg.selectAll('*').remove();
-    $('plotTitle').textContent='Local correlation: '+achShort()+' → '+MByKey[state.out].short.toLowerCase()+' at '+campusName()+', across the '+ctxShort()+' distribution';
+    $('plotTitle').textContent='Local correlation: '+achShort()+' → '+outShort()+' at '+campusName()+', across the '+ctxShort()+' distribution';
     $('plotSub').textContent=periodLabel()+' · Gaussian kernel on the '+ctxShort()+' percentile (bandwidth ±'+state.bw+' pctile pts) · the formal version of dragging the band';
     $('legend').innerHTML='';
     if(caasppMissing()){ svg.append('text').attr('x',w/2).attr('y',h/2).attr('text-anchor','middle')
@@ -1047,7 +1172,7 @@
       .attr('fill','#5c6470').attr('font-size',11.5).text(ctxShort()+' — percentile among shown schools (tick labels: percentile · value)');
     svg.append('text').attr('transform','rotate(-90)').attr('x',-(m.top+h-m.bottom)/2).attr('y',14)
       .attr('text-anchor','middle').attr('fill','#5c6470').attr('font-size',11.5)
-      .text('local r: '+achShort()+' → '+MByKey[state.out].short.toLowerCase());
+      .text('local r: '+achShort()+' → '+outShort());
     const defined=p=>p.r!=null;
     // no-variation envelope
     if(cd.env){ const area=d3.area().defined((e,i)=>e.lo!=null&&cd.pts[i].r!=null)
@@ -1096,9 +1221,10 @@
         focus.style('display',null);
         focus.select('line').attr('x1',x(best.t)).attr('x2',x(best.t));
         focus.select('circle').attr('cx',x(best.t)).attr('cy',yy(best.r));
-        const slopeTxt = ACHBy[state.ach].fmt==='score'
-          ? (100*best.slope*10).toFixed(2)+' pp outcome per +10 points'
-          : (100*best.slope).toFixed(2)+' pp outcome per +1 pp';
+        const achUnit = ACHBy[state.ach].fmt==='score' ? {m:10,u:'+10 points'} : {m:1,u:'+1 pp'};
+        const slopeTxt = outIsGpa()
+          ? (best.slope*achUnit.m).toFixed(3)+' GPA per '+achUnit.u
+          : (100*best.slope*achUnit.m).toFixed(2)+' pp outcome per '+achUnit.u;
         showTip(ev,'<b>'+Math.round(best.t)+'th percentile</b> of '+ctxShort()+' (≈ '+q(best.t)+')<br>'
           +'local r = '+fmtR(best.r)+' · 95% CI '+fmtR(best.lo)+' to '+fmtR(best.hi)
           +'<br><span class="tl">effective n ≈ '+Math.round(best.neff)+' · local slope ≈ '+slopeTxt+'</span>'); })
@@ -1146,11 +1272,13 @@
       interp+=' Pointwise bands; read shapes, not single bumps.';
     }
     html+='<div class="interp">'+interp+'</div>';
+    html+=appNote();
     $('statsBody').innerHTML=html;
   }
 
   // ---- render dispatch + events ----
   function updateCtlVisibility(){
+    $('ctlCtx2').classList.toggle('hide',!(state.view==='cond'||state.view==='twins'));
     $('ctlMatch').classList.toggle('hide',state.view!=='twins');
     $('ctlGap').classList.toggle('hide',state.view!=='twins');
     $('ctlBw').classList.toggle('hide',state.view!=='curve');
@@ -1169,6 +1297,7 @@
   $('campus').addEventListener('change',e=>{ state.campus=+e.target.value; state.sel=null; state.selPair=null; update(); });
   $('period').addEventListener('change',e=>{ state.period=e.target.value; cache={}; state.band=null; state.sel=null; state.selPair=null; update(); });
   $('ctxMetric').addEventListener('change',e=>{ state.ctx=e.target.value; state.band=null; update(); });
+  $('ctx2Metric').addEventListener('change',e=>{ state.ctx2=e.target.value; state.selPair=null; update(); });
   $('achMetric').addEventListener('change',e=>{ state.ach=e.target.value; update(); });
   $('outMetric').addEventListener('change',e=>{ state.out=e.target.value; update(); });
   $('matchMode').addEventListener('change',e=>{ state.matchMode=e.target.value; state.selPair=null; update(); });

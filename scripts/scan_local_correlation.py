@@ -3,7 +3,14 @@
 scan_local_correlation.py — systematic conditional-correlation scan.
 
 For every campus × period × context variable (achievement = CAASPP avg % met,
-outcome = admit rate), estimates the LOCAL (conditional) correlation function
+outcome = admit rate), estimates the LOCAL (conditional) correlation function.
+Context variables cover the tract ACS measures, the school-level student
+measures (UPP / %SED / %EL), and the application-behavior measures added with
+the page's self-selection tooling: the school's application rate to the campus
+(applicants ÷ cleaned A–G eligible, jointly-observed with the same reliability
+gate as the page), its application rate to the other eight campuses
+(applications sent there ÷ eligible; campus-year applicant counts suppressed in
+the source are treated as unobserved), and its raw applicant volume.
 
     rho(t) = corr( achievement, outcome | context percentile = t )
 
@@ -39,7 +46,8 @@ X = json.loads(open(os.path.join(REPO, "context", "data_context.js"), encoding="
 CIX = {k: i for i, k in enumerate(X["cvars"])}
 SIX = {"sed": 1, "el": 2}
 ACS_KEYS = [k for k in X["cvars"] if k != "year"]
-CTX_KEYS = ["upp", "sed", "el"] + ACS_KEYS
+APP_KEYS = ["app_rate_own", "app_rate_oth", "app_vol"]
+CTX_KEYS = ["upp", "sed", "el"] + ACS_KEYS + APP_KEYS
 
 def fnum(x):
     x = (x or "").strip()
@@ -47,9 +55,30 @@ def fnum(x):
     try: return float(x)
     except ValueError: return None
 
+# cleaned A-G eligible denominator Gp, exactly as scripts/make_site_data.py builds it
+AGCLEAN = {}
+for r in csv.DictReader(open(os.path.join(DATA, "ag_eligibility_cleaned.csv"), encoding="utf-8")):
+    _mc = (r["ag_met_clean"] or "").strip()
+    AGCLEAN[(r["cds14"], int(r["year"]))] = (r["recommended_action"], r["impute_confidence"],
+                                             int(float(_mc)) if _mc not in ("", "None") else None)
+def gp_of(cds, yr, raw_G):
+    rec = AGCLEAN.get((cds, yr))
+    if not rec: return raw_G
+    action, conf, met_clean = rec
+    if action == "SUPPRESS_RATE":
+        return met_clean if (conf == "HIGH" and met_clean is not None) else None
+    if action == "FLOOR": return None
+    return raw_G
+
 panel = defaultdict(list)     # (campus, ceeb) -> rows
+apps_by = defaultdict(dict)   # (campus, ceeb) -> {year: applicants}   (cross-campus lookup)
 for r in csv.DictReader(open(os.path.join(DATA, "panel_all9_by_year.csv"), encoding="utf-8")):
-    panel[(r["campus"], str(r["ceeb"]).strip().zfill(6))].append(r)
+    ce = str(r["ceeb"]).strip().zfill(6)
+    panel[(r["campus"], ce)].append(r)
+    _a = (r["applicants"] or "").strip()
+    if _a not in ("", "*", "None"):
+        yr = int(float(r["year"]))
+        apps_by[(r["campus"], ce)][yr] = apps_by[(r["campus"], ce)].get(yr, 0.0) + float(_a)
 CAMPUSES = sorted({c for c, _ in panel})
 
 def school_values(campus, years):
@@ -79,6 +108,32 @@ def school_values(campus, years):
             elif t is not None: vs.append(t)
         ach = sum(vs) / len(vs) if vs else None
         rec = {"ach": ach, "y": rate}
+        # application behavior (page conventions: jointly-observed ratio-of-sums, cov >= 0.5)
+        gp_by = {}
+        for r in rows:
+            g = fnum(r["ag_met_uccsu_count"])
+            gp = gp_of(r["cds14"], int(float(r["year"])), None if g is None else int(g))
+            if gp is not None: gp_by[int(float(r["year"]))] = gp
+        osn = osd = odenAll = 0.0; ook = False
+        for r in rows:
+            gp = gp_by.get(int(float(r["year"])))
+            if gp is None: continue
+            odenAll += gp
+            a = fnum(r["applicants"])
+            if a is not None: osn += a; osd += gp; ook = True
+        rec["app_rate_own"] = (osn / osd) if (ook and osd > 0 and (odenAll <= 0 or osd / odenAll >= COV_MIN)) else None
+        oa = og = 0.0; got = False
+        for yy in years:
+            gp = gp_by.get(yy)
+            if gp is None: continue
+            tot = None
+            for c2 in CAMPUSES:
+                if c2 == campus: continue
+                a2 = apps_by.get((c2, ceeb), {}).get(yy)
+                if a2 is not None: tot = (0.0 if tot is None else tot) + a2
+            if tot is not None: oa += tot; og += gp; got = True
+        rec["app_rate_oth"] = (oa / og) if (got and og > 0) else None
+        rec["app_vol"] = apps if apps > 0 else None
         # UPP: admission-year alignment (site convention)
         ups = [fnum(r["upp_pct"]) for r in rows if fnum(r["upp_pct"]) is not None]
         ups = [round(u, 1) for u in ups]

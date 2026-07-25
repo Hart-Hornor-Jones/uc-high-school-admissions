@@ -1,11 +1,13 @@
 # Neighborhood-context companion (`context/`) — data & methods
 
 The companion page at `context/` relates three school-level quantities: the **context** of each
-California high school — its *surroundings* (tract-level American Community Survey measures) or
-its *student body* (UPP, and the grade-11 shares socioeconomically disadvantaged and English
-learner) — its students' **measured achievement** (CAASPP grade 11, A–G completion), and its
-**UC admissions outcomes** (the same funnel rates as the main explorer). Its motivating question: how much of the
-achievement–admissions association is carried by where the school sits?
+California high school — its *surroundings* (tract-level American Community Survey measures), its
+*student body* (UPP, the grade-11 shares socioeconomically disadvantaged and English learner, and
+racial/ethnic composition), or its *application behavior* (application rate and applicant volume
+toward the selected campus) — its students' **measured achievement** (CAASPP grade 11, A–G
+completion), and its **UC admissions outcomes** (the main explorer's funnel rates, plus
+applicant-pool and admit GPA). Its motivating questions: how much of the achievement–admissions
+association is carried by where the school sits — and how much by who applies?
 
 ## Data lineage
 
@@ -65,6 +67,53 @@ achievement–admissions association is carried by where the school sits?
   finer-grained achievement axis; the spring-2021 administration is excluded (non-representative),
   as in the panel.
 
+## Application-behavior variables (added 2026-07)
+
+Three context (x) variables describe the school's applicants rather than its surroundings or its
+enrollment, supporting the self-selection question: if only a school's strongest students apply,
+its admit rate could reflect who chose to apply rather than how its applications were read.
+Holding application behavior fixed — the band, the curve, the twin match, the partial
+correlation — asks what remains.
+
+- **`app_rate_own`** — applicants to the selected campus ÷ cleaned A–G-eligible count (`Gp`),
+  pooled jointly-observed by ratio-of-sums with the explorer's suppression-reliability gate
+  (coverage ≥ 0.5). This is the same quantity as the outcome metric `app_rate`, offered on the
+  x-axis as a conditioning variable.
+- **`app_rate_oth`** — applications sent to the **other eight** UC campuses ÷ the same eligible
+  denominator. One student can apply to several campuses, so this can exceed 1 (it is displayed
+  as applications per eligible student). Campus-year applicant counts suppressed in the source
+  (< 3) are treated as unobserved, so the sum can slightly undercount at very small schools.
+- **`app_vol`** — total applicants to the selected campus over the period (the min-applicants
+  filter's quantity). Drawn on a log axis in the conditioning scatter; outlier trimming for this
+  variable operates on log10 values.
+
+Unlike every other context variable, these depend on the selected campus.
+
+**The shared-term caution.** The admit rate (admits ÷ applicants) and the own-campus application
+rate (applicants ÷ eligible) are built from the same applicant count — one's denominator is the
+other's numerator — so part of any association between them is mechanical, and conditioning one
+on the other partly conditions on noise shared by construction. `app_rate_oth` exists for exactly
+this reason: it shares no count with the selected campus's rates yet tracks the own-campus rate
+closely (r ≈ +0.85–0.89 at the selective campuses, pooled 2023–25), making it the cleaner
+conditioning variable. The page surfaces this caution, and one more, inline: per-eligible
+outcomes (admits ÷ eligible, enrollees ÷ eligible) are flat-to-positive across schools
+unconditionally and can turn negative *inside* application-rate bands — a composition effect of
+the conditioning itself (a Simpson-type reversal), not independent evidence.
+
+**Applicant-pool GPA outcomes.** Two outcome (y) metrics from the main explorer's GPA layer are
+selectable here: **applicant GPA** and **admit GPA** (UC-recalculated weighted-capped, grades
+10–11, averaged over the school's applicants / admitted students). Applicant GPA tests the
+self-selection premise directly — if thin applicant pools were elite subsets, schools where few
+apply would send stronger-GPA pools. Admit GPA is partly downstream of the decision being
+studied. On GPA axes the y-scale starts near the data rather than at zero, and twin-pair outcome
+gaps are reported in GPA points.
+
+**A second conditioning variable.** The "Also hold fixed" control adds a second context variable:
+the side panel then also reports the partial correlation of achievement with the outcome after
+linearly removing *both* variables (OLS residuals on residuals), and twin pairs must sit within
+±4 percentile points on both. The band and the local-correlation curve continue to show the
+first variable only.
+
 ## The four views
 
 - **Hold context fixed** — scatter of context (x) vs outcome (y), dots colored by
@@ -83,11 +132,12 @@ achievement–admissions association is carried by where the school sits?
   association), a **linear moderation** summary (standardized OLS zy ~ za + zu + za·zu on the
   context percentile u; the interaction β and t), and optional overlay of all nine campuses.
   `scripts/scan_local_correlation.py` runs the same estimator (independent implementation,
-  cross-checked to 4 decimals against the page) over every campus × period × context variable for
-  the admit rate and writes `data/local_correlation_scan.csv` — the systematic table behind the
-  view.
+  cross-checked to 4 decimals against the page) over every campus × period × context variable —
+  including the application-behavior variables — for the admit rate and writes
+  `data/local_correlation_scan.csv` (360 cells) — the systematic table behind the view.
 - **Twin schools** — pairs in near-identical surroundings (within ±4 percentile points of the
-  chosen context variable, or sharing a ZCTA / a census tract) whose achievement differs by at
+  chosen context variable, or sharing a ZCTA / a census tract; with a second hold-fixed variable
+  active, also within ±4 percentile points of it) whose achievement differs by at
   least a chosen gap; dumbbells compare their outcomes. Pairing is greedy without replacement
   (when two candidate pairs share a school the wider-gap pair wins it). Every pair clearing the
   gap slider is counted, and all reported statistics cover that full population; the chart draws
@@ -111,7 +161,8 @@ All statistics are school-level and unweighted, over schools passing the min-app
 - Current CDE coordinates may misplace schools that moved; ~54 of 1,518 site schools (mostly
   closed/relocated) lack context and are absent from this page.
 - Ecological, observational associations. Nothing here identifies student-level effects or
-  causal direction; the partial correlation conditions on *one* context variable at a time.
+  causal direction; the partial correlation conditions on one context variable at a time (two,
+  with the second hold-fixed control) — a lens, not a full model.
 
 ## Rebuild
 

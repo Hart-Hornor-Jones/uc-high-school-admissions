@@ -41,14 +41,19 @@ the Chronicle's content.
 **Companion page — [`context/`](context/):** adds each school's *context* — tract-level
 American Community Survey measures of its surroundings (median income, adult education, poverty,
 unemployment, home values, race/ethnicity, and a composite SES index) assigned from the school's
-coordinates via the Census Geocoder, plus school-level student measures (UPP, and the grade-11
-shares socioeconomically disadvantaged and English learner) — and asks how much of the
-achievement–admissions association it carries. Four
+coordinates via the Census Geocoder, school-level student measures (UPP, the grade-11
+shares socioeconomically disadvantaged and English learner, and racial/ethnic composition), and
+the school's *application behavior* (application rate to the selected campus, application rate to
+the other eight campuses, applicant volume) — and asks how much of the achievement–admissions
+association each carries. Four
 views: a conditioning scatter (brush a band of similar contexts; watch the within-band
-achievement→outcome correlation), a local-correlation curve (the conditional correlation function,
+achievement→outcome correlation; an optional second hold-fixed variable), a local-correlation
+curve (the conditional correlation function,
 kernel-estimated across the context distribution, with a permutation no-variation envelope),
-matched "twin schools" (near-identical contexts, large achievement gaps — do outcomes differ?),
-and a per-campus variance decomposition (R² unique to context, unique to achievement, and joint). Methods & caveats:
+matched "twin schools" (near-identical contexts — e.g. similar application rates or volume —
+with large achievement gaps: do outcomes differ?),
+and a per-campus variance decomposition (R² unique to context, unique to achievement, and joint).
+Applicant-pool and admit GPA are selectable outcomes there as well. Methods & caveats:
 [docs/NEIGHBORHOOD_CONTEXT.md](docs/NEIGHBORHOOD_CONTEXT.md).
 
 **Companion page — [`trends/`](trends/):** what happens *after* admission, across entering
