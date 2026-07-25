@@ -199,7 +199,11 @@
           Community Survey (ACS) 5-year profile of the census tract around its current campus location
           (CDE coordinates &rarr; Census Geocoder). Students may commute across boundaries, transfer, or attend
           charters far from home, and a tract (&asymp;4,000 residents) is not an attendance zone. Read the x-axis
-          as "the kind of place the school sits in."</li>
+          as "the kind of place the school sits in." Where location and enrollment visibly part ways
+          &mdash; the tract's SES percentile and the student body's need (UPP) percentile sitting 35+
+          points off alignment &mdash; the school's profile card carries a note saying so (about one
+          school in six; e.g. a campus on an affluent semi-rural tract enrolling a high-need student
+          body, or a selective school on a modest tract).</li>
         <li><b>Timing.</b> Neighborhood and test measures are taken from each entering class's grade-11 year
           &mdash; the spring before application &mdash; matching the main explorer's CAASPP convention. 2025
           classes use ACS&nbsp;2024 (the latest 5-year release), and where a class's grade-11 join is
@@ -238,8 +242,9 @@
           cannot attribute to either factor alone.</li>
         <li><b>This is an observational, school-level (ecological) analysis.</b> It cannot say what happens to an
           individual student, and no partial correlation here identifies a causal effect in either direction.</li>
-        <li><b>Coverage.</b> 1,464 of 1,518 schools in the main explorer have tract context (the rest are mostly
-          closed or relocated campuses without current coordinates). CAASPP is missing for classes entering in
+        <li><b>Coverage.</b> 1,468 of 1,518 schools in the main explorer have tract context (the rest are mostly
+          closed or relocated campuses without current coordinates, plus a few whose UC record could not be
+          tied to a CDE school &mdash; see the repository's crosswalk-repair note). CAASPP is missing for classes entering in
           2021 (spring-2020 test cancelled) and 2022 (spring-2021 test non-representative); those periods show
           context-only dots in gray.</li>
         <li><b>Application behavior.</b> Three x-variables describe who applies rather than where the
@@ -625,6 +630,35 @@
       +'<span class="tl">'+MByKey[state.out].short+':</span> '+fmtOut(d.y)
       +'<br><span class="tl">applicants:</span> '+fmtN(d.s.apps); }
 
+  // ---- surroundings-vs-students divergence flag ----
+  // Percentiles are computed over ALL schools in the current period with both values
+  // (independent of the min-applicants filter), so the flag is stable as filters move.
+  const DIVERGE_MIN = 35;   // flag when SES pctile + UPP pctile sit 35+ points off alignment
+  let _rk=null, _rkKey='';
+  function ord(x){ const v=x%100; if(v>=11&&v<=13) return x+'th'; const u=x%10;
+    return x+(u===1?'st':u===2?'nd':u===3?'rd':'th'); }
+  function divergeVals(s){
+    const ck=state.campus+'|'+state.period;
+    if(_rkKey!==ck||!_rk){ const ses=[],upp=[];
+      for(const x of schools()){ const a=ctxVal(x,'ses'), b=ctxVal(x,'upp');
+        if(a!=null&&b!=null){ ses.push(a); upp.push(b); } }
+      ses.sort(d3.ascending); upp.sort(d3.ascending);
+      _rk={ses,upp}; _rkKey=ck; }
+    if(_rk.ses.length<100) return null;
+    const a=ctxVal(s,'ses'), b=ctxVal(s,'upp');
+    if(a==null||b==null) return null;
+    const pc=(arr,v)=>100*((d3.bisectLeft(arr,v)+d3.bisectRight(arr,v))/2)/arr.length;
+    const pses=pc(_rk.ses,a), pupp=pc(_rk.upp,b);
+    if(Math.abs(pses+pupp-100)<DIVERGE_MIN) return null;
+    return {pses:Math.round(pses), pupp:Math.round(pupp)};
+  }
+  function divNote(s){
+    const q=divergeVals(s); if(!q) return '';
+    return '<div class="note">Surroundings and student body diverge here: the tract ranks at the '
+      +ord(q.pses)+' percentile of CA high schools by neighborhood SES, the student body at the '
+      +ord(q.pupp)+' percentile by need (UPP). Tract rows describe where the campus sits, not who attends.</div>';
+  }
+
   // ---- side profile card ----
   function renderProfile(d){
     const el=$('profile');
@@ -649,6 +683,7 @@
     rows.push('<tr><td class="k">app rate (other 8 UCs)</td><td class="v">'+fmtCtxFull(ctxVal(s,'app_rate_oth'),'app_rate_oth')+'</td></tr>');
     rows.push('<tr><td class="k">'+MByKey[state.out].short+'</td><td class="v">'+fmtOut(valOf(s,state.out))+'</td></tr>');
     el.innerHTML='<h3>'+s.name+'</h3><div class="ploc">'+(s.city||'')+' · '+(s.county||'')+' County · CEEB '+s.ceeb+'</div>'
+      +divNote(s)
       +'<table class="ptable">'+rows.join('')+'</table>';
   }
 
@@ -971,11 +1006,16 @@
         +'<tr><td class="k">'+ctxShort()+'</td><td class="v">'+fmtCtxFull(d.c,state.ctx)+'</td></tr>'
         +(ctx2Key()?'<tr><td class="k">'+ctxShort(ctx2Key())+'</td><td class="v">'+fmtCtxFull(ctxVal(s,ctx2Key()),ctx2Key())+'</td></tr>':'')
         +'<tr><td class="k">median income / poverty</td><td class="v">'+fmtUSD(ctxVal(s,'inc'))+' / '+fmtCtx(ctxVal(s,'pov'),'pov')+'</td></tr>'
+        +(state.ctx==='upp'?'':'<tr><td class="k">UPP (student need)</td><td class="v">'+fmtCtxFull(ctxVal(s,'upp'),'upp')+'</td></tr>')
         +'<tr><td class="k">'+achShort()+'</td><td class="v">'+fmtAch(d.a,state.ach)+'</td></tr>'
         +'<tr><td class="k">applicants</td><td class="v">'+fmtN(s.apps)+'</td></tr>'
         +'<tr><td class="k">'+MByKey[state.out].short+'</td><td class="v">'+fmtOut(d.y)+'</td></tr>'; };
+    const dnotes=[p.a.s,p.b.s].map(s2=>{ const q=divergeVals(s2);
+      return q? '<b>'+s2.name+'</b>: tract SES at the '+ord(q.pses)+' percentile, student need (UPP) at the '+ord(q.pupp)+'.' : null; }).filter(Boolean);
     el.innerHTML='<h3>Twin pair</h3><div class="ploc">'+campusName()+' · '+periodLabel()+'</div>'
-      +'<table class="ptable">'+row(p.a.s,p.a)+row(p.b.s,p.b)+'</table>';
+      +'<table class="ptable">'+row(p.a.s,p.a)+row(p.b.s,p.b)+'</table>'
+      +(dnotes.length? '<div class="note">Surroundings and student body diverge here — '+dnotes.join(' ')
+        +' Tract rows describe the campus location, not its enrollment.</div>' : '');
   }
 
   // ============================ VIEW: decomposition ============================

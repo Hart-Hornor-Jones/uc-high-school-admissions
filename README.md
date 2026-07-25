@@ -169,6 +169,15 @@ chronic non-reporters are **suppressed** (the rate is dropped, not guessed); den
 10 eligible are suppressed for per-eligible rates only (the school's real, low completion value
 is kept). Method, root-cause evidence, and a per-cell register: [`docs/AG_DATA_CLEANING.md`](docs/AG_DATA_CLEANING.md).
 
+**School-identity (crosswalk) repair.** UC's CEEB codes and CDE's CDS codes share no key, so the
+panel joins them by school name. The first-pass fuzzy matcher could glue a school to a similarly
+named neighbor (most visibly, Westchester Enriched Sciences Magnets carried West High Torrance's
+academic profile). A 2026-07 audit of all 1,549 joins repaired 95 to the school's own CDS record,
+set 6 with no valid CDE target to unmatched, and documented the legitimate cases where two UC
+records share one CDE campus. Aggregate correlations move by ≤0.01; school-level profiles and
+twin pairs are the point. Decision table with evidence: `build/repair_crosswalk_20260725.py`;
+method and before/after: [`docs/CROSSWALK_REPAIR.md`](docs/CROSSWALK_REPAIR.md).
+
 ---
 
 ## Data sources (all public)

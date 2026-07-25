@@ -154,12 +154,17 @@ All statistics are school-level and unweighted, over schools passing the min-app
 
 - **The tract describes the school's location, not its enrollment.** Choice, transfers,
   magnets and charters break the link between campus tract and student residence — e.g. a
-  citywide selective school can sit in a modest tract. Boundary/feeder analyses would need
+  citywide selective school can sit in a modest tract, and a campus on an affluent semi-rural
+  tract can enroll a high-need student body. Since 2026-07 the profile cards flag such cases
+  automatically: when a school's tract-SES percentile and its student-need (UPP) percentile sit
+  35+ points off alignment (about one school in six), the card carries a note with both
+  percentiles. Boundary/feeder analyses would need
   student-residence data that public files do not provide.
 - ACS 5-year estimates are rolling and carry sampling error at tract scale; medians are
   top-coded ($250k+ income, $2M+ home value). Estimates only; no margins of error in this pass.
-- Current CDE coordinates may misplace schools that moved; ~54 of 1,518 site schools (mostly
-  closed/relocated) lack context and are absent from this page.
+- Current CDE coordinates may misplace schools that moved; ~50 of 1,518 site schools (mostly
+  closed/relocated, plus a few whose UC record has no CDE match after the 2026-07 crosswalk
+  repair — see `docs/CROSSWALK_REPAIR.md`) lack context and are absent from this page.
 - Ecological, observational associations. Nothing here identifies student-level effects or
   causal direction; the partial correlation conditions on one context variable at a time (two,
   with the second hold-fixed control) — a lens, not a full model.
