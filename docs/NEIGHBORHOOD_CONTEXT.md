@@ -156,9 +156,11 @@ All statistics are school-level and unweighted, over schools passing the min-app
   magnets and charters break the link between campus tract and student residence — e.g. a
   citywide selective school can sit in a modest tract, and a campus on an affluent semi-rural
   tract can enroll a high-need student body. Since 2026-07 the profile cards flag such cases
-  automatically: when a school's tract-SES percentile and its student-need (UPP) percentile sit
-  35+ points off alignment (about one school in six), the card carries a note with both
-  percentiles. Boundary/feeder analyses would need
+  automatically and state the direction: when a school's tract-SES percentile and its student-need
+  (UPP) percentile sit 30+ points off alignment (about one school in four), the card notes whether
+  the student body carries more or less need than the surroundings suggest, with both percentiles,
+  the school's UPP, and the statewide-median anchor (the median CA high school's UPP is about 70%,
+  so raw UPP shares and tract poverty rates are not comparable numbers). Boundary/feeder analyses would need
   student-residence data that public files do not provide.
 - ACS 5-year estimates are rolling and carry sampling error at tract scale; medians are
   top-coded ($250k+ income, $2M+ home value). Estimates only; no margins of error in this pass.

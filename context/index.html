@@ -200,10 +200,14 @@
           (CDE coordinates &rarr; Census Geocoder). Students may commute across boundaries, transfer, or attend
           charters far from home, and a tract (&asymp;4,000 residents) is not an attendance zone. Read the x-axis
           as "the kind of place the school sits in." Where location and enrollment visibly part ways
-          &mdash; the tract's SES percentile and the student body's need (UPP) percentile sitting 35+
-          points off alignment &mdash; the school's profile card carries a note saying so (about one
-          school in six; e.g. a campus on an affluent semi-rural tract enrolling a high-need student
-          body, or a selective school on a modest tract).</li>
+          &mdash; the tract's SES percentile and the student body's need (UPP) percentile sitting 30+
+          points off alignment &mdash; the school's profile card carries a note saying so, with the
+          direction (about one school in four). It runs both ways: a campus in well-off surroundings
+          enrolling a higher-need student body (an agricultural-belt or gentrified-area school), or a
+          selective school drawing a lower-need student body to an ordinary tract (a citywide arts or
+          exam school). Percentile comparisons are the honest scale here: a tract poverty rate and a
+          UPP share are not comparable numbers &mdash; the statewide median high school's UPP is about
+          70%, so a "typical looking" UPP can sit far from a tract's rank.</li>
         <li><b>Timing.</b> Neighborhood and test measures are taken from each entering class's grade-11 year
           &mdash; the spring before application &mdash; matching the main explorer's CAASPP convention. 2025
           classes use ACS&nbsp;2024 (the latest 5-year release), and where a class's grade-11 join is
@@ -633,7 +637,7 @@
   // ---- surroundings-vs-students divergence flag ----
   // Percentiles are computed over ALL schools in the current period with both values
   // (independent of the min-applicants filter), so the flag is stable as filters move.
-  const DIVERGE_MIN = 35;   // flag when SES pctile + UPP pctile sit 35+ points off alignment
+  const DIVERGE_MIN = 30;   // flag when SES pctile + UPP pctile sit 30+ points off alignment
   let _rk=null, _rkKey='';
   function ord(x){ const v=x%100; if(v>=11&&v<=13) return x+'th'; const u=x%10;
     return x+(u===1?'st':u===2?'nd':u===3?'rd':'th'); }
@@ -650,13 +654,17 @@
     const pc=(arr,v)=>100*((d3.bisectLeft(arr,v)+d3.bisectRight(arr,v))/2)/arr.length;
     const pses=pc(_rk.ses,a), pupp=pc(_rk.upp,b);
     if(Math.abs(pses+pupp-100)<DIVERGE_MIN) return null;
-    return {pses:Math.round(pses), pupp:Math.round(pupp)};
+    return {pses:Math.round(pses), pupp:Math.round(pupp), hi:pses+pupp>100,
+            uppMed:Math.round(_rk.upp[Math.floor(_rk.upp.length/2)])};
   }
   function divNote(s){
     const q=divergeVals(s); if(!q) return '';
-    return '<div class="note">Surroundings and student body diverge here: the tract ranks at the '
-      +ord(q.pses)+' percentile of CA high schools by neighborhood SES, the student body at the '
-      +ord(q.pupp)+' percentile by need (UPP). Tract rows describe where the campus sits, not who attends.</div>';
+    const u=ctxVal(s,'upp');
+    return '<div class="note">Surroundings and student body diverge here — the student body carries '
+      +(q.hi?'more':'less')+' need than the surroundings suggest. Tract SES: '+ord(q.pses)
+      +' percentile of CA high schools. Student need: UPP '+(u!=null?u.toFixed(1)+'%':'\u2014')
+      +' (statewide median \u2248 '+q.uppMed+'%), the '+ord(q.pupp)
+      +' percentile. Tract rows describe where the campus sits, not who attends.</div>';
   }
 
   // ---- side profile card ----
@@ -1011,7 +1019,8 @@
         +'<tr><td class="k">applicants</td><td class="v">'+fmtN(s.apps)+'</td></tr>'
         +'<tr><td class="k">'+MByKey[state.out].short+'</td><td class="v">'+fmtOut(d.y)+'</td></tr>'; };
     const dnotes=[p.a.s,p.b.s].map(s2=>{ const q=divergeVals(s2);
-      return q? '<b>'+s2.name+'</b>: tract SES at the '+ord(q.pses)+' percentile, student need (UPP) at the '+ord(q.pupp)+'.' : null; }).filter(Boolean);
+      return q? '<b>'+s2.name+'</b>: '+(q.hi?'more':'less')+' student need than its surroundings suggest (tract SES '
+        +ord(q.pses)+' pctile; UPP '+ord(q.pupp)+' pctile).' : null; }).filter(Boolean);
     el.innerHTML='<h3>Twin pair</h3><div class="ploc">'+campusName()+' · '+periodLabel()+'</div>'
       +'<table class="ptable">'+row(p.a.s,p.a)+row(p.b.s,p.b)+'</table>'
       +(dnotes.length? '<div class="note">Surroundings and student body diverge here — '+dnotes.join(' ')
