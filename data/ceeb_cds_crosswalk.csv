@@ -4,7 +4,7 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 050006,56738745630132,OAK PARK HIGH SCHOOL,Oak Park High,gardiner_seed,1.00
 050008,19753091995786,VASQUEZ HIGH SCHOOL,Vasquez High,fuzzy_name_county,1.00
 050011,01611190130609,ALAMEDA COMMUNITY LEARNING CTR,Alameda Community Learning Center,fuzzy_name_county,0.95
-050013,01611190130625,ALTERNATIVES IN ACTION HIGH SCHOOL,Alternatives in Action,fuzzy_name_county,1.00
+050013,01100170130625,ALTERNATIVES IN ACTION HIGH SCHOOL,Alternatives in Action,hand_verified,0.95
 050015,01611190132142,ENCINAL HIGH SCHOOL,Encinal Junior/Senior High,gardiner_seed,1.00
 050029,01611190106401,ALAMEDA SCIENCE & TECHNICAL INST,Alameda Science and Technology Institute,hand_verified,0.98
 050035,01611270130450,ALBANY HIGH SCHOOL,Albany High,gardiner_seed,1.00
@@ -113,7 +113,7 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 050404,30665970111666,EARLY COLLEGE HIGH SCHOOL,Early College High,fuzzy_name_county,1.00
 050410,41690474130472,BURLINGAME HIGH SCHOOL,Burlingame High,gardiner_seed,1.00
 050411,37770990136077,GROSSMONT SECONDARY SCHOOL,Altus Schools East County,fuzzy_name_county,1.00
-050412,37771070136473,ALTUS SCHOOLS SOUTH BAY-SWEETWATER,Altus Schools South Bay,fuzzy_name_county,0.94
+050412,37103710136473,ALTUS SCHOOLS SOUTH BAY-SWEETWATER,Altus Schools South Bay,hand_verified,0.95
 050421,19646831931781,CALABASAS HIGH SCHOOL,Calabasas High,gardiner_seed,1.00
 050425,13630991332204,CALEXICO HIGH SCHOOL,Calexico High,gardiner_seed,1.00
 050430,13631071332501,CALIPATRIA HIGH SCHOOL,Calipatria High,fuzzy_name_county,1.00
@@ -203,7 +203,7 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 050704,19644361938372,SOUTH HILLS HIGH SCHOOL,South Hills High,fuzzy_name_county,1.00
 050705,08618200833004,DEL NORTE HIGH SCHOOL,Del Norte High,fuzzy_name_county,1.00
 050710,07616970737023,JOHN SWETT HIGH SCHOOL,John Swett High,fuzzy_name_county,1.00
-050711,36738903631199,SILVER VALLEY HIGH SCHOOL,Silver Valley Academy,fuzzy_name_county,1.00
+050711,36738903630274,SILVER VALLEY HIGH SCHOOL,Silver Valley High,hand_verified,0.95
 050714,30664313030038,CYPRESS HIGH SCHOOL,Cypress High,gardiner_seed,1.00
 050715,19644441932201,CULVER CITY HIGH SCHOOL,Culver City High,gardiner_seed,1.00
 050718,43694684331799,CUPERTINO HIGH SCHOOL,Cupertino High,gardiner_seed,1.00
@@ -233,7 +233,7 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 050785,47702504732707,DUNSMUIR HIGH SCHOOL,Dunsmuir High,fuzzy_name_county,1.00
 050790,04614320433201,DURHAM HIGH SCHOOL,Durham High,fuzzy_name_county,1.00
 050795,51713735132758,EAST NICOLAUS HIGH SCHOOL,East Nicolaus High,fuzzy_name_county,1.00
-050800,15737420165100,DESERT HIGH SCHOOL,High Desert,fuzzy_name_county,1.00
+050800,15636851531987,DESERT HIGH SCHOOL,Desert Junior-Senior High,hand_verified,0.95
 050804,37681303730066,VALHALLA HIGH SCHOOL,Valhalla High,gardiner_seed,1.00
 050805,37681303731692,EL CAJON VALLEY HIGH SCHOOL,El Cajon Valley High,gardiner_seed,1.00
 050806,37681303732336,GRANITE HILLS HIGH SCHOOL,Granite Hills High,gardiner_seed,1.00
@@ -266,7 +266,7 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 050890,47764554733309,ETNA UNION HIGH SCHOOL,Etna Union High,fuzzy_name_county,1.00
 050893,37683460106328,CANYON CREST ACADEMY,Canyon Crest Academy,gardiner_seed,1.00
 050897,36677100108191,SUMMIT HIGH SCHOOL,Summit High,gardiner_seed,1.00
-050899,19764970115725,LIFELINE EDUCATION CHARTER SCH,Lifeline Education Charter,fuzzy_name_county,0.94
+050899,19734370115725,LIFELINE EDUCATION CHARTER SCH,Lifeline Education Charter,hand_verified,0.95
 050900,12755151232206,EUREKA HIGH SCHOOL,Eureka Senior High,fuzzy_name_county,1.00
 050902,34673140105916,MONTEREY TRAIL HIGH SCHOOL,Monterey Trail High,gardiner_seed,1.00
 050905,54768365431598,EXETER UNION HIGH SCHOOL,Exeter Union High,fuzzy_name_county,1.00
@@ -363,7 +363,7 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 051168,36750443630407,HESPERIA HIGH SCHOOL,Hesperia High,gardiner_seed,1.00
 051175,24656982432409,HILMAR HIGH SCHOOL,Hilmar High,fuzzy_name_county,1.00
 051180,35675383537008,HOLLISTER HIGH SCHOOL,San Benito High,fuzzy_name_county,1.00
-051185,,SAN BENITO COUNTY EVENING HIGH,,unmatched_reviewed,0.00
+051185,35675383537008,SAN BENITO COUNTY EVENING HIGH,Hollister High,hand_verified,0.90
 051187,36750443630746,SULTANA HIGH SCHOOL,Sultana High,fuzzy_name_county,1.00
 051189,36679343630670,OPTIONS FOR YOUTH CHARTER SCH,Options for Youth-Victor Valley Charter,fuzzy2_token,0.80
 051192,37735690136267,COASTAL ACADEMY HS OCEANSIDE,Coastal Academy Charter,hand_verified,0.95
@@ -501,7 +501,7 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 051645,19647331933118,JOHN C FREMONT HIGH SCHOOL,John C. Fremont Senior High,fuzzy_name_county,1.00
 051650,19647331935568,JOHN MARSHALL HIGH SCHOOL,John Marshall Senior High,gardiner_seed,1.00
 051652,19647336019475,USC MEDIA & ENGINEERING MAGNET SCH,Thirty-Second Street USC Performing Arts,gardiner_seed,1.00
-051656,19647330118570,ANIMO LEROY LOCKE 3 COLG PREP,Alain Leroy Locke College Preparatory Academy,hand_verified,0.98
+051656,19647330118588,ANIMO LEROY LOCKE 3 COLG PREP,Alain Leroy Locke College Preparatory Academy,hand_verified,0.95
 051660,19101991996610,LOS ANGELES LEADERSHIP ACAD HS,Los Angeles Leadership Academy,fuzzy_name_county,0.94
 051662,19647330119693,UCLA COMMUNITY SCHOOL,UCLA Community K-12,gardiner_seed,1.00
 051663,19647330124891,ALLIANCE RENEE & MEYER LUSKIN,Alliance Renee and Meyer Luskin Academy High,fuzzy_name_county,1.00
@@ -519,11 +519,11 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 051719,19647331995448,FRANCISCO BRAVO MEDICAL MAGNET,Francisco Bravo Medical Magnet High,gardiner_seed,1.00
 051722,19647330102913,MIDDLE COLLEGE HIGH SCHOOL,Middle College High,fuzzy_name_county,1.00
 051728,19647330100750,WALLIS ANNENBERG HIGH SCHOOL,Wallis Annenberg High,fuzzy_name_county,1.00
-051737,19647331935352,LOS ANGELES RIVER SCHOOL,Los Angeles Senior High,fuzzy_name_county,0.94
+051737,,LOS ANGELES RIVER SCHOOL,,unmatched_reviewed,0.00
 051738,,IDEATE HIGH ACADEMY,,unmatched,0.71
 051739,19647330122762,LOS ANGELES BIG PICTURE HS,Los Angeles Senior High,hand_verified,0.98
 051761,01612590130666,ASPIRE LIONEL WILSON COLG PREP,Aspire Lionel Wilson College Preparatory Academy,fuzzy2_token,0.80
-051763,19647251996503,RENAISSANCE ARTS ACADEMY,Renaissance High School for the Arts,fuzzy_name_county,1.00
+051763,19647330101683,RENAISSANCE ARTS ACADEMY,Renaissance Arts Academy,hand_verified,0.95
 051764,19647330100800,CENTRAL CITY VALUE HIGH SCHOOL,Central City Value,fuzzy_name_county,1.00
 051768,41104130135269,OXFORD DAY ACADEMY,Oxford Day Academy,fuzzy_name_county,1.00
 051776,19647330121095,AMBASSADOR SCHL GLOBAL LDRSHP,Ambassador-Global Leadership,fuzzy2_token,0.80
@@ -639,7 +639,7 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 052172,21654172133056,SAN MARIN HIGH SCHOOL,San Marin High,fuzzy_name_county,1.00
 052175,50755645035654,OAKDALE HIGH SCHOOL,Oakdale High,fuzzy_name_county,1.00
 052176,20764142030013,YOSEMITE HIGH SCHOOL,Yosemite High,fuzzy_name_county,1.00
-052190,,CASTLEMONT BUS INFORM TECH SCH,,unmatched_reviewed,0.00
+052190,01612590125161,CASTLEMONT BUS INFORM TECH SCH,Castlemont High,hand_verified,0.90
 052205,01612590125716,FREMONT HIGH SCHOOL,Fremont High,fuzzy_name_county,1.00
 052206,30736433030590,TUSTIN CONNECT,Sycamore High (Alternative),fuzzy_name_county,1.00
 052210,19644690134858,CA SCH ARTS SAN GABRIEL VALLEY,California School of the Arts - San Gabriel Valley,gardiner_seed,1.00
@@ -793,7 +793,7 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 052723,34674473435930,MIRA LOMA HIGH SCHOOL,Mira Loma High,gardiner_seed,1.00
 052728,34674393430865,WEST CAMPUS HIGH SCHOOL,West Campus,gardiner_seed,1.00
 052730,34674473436714,RIO AMERICANO HIGH SCHOOL,Rio Americano High,fuzzy_name_county,1.00
-052735,34103480106302,SACRAMENTO HIGH SCHOOL,Sacramento County ED Special Education,fuzzy_name_county,0.94
+052735,34674390102038,SACRAMENTO HIGH SCHOOL,Sacramento Charter High,hand_verified,0.95
 052736,34673143430170,VALLEY HIGH SCHOOL,Valley High,gardiner_seed,1.00
 052740,28662902837102,SAINT HELENA HIGH SCHOOL,Saint Helena High,fuzzy_name_county,1.00
 052742,27661592730109,ALISAL HIGH SCHOOL,Alisal High,gardiner_seed,1.00
@@ -808,7 +808,7 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 052782,34752833430584,NATOMAS HIGH SCHOOL,Natomas High,fuzzy_name_county,1.00
 052790,36678763634680,PACIFIC HIGH SCHOOL,Pacific High,fuzzy_name_county,1.00
 052792,34673143430618,SHELDON HIGH SCHOOL,Sheldon High,gardiner_seed,1.00
-052795,37764710137067,HIGH TECH HIGH MESA,High Tech High Mesa,fuzzy_name_county,1.00
+052795,37103710137067,HIGH TECH HIGH MESA,High Tech High Mesa,hand_verified,0.95
 052797,36678763635844,SAN BERNARDINO HIGH SCHOOL,San Bernardino High,fuzzy_name_county,1.00
 052798,36678763636081,SAN GORGONIO HIGH SCHOOL,San Gorgonio High,gardiner_seed,1.00
 052803,34752833430659,NATOMAS CHARTER SCHOOL,Natomas Charter,fuzzy_name_county,1.00
@@ -877,7 +877,7 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 053055,19757131937697,SAN GABRIEL HIGH SCHOOL,San Gabriel High,gardiner_seed,1.00
 053062,19752911995810,GABRIELINO HIGH SCHOOL,Gabrielino High,gardiner_seed,1.00
 053065,10624141036094,SANGER HIGH SCHOOL,Sanger High,fuzzy_name_county,1.00
-053066,19734371996057,THURGOOD MARSHALL ACADEMIC HS,Thurgood Marshall,hand_verified,0.90
+053066,38684783830403,THURGOOD MARSHALL ACADEMIC HS,Marshall (Thurgood) High,hand_verified,0.98
 053070,33672493337656,SAN JACINTO HIGH SCHOOL,San Jacinto High,gardiner_seed,1.00
 053075,43696664333795,ABRAHAM LINCOLN HIGH SCHOOL,Abraham Lincoln High,fuzzy_name_county,1.00
 053077,43694274332995,ANDREW P HILL HIGH SCHOOL,Andrew P. Hill High,fuzzy_name_county,1.00
@@ -1025,7 +1025,7 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 053560,55724135536750,SUMMERVILLE UNION HIGH SCHOOL,Summerville High,fuzzy_name_county,0.94
 053565,50757395037700,TURLOCK HIGH SCHOOL,Turlock High,fuzzy_name_county,1.00
 053570,30736433037553,TUSTIN HIGH SCHOOL,Tustin High,gardiner_seed,1.00
-053571,30665483030368,PACIFIC COAST HIGH SCHOOL,Coast High,fuzzy_name_county,0.94
+053571,30103063030632,PACIFIC COAST HIGH SCHOOL,OCCS:CHEP/PCHS,hand_verified,0.95
 053575,36677773636743,TWENTYNINE PALMS HIGH SCHOOL,Twentynine Palms High,fuzzy_name_county,1.00
 053579,39686763930427,WEBER INSTITUTE OF APPLIED SCIENCES,Weber Institute,fuzzy_name_county,0.94
 053580,23656152335024,UKIAH HIGH SCHOOL,Ukiah High,fuzzy_name_county,1.00
@@ -1036,7 +1036,7 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 053597,48705734830089,WILL C WOOD HIGH SCHOOL,Will C. Wood High,fuzzy_name_county,1.00
 053598,44754324430211,SCOTTS VALLEY HIGH SCHOOL,Scotts Valley High,fuzzy_name_county,1.00
 053599,39685853930443,MIDDLE COLLEGE HIGH SCHOOL,Middle College High,fuzzy_name_county,1.00
-053603,01612420134668,DR JAMES J HOGAN HIGH SCHOOL,James Logan High,fuzzy2_token,0.80
+053603,48705814833950,DR JAMES J HOGAN HIGH SCHOOL,Hogan High,hand_verified,0.95
 053608,19651361995802,VALENCIA HIGH SCHOOL,Valencia High,gardiner_seed,1.00
 053609,12101240134163,NORTHCOAST PREPARATORY ACADEMY,Northcoast Preparatory and Performing Arts Academy,fuzzy_name_county,0.94
 053610,48705814838504,VALLEJO HIGH SCHOOL,Vallejo High,fuzzy_name_county,1.00
@@ -1063,7 +1063,7 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 053680,07616300733725,LAS LOMAS HIGH SCHOOL,Las Lomas High,gardiner_seed,1.00
 053682,36679343630787,SILVERADO HIGH SCHOOL,Silverado High,gardiner_seed,1.00
 053685,15638591536440,WASCO UNION HIGH SCHOOL,Wasco High,fuzzy_name_county,0.94
-053686,36679343630761,EXCELSIOR CHARTER SCHL VICTORVILLE,Excelsior Charter,fuzzy_name_county,0.94
+053686,36103633630761,EXCELSIOR CHARTER SCHL VICTORVILLE,Excelsior Charter,hand_verified,0.95
 053688,10621660114355,SIERRA CHARTER SCHOOL,Sierra Charter,fuzzy_name_county,1.00
 053690,48705814830147,JESSE M BETHEL HIGH SCHOOL,Jesse M. Bethel High,fuzzy_name_county,1.00
 053691,56726525630348,FOOTHILL TECHNOLOGY HS,Foothill Technology High,gardiner_seed,1.00
@@ -1104,7 +1104,7 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 053837,23656152330413,REDWOOD COLLEGIATE ACADEMY,Redwood Academy of Ukiah,fuzzy_name_county,1.00
 053839,39685930101576,WESTON RANCH HIGH SCHOOL,Weston Ranch High,fuzzy_name_county,1.00
 053843,39685850101956,ASPIRE BENJAMIN HOLT COLG PREP,Aspire Benjamin Holt College Preparatory Academy,fuzzy2_token,0.80
-053845,44697650100305,SANTA CRUZ COUNTY CYPRESS CHARTER,Cypress Charter High,fuzzy_name_county,0.94
+053845,44104470100305,SANTA CRUZ COUNTY CYPRESS CHARTER,Santa Cruz County Cypress Charter High,hand_verified,0.95
 053847,42693100102285,PIONEER VALLEY HIGH SCHOOL,Pioneer Valley High,gardiner_seed,1.00
 053849,49738824930384,TECHNOLOGY HIGH SCHOOL,Technology High,fuzzy_name_county,1.00
 053854,,COLLEGE PREP AND ARCH ACADEMY,,unmatched,0.71
@@ -1140,7 +1140,7 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 053909,37683380107482,SAN DIEGO METRO REGIONAL TECHNICAL,San Diego Metro Career and Tech,hand_verified,0.95
 053910,19647330101659,CATCH PREP CHARTER HIGH,Crenshaw Arts-Technology Charter High,fuzzy_name_county,0.94
 053912,45701360106013,UNIVERSITY PREPARATORY SCHOOL,University Preparatory,fuzzy_name_county,1.00
-053914,33670330135574,ACADEMY OF INNOVATION,Academy of Innovation,fuzzy_name_county,1.00
+053914,33670823330503,ACADEMY OF INNOVATION,Academy of Innovation,hand_verified,0.95
 053916,34674390101907,MET SACRAMENTO HIGH SCHOOL,The MET,fuzzy_name_county,0.94
 053922,37683380106799,LEARNING CHOICE ACADEMY - SAN DIEGO,Learning Choice Academy,hand_verified,0.98
 053927,34674390101972,ROSEMONT HIGH SCHOOL,Rosemont High,fuzzy_name_county,1.00
@@ -1148,7 +1148,7 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 053937,31750850108084,WHITNEY HIGH SCHOOL,Whitney High,gardiner_seed,1.00
 053941,39103973930476,VENTURE ACADEMY,Venture Academy,fuzzy_name_county,1.00
 053945,37683380106732,HIGH TECH HIGH INTERNATIONAL,High Tech High International,fuzzy_name_county,1.00
-053946,37681223730967,OASIS HIGH SCHOOL,Oasis High (Alternative),fuzzy2_token,0.80
+053946,01612590107169,OASIS HIGH SCHOOL,Oasis High,hand_verified,0.95
 053947,38684780109769,MARIN SCHOOL OF ARTS & TECH,,hand_verified,0.90
 053952,39686760124248,PACIFIC LAW ACADEMY,Pacific Law Academy,fuzzy_name_county,1.00
 053953,34673140108753,PLEASANT GROVE HIGH SCHOOL,Pleasant Grove High,gardiner_seed,1.00
@@ -1169,7 +1169,7 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 053983,19647330106864,ALLIANCE GERTZ-RESSLER HIGH SC,Alliance Gertz-Ressler Richard Merkin 6-12 Complex,gardiner_seed,1.00
 053984,34674390108951,HEALTH PROFESSIONS HIGH SCH,Arthur A. Benjamin Health Professions High,hand_verified,0.98
 053988,50710430108076,CENTRAL VALLEY HIGH SCHOOL,Central Valley High,gardiner_seed,1.00
-053991,19647330127910,CAMINO NUEVO HIGH SCHOOL,Camino Nuevo High #2,fuzzy_name_county,0.94
+053991,19647330106435,CAMINO NUEVO HIGH SCHOOL,Camino Nuevo Charter High,hand_verified,0.95
 053993,19649071996693,SCHOOL OF ARTS AND ENTERPRISE,School of Arts and Enterprise,fuzzy_name_county,1.00
 053995,33751760107920,LAKESIDE HIGH SCHOOL,Lakeside High,fuzzy_name_county,1.00
 053996,41764300110015,HIGH TECH HIGH BAYSHORE,,hand_verified,0.98
@@ -1177,7 +1177,7 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 054000,34765050108415,HERITAGE PEAK CHARTER SCHOOL,Heritage Peak Charter,fuzzy_name_county,1.00
 054003,10621660108555,DESIGN SCIENCE MIDDLE COLG HS,Design Science Early College High,fuzzy_name_county,0.95
 054013,33736760100255,DESERT MIRAGE HIGH SCHOOL,Desert Mirage High,gardiner_seed,1.00
-054015,19757131930122,VAUGHN NEXT CENTURY LEARN CTR,Century High,fuzzy_name_county,0.94
+054015,19647336019715,VAUGHN NEXT CENTURY LEARN CTR,Vaughn Next Century Learning Center,hand_verified,0.95
 054018,30666700108365,SEGERSTROM HIGH SCHOOL,Segerstrom High,gardiner_seed,1.00
 054020,39754990102392,MILLENNIUM HIGH SCHOOL,Millennium Charter,fuzzy_name_county,0.94
 054024,19647336116750,COMMUNITY CHARTER EARLY COLLEG,PUC Community Charter Middle and PUC Community Charter Early College High,fuzzy_name_county,0.94
@@ -1219,7 +1219,7 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 054113,33103300110833,RIVER SPRINGS CHARTER SCHOOL,River Springs Charter,fuzzy_name_county,1.00
 054118,19647330108936,ALLIANCE COLLINS COLLEGE READY HS,Alliance Collins Family College-Ready High,gardiner_seed,1.00
 054120,37683380114025,LINCOLN HIGH SCHOOL,Lincoln High,gardiner_seed,1.00
-054121,19647331935352,LOS ANGELES COLG PREP ACADEMY,Los Angeles Senior High,fuzzy_name_county,0.94
+054121,19772890109942,LOS ANGELES COLG PREP ACADEMY,Los Angeles College Prep Academy,hand_verified,0.95
 054135,12628100108688,ACADEMY OF THE REDWOODS,Academy of the Redwoods,fuzzy_name_county,1.00
 054139,54718030112458,CA ONLINE PUBLIC SCH CENTRAL VALLEY,California Online Public Schools Central Valley,fuzzy2_token,0.80
 054140,,LEADERSHIP PUB SCH COLG PARK,,unmatched_reviewed,0.00
@@ -1290,7 +1290,7 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 054304,37103716119119,LITERACY FIRST CHARTER SCHOOLS,Literacy First Charter,fuzzy_name_county,0.94
 054307,36750440116707,ENCORE JR/SR HIGH SCHOOL,Encore Jr./Sr. High School for the Performing and Visual Arts,fuzzy_name_county,0.94
 054310,19651360138727,CASTAIC HIGH SCHOOL,Castaic High,fuzzy_name_county,1.00
-054313,37764710114678,HIGH TECH HIGH CHULA VISTA,High Tech High Chula Vista,gardiner_seed,1.00
+054313,37103710114678,HIGH TECH HIGH CHULA VISTA,High Tech High Chula Vista,hand_verified,0.95
 054315,36750440114389,MIRUS SECONDARY SCHOOL,Mirus Secondary,fuzzy_name_county,1.00
 054316,36750440119115,OAK HILLS HIGH SCHOOL,Oak Hills High,fuzzy_name_county,1.00
 054317,15635290116400,MIRA MONTE HIGH SCHOOL,Mira Monte High,gardiner_seed,1.00
@@ -1358,7 +1358,7 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 054475,19101990115212,MAGNOLIA SCIENCE ACADEMY 2 VALLEY,Magnolia Science Academy 2,hand_verified,0.98
 054481,19650940122432,EDGEWOOD HIGH SCHOOL,Edgewood High,fuzzy_name_county,1.00
 054482,37680490136747,IQ ACADEMY CALIFORNIA-LA,California Academy of Sports Science,fuzzy2_token,0.80
-054483,19647330117630,MAGNOLIA SCIENCE ACADEMY 5 LOBOS,Magnolia Science Academy 5,fuzzy_name_county,0.94
+054483,19101990137679,MAGNOLIA SCIENCE ACADEMY 5 LOBOS,Magnolia Science Academy 5,hand_verified,0.95
 054493,19651360121731,ALBERT EINSTEIN LETTER ART SCI,"Albert Einstein Academy for Letters, Arts and Sciences",fuzzy_name_county,0.90
 054495,56725460120634,ARCHITECTURE CONSTRUCT ENG HS,"Architecture, Construction & Engineering Charter High (ACE)",fuzzy2_token,0.80
 054498,19647330120071,NEW DESIGNS CHARTER SCH WATTS,New Designs Charter School-Watts,hand_verified,0.98
@@ -1399,7 +1399,7 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 054607,19648080124552,APPLIED TECHNOLOGY CENTER,Applied Technology Center,fuzzy_name_county,1.00
 054608,33736760121673,NOVA ACADEMY EARLY COLLEGE COACHELL,NOVA Academy - Coachella,fuzzy2_token,0.80
 054611,01612590125161,CASTLEMONT HIGH SCHOOL,Castlemont High,fuzzy_name_county,1.00
-054614,19647330141572,LEADERSHIP IN ENTERTAINMENT,Virtual Academy of the Arts & Entertainment,fuzzy2_token,0.80
+054614,19647330125963,LEADERSHIP IN ENTERTAINMENT,Leadership in Entertainment and Media Arts (LEMA),hand_verified,0.95
 054617,19647330126615,ACADEMIES EDUCATION/EMPOWERMNT,Academies of Education and Empowerment at Carson High,fuzzy_name_county,0.88
 054618,19647330126623,ACADEMY OF MEDICAL ARTS AT CARSON,Academy of Medical Arts at Carson High,fuzzy_name_county,1.00
 054620,43104390123794,SUMMIT PUBLIC SCHOOL-TAHOMA,Summit Public School: Tahoma,fuzzy_name_county,1.00
@@ -1440,7 +1440,7 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 054697,24657890127373,EL CAPITAN HIGH SCHOOL,El Capitan High,fuzzy_name_county,1.00
 054701,19647330127803,EARLY COLLEGE ACAD LA TRADE TECH,Early College Academy-LA Trade Tech College,hand_verified,0.98
 054702,33671730127316,RANCHO MIRAGE HIGH SCHOOL,Rancho Mirage High,gardiner_seed,1.00
-054704,01612590126748,LPS OAKLAND R&D CAMPUS,LPS Oakland R & D Campus,fuzzy_name_county,1.00
+054704,01100170126748,LPS OAKLAND R&D CAMPUS,LPS Oakland R & D Campus,hand_verified,0.95
 054705,19648570125377,PALMDALE AEROSPACE ACADEMY,Palmdale Aerospace Academy,gardiner_seed,1.00
 054709,37735510127423,SAGE CREEK HIGH SCHOOL,Sage Creek High,gardiner_seed,1.00
 054710,19647330126474,HILDA L SOLIS LEARNING ACDMY,"Hilda L. Solis Learning Academy School of Technology, Business and Education",fuzzy2_token,0.80
@@ -1510,7 +1510,7 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 054946,33669930139360,MISSION VISTA ACADEMY,Mission Vista Academy,fuzzy_name_county,1.00
 054952,44754320139410,CA ONLINE PUBLIC SCH MONTEREY BAY,California Online Public Schools Monterey Bay,fuzzy2_token,0.80
 054970,01612590129932,EAST BAY INNOVATION ACADEMY,East Bay Innovation Academy,fuzzy_name_county,1.00
-054979,36679346059562,LAKEVIEW LEADERSHIP ACADEMY,Lakeview Leadership Academy,fuzzy_name_county,1.00
+054979,36679340137638,LAKEVIEW LEADERSHIP ACADEMY,Lakeview Leadership Academy,hand_verified,0.95
 054980,42750100138891,CA ONLINE PUBLIC SCH CENTRAL COAST,California Online Public Schools Central Coast,hand_verified,0.98
 054985,31669510140541,TWELVE BRIDGES HIGH SCHOOL,Twelve Bridges High,fuzzy_name_county,1.00
 054992,33672070140491,LIBERTY HIGH SCHOOL,Liberty High,fuzzy_name_county,1.00
@@ -1519,7 +1519,7 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 054996,10739651030790,CENTRAL HIGH SCHOOL,Central High,fuzzy_name_county,1.00
 054997,10739650140509,JUSTIN GARZA HIGH SCHOOL,Justin Garza High,fuzzy_name_county,1.00
 055003,30664310140707,CAMBRIDGE VIRTUAL ACADEMY,Cambridge Virtual Academy,fuzzy_name_county,1.00
-055005,36677103633302,ENTREPENEUR HIGH SCHL FONTANA,Fontana High,fuzzy_name_county,0.94
+055005,36103630140012,ENTREPENEUR HIGH SCHL FONTANA,Entrepreneur High Fontana,hand_verified,0.95
 055007,19101990140681,ENVIRONMENTAL CHARTER HIGH SCH,Environmental Charter High - Gardena,hand_verified,0.98
 055010,41690620139915,KIPP ESPERANZA HIGH SCHOOL,KIPP Esperanza High,fuzzy_name_county,1.00
 055011,19768690128728,DA VINCI CONNECT HIGH SCHOOL,Da Vinci Connect,fuzzy_name_county,1.00
@@ -1542,7 +1542,7 @@ ceeb,cds14,dv_name,cde_name,match_method,match_score
 059801,01612590129932,EAST BAY INNOVATION ACADEMY,East Bay Innovation Academy,fuzzy_name_county,1.00
 1251598,19647330111641,ALLIANCE OUCHI-O'DONOVAN 6-12,Alliance Ouchi-O'Donovan 6-12 Complex,fuzzy_name_county,0.94
 1252154,19647331931716,LAKE BALBOA COLLEGE PREP K-12,Lake Balboa College Preparatory Magnet K-12,fuzzy2_token,0.80
-251237,36677103633302,OPTIONS FOR YOUTH - ACTON-FONTANA 2,Fontana High,fuzzy_name_county,0.94
+251237,19753090136648,OPTIONS FOR YOUTH - ACTON-FONTANA 2,Options for Youth-Acton,hand_verified,0.95
 252215,07100740129684,SUMMIT PUBLIC SCHOOL K2,Summit Public School K2,fuzzy_name_county,1.00
 352429,36679343630670,OPTIONS FOR YOUTH-VICTOR VLY-VCTVL3,Options for Youth-Victor Valley Charter,fuzzy2_token,0.80
 754196,19647330114942,ALLIANCE COLLEGE-READY ACD #7,Alliance Collins Family College-Ready High,hand_verified,0.95

@@ -106,3 +106,70 @@ python3 scripts/scan_local_correlation.py      # local_correlation_scan.csv
   three long-closed records (`unmatched`) remain from the original build.
 - Schools repaired to long-closed CDS records may predate the component files
   (CAASPP starts 2015; A–G 2017; CUPC 2016) and so carry funnel data only.
+
+---
+
+# Round 2: the reconciliation-worksheet pass (2026-07-30)
+
+The CSU crosswalk project independently re-verified CDS assignments for the
+same CEEB universe (web-verification rounds, 2026-07-29). Reconciling that
+lineage against this repo's repaired copy (`hs data/ceeb_cds_reconciliation_
+worksheet.csv`, 66 CEEBs) showed the repo still carried ~2 dozen first-pass
+fuzzy joins of the same defect class that round 1 fixed — surfacing on rows
+round 1's audit had no reason to suspect (they shared no CDS and had name-token
+overlap). It also validated round 1: 59 of its repairs were independently
+re-confirmed by the web rounds.
+
+## The repair
+
+`build/repair_crosswalk_20260730.py` applies Hart's worksheet adjudications
+(2026-07-29/30) plus one further find, in place, with a
+`*_pre_repair_20260730.csv` backup (not committed):
+
+- **26 conflict rows remapped** to the verdict CDS. Typical of the class:
+  Dr. James J. Hogan High (Vallejo) had James **Logan** High (Alameda county);
+  Oasis High (Oakland) had Oasis (Fallbrook); Sacramento High had the SCOE
+  special-ed record; Vaughn Next Century had Century High (Alhambra); both
+  Fontana-area OFY/Entrepreneur CEEBs had Fontana High itself; Renaissance Arts
+  Academy (LAUSD) had Long Beach's Renaissance HS for the Arts.
+- **2 nulls filled from v2 evidence** (San Benito County Evening → shares
+  Hollister High's record; Castlemont BIT → shares Castlemont High's record),
+  superseding round 1's `unmatched_reviewed` for those two.
+- **1 nulled**: LA River School's fuzzy value was Los Angeles Senior High's
+  CDS; no verdict record exists yet, so covariates are removed, not borrowed.
+- **Thurgood Marshall Academic HS (053066)**, found by the 2026-07-30 Mission
+  High fact-check: was joined to Thurgood Marshall K-12, **Compton** Unified;
+  UC's own dimension places it in San Francisco. Now `38684783830403`
+  (Marshall (Thurgood) High, SFUSD). Both the repo and the CSU v2 crosswalk
+  shared this defect; the worksheet gained the row for the v2 side.
+
+Rows Hart deliberately left OPEN are untouched: the 8 program/complex POLICY
+rows (own closed CDS vs parent/Active successor — Crawford ×3, SD Intl/LEADS,
+Palisades, Hamilton, Mendocino), 050446 Santa Cruz Alternative, and 053892
+Crawford Multimedia.
+
+## Verification
+
+Rebuilt panel → data.js → cross_section_all9 → data_context.js → scan.
+The data.js diff touches exactly 23 CEEBs (the 29 applied rows minus 6 with no
+post-2015 site presence), and within changed schools the UC funnel counts and
+GPA columns are bit-identical — only CDS-keyed covariates moved. A jsdom pass
+over the live page shows 14 of 18 campus×period anchor correlations unchanged
+at two decimals; four move by 0.01 (LA p2325 −0.15→−0.14, Davis −0.23→−0.22,
+Riverside +0.49→+0.50, LA p1619 +0.01→+0.02). The round-1 sensitivity bound
+still holds in its own terms: **dropping** the affected schools moves anchors
+by ≤ 0.0023; the visible movement comes from corrected covariates *entering*
+(e.g., Renaissance Arts' real CAASPP is 89% average met, not Long Beach's 32%;
+Vaughn and Sacramento Charter enter with their own records).
+
+## Cost worth knowing: same-school vintage remaps
+
+For several verdicts the old and new CDS are the *same school* under two
+authorizer/district vintages, and the component files carry the school's
+history under the **old** prefix. Those schools lose site covariates until the
+join becomes vintage-aware (a CDS-alias table would fix it): High Tech High
+Chula Vista (90 campus-year rows), LPS Oakland R&D (63), High Tech High Mesa
+(36), Altus South Bay-Sweetwater, Santa Cruz Cypress Charter, and part of
+Alternatives in Action's span. Across all applied rows the panel's covariate
+coverage is net-flat (276 school-campus-years gained, 276 lost); the losses are
+either wrong-school data removed (the point) or this vintage effect.
