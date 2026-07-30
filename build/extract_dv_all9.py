@@ -24,16 +24,29 @@ OUT  = sys.argv[2] if len(sys.argv) > 2 else "data/dv_admissions_all9.csv"
 CAMPUS = {"Berkeley","Davis","Irvine","Los Angeles","Merced",
           "Riverside","San Diego","Santa Barbara","Santa Cruz"}
 
-def load_keys(tab):
+# The coverage file's reconstructed `campus` labels assume the COUNTS tabs' campus ordering
+# (Berkeley ... Santa Cruz, Universitywide LAST). The fr-gpa-by-yr tab's campus control lists
+# Universitywide FIRST, so on that tab every label is shifted one position: the state labelled
+# "Berkeley" is actually Universitywide, "Davis" is Berkeley, ..., "Universitywide" is Santa Cruz.
+# Verified per (school-type x fall-term) block two ways -- school-count fingerprint and
+# selectivity signature; see build/repair_gpa_offset_20260730.py for the full record.
+COUNTS_ORDER = ["Berkeley","Davis","Irvine","Los Angeles","Merced",
+                "Riverside","San Diego","Santa Barbara","Santa Cruz","Universitywide"]
+GPA_ORDER    = ["Universitywide"] + COUNTS_ORDER[:-1]          # actual fr-gpa-by-yr control order
+GPA_RELABEL  = dict(zip(COUNTS_ORDER, GPA_ORDER))              # coverage label -> actual campus
+
+def load_keys(tab, relabel=None):
     keys = {}
     for r in csv.DictReader(open(f"{LEAN}/admissions_freshman_state_coverage.csv", encoding="utf-8")):
-        if (r["source_tab"] == tab and r["campus"] in CAMPUS
+        if (r["source_tab"] == tab
                 and r["school_type"] == "California public high school" and r["present"] == "True"):
-            keys[r["state_key"]] = (r["campus"], r["fall_term"])
+            campus = relabel[r["campus"]] if relabel else r["campus"]
+            if campus in CAMPUS:
+                keys[r["state_key"]] = (campus, r["fall_term"])
     return keys
 
 eth = load_keys("fr-eth-by-yr")
-gpa = load_keys("fr-gpa-by-yr")
+gpa = load_keys("fr-gpa-by-yr", relabel=GPA_RELABEL)
 sys.stderr.write(f"eth_keys={len(eth)} gpa_keys={len(gpa)}\n")
 
 dim = {}
@@ -85,3 +98,29 @@ from collections import Counter
 c = Counter(r[1] for r in out)
 sys.stderr.write(f"dim_miss={miss} rows={len(out)}\n")
 for camp in sorted(CAMPUS): sys.stderr.write(f"  {camp:14} rows={c[camp]}\n")
+
+# ---- validation of the GPA relabel, per (campus x year) block ----
+# (1) school-count fingerprint: schools with an applicant GPA nearly equal schools with an
+#     applicant COUNT for the same campus+year (counts labels are known-correct); a residual
+#     shift puts them off by 100+.  (2) selectivity signature: the share of GPA schools with
+#     an ADMIT GPA must track campus admit rate (Berkeley/Los Angeles lowest, Merced highest).
+gpa_app = defaultdict(set); gpa_adm = defaultdict(set); cnt_app = defaultdict(set)
+for (ceeb, campus, year), g in gpaval.items():
+    if "applicants" in g: gpa_app[(campus, year)].add(ceeb)
+    if "admits" in g:     gpa_adm[(campus, year)].add(ceeb)
+for (ceeb, campus, year), sc in counts.items():
+    if sc.get("applicants"): cnt_app[(campus, year)].add(ceeb)
+devs = sorted(((abs(len(gpa_app[k]) - len(cnt_app[k])), k) for k in gpa_app if k in cnt_app), reverse=True)
+if devs:
+    d, k = devs[0]
+    sys.stderr.write(f"fingerprint: {len(devs)} campus-year blocks, max |gpa_schools - count_schools| = {d} at {k}\n")
+    if d > 10: sys.stderr.write("  WARNING: fingerprint deviation > 10 -- GPA campus mapping suspect!\n")
+for yr in ("2019", "2024"):
+    sh = {cm: (len(gpa_adm[(cm, yr)] & gpa_app[(cm, yr)]), len(gpa_app[(cm, yr)]))
+          for cm in CAMPUS if len(gpa_app[(cm, yr)]) > 100}
+    if len(sh) < 9: continue
+    pct = {cm: a / b for cm, (a, b) in sh.items()}
+    low2 = sorted(pct, key=pct.get)[:2]; hi = max(pct, key=pct.get)
+    ok = set(low2) == {"Berkeley", "Los Angeles"} and hi == "Merced"
+    sys.stderr.write(f"selectivity {yr}: lowest admit-GPA coverage {sorted(low2)}, highest {hi} -> "
+                     + ("OK\n" if ok else "WARNING: expected Berkeley/Los Angeles lowest, Merced highest\n"))

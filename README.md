@@ -105,6 +105,14 @@ the academic–admit correlation **flipped sign over the past decade** (Berkeley
 in 2024; San Diego +0.16 → −0.55); because self-selection is roughly constant across eras, this
 time shift helps separate a possible school-level effect from static self-selection.
 
+On the two GPA axes (same pooling and threshold, site conventions), the correlation of admit rate
+with the school's applicant-pool GPA / admit GPA is Berkeley −0.06 / −0.16 and San Diego
+−0.46 / −0.57. These supersede figures circulated before 2026-07-30, when a one-position
+campus-label offset in the source's GPA tab (its campus list begins with Universitywide, unlike
+the counts tabs) was found and repaired — see
+[`build/repair_gpa_offset_20260730.py`](build/repair_gpa_offset_20260730.py). Counts, admit
+rates, and every non-GPA statistic were never affected.
+
 > The interactive site thresholds on **total applicants**, so its live *r* can differ by ~0.01
 > from this table, which (following the source analysis) paired applicants with admits in the
 > denominator. The committed data reproduce this table exactly under that convention

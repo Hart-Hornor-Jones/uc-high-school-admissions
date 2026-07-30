@@ -120,29 +120,29 @@ for r in csv.DictReader(open(os.path.join(DATA, "panel_all9_by_year.csv"), encod
         meta[ce] = [r["school_name"], r["city"], r["county"], r["cds14"]]; meta_year[ce] = yr
 for k in panel: panel[k].sort()
 
-# ---- metric metadata (X-axis merit/context + selectable outcome rates) ----
+# ---- metric metadata (X-axis academic/context + selectable outcome rates) ----
 # num/den letters map to panel array indices in index.html: A=1 D=2 E=3 C=4 G=5 H=6
 METRICS = [
-  # merit / context (typical X-axis)
-  {"key":"avg",  "label":"CAASPP proficiency — avg % met (gr 11)", "short":"CAASPP avg % met", "role":"merit",   "fmt":"pct"},
-  {"key":"ela",  "label":"CAASPP ELA — % met (gr 11)",  "short":"CAASPP ELA % met",  "role":"merit",   "fmt":"pct"},
-  {"key":"math", "label":"CAASPP Math — % met (gr 11)", "short":"CAASPP Math % met", "role":"merit",   "fmt":"pct"},
-  {"key":"ag",   "label":"A–G completion — % of cohort UC/CSU-eligible", "short":"A–G completion", "role":"merit", "fmt":"pct", "num":"G", "den":"C"},
+  # academic / context (typical X-axis)
+  {"key":"avg",  "label":"CAASPP proficiency — avg % met (gr 11)", "short":"CAASPP avg % met", "role":"academic",   "fmt":"pct"},
+  {"key":"ela",  "label":"CAASPP ELA — % met (gr 11)",  "short":"CAASPP ELA % met",  "role":"academic",   "fmt":"pct"},
+  {"key":"math", "label":"CAASPP Math — % met (gr 11)", "short":"CAASPP Math % met", "role":"academic",   "fmt":"pct"},
+  {"key":"ag",   "label":"A–G completion — % of cohort UC/CSU-eligible", "short":"A–G completion", "role":"academic", "fmt":"pct", "num":"G", "den":"C"},
   {"key":"upp",  "label":"Poverty / high-need — UPP %", "short":"UPP (poverty)", "role":"context", "fmt":"pct"},
   {"key":"awpe", "label":"Writing req. met — ELWR/AWPE (enrollees)", "short":"ELWR/AWPE", "role":"context", "fmt":"pct",
                  "caveat":"UC enrollees only (self-selected, small N); latest year available per school."},
-  {"key":"app_gpa","label":"Applicant GPA — UC weighted-capped (gr 10–11)","short":"Applicant GPA","role":"merit","fmt":"gpa",
-                 "caveat":"Mean UC-recalculated GPA of the school's UC freshman APPLICANTS (weighted, honors-capped). An applicant-pool merit measure — distinct from CAASPP, which covers all grade-11 students."},
-  {"key":"adm_gpa","label":"Admit GPA — UC weighted-capped (admitted students)","short":"Admit GPA","role":"merit","fmt":"gpa",
+  {"key":"app_gpa","label":"Applicant GPA — UC weighted-capped (gr 10–11)","short":"Applicant GPA","role":"academic","fmt":"gpa",
+                 "caveat":"Mean UC-recalculated GPA of the school's UC freshman APPLICANTS (weighted, honors-capped). An applicant-pool measure — distinct from CAASPP, which covers all grade-11 students."},
+  {"key":"adm_gpa","label":"Admit GPA — UC weighted-capped (admitted students)","short":"Admit GPA","role":"academic","fmt":"gpa",
                  "caveat":"Mean GPA of ADMITTED students. Partly downstream of the admit decision (a more selective campus shows a higher bar), so read it as the GPA level UC accepted at the school, not a pure measure of school strength."},
-  {"key":"grad6_prior","label":"UC-wide 6-yr graduation — earlier entrants, any campus (cohorts 6–10 yrs before period)","short":"UC-wide 6-yr grad (prior cohorts)","role":"merit","fmt":"pct","grad":{"col":"g6","win":"prior"},
+  {"key":"grad6_prior","label":"UC-wide 6-yr graduation — earlier entrants, any campus (cohorts 6–10 yrs before period)","short":"UC-wide 6-yr grad (prior cohorts)","role":"academic","fmt":"pct","grad":{"col":"g6","win":"prior"},
                  "caveat":"N-weighted 6-yr UC graduation rate of the school's earlier UC entrants (entry cohorts 6-10 years before the selected period starts) - the most recent rates fully observable, and knowable to admissions readers, by decision time. All-UC-campus rates; cohorts shown only when >=10 entrants."},
   # outcome rates (selectable Y-axis); computed period-consistently as ratio-of-sums
-  {"key":"ret1_same","label":"UC-wide 1st-year retention — this period's entrants, any campus","short":"UC-wide 1st-yr retention","role":"merit","fmt":"pct","grad":{"col":"r1","win":"same"},
+  {"key":"ret1_same","label":"UC-wide 1st-year retention — this period's entrants, any campus","short":"UC-wide 1st-yr retention","role":"academic","fmt":"pct","grad":{"col":"r1","win":"same"},
                  "caveat":"Share of the school's UC freshman entrants in the selected period still enrolled after one year (available through entry 2024). SCOPE: counts the school's entrants to ANY UC campus (pooled), not only the selected one - so a school can carry a rate even when its admits/enrollees to this campus are zero or suppressed."},
-  {"key":"grad4_same","label":"UC-wide 4-yr graduation — this period's entrants, any campus","short":"UC-wide 4-yr grad","role":"merit","fmt":"pct","grad":{"col":"g4","win":"same"},
+  {"key":"grad4_same","label":"UC-wide 4-yr graduation — this period's entrants, any campus","short":"UC-wide 4-yr grad","role":"academic","fmt":"pct","grad":{"col":"g4","win":"same"},
                  "caveat":"4-year UC graduation rate of entrants in the selected period; mature only through entry 2021 (empty for recent periods - try 2016-2019). SCOPE: counts the school's entrants to ANY UC campus (pooled), not only the selected one - so a school can carry a rate even when its admits/enrollees to this campus are zero or suppressed."},
-  {"key":"grad6_same","label":"UC-wide 6-yr graduation — this period's entrants, any campus","short":"UC-wide 6-yr grad","role":"merit","fmt":"pct","grad":{"col":"g6","win":"same"},
+  {"key":"grad6_same","label":"UC-wide 6-yr graduation — this period's entrants, any campus","short":"UC-wide 6-yr grad","role":"academic","fmt":"pct","grad":{"col":"g6","win":"same"},
                  "caveat":"6-year UC graduation rate of entrants in the selected period; mature only through entry 2019 (empty for recent periods - try 2016-2019). SCOPE: counts the school's entrants to ANY UC campus (pooled), not only the selected one - so a school can carry a rate even when its admits/enrollees to this campus are zero or suppressed."},
   {"key":"ret1_camp","label":"1st-year retention at this campus — this period's entrants","short":"Retention (this campus)","role":"outcome","fmt":"pct","grad":{"col":"r1","win":"same","src":"campus"},
                  "caveat":"Entrants to the SELECTED campus only (UC dashboard per-campus series). A school-year is reported only when >=10 of its students entered this campus that fall, so mostly larger feeder schools appear - far fewer dots than other outcomes. Retention is available through entry 2024."},

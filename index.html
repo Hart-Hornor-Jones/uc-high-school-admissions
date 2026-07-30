@@ -302,7 +302,11 @@
           is the average among <i>admitted</i> students &mdash; the GPA bar UC actually accepted &mdash; and is partly
           downstream of the admit decision (a more selective campus shows a higher bar), so read it as a level UC set, not a
           pure measure of school strength. A profile also shows enrollee GPA and the <b>admit&minus;applicant gap</b> (how far
-          above the pool the admitted students sat). Admit GPA is blank wherever UC suppresses a school's admits.</li>
+          above the pool the admitted students sat). Admit GPA is blank wherever UC suppresses a school's admits.
+          The GPA series were re&ndash;extracted on 2026&ndash;07&ndash;30 after a one&ndash;position campus&ndash;label
+          offset was found in the source's GPA tab (its campus list begins with Universitywide, unlike the counts
+          tabs); the corrected assignment is validated against school&ndash;count and selectivity fingerprints.
+          Counts and admit rates were never affected.</li>
         <li><b>UC graduation rates by high school.</b> From UC's freshman-outcomes dashboard: for each
           school and fall entry cohort, the share of its UC freshman entrants (all nine campuses pooled) who
           persisted one year and who graduated within 4, 5 or 6 years. A cohort appears only when the school
@@ -350,7 +354,7 @@
   const METRICS = D.metrics, MByKey = Object.fromEntries(METRICS.map(m=>[m.key,m]));
   // X axis offers academic/context metrics plus outcome metrics flagged xaxis (the same-period UC
   // retention/graduation rates: later outcomes read as indicators of academic strength present at application).
-  const X_KEYS = METRICS.filter(m=>m.role==='merit'||m.role==='context'||m.xaxis).map(m=>m.key);
+  const X_KEYS = METRICS.filter(m=>m.role==='academic'||m.role==='context'||m.xaxis).map(m=>m.key);
   const Y_KEYS = METRICS.filter(m=>m.role==='outcome').map(m=>m.key);
   const ALL_KEYS = METRICS.map(m=>m.key);
   const periodByKey = Object.fromEntries(D.periods.map(p=>[p.key,p]));
@@ -726,7 +730,7 @@
     let txt='';
     if(r!=null){ const strg=Math.abs(r)<.1?'essentially no':Math.abs(r)<.25?'a weak':Math.abs(r)<.45?'a moderate':'a strong';
       const dir=r<0?'negative':'positive'; let plain='';
-      if(MByKey[xk].role==='merit') plain=r<0?' — higher-scoring schools have a lower rate on this outcome here.':' — higher-scoring schools have a higher rate on this outcome here.';
+      if(MByKey[xk].role==='academic') plain=r<0?' — higher-scoring schools have a lower rate on this outcome here.':' — higher-scoring schools have a higher rate on this outcome here.';
       else if(xk==='upp') plain=r>0?' — higher-UPP schools have a higher rate on this outcome here.':' — higher-UPP schools have a lower rate on this outcome here.';
       txt=`${strg} ${dir} relationship${plain}`; }
     $('interp').textContent=txt;
