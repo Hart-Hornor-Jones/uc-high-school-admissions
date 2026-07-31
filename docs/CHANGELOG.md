@@ -9,6 +9,31 @@ day of the change, not necessarily to the day of the commit that carried it.
 
 ---
 
+## 2026-07-31 — Admitted vs. denied page
+
+**Added**
+- A third companion page, [`denied/`](../denied/): the GPA gap between the students a campus admitted
+  and the students it denied, per California public high school × campus (9 + Universitywide) × year,
+  fall 1994–2025. Three views — a dumbbell *wedge timeline* (dot area = students), a paired-row
+  heatmap *wall* (all campuses × all years on one screen), and an all-school *field* (admitted GPA vs.
+  denied GPA, three year snapshots on shared axes).
+- Denied volume = applicants − admits; denied mean GPA recovered by moment arithmetic,
+  (N<sub>app</sub>·GPA<sub>app</sub> − N<sub>adm</sub>·GPA<sub>adm</sub>) / N<sub>denied</sub> — exact given the
+  published means. Derived denied GPA is masked at build time when fewer than 10 students were denied
+  (noise-dominated) or the value falls outside (0, 5); suppressed cells stay blank, never zero.
+- `data/school_campus_year_admitted_denied.csv` (the derived dataset; GPA carries the 2026-07-30
+  campus-label-offset repair) and `scripts/make_denied_data.py`, which builds `denied/data_denied.js`
+  from it over the site's school-name universe (1,536 CA public high schools; community-college and
+  unidentifiable source codes excluded — they carry 69 of 129,625 displayable denied-GPA school-years).
+- Verified: den_gpa re-derives from the published counts and means in all 481 sampled rows where both
+  exist; a 616 school-year sample of *rendered* page values matches an independent recompute from the
+  CSV digit-for-digit; CEEB traps asserted in the build (052980 Mission SF ≠ 052904 San Fernando,
+  051984 University HS Irvine, 052970 Lowell).
+
+**Changed**
+- The explorer's companions paragraph and the context/trends backlink rows now link `denied/`.
+  No anchors or chart logic on the existing pages were touched.
+
 ## 2026-07-31 — Housekeeping
 
 **Added**

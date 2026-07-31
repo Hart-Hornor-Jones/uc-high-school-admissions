@@ -68,6 +68,17 @@ family-income origin and median graduate debt by group (Scorecard). Each chart c
 universe badge, definitions, cohort sizes, and a CSV download. Methods & caveats:
 [docs/OUTCOMES_TRENDS.md](docs/OUTCOMES_TRENDS.md).
 
+**Companion page — [`denied/`](denied/):** the two populations an admission decision separates.
+UC publishes, per school × campus × year, applicant and admit counts and the mean GPA of each;
+from those the page derives the denied side exactly — denied volume = applicants − admits, denied
+mean GPA = (N_app·GPA_app − N_adm·GPA_adm)/N_denied — and shows it three ways: a dumbbell *wedge
+timeline* for one school → campus across 1994–2025 (dot area = students), a paired-row heatmap
+*wall* putting all ten campus rows × 32 years on one screen, and an all-school *field* scatter
+(admitted vs. denied GPA, dot area = applicants, three year snapshots on shared axes). Derived
+denied GPA is masked where fewer than 10 students were denied; suppressed cells stay blank, never
+zero. Dataset: [`data/school_campus_year_admitted_denied.csv`](data/school_campus_year_admitted_denied.csv);
+built by [`scripts/make_denied_data.py`](scripts/make_denied_data.py).
+
 ---
 
 ## The question
