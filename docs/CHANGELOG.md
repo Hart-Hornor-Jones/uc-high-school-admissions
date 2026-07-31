@@ -9,6 +9,40 @@ day of the change, not necessarily to the day of the commit that carried it.
 
 ---
 
+## 2026-07-31 — Admitted vs. denied: counts universe repaired
+
+**Fixed**
+- The derived denied dataset drew its applicant and admit counts from `school_year_wide.csv` in the
+  correlation-matrix working folder, which was assembled for that study and covers only **1,181
+  CEEBs**. **355 schools** the GPA extraction knows about are absent from it entirely (0 of 355
+  present, against 1,181 of 1,181 for the schools that worked). They reached the page with an
+  admitted-GPA series and **no volume at any campus in any year**, and therefore no derivable denied
+  series, no scatter dot and no grid row — 23.1% of the listed universe. Six of them collide on name
+  and city with a live code and showed as duplicate entries in the school picker (Gompers Prep,
+  Crawford and Lincoln in San Diego, Aliso Niguel, Lawndale, East Bay Innovation), which is how the
+  defect surfaced.
+- The nine per-campus rows are now taken from `data/dv_admissions_all9.csv`, which covers the full
+  CEEB universe and carries the 2026-07-30 offset repair. Validated before the swap: against the
+  previous file it agrees **exactly on all four fields across 244,944 overlapping cells — zero
+  disagreements** — and adds 10,125 applicant and 4,226 admit values it lacked.
+  `build/repair_denied_counts_from_dv_20260731.py`, with the pre-repair file preserved as
+  `data/school_campus_year_admitted_denied_pre_dv_counts_20260731.csv`.
+- Effect: all 355 recover counts, 61 of them now show a derivable denied series (the rest stay masked
+  at fewer than 10 denials); the school universe goes **1,536 → 1,607**; displayable denied-GPA
+  school-years 129,556 → 129,754. In volume the affected schools are small — 85,745 applications
+  against 9,298,231, or 0.91%, median 158 across 32 years against 4,899 — so **every pooled mean on
+  the page moved by less than 0.005 GPA** (median 0.00016, max 0.0041). No previously published value
+  is contradicted.
+
+**Known, and documented on the page**
+- Universitywide rows are unchanged: Universitywide is not the sum of the campuses, the wide file is
+  its only source, and `dv_admissions_all9.csv` has no Universitywide column. Schools outside the wide
+  file therefore keep a blank systemwide row — blank meaning not published here, never zero.
+- For four of the six reissued-code pairs the systemwide row is filed under the later code across the
+  whole span while the campus rows follow the code each year was reported under, because the two UC
+  files resolve the code change differently. 39 school-years. Applications are conserved across the
+  swap (47,295 → 48,002 over the six pairs; the increase is coverage the wide file lacked).
+
 ## 2026-07-31 — Admitted vs. denied page: legibility revision
 
 **Changed**
@@ -70,8 +104,9 @@ day of the change, not necessarily to the day of the commit that carried it.
   (noise-dominated) or the value falls outside (0, 5); suppressed cells stay blank, never zero.
 - `data/school_campus_year_admitted_denied.csv` (the derived dataset; GPA carries the 2026-07-30
   campus-label-offset repair) and `scripts/make_denied_data.py`, which builds `denied/data_denied.js`
-  from it over the site's school-name universe (1,536 CA public high schools; community-college and
-  unidentifiable source codes excluded — they carry 69 of 129,625 displayable denied-GPA school-years).
+  from it over the site's school-name universe (community-college and unidentifiable source codes
+  excluded). NB: the counts universe was repaired on 2026-07-31, below — the figures stated in this
+  entry (1,536 schools; 69 of 129,625 displayable denied-GPA school-years) are the pre-repair ones.
 - Verified: den_gpa re-derives from the published counts and means in all 481 sampled rows where both
   exist; a 616 school-year sample of *rendered* page values matches an independent recompute from the
   CSV digit-for-digit; CEEB traps asserted in the build (052980 Mission SF ≠ 052904 San Fernando,

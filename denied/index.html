@@ -119,7 +119,7 @@
     <b style="color:#1c5cab">Admitted</b> is always blue, <b style="color:#b84c1f">denied</b> is always orange.
     The page opens on <b>all California public high schools pooled</b>; type a school name to narrow every
     view to that one school. Denied counts and denied mean GPA are <i>derived</i> &mdash; exactly, from the
-    published figures; <a href="#derivation">the derivation and six caveats</a> are at the foot of the
+    published figures; <a href="#derivation">the derivation and eight caveats</a> are at the foot of the
     page.</p>
   </header>
 
@@ -196,7 +196,7 @@
   </section>
 
   <details class="notes" id="derivation">
-    <summary>How &ldquo;denied&rdquo; is derived, and six caveats</summary>
+    <summary>How &ldquo;denied&rdquo; is derived, and eight caveats</summary>
     <div>
       <ul>
         <li><b>Derivation.</b> Denied volume = applicants &minus; admits. Denied mean GPA is recovered by
@@ -221,9 +221,22 @@
           are shifted one position; this page uses the corrected assignment (verified: the corrected systemwide
           GPA matches the unrepaired &ldquo;Berkeley&rdquo; column in 29,131 of 29,131 school-years, and
           post-repair admit-GPA coverage tracks campus selectivity).</li>
-        <li><b>Universe.</b> 1,536 California public high schools &mdash; the same school list and naming as the
+        <li><b>Universe.</b> 1,607 California public high schools &mdash; the same school list and naming as the
           rest of the site. Community-college and unidentifiable source codes that ride along in the counts
-          extract are excluded (they carry 69 of 129,625 displayable denied-GPA school-years).</li>
+          extract are excluded (they carry 69 of 129,823 displayable denied-GPA school-years).</li>
+        <li><b>Where the counts come from.</b> Applicant and admit counts for the nine campuses are taken
+          from UC&rsquo;s by-campus file, which covers the full school universe. An earlier build of this
+          page drew them from a derived table assembled for another study, which covered only 1,181 schools
+          and so left 355 schools with a published GPA and no volume at all &mdash; and therefore no denied
+          series. Repaired 2026-07-31; the two sources agree exactly where both carry a value (244,944
+          cells, no disagreements), and the repair moved every pooled mean on this page by less than
+          0.005&nbsp;GPA.</li>
+        <li><b>Codes that changed.</b> A school reissued a new CEEB code &mdash; usually at a charter
+          conversion &mdash; appears once per code, each covering its own era; six pairs share a name and
+          city. For four of them the systemwide row is filed under the later code for the whole span while
+          the campus rows follow the code each year was reported under, because the systemwide and
+          by-campus figures come from different UC files that resolve the change differently. It affects 39
+          school-years.</li>
       </ul>
     </div>
   </details>
