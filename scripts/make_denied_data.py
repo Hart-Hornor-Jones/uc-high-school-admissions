@@ -38,7 +38,7 @@ Pooled marginal (agg)
 Over every school-year at that campus where applicants, admits, app_gpa and adm_gpa
 are ALL published:
     app  = sum N_app                     adm  = sum N_adm            den = app - adm
-    gm   = sum(N_adm*GPA_adm) / adm      (enrolment-weighted admit mean)
+    gm   = sum(N_adm*GPA_adm) / adm      (enrollment-weighted admit mean)
     gd   = (sum(N_app*GPA_app) - sum(N_adm*GPA_adm)) / den
 The denied pooled mean is the same moment identity applied to the pooled totals, so
 it is NOT affected by the per-school den<10 mask: schools masked individually still

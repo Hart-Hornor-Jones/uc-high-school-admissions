@@ -119,39 +119,8 @@
     <b style="color:#1c5cab">Admitted</b> is always blue, <b style="color:#b84c1f">denied</b> is always orange.
     The page opens on <b>all California public high schools pooled</b>; type a school name to narrow every
     view to that one school. Denied counts and denied mean GPA are <i>derived</i> &mdash; exactly, from the
-    published figures &mdash; as described under the caveats.</p>
-    <details class="notes">
-      <summary>How &ldquo;denied&rdquo; is derived, and six caveats</summary>
-      <div>
-        <ul>
-          <li><b>Derivation.</b> Denied volume = applicants &minus; admits. Denied mean GPA is recovered by
-            moment arithmetic: (N<sub>app</sub>&middot;GPA<sub>app</sub> &minus; N<sub>adm</sub>&middot;GPA<sub>adm</sub>) / N<sub>denied</sub>.
-            UC publishes the applicant and admit means, so the denied mean is exact <i>given</i> those two.</li>
-          <li><b>Suppression.</b> UC blanks small cells. Blank &ne; zero: missing years show as gaps, never as 0.</li>
-          <li><b>Small denominators.</b> When fewer than 10 students were denied, the derived denied GPA is
-            noise-dominated and is masked (shown as a gap) everywhere on this page. Derived values outside
-            (0,&nbsp;5) &mdash; a handful of tiny-denominator artifacts &mdash; are likewise blanked. The mask is
-            applied when the dataset is built, not in the browser.</li>
-          <li><b>The pooled &ldquo;all high schools&rdquo; figures.</b> With the school box empty, each campus-year
-            shows one weighted average over every California public high school whose applicant and admit GPA
-            UC published that year: admitted mean = &Sigma;(N<sub>adm</sub>&middot;GPA<sub>adm</sub>)&nbsp;/&nbsp;&Sigma;N<sub>adm</sub>,
-            and the denied mean is the same moment identity applied to the pooled totals. Because it is applied
-            to totals, the pooled denied mean is <i>not</i> affected by the small-denominator mask &mdash; schools
-            masked individually still contribute. The pooled counts are the counts of those contributing schools
-            (shown on hover), not UC&rsquo;s campus grand total, since a school-year whose GPA is suppressed
-            cannot enter a GPA-weighted mean.</li>
-          <li><b>GPA coverage.</b> Published means cover students with a UC-computable GPA; the derivation
-            assumes similar coverage among admitted and denied.</li>
-          <li><b>Campus-label repair.</b> The source GPA tab lists Universitywide first, so its raw campus labels
-            are shifted one position; this page uses the corrected assignment (verified: the corrected systemwide
-            GPA matches the unrepaired &ldquo;Berkeley&rdquo; column in 29,131 of 29,131 school-years, and
-            post-repair admit-GPA coverage tracks campus selectivity).</li>
-          <li><b>Universe.</b> 1,536 California public high schools &mdash; the same school list and naming as the
-            rest of the site. Community-college and unidentifiable source codes that ride along in the counts
-            extract are excluded (they carry 69 of 129,625 displayable denied-GPA school-years).</li>
-        </ul>
-      </div>
-    </details>
+    published figures; <a href="#derivation">the derivation and six caveats</a> are at the foot of the
+    page.</p>
   </header>
 
   <div class="controls">
@@ -190,11 +159,11 @@
     <div class="kicker">GPA by campus and year</div>
     <h2 id="titleW"></h2>
     <p class="what">Rows are campuses (systemwide first), each split into an <i>admitted</i> and a
-      <i>denied</i> strip; columns are the 32 years. Cell colour is mean GPA, on a scale fitted to the values
-      actually on screen. Grey cells are data &mdash; suppressed or masked, never zero. The right margin
+      <i>denied</i> strip; columns are the 32 years. Cell color is mean GPA, on a scale fitted to the values
+      actually on screen. Hatched cells are data &mdash; suppressed or masked, never zero. The right margin
       totals 2015&ndash;2025 volumes.</p>
     <div class="toolbar">
-      <span class="flab">Colour</span>
+      <span class="flab">Color</span>
       <span class="seg" id="wallMode">
         <button type="button" data-mode="abs">Mean GPA</button>
         <button type="button" data-mode="rel">Difference from average</button>
@@ -225,6 +194,39 @@
     <div class="chart" id="cF"></div>
     <div class="legend" id="lF"></div>
   </section>
+
+  <details class="notes" id="derivation">
+    <summary>How &ldquo;denied&rdquo; is derived, and six caveats</summary>
+    <div>
+      <ul>
+        <li><b>Derivation.</b> Denied volume = applicants &minus; admits. Denied mean GPA is recovered by
+          moment arithmetic: (N<sub>app</sub>&middot;GPA<sub>app</sub> &minus; N<sub>adm</sub>&middot;GPA<sub>adm</sub>) / N<sub>denied</sub>.
+          UC publishes the applicant and admit means, so the denied mean is exact <i>given</i> those two.</li>
+        <li><b>Suppression.</b> UC blanks small cells. Blank &ne; zero: missing years show as gaps, never as 0.</li>
+        <li><b>Small denominators.</b> When fewer than 10 students were denied, the derived denied GPA is
+          noise-dominated and is masked (shown as a gap) everywhere on this page. Derived values outside
+          (0,&nbsp;5) &mdash; a handful of tiny-denominator artifacts &mdash; are likewise blanked. The mask is
+          applied when the dataset is built, not in the browser.</li>
+        <li><b>The pooled &ldquo;all high schools&rdquo; figures.</b> With the school box empty, each campus-year
+          shows one weighted average over every California public high school whose applicant and admit GPA
+          UC published that year: admitted mean = &Sigma;(N<sub>adm</sub>&middot;GPA<sub>adm</sub>)&nbsp;/&nbsp;&Sigma;N<sub>adm</sub>,
+          and the denied mean is the same moment identity applied to the pooled totals. Because it is applied
+          to totals, the pooled denied mean is <i>not</i> affected by the small-denominator mask &mdash; schools
+          masked individually still contribute. The pooled counts are the counts of those contributing schools
+          (shown on hover), not UC&rsquo;s campus grand total, since a school-year whose GPA is suppressed
+          cannot enter a GPA-weighted mean.</li>
+        <li><b>GPA coverage.</b> Published means cover students with a UC-computable GPA; the derivation
+          assumes similar coverage among admitted and denied.</li>
+        <li><b>Campus-label repair.</b> The source GPA tab lists Universitywide first, so its raw campus labels
+          are shifted one position; this page uses the corrected assignment (verified: the corrected systemwide
+          GPA matches the unrepaired &ldquo;Berkeley&rdquo; column in 29,131 of 29,131 school-years, and
+          post-repair admit-GPA coverage tracks campus selectivity).</li>
+        <li><b>Universe.</b> 1,536 California public high schools &mdash; the same school list and naming as the
+          rest of the site. Community-college and unidentifiable source codes that ride along in the counts
+          extract are excluded (they carry 69 of 129,625 displayable denied-GPA school-years).</li>
+      </ul>
+    </div>
+  </details>
 
   <section class="vintage">
     <h2>Data vintage</h2>
@@ -265,7 +267,7 @@ const BLANK = "url(#nodata)";                   // heat-map cell with no data (n
 const POOL_INK = "#111111";                    // the pooled all-schools marker
 // sequential, wide dynamic range (ColorBrewer YlGnBu-9): pale -> deep navy
 const RAMP = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"];
-// diverging, colour-blind safe and deliberately unlike the blue/orange pair (ColorBrewer PRGn-9)
+// diverging, color-blind safe and deliberately unlike the blue/orange pair (ColorBrewer PRGn-9)
 const DIV  = ["#40004b","#762a83","#9970ab","#c2a5cf","#f4f2f5","#a6dba0","#5aae61","#1b7837","#00441b"];
 const $ = id => document.getElementById(id);
 const fmtN = n => n==null ? "—" : n.toLocaleString("en-US");
@@ -535,7 +537,7 @@ function renderW(){
   const g=el("g",{},svg);
   const allRows=CAMPS.map((_,ci)=>rows(state.school,ci));
 
-  // ---- colour scale, fitted to what is actually on screen ----
+  // ---- color scale, fitted to what is actually on screen ----
   const vals=[];
   allRows.forEach((rr,ci)=>rr.forEach((r,yi)=>{
     const cell=cellValue(ci,yi,r,rel);
@@ -944,6 +946,14 @@ $('footer').innerHTML=`Data: UC Information Center, freshman admissions by sourc
   `by-year GPA tab with the one-position campus-label offset corrected. Denied counts and denied mean GPA `+
   `derived as stated above; masking (denied&lt;10, values outside (0,5)) applied when the dataset is built. `+
   `Built ${D.generated}. Part of the <a href="../">UC admissions explorer</a>.`;
+
+// the derivation block sits at the foot of the page; the intro links to it
+const notes=$('derivation');
+function openNotes(){ if(notes && !notes.open) notes.open=true; }
+if(location.hash==='#derivation') openNotes();
+window.addEventListener('hashchange',()=>{ if(location.hash==='#derivation') openNotes(); });
+for(const a of document.querySelectorAll('a[href="#derivation"]'))
+  a.addEventListener('click',openNotes);
 
 buildDatalist(); buildCampusChips(); buildYearSelects(); buildWallMode();
 $('search').value=""; $('clearSchool').hidden=true;

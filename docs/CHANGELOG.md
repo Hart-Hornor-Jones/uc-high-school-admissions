@@ -23,16 +23,20 @@ day of the change, not necessarily to the day of the commit that carried it.
   denied mean is **not** affected by the per-school n<10 mask. Pooled counts are the counts of the
   contributing schools (surfaced on hover and in a new *Schools pooled* table column), not UC's campus
   grand total — a school-year with suppressed GPA cannot enter a GPA-weighted mean.
-- *GPA by campus and year*: the colour ramp was carrying almost no information (a narrow single-hue
+- *GPA by campus and year*: the color ramp was carrying almost no information (a narrow single-hue
   blue fixed at 3.00–4.35 against values that mostly sit above 3.5). Replaced with a wide-range
   sequential scale (ColorBrewer YlGnBu-9) **fitted to the values on screen**, plus a second mode,
-  *Difference from average*, on a diverging colour-blind-safe scale (PRGn-9): a selected school
+  *Difference from average*, on a diverging color-blind-safe scale (PRGn-9): a selected school
   against the all-school average for the same campus, year and strip; the pooled view against UC
   systemwide. Cells with no data are now a hatched backing rather than white space, so a suppressed
   cell can never be read as a pale value.
 - *GPA by campus and year*: row labels split into two columns — campus in one, `admitted` / `denied`
   in the other. The old single `adm / den` sub-label read as a ratio and made the campus name look
   like a total.
+- The derivation-and-caveats block moved out of the header to the foot of the page, above *Data
+  vintage*; the intro links down to it and the link expands it. It opened the page on a wall of
+  method before the reader had seen a chart.
+- Prose set in American spelling throughout (color, gray, enrollment).
 - *Every school in one year*: axes now auto-fit to the schools (≈0.8 GPA points across rather than a
   fixed ≈1.2 with the cloud in one corner; 99.3% of dots land inside the frame at the default view),
   and the panels are **zoomable — scroll to zoom, drag to pan, double-click or *Reset zoom* to
