@@ -23,15 +23,24 @@
     margin:18px 0 10px;padding:14px 16px;background:var(--card);border:1px solid var(--line);
     border-radius:12px;box-shadow:var(--shadow);position:sticky;top:0;z-index:30;}
   .ctl{display:flex;flex-direction:column;gap:5px;}
-  .ctl.grow{flex:1;min-width:220px;}
+  .ctl.grow{flex:1;min-width:240px;}
   .ctl label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);}
   input[type=text],select{font:inherit;padding:7px 9px;border:1px solid #cfd6e0;border-radius:8px;
     background:#fff;color:var(--ink);min-width:190px;}
+  .searchwrap{position:relative;display:flex;}
+  .searchwrap input[type=text]{flex:1;padding-right:30px;}
+  .clearbtn{position:absolute;right:4px;top:50%;transform:translateY(-50%);border:0;background:none;
+    color:var(--muted);font-size:17px;line-height:1;cursor:pointer;padding:3px 6px;border-radius:6px;}
+  .clearbtn:hover{background:#eef1f5;color:var(--ink);}
+  .clearbtn[hidden]{display:none;}
   .chiprow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
   .chip{font:inherit;font-size:12.5px;font-weight:600;border:1px solid #cfd6e0;background:#fff;
     color:var(--muted);border-radius:999px;padding:5px 12px;cursor:pointer;}
   .chip:hover{border-color:#9fb0c6;color:var(--ink);}
   .chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .chip.small{font-size:11.5px;font-weight:500;padding:4px 10px;}
+  .scope{font-size:12.5px;color:var(--muted);}
+  .scope b{color:var(--ink);font-weight:650;}
   .fnote{font-size:11.5px;color:var(--muted);}
   .card{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);
     padding:16px 18px 12px;margin-top:20px;}
@@ -47,11 +56,18 @@
   .lk .line{width:16px;height:0;border-top:2.5px solid;border-radius:2px;}
   .lk .box{width:11px;height:11px;border-radius:3px;}
   .lk .dot{width:10px;height:10px;border-radius:50%;}
-  .fieldctl{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px;}
-  .fieldctl select{min-width:0;padding:5px 7px;font-size:13px;}
-  .fieldctl .flab{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);}
+  .lk .dia{width:9px;height:9px;transform:rotate(45deg);border:2px solid;background:#fff;}
+  .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px;}
+  .toolbar select{min-width:0;padding:5px 7px;font-size:13px;}
+  .toolbar .flab{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);}
+  .seg{display:inline-flex;border:1px solid #cfd6e0;border-radius:999px;overflow:hidden;background:#fff;}
+  .seg button{font:inherit;font-size:12.5px;font-weight:600;border:0;background:none;color:var(--muted);
+    padding:5px 13px;cursor:pointer;}
+  .seg button+button{border-left:1px solid #cfd6e0;}
+  .seg button[aria-pressed="true"]{background:var(--accent);color:#fff;}
+  .movers{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:8px;font-size:12px;color:var(--muted);}
   .tooltip{position:fixed;pointer-events:none;background:#11151c;color:#fff;font-size:12px;
-    padding:8px 10px;border-radius:8px;max-width:270px;opacity:0;transition:opacity .08s;z-index:50;
+    padding:8px 10px;border-radius:8px;max-width:290px;opacity:0;transition:opacity .08s;z-index:50;
     box-shadow:0 6px 20px rgba(0,0,0,.3);line-height:1.5;}
   .tooltip .t{font-weight:650;}
   .tooltip .r{display:flex;align-items:center;gap:7px;white-space:nowrap;}
@@ -101,11 +117,11 @@
     applicants and admits and the mean GPA of each. That is enough to recover the two populations an
     admission decision separates: the students a campus took and the students it turned away.
     <b style="color:#1c5cab">Admitted</b> is always blue, <b style="color:#b84c1f">denied</b> is always orange.
-    Three views: a per-school timeline, the whole system on one screen, and every school at once.
-    Denied counts and denied mean GPA are <i>derived</i> &mdash; exactly, from the published figures &mdash;
-    as described under the caveats.</p>
+    The page opens on <b>all California public high schools pooled</b>; type a school name to narrow every
+    view to that one school. Denied counts and denied mean GPA are <i>derived</i> &mdash; exactly, from the
+    published figures &mdash; as described under the caveats.</p>
     <details class="notes">
-      <summary>How &ldquo;denied&rdquo; is derived, and five caveats</summary>
+      <summary>How &ldquo;denied&rdquo; is derived, and six caveats</summary>
       <div>
         <ul>
           <li><b>Derivation.</b> Denied volume = applicants &minus; admits. Denied mean GPA is recovered by
@@ -116,6 +132,14 @@
             noise-dominated and is masked (shown as a gap) everywhere on this page. Derived values outside
             (0,&nbsp;5) &mdash; a handful of tiny-denominator artifacts &mdash; are likewise blanked. The mask is
             applied when the dataset is built, not in the browser.</li>
+          <li><b>The pooled &ldquo;all high schools&rdquo; figures.</b> With the school box empty, each campus-year
+            shows one weighted average over every California public high school whose applicant and admit GPA
+            UC published that year: admitted mean = &Sigma;(N<sub>adm</sub>&middot;GPA<sub>adm</sub>)&nbsp;/&nbsp;&Sigma;N<sub>adm</sub>,
+            and the denied mean is the same moment identity applied to the pooled totals. Because it is applied
+            to totals, the pooled denied mean is <i>not</i> affected by the small-denominator mask &mdash; schools
+            masked individually still contribute. The pooled counts are the counts of those contributing schools
+            (shown on hover), not UC&rsquo;s campus grand total, since a school-year whose GPA is suppressed
+            cannot enter a GPA-weighted mean.</li>
           <li><b>GPA coverage.</b> Published means cover students with a UC-computable GPA; the derivation
             assumes similar coverage among admitted and denied.</li>
           <li><b>Campus-label repair.</b> The source GPA tab lists Universitywide first, so its raw campus labels
@@ -131,56 +155,73 @@
   </header>
 
   <div class="controls">
-    <div class="ctl grow"><label for="search">School</label>
-      <input type="text" id="search" list="schoollist" placeholder="e.g. Berkeley High, University High &mdash; Irvine&hellip;" />
+    <div class="ctl grow"><label for="search">High school</label>
+      <div class="searchwrap">
+        <input type="text" id="search" list="schoollist" autocomplete="off"
+               placeholder="All California public high schools &mdash; type a school name to narrow&hellip;" />
+        <button type="button" class="clearbtn" id="clearSchool" hidden
+                title="Show all California public high schools"
+                aria-label="Show all California public high schools">&times;</button>
+      </div>
       <datalist id="schoollist"></datalist>
     </div>
     <div class="ctl"><label>Campus</label>
       <div class="chiprow" id="campusChips"></div>
     </div>
-    <div class="ctl"><span class="fnote" id="scopeNote">campus applies to the timeline and the field &mdash;
-      the wall always shows all campuses</span></div>
+    <div class="ctl"><span class="scope" id="scopeNote"></span>
+      <span class="fnote">Campus applies to the timeline and the scatter; the grid always shows all campuses.</span></div>
   </div>
 
-  <!-- 1 · wedge timeline -->
+  <!-- 1 · admitted and denied GPA by year -->
   <section class="card" id="cardT">
-    <div class="kicker">The wedge timeline</div>
+    <div class="kicker">Admitted and denied GPA by year</div>
     <h2 id="titleT"></h2>
-    <p class="what">Each year is one vertical dumbbell from the denied mean GPA up to the admitted mean GPA.
-      Dot <i>area</i> is the number of students on each side, so a glyph reads: how high the bar, how wide
-      the gap, how many taken, how many turned away. Hover for exact values.</p>
+    <p class="what">Each year is one vertical bar running from the denied mean GPA up to the admitted mean
+      GPA. Dot <i>area</i> is the number of students on each side, so a single mark reads: how high the GPA,
+      how wide the gap, how many taken, how many turned away. Hover for exact values.</p>
     <div class="chart" id="cT"></div>
     <div class="legend" id="lT"></div>
-    <details class="tbl"><summary>Table &mdash; underlying numbers for this school &rarr; campus</summary>
+    <details class="tbl"><summary>Table &mdash; underlying numbers for this selection</summary>
       <div id="tblT"></div></details>
   </section>
 
-  <!-- 2 · the wall -->
+  <!-- 2 · GPA by campus and year -->
   <section class="card" id="cardW">
-    <div class="kicker">The wall</div>
+    <div class="kicker">GPA by campus and year</div>
     <h2 id="titleW"></h2>
-    <p class="what">Rows are campuses (systemwide on top), each split into an <i>admitted</i> and a
-      <i>denied</i> strip; columns are the 32 years; cell darkness is mean GPA on a single blue ramp, so the
-      two strips compare directly. Blank cells are data &mdash; suppressed or masked, never zero. The right
-      margin totals 2015&ndash;2025 volumes.</p>
+    <p class="what">Rows are campuses (systemwide first), each split into an <i>admitted</i> and a
+      <i>denied</i> strip; columns are the 32 years. Cell colour is mean GPA, on a scale fitted to the values
+      actually on screen. Grey cells are data &mdash; suppressed or masked, never zero. The right margin
+      totals 2015&ndash;2025 volumes.</p>
+    <div class="toolbar">
+      <span class="flab">Colour</span>
+      <span class="seg" id="wallMode">
+        <button type="button" data-mode="abs">Mean GPA</button>
+        <button type="button" data-mode="rel">Difference from average</button>
+      </span>
+      <span class="fnote" id="wallModeNote"></span>
+    </div>
     <div class="chart" id="cW"></div>
     <div class="legend" id="lW"></div>
   </section>
 
-  <!-- 3 · the field -->
+  <!-- 3 · every school in one year -->
   <section class="card" id="cardF">
-    <div class="kicker">The field</div>
+    <div class="kicker">Every school in one year</div>
     <h2 id="titleF"></h2>
-    <p class="what">Zooming out: every California public high school applying to the selected campus in a
-      year &mdash; admitted mean GPA against denied mean GPA, dot area = applicants, schools with fewer than
-      10 denials not shown. The diagonal is &ldquo;admitted = denied&rdquo;; height above it is the school's
-      wedge. The selected school is highlighted; click any dot to select that school.</p>
-    <div class="fieldctl">
+    <p class="what">Every California public high school applying to the selected campus in a year &mdash;
+      admitted mean GPA against denied mean GPA, dot area = applicants, schools with fewer than 10 denials
+      not shown. The diagonal is &ldquo;admitted&nbsp;=&nbsp;denied&rdquo;; height above it is the school&rsquo;s
+      GPA gap. Both axes carry the same GPA scale and open fitted to where the schools actually are.
+      <b>Scroll to zoom, drag to pan, double-click to reset</b> &mdash; the three years move together.
+      Click any dot to select that school.</p>
+    <div class="toolbar">
       <span class="flab">Years</span>
       <select id="fy0"></select><select id="fy1"></select><select id="fy2"></select>
-      <span class="fnote">three snapshots, shared axes &mdash; watch the field drift up-right as GPAs
-        compress toward the ceiling</span>
+      <button type="button" class="chip small" id="fReset">Reset zoom</button>
+      <span class="fnote" id="fZoomNote"></span>
     </div>
+    <div class="movers" id="fMovers"></div>
     <div class="chart" id="cF"></div>
     <div class="legend" id="lF"></div>
   </section>
@@ -195,7 +236,8 @@
         continuous through 2020&ndash;21.</dd>
       <dt>Denied series</dt>
       <dd>Derived from the above at build time (2026-07-31) by
-        <code>scripts/make_denied_data.py</code>; the underlying dataset is
+        <code>scripts/make_denied_data.py</code>, which also computes the pooled all-school marginal for each
+        campus and year; the underlying dataset is
         <a href="../data/school_campus_year_admitted_denied.csv">data/school_campus_year_admitted_denied.csv</a>.</dd>
     </dl>
     <p class="updated">Last updated 31&nbsp;July&nbsp;2026. Revision history is in
@@ -219,51 +261,71 @@ const CAMPS = D.campuses;
 const CAMP_LABEL = c => c==="Universitywide" ? "UC systemwide" : (c==="Los Angeles" ? "UCLA" : c);
 const ADM = "#2a78d6", DEN = "#eb6834";
 const INK = "#1a1a1a", MUTED = "#5c6470", GRID = "#eef1f5", AXIS = "#cdd4de", SURF = "#fbfcfe";
-const RAMP = ["#cde2fb","#b7d3f6","#9ec5f4","#86b6ef","#6da7ec","#5598e7","#3987e5","#2a78d6","#256abf","#1c5cab","#184f95","#104281","#0d366b"];
+const BLANK = "url(#nodata)";                   // heat-map cell with no data (never zero)
+const POOL_INK = "#111111";                    // the pooled all-schools marker
+// sequential, wide dynamic range (ColorBrewer YlGnBu-9): pale -> deep navy
+const RAMP = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"];
+// diverging, colour-blind safe and deliberately unlike the blue/orange pair (ColorBrewer PRGn-9)
+const DIV  = ["#40004b","#762a83","#9970ab","#c2a5cf","#f4f2f5","#a6dba0","#5aae61","#1b7837","#00441b"];
 const $ = id => document.getElementById(id);
 const fmtN = n => n==null ? "—" : n.toLocaleString("en-US");
 const g1 = v => v==null ? "—" : v.toFixed(2);
+const sgn = v => (v>0?"+":v<0?"−":"±")+Math.abs(v).toFixed(2);
 
 // title-case a dashboard school name for headings ("BERKELEY HIGH SCHOOL" -> "Berkeley High School")
 function tc(s){ return s.toLowerCase().replace(/\b[a-z]/g, ch=>ch.toUpperCase())
   .replace(/\b(Of|The|And|At|For)\b/g, m=>m.toLowerCase()).replace(/^([a-z])/, m=>m.toUpperCase()); }
 
 // ---------- data access ----------
-// packed row: [yi, app, adm, gm*100, gd*100]; app/adm -1 = absent; gpa 0 = absent.
-// denied = applicants - admits (not stored). gd was masked at build (denied<10 or outside (0,5)).
+// packed row: [yi, app, adm, gm*100, gd*100] (+ [5]=nSchools on pooled rows);
+// app/adm -1 = absent; gpa 0 = absent. denied = applicants - admits (not stored).
+// gd was masked at build (denied<10 or outside (0,5)); pooled rows are not subject to that mask.
+const ALL = null;                              // school id meaning "all CA public high schools"
+function packed(si, ci){ return si===ALL ? (D.agg[ci]||[]) : D.series[si][ci]; }
 function rows(si, ci){
-  const out = YEARS.map(y=>({y, app:null, adm:null, den:null, gm:null, gd:null}));
-  for(const p of D.series[si][ci]){
+  const out = YEARS.map(y=>({y, app:null, adm:null, den:null, gm:null, gd:null, ns:null}));
+  for(const p of packed(si,ci)){
     const o = out[p[0]];
     o.app = p[1]<0 ? null : p[1];
     o.adm = p[2]<0 ? null : p[2];
     o.den = (o.app!=null && o.adm!=null) ? o.app-o.adm : null;
     o.gm = p[3] ? p[3]/100 : null;
     o.gd = p[4] ? p[4]/100 : null;
+    o.ns = p.length>5 ? p[5] : null;
   }
   return out;
 }
-function gpaDomain(si){ // fixed per school across campuses -> comparable when switching campus
+function gpaDomain(si){ // fixed across campuses -> comparable when switching campus
   let lo=9, hi=0;
-  for(let ci=0; ci<CAMPS.length; ci++) for(const p of D.series[si][ci]){
+  for(let ci=0; ci<CAMPS.length; ci++) for(const p of packed(si,ci)){
     if(p[3]){ lo=Math.min(lo,p[3]/100); hi=Math.max(hi,p[3]/100); }
     if(p[4]){ lo=Math.min(lo,p[4]/100); hi=Math.max(hi,p[4]/100); }
   }
   if(lo>hi) return [3,4.5];
   return [Math.floor(lo*10)/10-0.05, Math.ceil(hi*10)/10+0.05];
 }
-// field index: campus -> yearIdx -> [si, gm, gd, app, adm][] (only rows with both GPAs; gd implies denied>=10)
+// pooled marginal for one campus-year, as {gm,gd,app,adm,den,ns} or null
+function pooled(ci, yi){
+  for(const p of (D.agg[ci]||[])) if(p[0]===yi){
+    const app=p[1], adm=p[2];
+    return {gm:p[3]?p[3]/100:null, gd:p[4]?p[4]/100:null, app, adm, den:app-adm, ns:p[5]};
+  }
+  return null;
+}
+// field index: campus -> yearIdx -> [si, gm, gd, app, adm][] (both GPAs present; gd implies denied>=10)
 const FIELD = CAMPS.map(()=>YEARS.map(()=>[]));
 for(let si=0; si<D.schools.length; si++)
   for(let ci=0; ci<CAMPS.length; ci++)
     for(const p of D.series[si][ci])
       if(p[3] && p[4]) FIELD[ci][p[0]].push([si, p[3]/100, p[4]/100, p[1], p[2]]);
 
-const state = { school:null, campus:1, fys:[2015,2020,2025] };  // campus 1 = Berkeley
-state.school = Math.max(0, D.schools.findIndex(s=>s[0]==="050290"));   // Berkeley High
+const state = { school:ALL, campus:1, fys:[2015,2020,2025], wallMode:"abs", view:null };
 
 const sName = si => tc(D.schools[si][1]);
 const sCity = si => D.schools[si][2];
+const selLabel = () => state.school===ALL ? "All California public high schools"
+                                          : sName(state.school)+" ("+sCity(state.school)+")";
+const selShort = () => state.school===ALL ? "all CA public high schools" : sName(state.school);
 
 // ---------- svg helpers ----------
 const NS = "http://www.w3.org/2000/svg";
@@ -271,9 +333,7 @@ function el(n, attrs, parent){ const e=document.createElementNS(NS,n);
   for(const k in attrs) e.setAttribute(k,attrs[k]); if(parent) parent.appendChild(e); return e; }
 function txt(parent,x,y,s,attrs){ const t=el("text",Object.assign({x,y},attrs||{}),parent); t.textContent=s; return t; }
 function lin(d0,d1,r0,r1){ const k=(r1-r0)/(d1-d0); return v=>r0+(v-d0)*k; }
-function pathFrom(pts){ let d="",pen=false;
-  for(const p of pts){ if(!p){pen=false;continue;} d+=(pen?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1); pen=true; }
-  return d; }
+function clear(node){ while(node.firstChild) node.removeChild(node.firstChild); }
 
 // ---------- tooltip ----------
 const tip = $('tooltip');
@@ -299,6 +359,10 @@ function tipMove(evt){
 function tipHide(){ tip.style.opacity=0; }
 
 // ---------- shared axis pieces ----------
+function tickStep(span){
+  for(const s of [1,0.5,0.25,0.2,0.1,0.05,0.02,0.01]){ const n=span/s; if(n>=4&&n<=11) return s; }
+  return span>1 ? 1 : 0.01;
+}
 function gpaAxis(g,sy,x0,x1,dom){
   const step=(dom[1]-dom[0])>0.9?0.25:0.1;
   const start=Math.ceil(dom[0]/step)*step;
@@ -333,32 +397,46 @@ function legend(elId,items){
   for(const [type,color,label] of items){
     const s=document.createElement("span"); s.className="lk";
     const m=document.createElement("span"); m.className=type;
-    if(type==="line") m.style.borderTopColor=color; else m.style.background=color;
+    if(type==="line") m.style.borderTopColor=color;
+    else if(type==="dia") m.style.borderColor=color;
+    else m.style.background=color;
     s.appendChild(m);
     const l=document.createElement("span"); l.textContent=label; s.appendChild(l);
     box.appendChild(s);
   }
+}
+// place a text label beside a point, flipping (and only flipping) when it would overrun the frame
+function placeLabel(t,x,y,box,gap){
+  t.setAttribute("y",y+3.5);
+  let w=0; try{ w=t.getComputedTextLength(); }catch(e){}
+  if(!w) w=t.textContent.length*5.1;
+  const flip = (x+gap+w > box.x1-3) && (x-gap-w > box.x0+3);
+  t.setAttribute("x", flip ? x-gap : x+gap);
+  t.setAttribute("text-anchor", flip ? "end" : "start");
 }
 function emptyNote(host,msg){
   const p=document.createElement("p");
   p.style.cssText="color:#5c6470;font-size:13px;padding:26px 8px;text-align:center;margin:0;";
   p.textContent=msg; host.appendChild(p);
 }
-function sizeKeySteps(maxN){
-  if(maxN>=800) return [50,250,1000];
-  if(maxN>=300) return [25,100,400];
-  if(maxN>=80) return [10,50,200];
-  return [5,20,60];
+function sizeKeySteps(maxN){                   // three round sizes spanning the data
+  const nice=v=>{ const e=Math.pow(10,Math.floor(Math.log10(Math.max(v,1))));
+    const m=v/e; return (m<1.5?1:m<3.5?2:m<7.5?5:10)*e; };
+  const out=[];
+  for(const t of [maxN*0.02, maxN*0.15, maxN*0.6]){
+    const n=nice(t); if(n>=1 && out.indexOf(n)<0) out.push(n);
+  }
+  return out.length ? out : [1];
 }
 
-// =============== the wedge timeline ===============
+// =============== 1 · admitted and denied GPA by year ===============
 function renderT(){
-  $('titleT').textContent = sName(state.school)+" ("+sCity(state.school)+") → "+CAMP_LABEL(CAMPS[state.campus])+", 1994–2025";
-  const host=$('cT'); host.textContent="";
+  $('titleT').textContent = selLabel()+" → "+CAMP_LABEL(CAMPS[state.campus])+", 1994–2025";
+  const host=$('cT'); clear(host);
   const rs=rows(state.school,state.campus);
   if(!rs.some(r=>r.gm!=null||r.app!=null)){
-    emptyNote(host,"No published data for this school → campus. Blank ≠ zero — UC suppresses small cells.");
-    $('lT').textContent=""; $('tblT').textContent=""; return;
+    emptyNote(host,"No published data for this selection. Blank ≠ zero — UC suppresses small cells.");
+    $('lT').textContent=""; clear($('tblT')); return;
   }
   const W=1150, H=420, M={l:56,r:34,t:18,b:32};
   const svg=el("svg",{viewBox:`0 0 ${W} ${H}`},host);
@@ -373,7 +451,7 @@ function renderT(){
   }
   testBlindMarker(g,sx,M.t,H-M.b);
 
-  const maxN=Math.max(...rs.map(r=>Math.max(r.adm||0,r.den||0)),1);
+  const maxN=Math.max.apply(null,rs.map(r=>Math.max(r.adm||0,r.den||0)).concat([1]));
   const rOf=n=>n==null?0:Math.max(2.5,Math.min(13,13*Math.sqrt(n/maxN)));
   for(const r of rs){
     const x=sx(r.y);
@@ -391,81 +469,132 @@ function renderT(){
   for(const n of sizeKeySteps(maxN)){
     el("circle",{cx:off,cy:ky,r:rOf(n),fill:"none",stroke:MUTED,"stroke-width":1},g);
     txt(g,off+rOf(n)+3,ky+4,fmtN(n),{fill:MUTED,"font-size":10.5});
-    off+=rOf(n)+50;
+    off+=rOf(n)+56;
   }
   hoverLayer(svg,g,sx,M.l,W-M.r,M.t,H-M.b,rs,(r,evt)=>{
-    tipShow(evt,r.y+" · "+sName(state.school)+" → "+CAMP_LABEL(CAMPS[state.campus]),[
+    const lines=[
       [ADM,"admitted",g1(r.gm)+" GPA · "+fmtN(r.adm)],
       [DEN,"denied",(r.gd!=null?g1(r.gd):(r.den!=null&&r.den<10?"masked (n<10)":"—"))+" GPA · "+fmtN(r.den)],
-      [null,"gap",(r.gm!=null&&r.gd!=null)?(r.gm-r.gd).toFixed(2)+" GPA points":"—"],
-    ]);
+      [null,"gap",(r.gm!=null&&r.gd!=null)?(r.gm-r.gd).toFixed(2)+" GPA points":"—"]];
+    if(r.ns!=null) lines.push([null,"schools pooled",fmtN(r.ns)]);
+    tipShow(evt,r.y+" · "+selShort()+" → "+CAMP_LABEL(CAMPS[state.campus]),lines);
   });
   legend("lT",[["dot",ADM,"admitted (mean GPA, dot area = students)"],
                ["dot",DEN,"denied (mean GPA, dot area = students)"]]);
   renderTable();
 }
 function renderTable(){
-  const host=$('tblT'); host.textContent="";
+  const host=$('tblT'); clear(host);
+  const pool = state.school===ALL;
   const t=document.createElement("table");
   const hr=document.createElement("tr");
-  for(const h of ["Year","Applicants","Admitted","Denied","Admitted GPA","Denied GPA (derived)"]){
-    const th=document.createElement("th"); th.textContent=h; hr.appendChild(th);
-  }
+  const heads=["Year","Applicants","Admitted","Denied","Admitted GPA","Denied GPA (derived)"];
+  if(pool) heads.push("Schools pooled");
+  for(const h of heads){ const th=document.createElement("th"); th.textContent=h; hr.appendChild(th); }
   t.appendChild(hr);
   for(const r of rows(state.school,state.campus)){
     if(r.app==null&&r.gm==null) continue;
     const tr=document.createElement("tr");
-    for(const v of [r.y,fmtN(r.app),fmtN(r.adm),fmtN(r.den),g1(r.gm),
-                    r.gd!=null?g1(r.gd):(r.den!=null&&r.den<10?"n<10":"—")]){
-      const td=document.createElement("td"); td.textContent=v; tr.appendChild(td);
-    }
+    const cells=[r.y,fmtN(r.app),fmtN(r.adm),fmtN(r.den),g1(r.gm),
+                 r.gd!=null?g1(r.gd):(r.den!=null&&r.den<10?"n<10":"—")];
+    if(pool) cells.push(fmtN(r.ns));
+    for(const v of cells){ const td=document.createElement("td"); td.textContent=v; tr.appendChild(td); }
     t.appendChild(tr);
   }
   host.appendChild(t);
 }
 
-// =============== the wall ===============
+// =============== 2 · GPA by campus and year ===============
+// value painted into a cell: the mean GPA, or its distance from the reference series
+function cellValue(ci,yi,r,rel){
+  if(!rel) return {adm:r.gm, den:r.gd};
+  const ref = pooled(state.school===ALL ? 0 : ci, yi);
+  if(!ref) return {adm:null, den:null};
+  return {adm:(r.gm!=null&&ref.gm!=null)?r.gm-ref.gm:null,
+          den:(r.gd!=null&&ref.gd!=null)?r.gd-ref.gd:null};
+}
 function renderW(){
-  $('titleW').textContent="All campuses × all years — "+sName(state.school)+" ("+sCity(state.school)+")";
-  const host=$('cW'); host.textContent="";
-  const W=1150, M={l:120,r:230,t:26,b:8};
+  const rel = state.wallMode==="rel";
+  $('titleW').textContent = selLabel()+" — every campus, 1994–2025";
+  $('wallModeNote').textContent = rel
+    ? (state.school===ALL
+        ? "each campus against UC systemwide in the same year and strip"
+        : "this school against the all-school average for the same campus, year and strip")
+    : "scale fitted to the values on screen";
+  const host=$('cW'); clear(host);
+  const W=1150, M={l:190,r:230,t:26,b:8};
   const cw=(W-M.l-M.r)/NY;
-  const rh=16, sub=2, rowGap=9, pairH=rh*2+sub;
-  const H=M.t+CAMPS.length*(pairH+rowGap)+M.b+22;
+  const rh=17, sub=2, rowGap=10, pairH=rh*2+sub;
+  const H=M.t+CAMPS.length*(pairH+rowGap)+M.b+26;
   const svg=el("svg",{viewBox:`0 0 ${W} ${H}`},host);
+  // hatched backing for cells with no data, so "suppressed" can never read as a pale value
+  const pat=el("pattern",{id:"nodata",width:5,height:5,patternUnits:"userSpaceOnUse",
+    patternTransform:"rotate(45)"},el("defs",{},svg));
+  el("rect",{width:5,height:5,fill:"#eff2f6"},pat);
+  el("line",{x1:0,y1:0,x2:0,y2:5,stroke:"#c2cad6","stroke-width":1.3},pat);
   const g=el("g",{},svg);
-  const GLO=3.0, GHI=4.35;
-  const colOf=v=>{ if(v==null) return null;
-    const t=Math.max(0,Math.min(1,(v-GLO)/(GHI-GLO))); return RAMP[Math.round(t*(RAMP.length-1))]; };
+  const allRows=CAMPS.map((_,ci)=>rows(state.school,ci));
+
+  // ---- colour scale, fitted to what is actually on screen ----
+  const vals=[];
+  allRows.forEach((rr,ci)=>rr.forEach((r,yi)=>{
+    const cell=cellValue(ci,yi,r,rel);
+    if(cell.adm!=null) vals.push(cell.adm);
+    if(cell.den!=null) vals.push(cell.den);
+  }));
+  let lo, hi, colOf;
+  if(!vals.length){ lo=0; hi=1; colOf=()=>null; }
+  else if(rel){
+    let m=0; for(const v of vals) m=Math.max(m,Math.abs(v));
+    hi=Math.max(0.05,Math.ceil(m*20)/20); lo=-hi;
+    colOf=v=>v==null?null:DIV[Math.round((Math.max(-1,Math.min(1,v/hi))+1)/2*(DIV.length-1))];
+  } else {
+    let a=9,b=0; for(const v of vals){ if(v<a)a=v; if(v>b)b=v; }
+    lo=Math.floor(a*20)/20; hi=Math.ceil(b*20)/20;
+    if(hi-lo<0.05) hi=lo+0.05;
+    colOf=v=>v==null?null:RAMP[Math.round(Math.max(0,Math.min(1,(v-lo)/(hi-lo)))*(RAMP.length-1))];
+  }
 
   for(let yr=1995;yr<=2025;yr+=5)
     txt(g,M.l+(yr-Y0+0.5)*cw,M.t-8,""+yr,{"text-anchor":"middle",fill:MUTED});
 
-  const allRows=CAMPS.map((_,ci)=>rows(state.school,ci));
-  const vmax=Math.max(...allRows.map(rr=>{
+  const vmax=Math.max.apply(null,allRows.map(rr=>{
     const rec=rr.filter(r=>r.y>=2015);
     return Math.max(rec.reduce((s,r)=>s+(r.adm||0),0),rec.reduce((s,r)=>s+(r.den||0),0));
-  }),1);
+  }).concat([1]));
   const bwMax=130, bl=n=>bwMax*n/vmax;
 
   CAMPS.forEach((c,ci)=>{
     const y0=M.t+ci*(pairH+rowGap);
-    txt(g,M.l-10,y0+rh-3,CAMP_LABEL(c),{"text-anchor":"end",fill:INK,"font-weight":ci===0?650:500});
-    txt(g,M.l-10,y0+rh+sub+rh-3,"adm / den",{"text-anchor":"end",fill:MUTED,"font-size":9});
+    // two label columns: which campus, then which side of the decision
+    txt(g,M.l-84,y0+rh+sub/2+1,CAMP_LABEL(c),
+        {"text-anchor":"end",fill:INK,"font-weight":ci===0?650:500,"font-size":12});
+    el("line",{x1:M.l-76,x2:M.l-76,y1:y0+1,y2:y0+pairH-1,stroke:AXIS,"stroke-width":1},g);
+    txt(g,M.l-8,y0+rh-4,"admitted",{"text-anchor":"end",fill:ADM,"font-size":10,"font-weight":600});
+    txt(g,M.l-8,y0+rh+sub+rh-4,"denied",{"text-anchor":"end",fill:DEN,"font-size":10,"font-weight":600});
+    // hatched backing: a cell with no data is visibly a hole, not a pale value
+    el("rect",{x:M.l+1,y:y0,width:NY*cw-2,height:rh,fill:BLANK,rx:2},g);
+    el("rect",{x:M.l+1,y:y0+rh+sub,width:NY*cw-2,height:rh,fill:BLANK,rx:2},g);
+
     allRows[ci].forEach((r,yi)=>{
       const x=M.l+yi*cw;
-      const mk=(yy,col,kind,val,n)=>{
-        if(!col) return;
+      const cell=cellValue(ci,yi,r,rel);
+      const mk=(yy,v,kind,gpa,n)=>{
+        const col=colOf(v);
+        if(col==null) return;
         const rc=el("rect",{x:x+1,y:yy,width:cw-2,height:rh,fill:col,rx:2},g);
         rc.addEventListener("pointermove",evt=>{
-          tipShow(evt,r.y+" · "+sName(state.school)+" → "+CAMP_LABEL(c),
-            [[kind==="adm"?ADM:DEN,kind==="adm"?"admitted":"denied",g1(val)+" GPA · "+fmtN(n)]]);
+          const lines=[[kind==="adm"?ADM:DEN,kind==="adm"?"admitted":"denied",g1(gpa)+" GPA · "+fmtN(n)]];
+          if(rel) lines.push([null,"vs. "+(state.school===ALL?"UC systemwide":"the all-school average"),
+                              sgn(v)+" GPA points"]);
+          if(r.ns!=null) lines.push([null,"schools pooled",fmtN(r.ns)]);
+          tipShow(evt,r.y+" · "+selShort()+" → "+CAMP_LABEL(c),lines);
           tipMove(evt);
         });
         rc.addEventListener("pointerleave",tipHide);
       };
-      mk(y0,colOf(r.gm),"adm",r.gm,r.adm);
-      mk(y0+rh+sub,colOf(r.gd),"den",r.gd,r.den);
+      mk(y0,cell.adm,"adm",r.gm,r.adm);
+      mk(y0+rh+sub,cell.den,"den",r.gd,r.den);
     });
     const recent=allRows[ci].filter(r=>r.y>=2015);
     const admT=recent.reduce((s,r)=>s+(r.adm||0),0);
@@ -473,151 +602,342 @@ function renderW(){
     const bx=W-M.r+12;
     el("rect",{x:bx,y:y0+2,width:bl(admT),height:rh-4,fill:ADM,rx:2},g);
     el("rect",{x:bx,y:y0+rh+sub+2,width:bl(denT),height:rh-4,fill:DEN,rx:2},g);
-    txt(g,bx+bl(admT)+5,y0+rh-3,fmtN(admT),{fill:MUTED,"font-size":10});
-    txt(g,bx+bl(denT)+5,y0+rh+sub+rh-3,fmtN(denT),{fill:MUTED,"font-size":10});
+    txt(g,bx+bl(admT)+5,y0+rh-4,fmtN(admT),{fill:MUTED,"font-size":10});
+    txt(g,bx+bl(denT)+5,y0+rh+sub+rh-4,fmtN(denT),{fill:MUTED,"font-size":10});
   });
   txt(g,W-M.r+12,M.t-8,"students 2015–25",{fill:MUTED,"font-size":10});
 
-  // ramp legend
-  const ly=H-6, lx=M.l, lw=220;
-  RAMP.forEach((ccol,i)=>el("rect",{x:lx+i*(lw/RAMP.length),y:ly-9,width:lw/RAMP.length+0.5,height:9,fill:ccol},g));
-  txt(g,lx-8,ly,"mean GPA  ≤"+GLO.toFixed(1),{"text-anchor":"end",fill:MUTED});
-  txt(g,lx+lw+8,ly,GHI.toFixed(2)+"+",{fill:MUTED});
-  txt(g,lx+lw+90,ly,"blank = suppressed / masked (n<10)",{fill:MUTED});
-  legend("lW",[["box",ADM,"volume bars: admitted"],["box",DEN,"volume bars: denied"]]);
+  // ---- scale legend ----
+  const scale = rel ? DIV : RAMP;
+  const ly=H-8, lx=M.l, lw=234;
+  scale.forEach((ccol,i)=>el("rect",{x:lx+i*(lw/scale.length),y:ly-11,width:lw/scale.length+0.5,
+    height:11,fill:ccol,stroke:"#fff","stroke-width":0.5},g));
+  txt(g,lx-8,ly-1,rel?("vs. average  "+sgn(lo)):("mean GPA  "+lo.toFixed(2)),{"text-anchor":"end",fill:MUTED});
+  txt(g,lx+lw+8,ly-1,rel?sgn(hi):hi.toFixed(2),{fill:MUTED});
+  el("rect",{x:lx+lw+70,y:ly-11,width:16,height:11,fill:BLANK,rx:2},g);
+  txt(g,lx+lw+92,ly-1,"no data — suppressed or masked (n<10)",{fill:MUTED});
+  legend("lW",[["box",ADM,"volume bars: admitted 2015–25"],["box",DEN,"volume bars: denied 2015–25"]]);
 }
 
-// =============== the field ===============
+// =============== 3 · every school in one year ===============
+const F = { svg:null, panels:[], base:null, dragging:false, moved:false };
+function fitView(){                                   // auto-fit to where the schools actually are
+  const gm=[], gd=[];
+  for(const yr of state.fys) for(const d of (FIELD[state.campus][yr-Y0]||[])){ gm.push(d[1]); gd.push(d[2]); }
+  if(!gm.length) return {cx:3.75, cy:3.75, span:1.2};
+  const q=(a,p)=>{ a=a.slice().sort((x,y)=>x-y);
+    return a[Math.max(0,Math.min(a.length-1,Math.round(p*(a.length-1))))]; };
+  const xlo=q(gd,0.005), xhi=q(gd,0.995), ylo=q(gm,0.005), yhi=q(gm,0.995);
+  const span=Math.max(xhi-xlo, yhi-ylo, 0.12)*1.12;   // equal GPA-units-per-pixel on both axes
+  return {cx:(xlo+xhi)/2, cy:(ylo+yhi)/2, span};
+}
 function renderF(){
-  $('titleF').textContent="Every school at once — applicants to "+CAMP_LABEL(CAMPS[state.campus])+
-    ", "+state.fys.join(" · ");
-  const host=$('cF'); host.textContent="";
+  $('titleF').textContent="Applicants to "+CAMP_LABEL(CAMPS[state.campus])+", "+state.fys.join(" · ");
+  const host=$('cF'); clear(host); F.panels=[];
   const panels=state.fys.map(yr=>FIELD[state.campus][yr-Y0]||[]);
   if(!panels.some(p=>p.length)){
     emptyNote(host,"No school in these years has both GPAs published with ≥10 denials for this campus.");
-    $('lF').textContent=""; return;
+    $('lF').textContent=""; clear($('fMovers')); $('fZoomNote').textContent=""; return;
   }
-  // shared domain + shared size scale across the three panels
-  let lo=9, hi=0, maxApp=1;
-  for(const p of panels) for(const d of p){
-    lo=Math.min(lo,d[1],d[2]); hi=Math.max(hi,d[1],d[2]);
-    if(d[3]>0) maxApp=Math.max(maxApp,d[3]);
-  }
-  lo=Math.max(2.0,Math.floor(lo*10)/10-0.05); hi=Math.min(4.6,Math.ceil(hi*10)/10+0.05);
-  const P=356, M={l:46,r:10,t:26,b:36}, GAPX=26;
-  const W=3*P+2*GAPX+10, H=P+M.t+M.b-26;
-  const svg=el("svg",{viewBox:`0 0 ${W} ${H}`},host);
-  const step=(hi-lo)>0.9?0.25:0.1;
+  let maxApp=1;
+  for(const p of panels) for(const d of p) if(d[3]>0) maxApp=Math.max(maxApp,d[3]);
+  const rOf=n=>n==null||n<0?2:Math.max(1.8,Math.min(10,10*Math.sqrt(n/maxApp)));
+
+  const P=356, PAD={l:46,t:26,b:36}, GAPX=26;
+  const W=3*P+2*GAPX+10, H=P+PAD.t+PAD.b-26;
+  const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,style:"touch-action:none"},host);
+  F.svg=svg;
+  const defs=el("defs",{},svg);
+  F.base=fitView();
+  if(!state.view) state.view=Object.assign({},F.base);
+
   state.fys.forEach((yr,pi)=>{
     const x0=10+pi*(P+GAPX);
+    const box={x0:x0+PAD.l, x1:x0+P, y0:PAD.t, y1:PAD.t+P-PAD.l-4};
+    const cp=el("clipPath",{id:"fclip"+pi},defs);
+    el("rect",{x:box.x0,y:box.y0,width:box.x1-box.x0,height:box.y1-box.y0},cp);
     const g=el("g",{},svg);
-    const sx=lin(lo,hi,x0+M.l,x0+P);
-    const sy=lin(lo,hi,M.t+P-M.l-4,M.t);
-    txt(g,x0+M.l,M.t-10,""+yr,{fill:INK,"font-weight":650,"font-size":13});
-    const start=Math.ceil(lo/step)*step;
-    for(let v=start;v<=hi+1e-9;v+=step){
-      el("line",{x1:sx(lo),x2:sx(hi),y1:sy(v),y2:sy(v),stroke:GRID},g);
-      el("line",{x1:sx(v),x2:sx(v),y1:sy(lo),y2:sy(hi),stroke:GRID},g);
-      if(pi===0) txt(g,sx(lo)-6,sy(v)+3.5,v.toFixed(2),{"text-anchor":"end",fill:MUTED,"font-size":9.5});
-      txt(g,sx(v),sy(lo)+16,v.toFixed(2),{"text-anchor":"middle",fill:MUTED,"font-size":9.5});
-    }
-    el("line",{x1:sx(lo),x2:sx(hi),y1:sy(lo),y2:sy(hi),stroke:AXIS,"stroke-width":1},g);
+    const axisG=el("g",{},g);
+    el("rect",{x:box.x0,y:box.y0,width:box.x1-box.x0,height:box.y1-box.y0,
+      fill:"#fff",stroke:AXIS,"stroke-width":1},g);
+    const inner=el("g",{"clip-path":"url(#fclip"+pi+")"},g);
+    const gridG=el("g",{},inner);
+    const dotG=el("g",{},inner);
+    const markG=el("g",{},inner);
+    txt(g,box.x0,PAD.t-10,""+yr,{fill:INK,"font-weight":650,"font-size":13});
+    txt(g,box.x1,PAD.t-10,panels[pi].length+" schools",{fill:MUTED,"font-size":10,"text-anchor":"end"});
+    txt(g,(box.x0+box.x1)/2,H-3,"denied GPA →",{"text-anchor":"middle",fill:MUTED,"font-size":10.5});
     if(pi===0){
-      const dv=lo+(hi-lo)*0.18;
-      txt(g,sx(dv),sy(dv)+13,"admitted = denied",{fill:MUTED,"font-size":9.5,
-        transform:`rotate(-45 ${sx(dv)} ${sy(dv)+13})`});
-      const ty=M.t+72, tx=x0+10;
+      const ty=PAD.t+72, tx=x0+10;
       txt(g,tx,ty,"admitted GPA ↑",{fill:MUTED,"font-size":10.5,"text-anchor":"middle",
         transform:`rotate(-90 ${tx} ${ty})`});
     }
-    txt(g,x0+M.l+(P-M.l)/2,H-3,"denied GPA →",{"text-anchor":"middle",fill:MUTED,"font-size":10.5});
-
-    const pts=panels[pi];
-    const rOf=n=>n==null||n<0?2:Math.max(1.8,Math.min(10,10*Math.sqrt(n/maxApp)));
-    const selPt=pts.find(d=>d[0]===state.school);
-    txt(g,x0+P,M.t-10,pts.length+" schools",{fill:MUTED,"font-size":10,"text-anchor":"end"});
-    for(const d of pts){
+    // dots are built once; positions are updated on zoom/pan
+    const dots=[];
+    for(const d of panels[pi]){
       if(d[0]===state.school) continue;
-      mkDot(g,sx(d[2]),sy(d[1]),rOf(d[3]),"#c3c2b7",0.55,d,yr,false);
+      dots.push(mkDot(dotG,rOf(d[3]),"#b9b7a9",0.6,d,yr,false));
     }
-    if(selPt){
-      const cx=sx(selPt[2]), cy=sy(selPt[1]), r=Math.max(rOf(selPt[3]),5);
-      mkDot(g,cx,cy,r,ADM,1,selPt,yr,true);
-      const flip=cx>x0+P-70;
-      txt(g,flip?cx-r-4:cx+r+4,cy+3.5,sName(state.school),
-        {fill:INK,"font-size":9.5,"font-weight":600,"text-anchor":flip?"end":"start"});
+    const sel = state.school===ALL ? null : panels[pi].find(d=>d[0]===state.school);
+    let selDot=null, selLab=null;
+    if(sel){
+      selDot=mkDot(dotG,Math.max(rOf(sel[3]),5),ADM,1,sel,yr,true);
+      selLab=txt(markG,0,0,sName(state.school),{fill:INK,"font-size":9.5,"font-weight":600});
     }
+    // the pooled all-schools marker, always drawn
+    const pl=pooled(state.campus,yr-Y0);
+    let poolMark=null, poolLab=null;
+    if(pl && pl.gm!=null && pl.gd!=null){
+      poolMark=el("rect",{width:12,height:12,fill:"#fff",stroke:POOL_INK,"stroke-width":2},markG);
+      poolMark.addEventListener("pointermove",evt=>{
+        if(F.dragging) return;
+        tipShow(evt,yr+" · all CA public high schools → "+CAMP_LABEL(CAMPS[state.campus]),[
+          [ADM,"admitted GPA",g1(pl.gm)+" · "+fmtN(pl.adm)],
+          [DEN,"denied GPA",g1(pl.gd)+" · "+fmtN(pl.den)],
+          [null,"gap",(pl.gm-pl.gd).toFixed(2)+" GPA points"],
+          [null,"schools pooled",fmtN(pl.ns)],
+        ]); tipMove(evt);
+      });
+      poolMark.addEventListener("pointerleave",tipHide);
+      if(state.school===ALL)
+        poolLab=txt(markG,0,0,"all CA public HS",{fill:INK,"font-size":9.5,"font-weight":600});
+    }
+    F.panels.push({box,axisG,gridG,dots,selDot,selLab,sel,poolMark,poolLab,pl,pi});
   });
-  legend("lF",[["dot",ADM,"selected school"],["dot","#c3c2b7","every other CA public HS (≥10 denied)"],
-               ["line",AXIS,"diagonal: no GPA gap"]]);
+
+  attachZoom(svg);
+  paintF();
+  buildMovers();
+  const items=[["dot","#b9b7a9","each dot: one CA public high school (≥10 denied), area = applicants"],
+               ["dia",POOL_INK,"all CA public high schools pooled"],
+               ["line",AXIS,"diagonal: admitted = denied (no GPA gap)"]];
+  if(state.school!==ALL) items.splice(1,0,["dot",ADM,"selected school"]);
+  legend("lF",items);
 }
-function mkDot(g,cx,cy,r,fill,op,d,yr,strong){
-  el("circle",{cx,cy,r,fill,opacity:op,stroke:SURF,"stroke-width":strong?2:1},g);
-  const hit=el("circle",{cx,cy,r:Math.max(r,7),fill:"transparent",style:"cursor:pointer"},g);
+function mkDot(g,r,fill,op,d,yr,strong){
+  const c=el("circle",{r,fill,opacity:op,stroke:SURF,"stroke-width":strong?2:1},g);
+  const hit=el("circle",{r:Math.max(r,7),fill:"transparent",style:"cursor:pointer"},g);
   hit.addEventListener("pointermove",evt=>{
+    if(F.dragging) return;
     tipShow(evt,sName(d[0])+" ("+sCity(d[0])+") · "+yr+" → "+CAMP_LABEL(CAMPS[state.campus]),[
       [ADM,"admitted GPA",d[1].toFixed(2)],
       [DEN,"denied GPA",d[2].toFixed(2)],
+      [null,"gap",(d[1]-d[2]).toFixed(2)+" GPA points"],
       [null,"applicants / admits",fmtN(d[3]<0?null:d[3])+" / "+fmtN(d[4]<0?null:d[4])],
     ]); tipMove(evt);
   });
   hit.addEventListener("pointerleave",tipHide);
-  hit.addEventListener("click",()=>{ setSchool(d[0]); });
+  hit.addEventListener("click",()=>{ if(!F.moved) setSchool(d[0]); });
+  return {c,hit,d};
+}
+function scalesFor(box){
+  const v=state.view;
+  return {sx:lin(v.cx-v.span/2, v.cx+v.span/2, box.x0, box.x1),
+          sy:lin(v.cy-v.span/2, v.cy+v.span/2, box.y1, box.y0)};
+}
+function paintF(){
+  const v=state.view;
+  const step=tickStep(v.span);
+  const atBase = F.base && Math.abs(v.span-F.base.span)<1e-9 &&
+                 Math.abs(v.cx-F.base.cx)<1e-9 && Math.abs(v.cy-F.base.cy)<1e-9;
+  $('fZoomNote').textContent = "axes span "+v.span.toFixed(2)+" GPA points"+
+    (atBase ? " — fitted to the data" : " — zoomed; double-click to reset");
+  const lo=v.cx-v.span/2, hi=v.cx+v.span/2, blo=v.cy-v.span/2, bhi=v.cy+v.span/2;
+  for(const p of F.panels){
+    const {sx,sy}=scalesFor(p.box);
+    clear(p.axisG); clear(p.gridG);
+    for(let k=Math.ceil(lo/step); k*step<=hi+1e-9; k++){
+      const t=k*step, x=sx(t);
+      el("line",{x1:x,x2:x,y1:p.box.y0,y2:p.box.y1,stroke:GRID},p.gridG);
+      txt(p.axisG,x,p.box.y1+15,t.toFixed(2),{"text-anchor":"middle",fill:MUTED,"font-size":9.5});
+    }
+    for(let k=Math.ceil(blo/step); k*step<=bhi+1e-9; k++){
+      const t=k*step, y=sy(t);
+      el("line",{x1:p.box.x0,x2:p.box.x1,y1:y,y2:y,stroke:GRID},p.gridG);
+      if(p.pi===0) txt(p.axisG,p.box.x0-6,y+3.5,t.toFixed(2),{"text-anchor":"end",fill:MUTED,"font-size":9.5});
+    }
+    // diagonal admitted = denied, over the range visible on both axes
+    const dlo=Math.max(lo,blo), dhi=Math.min(hi,bhi);
+    if(dhi>dlo){
+      el("line",{x1:sx(dlo),y1:sy(dlo),x2:sx(dhi),y2:sy(dhi),stroke:AXIS,"stroke-width":1},p.gridG);
+      if(p.pi===0){
+        const dv=dlo+(dhi-dlo)*0.5;
+        txt(p.gridG,sx(dv),sy(dv)+13,"admitted = denied",{fill:MUTED,"font-size":9.5,
+          "text-anchor":"middle",transform:`rotate(-45 ${sx(dv)} ${sy(dv)+13})`});
+      }
+    }
+    for(const o of p.dots){
+      const x=sx(o.d[2]), y=sy(o.d[1]);
+      o.c.setAttribute("cx",x); o.c.setAttribute("cy",y);
+      o.hit.setAttribute("cx",x); o.hit.setAttribute("cy",y);
+    }
+    if(p.selDot){
+      const x=sx(p.sel[2]), y=sy(p.sel[1]);
+      p.selDot.c.setAttribute("cx",x); p.selDot.c.setAttribute("cy",y);
+      p.selDot.hit.setAttribute("cx",x); p.selDot.hit.setAttribute("cy",y);
+      placeLabel(p.selLab,x,y,p.box,(+p.selDot.c.getAttribute("r"))+4);
+    }
+    if(p.poolMark){
+      const x=sx(p.pl.gd), y=sy(p.pl.gm);
+      p.poolMark.setAttribute("x",x-6); p.poolMark.setAttribute("y",y-6);
+      p.poolMark.setAttribute("transform",`rotate(45 ${x} ${y})`);
+      if(p.poolLab) placeLabel(p.poolLab,x,y,p.box,12);
+    }
+  }
+}
+function attachZoom(svg){
+  const locOf=evt=>{
+    const pt=svg.createSVGPoint(); pt.x=evt.clientX; pt.y=evt.clientY;
+    return pt.matrixTransform(svg.getScreenCTM().inverse());
+  };
+  const panelAt=loc=>F.panels.find(p=>loc.x>=p.box.x0-1&&loc.x<=p.box.x1+1&&
+                                      loc.y>=p.box.y0-1&&loc.y<=p.box.y1+1)||null;
+  const toData=(loc,box)=>{
+    const v=state.view;
+    return {gx:v.cx-v.span/2+(loc.x-box.x0)/(box.x1-box.x0)*v.span,
+            gy:v.cy+v.span/2-(loc.y-box.y0)/(box.y1-box.y0)*v.span};
+  };
+  svg.addEventListener("wheel",evt=>{
+    const loc=locOf(evt), p=panelAt(loc); if(!p) return;
+    evt.preventDefault();
+    const before=toData(loc,p.box);
+    const k=Math.exp((evt.deltaMode===1?evt.deltaY*16:evt.deltaY)*0.0016);
+    const span=Math.max(0.06,Math.min(3.0,state.view.span*k));
+    if(span===state.view.span) return;
+    state.view.span=span;
+    const after=toData(loc,p.box);                       // keep the point under the cursor fixed
+    state.view.cx+=before.gx-after.gx;
+    state.view.cy+=before.gy-after.gy;
+    paintF();
+  },{passive:false});
+  let last=null, lastPx=null;
+  svg.addEventListener("pointerdown",evt=>{
+    const loc=locOf(evt), p=panelAt(loc); if(!p) return;
+    F.dragging=true; F.moved=false; last={box:p.box, d:toData(loc,p.box)}; lastPx=loc;
+    try{ svg.setPointerCapture(evt.pointerId); }catch(e){}
+    svg.style.cursor="grabbing"; tipHide();
+  });
+  svg.addEventListener("pointermove",evt=>{
+    if(!F.dragging||!last) return;
+    const loc=locOf(evt), now=toData(loc,last.box);
+    if(Math.abs(loc.x-lastPx.x)>2||Math.abs(loc.y-lastPx.y)>2) F.moved=true;
+    state.view.cx+=last.d.gx-now.gx; state.view.cy+=last.d.gy-now.gy;
+    paintF();
+  });
+  const end=evt=>{ if(!F.dragging) return; F.dragging=false; svg.style.cursor="";
+    try{ svg.releasePointerCapture(evt.pointerId); }catch(e){}
+    setTimeout(()=>{F.moved=false;},0); };
+  svg.addEventListener("pointerup",end);
+  svg.addEventListener("pointercancel",end);
+  svg.addEventListener("dblclick",evt=>{ evt.preventDefault(); resetView(); });
+}
+function resetView(){ state.view=Object.assign({},F.base||fitView()); paintF(); }
+// schools that moved furthest in the (denied GPA, admitted GPA) plane between the outer two years
+function movers(){
+  const y0=Math.min.apply(null,state.fys), y1=Math.max.apply(null,state.fys);
+  if(y0===y1) return [];
+  const a=new Map(), out=[];
+  for(const d of (FIELD[state.campus][y0-Y0]||[])) a.set(d[0],d);
+  for(const d of (FIELD[state.campus][y1-Y0]||[])){
+    const p=a.get(d[0]); if(!p) continue;
+    if(p[3]<40||d[3]<40) continue;                       // ignore schools too small to read
+    out.push({si:d[0], dist:Math.sqrt(Math.pow(d[2]-p[2],2)+Math.pow(d[1]-p[1],2)), from:p, to:d});
+  }
+  out.sort((x,y)=>y.dist-x.dist);
+  return out.slice(0,5);
+}
+function buildMovers(){
+  const host=$('fMovers'); clear(host);
+  const ms=movers();
+  if(!ms.length) return;
+  const y0=Math.min.apply(null,state.fys), y1=Math.max.apply(null,state.fys);
+  const lab=document.createElement("span");
+  lab.textContent="Schools that moved furthest, "+y0+" → "+y1+":";
+  host.appendChild(lab);
+  for(const m of ms){
+    const b=document.createElement("button");
+    b.className="chip small"; b.type="button";
+    b.textContent=sName(m.si);
+    b.title=sName(m.si)+" ("+sCity(m.si)+"): admitted "+m.from[1].toFixed(2)+"→"+m.to[1].toFixed(2)+
+            ", denied "+m.from[2].toFixed(2)+"→"+m.to[2].toFixed(2)+
+            ", gap "+(m.from[1]-m.from[2]).toFixed(2)+"→"+(m.to[1]-m.to[2]).toFixed(2);
+    b.addEventListener("click",()=>setSchool(m.si));
+    host.appendChild(b);
+  }
 }
 
 // ---------- controls ----------
 const searchIndex=new Map();
 function schoolLabel(s){ const city=(s[2]&&s[2].trim())?s[2].trim():"—"; return s[1]+" — "+city; }
 function buildDatalist(){
-  const dl=$('schoollist'); dl.innerHTML=""; searchIndex.clear();
-  const order=D.schools.map((s,i)=>i);
+  const dl=$('schoollist'); clear(dl); searchIndex.clear();
   const base=new Map();
-  for(const i of order){ const b=schoolLabel(D.schools[i]); base.set(b,(base.get(b)||0)+1); }
-  for(const i of order){
-    let label=schoolLabel(D.schools[i]);
-    if(base.get(label)>1||searchIndex.has(label)) label+=" (CEEB "+D.schools[i][0]+")";
+  for(const s of D.schools){ const b=schoolLabel(s); base.set(b,(base.get(b)||0)+1); }
+  D.schools.forEach((s,i)=>{
+    let label=schoolLabel(s);
+    if(base.get(label)>1||searchIndex.has(label)) label+=" (CEEB "+s[0]+")";
     searchIndex.set(label,i);
     const o=document.createElement("option"); o.value=label; dl.appendChild(o);
-  }
+  });
 }
 function onSearch(){
   const q=$('search').value.trim();
+  if(q===""){ setSchool(ALL); return; }
   if(searchIndex.has(q)){ setSchool(searchIndex.get(q)); return; }
   const qq=q.toLowerCase();
   if(qq.length<3) return;
   let best=null;
-  for(const [label,i] of searchIndex) if(label.toLowerCase().includes(qq)){ best=i; break; }
+  for(const entry of searchIndex) if(entry[0].toLowerCase().indexOf(qq)>=0){ best=entry[1]; break; }
   if(best!=null) setSchool(best);
 }
 function setSchool(si){
-  if(si===state.school){ renderAll(); return; }
   state.school=si;
-  $('search').value=schoolLabel(D.schools[si]);
+  $('search').value = si===ALL ? "" : schoolLabel(D.schools[si]);
+  $('clearSchool').hidden = si===ALL;
   renderAll();
 }
+function syncScope(){
+  $('scopeNote').innerHTML = state.school===ALL
+    ? "Showing <b>all "+D.schools.length.toLocaleString("en-US")+
+      " California public high schools</b>, pooled."
+    : "Showing <b>"+selLabel()+"</b> only.";
+}
 function buildCampusChips(){
-  const host=$('campusChips'); host.textContent="";
+  const host=$('campusChips'); clear(host);
   CAMPS.forEach((c,ci)=>{
     const b=document.createElement("button");
     b.className="chip"; b.type="button"; b.textContent=CAMP_LABEL(c);
     b.setAttribute("aria-pressed",state.campus===ci?"true":"false");
-    b.addEventListener("click",()=>{ state.campus=ci; buildCampusChips(); renderT(); renderF(); });
+    b.addEventListener("click",()=>{ state.campus=ci; state.view=null;
+      buildCampusChips(); renderT(); renderF(); });
     host.appendChild(b);
   });
 }
 function buildYearSelects(){
   ["fy0","fy1","fy2"].forEach((id,k)=>{
-    const sel=$(id); sel.innerHTML="";
+    const sel=$(id); clear(sel);
     for(const y of YEARS){ const o=document.createElement("option"); o.value=y; o.textContent=y; sel.appendChild(o); }
     sel.value=state.fys[k];
-    sel.addEventListener("change",()=>{ state.fys[k]=+sel.value; renderF(); });
+    sel.addEventListener("change",()=>{ state.fys[k]=+sel.value; state.view=null; renderF(); });
   });
 }
+function buildWallMode(){
+  for(const b of $('wallMode').querySelectorAll("button")){
+    b.setAttribute("aria-pressed", b.dataset.mode===state.wallMode ? "true":"false");
+    b.onclick=()=>{ state.wallMode=b.dataset.mode; buildWallMode(); renderW(); };
+  }
+}
 
-function renderAll(){ renderT(); renderW(); renderF(); }
+function renderAll(){ syncScope(); renderT(); renderW(); renderF(); }
 
 $('search').addEventListener('change',onSearch);
-$('search').addEventListener('input',()=>{ if(searchIndex.has($('search').value.trim())) onSearch(); });
+$('search').addEventListener('input',()=>{
+  const q=$('search').value.trim();
+  if(q==="" && state.school!==ALL){ setSchool(ALL); return; }
+  if(searchIndex.has(q)) onSearch();
+});
+$('clearSchool').addEventListener('click',()=>{ setSchool(ALL); $('search').focus(); });
+$('fReset').addEventListener('click',resetView);
 
 $('footer').innerHTML=`Data: UC Information Center, freshman admissions by source high school `+
   `(California public HS), fall 1994–2025 — counts from the by-year counts tabs (labels verified); GPA from the `+
@@ -625,9 +945,11 @@ $('footer').innerHTML=`Data: UC Information Center, freshman admissions by sourc
   `derived as stated above; masking (denied&lt;10, values outside (0,5)) applied when the dataset is built. `+
   `Built ${D.generated}. Part of the <a href="../">UC admissions explorer</a>.`;
 
-buildDatalist(); buildCampusChips(); buildYearSelects();
-$('search').value=schoolLabel(D.schools[state.school]);
+buildDatalist(); buildCampusChips(); buildYearSelects(); buildWallMode();
+$('search').value=""; $('clearSchool').hidden=true;
 renderAll();
+
+window.UCDENIED_TEST={state,rows,pooled,movers,fitView,setSchool,resetView,paintF,renderW,F,FIELD,cellValue,ALL};
 })();
 </script>
 </body>

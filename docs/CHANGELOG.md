@@ -9,6 +9,49 @@ day of the change, not necessarily to the day of the commit that carried it.
 
 ---
 
+## 2026-07-31 — Admitted vs. denied page: legibility revision
+
+**Changed**
+- Section headings are now plain descriptions of what is plotted — *Admitted and denied GPA by year*,
+  *GPA by campus and year*, *Every school in one year* — replacing the earlier figurative names
+  ("the wedge timeline", "the wall", "the field"). Body copy follows suit.
+- **The page now opens on all California public high schools pooled**, not on a single default school.
+  The school box starts empty and carries a clear (×) control; typing a name narrows every view to
+  that school. Each campus-year therefore shows a marginal: applicants and admits summed over every
+  school whose GPA UC published that year, admitted mean = Σ(N_adm·GPA_adm)/ΣN_adm, denied mean = the
+  same moment identity applied to the pooled totals. Because it is applied to totals, the pooled
+  denied mean is **not** affected by the per-school n<10 mask. Pooled counts are the counts of the
+  contributing schools (surfaced on hover and in a new *Schools pooled* table column), not UC's campus
+  grand total — a school-year with suppressed GPA cannot enter a GPA-weighted mean.
+- *GPA by campus and year*: the colour ramp was carrying almost no information (a narrow single-hue
+  blue fixed at 3.00–4.35 against values that mostly sit above 3.5). Replaced with a wide-range
+  sequential scale (ColorBrewer YlGnBu-9) **fitted to the values on screen**, plus a second mode,
+  *Difference from average*, on a diverging colour-blind-safe scale (PRGn-9): a selected school
+  against the all-school average for the same campus, year and strip; the pooled view against UC
+  systemwide. Cells with no data are now a hatched backing rather than white space, so a suppressed
+  cell can never be read as a pale value.
+- *GPA by campus and year*: row labels split into two columns — campus in one, `admitted` / `denied`
+  in the other. The old single `adm / den` sub-label read as a ratio and made the campus name look
+  like a total.
+- *Every school in one year*: axes now auto-fit to the schools (≈0.8 GPA points across rather than a
+  fixed ≈1.2 with the cloud in one corner; 99.3% of dots land inside the frame at the default view),
+  and the panels are **zoomable — scroll to zoom, drag to pan, double-click or *Reset zoom* to
+  restore**, with all three years locked to one view. Both axes keep an identical GPA scale, so the
+  admitted = denied diagonal stays at 45°. Added a pooled all-schools marker on every panel and a
+  *Schools that moved furthest* shortcut row (largest displacement in the admitted/denied GPA plane
+  between the outer two selected years, applicants ≥ 40 in both).
+
+**Verified**
+- 54/54 headless assertions in a real browser: payload-vs-rendered dot and cell counts, the pooled
+  arithmetic, two-column labels, ramp coverage, neutrality of the systemwide row in relative mode,
+  auto-fit coverage, wheel-zoom / drag-pan / reset, wheel not stealing page scroll, label containment,
+  school search including the CEEB traps, campus switching, and no console errors.
+- **24,053 rendered table values across 130 school × campus selections** re-derived independently from
+  `data/school_campus_year_admitted_denied.csv` in Python — 0 mismatches. The pooled moment identity
+  holds for all 299 campus-years.
+- `denied/data_denied.js` was rebuilt and is identical to the previous payload except for the new
+  `agg` block: `schools` and `series` compare equal element-for-element.
+
 ## 2026-07-31 — Admitted vs. denied page
 
 **Added**
