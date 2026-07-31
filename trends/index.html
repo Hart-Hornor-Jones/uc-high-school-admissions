@@ -76,6 +76,8 @@
   details.notes th{background:#f4f6fa;}
   .dl{font-size:12.5px;color:var(--muted);margin-top:8px;}
   .cutnote{font-size:12px;color:var(--muted);padding:2px 8px 6px;}
+  .seriesnote{font-size:12px;color:var(--muted);padding:6px 8px 0;line-height:1.55;}
+  .seriesnote b{color:var(--ink);font-weight:650;}
   .gatenote{font-size:12px;color:#8a6d1a;background:#fcf9f0;border:1px solid #efe6cd;border-radius:8px;
     padding:6px 10px;margin:4px 8px 6px;max-width:960px;}
   noscript table{border-collapse:collapse;} noscript td,noscript th{border:1px solid #ccc;padding:4px 8px;}
@@ -83,6 +85,21 @@
     .wrap{padding:14px 12px 40px;}
     select,input[type=text]{min-width:100px;}
     .chips{max-width:100%;}
+  }
+  footer{margin-top:26px;color:var(--muted);font-size:12px;line-height:1.6;border-top:1px solid var(--line);padding-top:14px;}
+  /* --- uniform data-vintage block (identical on /, context/, trends/) --- */
+  .vintage{margin-top:26px;border-top:1px solid var(--line);padding-top:14px;
+    color:var(--muted);font-size:12px;line-height:1.65;}
+  .vintage h2{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ink);margin:0 0 8px;}
+  .vintage dl{margin:0;display:grid;grid-template-columns:max-content 1fr;gap:3px 16px;}
+  .vintage dt{font-weight:650;color:var(--ink);}
+  .vintage dd{margin:0;}
+  .vintage .updated{margin:10px 0 0;}
+  @media (max-width:700px){
+    .vintage dl{grid-template-columns:1fr;gap:0;}
+    .vintage dt{margin-top:7px;}
+    .vintage dd{margin:0;}
   }
 </style>
 </head>
@@ -119,6 +136,7 @@
     <div class="plot-title" id="plotTitle"></div>
     <div class="plot-sub" id="plotSub"></div>
     <div id="chart"></div>
+    <div class="seriesnote" id="seriesnote"></div>
     <div class="gatenote" id="gatenote" style="display:none"></div>
     <div class="cutnote" id="cutnote" style="display:none"></div>
     <div class="footer-note">
@@ -129,6 +147,31 @@
 
   <details class="notes">
     <summary>Methods, definitions &amp; downloads</summary>
+    <h3>Which series a number comes from</h3>
+    <p>Retention and graduation appear on this page in more than one series, published by different
+    offices over different universes. They are not interchangeable, and the gaps between them are
+    larger than most of the trends they are used to describe. Every chart therefore carries a
+    universe badge, and a series line sits directly beneath it.</p>
+    <table>
+      <tr><th>Series</th><th>Publisher and universe</th><th>First-year retention</th><th>Four-year graduation</th></tr>
+      <tr><td>Systemwide</td><td>UC Information Center; all nine campuses pooled, by entering cohort</td>
+          <td>91.7% (2021 entrants)</td><td>74.0% (2021 entrants)</td></tr>
+      <tr><td>UC Berkeley</td><td>UCB Office of Planning &amp; Analysis; the campus's own cohort definitions</td>
+          <td>95.8% (2021 entrants)</td><td>80.6% (2021 entrants)</td></tr>
+      <tr><td>UC San Diego</td><td>UCSD Institutional Research; the campus's own definitions, by school of major</td>
+          <td colspan="2">campus definitions; not comparable with either series above</td></tr>
+      <tr><td>By source school</td><td>UC Information Center; entrants from one high school or community college to the
+          selected campus, or to all nine pooled</td>
+          <td colspan="2">integer percents, cohorts of 10 or more</td></tr>
+      <tr><td>Federal</td><td>IPEDS / College Scorecard; first-time full-time or Title IV students, indexed to the
+          data year rather than the entering cohort</td>
+          <td colspan="2">a narrower population; not comparable with the UC series</td></tr>
+    </table>
+    <p>A figure quoted without its series is ambiguous. &ldquo;74.0%&rdquo; is systemwide four-year graduation
+    for the 2021 entering cohort, not Berkeley's, which is 80.6%. &ldquo;About 92%&rdquo; is systemwide
+    first-year retention, not Berkeley's, which is about 96%. Retention is not graduation: first-year
+    retention counts students enrolled at the start of the second year and says nothing about completion.</p>
+
     <h3>What kind of number is on the y-axis?</h3>
     <p>Measures are grouped in the picker by what they mean, and every chart carries a purple tag:
     <b>% of entering cohort</b> &mdash; the share of everyone who started (the usual "graduation rate");
@@ -229,11 +272,43 @@
   </details>
 
   <noscript>
-    <p>This page is interactive and needs JavaScript. Headline numbers from the underlying data: systemwide
-    freshman cohorts &mdash; first-year retention 93.0% (2024 entrants, N=50,742); graduation within four years
-    74.0% (2021 entrants); within six years 86.1% (2019 entrants). The tidy CSVs are linked in the page source
-    under data/trends/.</p>
+    <p>This page is interactive and needs JavaScript. Headline numbers from the underlying data, all from the
+    <b>UC Information Center systemwide series</b> (all nine campuses pooled, freshman entrants, by entering
+    cohort): first-year retention 93.0% (2024 entrants, N=50,742); graduation within four years 74.0% (2021
+    entrants); within six years 86.1% (2019 entrants). Individual campuses' own dashboards report different
+    figures for the same measures &mdash; Berkeley's four-year graduation for the 2021 entering cohort is 80.6%.
+    The tidy CSVs are linked in the page source under data/trends/.</p>
   </noscript>
+  <section class="vintage">
+    <h2>Data vintage</h2>
+    <dl>
+      <dt>Admissions</dt>
+      <dd>UC Information Center, admission years through fall&nbsp;2025.</dd>
+      <dt>Achievement</dt>
+      <dd>CDE CAASPP grade&nbsp;11 (Smarter Balanced), spring 2015&ndash;2025. Spring 2020 was cancelled
+        and spring 2021 is excluded as non-representative; each entering class is matched to its own
+        grade-11 test the prior spring, so the 2021 and 2022 entering classes carry no CAASPP value.</dd>
+      <dt>UC outcomes</dt>
+      <dd>Entry cohorts 1999&ndash;2024. A rate appears only where its window has closed: six-year
+        completion through the 2019 entering cohort, five-year through 2020, four-year through 2021,
+        first-year retention through 2024.</dd>
+      <dt>Neighborhood</dt>
+      <dd>U.S. Census Bureau ACS 5-year estimates at census-tract level; ACS year set to the school
+        year, with 2025 school years carrying the 2024 release.</dd>
+    </dl>
+    <p class="updated">Last updated 31&nbsp;July&nbsp;2026. Build dates for each data layer are given with
+      the sources below; revision history is in
+      <a href="https://github.com/hart-hornor-jones/uc-high-school-admissions/blob/main/docs/CHANGELOG.md">docs/CHANGELOG.md</a>.</p>
+  </section>
+  <footer id="footer">
+    <b>Sources.</b> UC series: University of California Information Center undergraduate-outcomes and
+    admissions-by-source-school dashboards. Federal series: College Scorecard institution files and
+    IPEDS Completions. Campus series: UC San Diego Institutional Research and the UC Berkeley Office of
+    Planning &amp; Analysis. Harvest vintages, universes and per-measure definitions are under
+    &ldquo;Methods, definitions &amp; downloads&rdquo; above, with the tidy CSVs behind every chart.
+    Built by <code>scripts/make_trends_data.py</code> in the same repository as the
+    <a href="../">main explorer</a>. <span id="genstamp"></span>
+  </footer>
 </div>
 <div class="tooltip" id="tooltip"></div>
 
@@ -766,7 +841,7 @@ function assemble(){
   const m=state.mode, sel=getSel();
   const series=[];
   let title='', sub='', unit='%', universe='uc', xlab='Entering cohort',
-      xpill='entering cohort', sem='cohort', mask='', gate='';
+      xpill='entering cohort', sem='cohort', mask='', gate='', snote='';
   const lblOf={}; currentOptions().forEach(([k,l])=>lblOf[k]=l);
   if(m==='sys'){
     const meta=SYS_MEASURES[state.level].find(x=>x[0]===state.measure);
@@ -781,6 +856,9 @@ function assemble(){
     sub=meta[3]+'. Hover for cohort sizes. UC Information Center universe.'+
       ((state.slice==='pell'||state.slice==='fg')?' Pell and first-generation lines are exact N-weighted combinations of the published ethnicity-by-'+(state.slice==='pell'?'Pell':'first-generation')+' cells (mean and GPA measures are available under the ethnicity splits).':'');
     mask='Published cohort sizes shown in tooltips.';
+    snote='<b>Series:</b> UC Information Center, all nine campuses pooled, by entering cohort. A campus\u2019s '+
+      'own dashboard reports a different figure for the same measure \u2014 Berkeley\u2019s first-year retention runs '+
+      'about 4 points above this series and its four-year graduation about 7. Read these as systemwide numbers only.';
   }
   else if(m==='fed'){
     universe='fed'; xlab='Scorecard data year'; xpill='Scorecard data year — the cohort entered ≈6 years earlier';
@@ -805,6 +883,9 @@ function assemble(){
       sub=state.fedMeasure==='ret'?'Campus-level retention of full-time entrants (IPEDS).':'Campus undergraduate Pell share — who is enrolled, not an outcome.';
     }
     mask='Federal universe: see Methods for cohort definitions.';
+    snote='<b>Series:</b> federal \u2014 IPEDS and College Scorecard, first-time full-time or Title\u00a0IV students, '+
+      'indexed to the data year rather than the entering cohort. A narrower population than the UC series on this '+
+      'page and not comparable with it.';
   }
   else if(m==='hs'||m==='ccc'){
     const kind=m, names=T[kind].names, src=T[kind].series[state.campus]||{};
@@ -822,6 +903,10 @@ function assemble(){
     sub=(m==='hs'?'Freshman entrants from each school; ':'Transfer entrants from each college; ')+
       'integer percents as published; cells appear only when the entering cohort has at least 10 students.';
     mask='Source masks cells with fewer than 10 students; gaps are masked or absent years.';
+    snote='<b>Series:</b> UC Information Center outcomes published per source '+(m==='hs'?'high school':'community college')+
+      ', counting that school\u2019s entrants to '+(state.campus==='All'?'all nine campuses pooled':'UC '+state.campus)+
+      '. Integer percents, cells only where the entering cohort reaches 10 \u2014 a per-school series, not the '+
+      'systemwide one and not a campus dashboard.';
   }
   else if(m==='gpa'){
     const meas=state.gpaMeasure;
@@ -863,6 +948,10 @@ function assemble(){
       '-GPA distribution per cohort (the same boundaries at every campus — selective campuses draw mostly from the top band). Denominators are the dashboard’s own: students with a usable GPA (systemwide ≈96% of the published cohort at 2019).';
     if(winGate!==9999) gate='Cohorts after '+winGate+' are omitted for this measure: the later completion windows haven’t closed yet.';
     mask='Hover for each band’s entering denominator; sparse cells (small groups at small campuses) are absent at source.';
+    snote='<b>Series:</b> UC Information Center band rates for '+(state.campus==='All'?'all nine campuses pooled':'UC '+state.campus)+
+      ', on bands cut from the <i>systemwide</i> '+(state.level==='FR'?'high-school':'transfer')+'-GPA distribution. A band rate is '+
+      'the outcome of one third of the systemwide distribution as it appears at this campus \u2014 not the campus\u2019s '+
+      'overall rate, and not comparable with a campus dashboard.';
     
   }
   else if(m==='ucsd'){
@@ -879,6 +968,8 @@ function assemble(){
     title=um[1]+' — UC San Diego, '+scope+', '+(state.level==='FR'?'first-year':'transfer')+' entrants';
     sub='UC San Diego’s institutional-research dashboards, by the school/division of the student’s major. Cohort and group definitions are UCSD’s own (ethnicity keeps Hawaiian/Pacific Islander and Unknown as separate categories); rates are full precision, denominators in tooltips.';
     mask='Cells under the dashboard’s reporting threshold are suppressed at source — small schools and groups have gaps rather than zeros.';
+    snote='<b>Series:</b> UC San Diego Institutional Research, the campus\u2019s own cohort and group definitions \u2014 not the '+
+      'UC Information Center systemwide series, and not comparable with it or with the Berkeley series.';
     const hasComb=sel.some(k=>String(k).startsWith('All STEM')||String(k).startsWith('All non-STEM'))||String(state.ucsdSchool).startsWith('All ');
     if(hasComb) gate='Combined lines sum graduates and cohort sizes over member schools — STEM: Biology, Engineering, Physical Sciences, Scripps, Data Science; non-STEM: Arts & Humanities, Social Sciences, Global Policy (Public Health left unclassified). A point is drawn only when suppressed member cells (each under 10 students) could not move the rate by more than 1 pp.';
   }
@@ -897,6 +988,10 @@ function assemble(){
     title=md[1]+' — UC Berkeley, by '+dimLbl.replace(' — retention','')+', '+(state.level==='FR'?'freshman':'transfer')+' entrants';
     sub='UC Berkeley’s Office of Planning & Analysis "Disaggregated Grad Rates" dashboard and the campus’s Our Berkeley data downloads. Berkeley’s own universe and categories — including disaggregated Asian and Latinx subgroups and the campus’s EOP-eligibility markers. Full-precision rates; denominators in tooltips.';
     mask='Detailed subgroups can be small (Pacific Islander, Nonbinary) — read with their Ns. Retention cells under N=20 hidden; retention aggregates residency.';
+    snote='<b>Series:</b> UC Berkeley Office of Planning &amp; Analysis, Berkeley\u2019s own cohort definitions \u2014 not the '+
+      'UC Information Center systemwide series. Berkeley\u2019s first-year retention runs about 96% against about 92% '+
+      'systemwide, and its four-year graduation 80.6% against 74.0% for the 2021 entering cohort. The two are not '+
+      'interchangeable in either direction.';
   }
   else if(m==='majors'){
     universe='fed'; xlab='Completions year'; xpill='completions year (period start)';
@@ -912,6 +1007,8 @@ function assemble(){
     sub='IPEDS completions, first majors only. Degrees conferred count graduates by field — field mix reflects both enrollment choices and completion, not a graduation rate. '+
       'Underrepresented = Black, Hispanic/Latino, American Indian/Alaska Native, Hawaiian/Pacific Islander (federal categories).';
     mask='Counts of degrees conferred; a student appears once, under the first major.';
+    snote='<b>Series:</b> IPEDS completions at '+state.campus+' \u2014 degrees conferred in a year, not a cohort '+
+      'outcome and not a rate. Field mix reflects enrollment choices as much as completion.';
   }
   else if(m==='fgfed'){
     universe='fed'; xlab='Years after entry'; xpill='years after entry — one pooled cohort per point, not a time trend';
@@ -926,8 +1023,10 @@ function assemble(){
       +' — '+state.campus+', by years after entry';
     sub='Share of the entering (Title IV) cohort reaching this status by 2, 3, 4, 6, and 8 years after entry. Scorecard NSLDS pooled cohorts; first-generation here = no parent with any postsecondary schooling — broader than UC’s definition. Cohort counts in tooltips.';
     mask='Title-IV universe; one pooled cohort per horizon.';
+    snote='<b>Series:</b> College Scorecard NSLDS, pooled Title\u00a0IV cohorts at '+state.campus+', by years after entry \u2014 '+
+      'one pooled cohort per point rather than a time trend, and a narrower population than the UC series.';
   }
-  return {series,title,sub,unit,universe,xlab,xpill,sem,mask,gate};
+  return {series,title,sub,unit,universe,xlab,xpill,sem,mask,gate,snote};
 }
 
 function showCutnote(){
@@ -963,6 +1062,8 @@ function renderMoney(){
   $('plotTitle').innerHTML=titleTxt+' <span class="badge fed">Federal data</span><span class="badge sem">'+SEM_TAG.dollars+'</span>';
   $('plotSub').innerHTML='<span class="badge xax">x: dollars · rows: campus</span> '+subTxt;
   $('maskNote').textContent='Medians; counts in the CSV. Title-IV universe only.';
+  $('seriesnote').innerHTML='<b>Series:</b> College Scorecard, Title\u00a0IV recipients only \u2014 medians across pooled '+
+    'cohorts at a point in time, not an outcome rate and not comparable with the UC series on this page.';
   $('cutnote').style.display='none'; $('gatenote').style.display='none';
   lastView={money:true,cols,metric};
 }
@@ -1015,6 +1116,7 @@ function update(){
     '<span class="badge sem">'+(SEM_TAG[v.sem]||v.sem)+'</span>';
   $('plotSub').innerHTML='<span class="badge xax">x: '+v.xpill+'</span> '+v.sub;
   $('maskNote').textContent=v.mask;
+  $('seriesnote').innerHTML=v.snote||'';
   const gn=$('gatenote');
   if(v.gate){ gn.style.display='block'; gn.textContent=v.gate; } else gn.style.display='none';
   showCutnote();
@@ -1160,6 +1262,7 @@ $('dlcsv').addEventListener('click',()=>{
   parts.push('<b>Degrees conferred</b> — IPEDS completion counts by field; not rates.');
   g.innerHTML=parts.join(' ');
   $('srcline').textContent='UC series: '+T.meta.sources.uc_ic+'. Federal series: '+T.meta.sources.scorecard+'; '+T.meta.sources.ipeds+'. UCSD series: '+(T.meta.sources.ucsd||'')+'. UC Berkeley series: '+(T.meta.sources.ucb||'')+'. Site data built '+T.meta.built+'.';
+  $('genstamp').textContent='Data layer built '+(T.meta.built||'')+'.';
 })();
 
 /* ---------- boot ---------- */

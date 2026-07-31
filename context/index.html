@@ -97,12 +97,33 @@
     .ctl{flex:1 1 calc(50% - 10px);min-width:0;}
     .ctl select{width:100%;min-width:0;max-width:none;font-size:16px;}
     .seg{display:flex;} .seg button{flex:1;padding:7px 6px;}
+    /* The four-view switcher needs the whole row at phone widths: in a half-width cell the
+       buttons cannot shrink below their min-content width, overflow the segmented control,
+       and are clipped by its hidden overflow — the last two views become unreachable. */
+    .ctl.ctl-view{flex-basis:100%;}
+    .ctl.ctl-view .seg{flex-wrap:wrap;}
+    .ctl.ctl-view .seg button{flex:1 1 45%;min-width:0;border-top:1px solid #cfd6e0;}
+    .ctl.ctl-view .seg button:nth-child(-n+2){border-top:0;}
     .rangewrap{width:100%;} input[type=range]{flex:1;width:auto;}
     .chk{width:100%;justify-content:flex-start;}
     .chartcard{min-height:0;padding:6px 2px 2px;}
     .side .card{padding:12px 12px;}
     .bigr{font-size:24px;}
     details.notes{padding:0 12px;}
+  }
+  /* --- uniform data-vintage block (identical on /, context/, trends/) --- */
+  .vintage{margin-top:26px;border-top:1px solid var(--line);padding-top:14px;
+    color:var(--muted);font-size:12px;line-height:1.65;}
+  .vintage h2{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ink);margin:0 0 8px;}
+  .vintage dl{margin:0;display:grid;grid-template-columns:max-content 1fr;gap:3px 16px;}
+  .vintage dt{font-weight:650;color:var(--ink);}
+  .vintage dd{margin:0;}
+  .vintage .updated{margin:10px 0 0;}
+  @media (max-width:700px){
+    .vintage dl{grid-template-columns:1fr;gap:0;}
+    .vintage dt{margin-top:7px;}
+    .vintage dd{margin:0;}
   }
 </style>
 </head>
@@ -124,7 +145,7 @@
   <div class="controls">
     <div class="ctl"><label for="campus">Campus</label><select id="campus"></select></div>
     <div class="ctl"><label for="period">Year / period</label><select id="period"></select></div>
-    <div class="ctl"><label>View</label>
+    <div class="ctl ctl-view"><label>View</label>
       <div class="seg" id="view">
         <button data-v="cond" class="on" title="Scatter of context vs outcome; brush a band to condition on it">Hold context fixed</button>
         <button data-v="curve" title="The conditional correlation function: how the achievement–outcome association changes across the context distribution">Local correlation</button>
@@ -287,6 +308,27 @@
     </div>
   </details>
 
+  <section class="vintage">
+    <h2>Data vintage</h2>
+    <dl>
+      <dt>Admissions</dt>
+      <dd>UC Information Center, admission years through fall&nbsp;2025.</dd>
+      <dt>Achievement</dt>
+      <dd>CDE CAASPP grade&nbsp;11 (Smarter Balanced), spring 2015&ndash;2025. Spring 2020 was cancelled
+        and spring 2021 is excluded as non-representative; each entering class is matched to its own
+        grade-11 test the prior spring, so the 2021 and 2022 entering classes carry no CAASPP value.</dd>
+      <dt>UC outcomes</dt>
+      <dd>Entry cohorts 1999&ndash;2024. A rate appears only where its window has closed: six-year
+        completion through the 2019 entering cohort, five-year through 2020, four-year through 2021,
+        first-year retention through 2024.</dd>
+      <dt>Neighborhood</dt>
+      <dd>U.S. Census Bureau ACS 5-year estimates at census-tract level; ACS year set to the school
+        year, with 2025 school years carrying the 2024 release.</dd>
+    </dl>
+    <p class="updated">Last updated 31&nbsp;July&nbsp;2026. Build dates for each data layer are given with
+      the sources below; revision history is in
+      <a href="https://github.com/hart-hornor-jones/uc-high-school-admissions/blob/main/docs/CHANGELOG.md">docs/CHANGELOG.md</a>.</p>
+  </section>
   <footer id="footer">
     <b>Sources.</b> UC admissions funnel: University of California Information Center (admissions by source
     school). Achievement: CDE CAASPP research files (Smarter Balanced grade 11), CDE A&ndash;G completion.

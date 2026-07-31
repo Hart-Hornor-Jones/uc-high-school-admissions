@@ -152,7 +152,7 @@ rates, and every non-GPA statistic were never affected.
 │   ├── extract_dv_all9.py      #   the one step needing the ~12 GB raw dump → dv_admissions_all9.csv
 │   ├── parse_caaspp_groups.py  #   CAASPP research files → grade-11 SED/EL composition (context page)
 │   └── README.md               #   runbook
-└── docs/                       # methodology & data dictionary
+└── docs/                       # methodology, data dictionary, and CHANGELOG.md (revision history)
 ```
 
 ---
@@ -210,6 +210,20 @@ compact **derived** datasets are included, under `data/`.
 The crosswalk (`data/ceeb_cds_crosswalk.csv`) bridges the 6-digit CEEB and 14-digit CDS code
 universes; hand-verified to ~98%. See [`docs/DATA_DICTIONARY.md`](docs/DATA_DICTIONARY.md).
 
+### Data vintage
+
+The same block appears at the foot of every published page.
+
+| Layer | Coverage |
+|---|---|
+| Admissions | UC Information Center, admission years through fall 2025. |
+| Achievement | CDE CAASPP grade 11 (Smarter Balanced), spring 2015–2025. Spring 2020 was cancelled and spring 2021 is excluded as non-representative; each entering class is matched to its own grade-11 test the prior spring, so the 2021 and 2022 entering classes carry no CAASPP value. |
+| UC outcomes | Entry cohorts 1999–2024. A rate appears only where its window has closed: six-year completion through the 2019 entering cohort, five-year through 2020, four-year through 2021, first-year retention through 2024. |
+| Neighborhood | U.S. Census Bureau ACS 5-year estimates at census-tract level; ACS year set to the school year, with 2025 school years carrying the 2024 release. |
+
+Each page's footer also prints the build date of the data layer it loads. Revision history:
+[`docs/CHANGELOG.md`](docs/CHANGELOG.md).
+
 ---
 
 ## Reproduce
@@ -247,7 +261,28 @@ python3 build/parse_grad_rates.py /path/to/ug_outcomes_freshman_grad_rates_by_hs
 - The **San Francisco Chronicle** UC-admissions explorer (Nami Sumida, Hanna Zakharenko) inspired
   the visual design. Independent project; not affiliated with the Chronicle.
 
+**Authorship.** The pipeline, the derived datasets and the pages are published under this
+repository's name rather than an individual's, and are the work of its contributors. Corrections and
+questions are best raised as an issue on the repository.
 
+**Suggested citation.** The derived data are rebuilt in place rather than issued as numbered
+releases, so a citation should carry the revision it was read from — see
+[`docs/CHANGELOG.md`](docs/CHANGELOG.md), and the *Data vintage* block at the foot of every page.
+
+> *UC admissions & California high-school academic indicators.* UC High School Admissions project,
+> 2026. https://hart-hornor-jones.github.io/uc-high-school-admissions/ (accessed *DATE*).
+
+For a figure that must be reproducible, cite the repository and the revision instead:
+
+> *UC admissions & California high-school academic indicators*, revision of *YYYY-MM-DD*.
+> UC High School Admissions project, 2026.
+> https://github.com/hart-hornor-jones/uc-high-school-admissions
+
+**Reuse.** The code is MIT-licensed. The datasets under `data/` are *derived* from public records of
+the University of California and the California Department of Education; those agencies' own terms
+govern the underlying data, and citations of a specific measure should name the source agency as
+well as this repository. See [`LICENSE`](LICENSE) and the [data sources](#data-sources-all-public)
+above.
 
 ---
 

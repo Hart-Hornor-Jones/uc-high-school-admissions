@@ -128,7 +128,7 @@ METRICS = [
   {"key":"ela",  "label":"CAASPP ELA — % met (gr 11)",  "short":"CAASPP ELA % met",  "role":"academic",   "fmt":"pct"},
   {"key":"math", "label":"CAASPP Math — % met (gr 11)", "short":"CAASPP Math % met", "role":"academic",   "fmt":"pct"},
   {"key":"ag",   "label":"A–G completion — % of cohort UC/CSU-eligible", "short":"A–G completion", "role":"academic", "fmt":"pct", "num":"G", "den":"C"},
-  {"key":"upp",  "label":"Poverty / high-need — UPP %", "short":"UPP (poverty)", "role":"context", "fmt":"pct"},
+  {"key":"upp",  "label":"Unduplicated pupils — UPP % (FRPM/EL/foster, gr 9–12)", "short":"UPP %", "role":"context", "fmt":"pct"},
   {"key":"awpe", "label":"Writing req. met — ELWR/AWPE (enrollees)", "short":"ELWR/AWPE", "role":"context", "fmt":"pct",
                  "caveat":"UC enrollees only (self-selected, small N); latest year available per school."},
   {"key":"app_gpa","label":"Applicant GPA — UC weighted-capped (gr 10–11)","short":"Applicant GPA","role":"academic","fmt":"gpa",

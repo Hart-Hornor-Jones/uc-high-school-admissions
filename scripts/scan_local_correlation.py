@@ -5,7 +5,9 @@ scan_local_correlation.py — systematic conditional-correlation scan.
 For every campus × period × context variable (achievement = CAASPP avg % met,
 outcome = admit rate), estimates the LOCAL (conditional) correlation function.
 Context variables cover the tract ACS measures, the school-level student
-measures (UPP / %SED / %EL), and the application-behavior measures added with
+measures (UPP, the grade-11 shares socioeconomically disadvantaged and English
+learner, and the grade 9-12 racial-composition shares), and the
+application-behavior measures added with
 the page's self-selection tooling: the school's application rate to the campus
 (applicants ÷ cleaned A–G eligible, jointly-observed with the same reliability
 gate as the page), its application rate to the other eight campuses
@@ -44,10 +46,14 @@ COV_MIN = 0.5
 X = json.loads(open(os.path.join(REPO, "context", "data_context.js"), encoding="utf-8")
                .read().split("window.UCCTX = ", 1)[1].rstrip().rstrip(";"))
 CIX = {k: i for i, k in enumerate(X["cvars"])}
-SIX = {"sed": 1, "el": 2}
+# School-level student measures, read positionally out of the context layer's `sch` rows.
+# Derived from the layer's own `svars` header so the scan follows it when new measures are
+# added (the racial-composition variables r_hisp/r_white/r_asian/r_black/r_urg arrived this way).
+SIX = {k: i for i, k in enumerate(X["svars"]) if k != "year"}
+SCH_KEYS = [k for k in X["svars"] if k != "year"]
 ACS_KEYS = [k for k in X["cvars"] if k != "year"]
 APP_KEYS = ["app_rate_own", "app_rate_oth", "app_vol"]
-CTX_KEYS = ["upp", "sed", "el"] + ACS_KEYS + APP_KEYS
+CTX_KEYS = ["upp"] + SCH_KEYS + ACS_KEYS + APP_KEYS
 
 def fnum(x):
     x = (x or "").strip()
