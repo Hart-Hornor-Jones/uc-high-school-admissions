@@ -79,6 +79,18 @@ denied GPA is masked where fewer than 10 students were denied; suppressed cells 
 zero. Dataset: [`data/school_campus_year_admitted_denied.csv`](data/school_campus_year_admitted_denied.csv);
 built by [`scripts/make_denied_data.py`](scripts/make_denied_data.py).
 
+**Companion page — [`history/`](history/):** the long view, 1999–2025. For each campus and each
+admission year, the correlation across California public high schools (≥25 applicants) between a
+school's admit rate and its achievement level, carried across four testing regimes on two
+independent measurement families — the college-bound tests (SAT, era-bridged; ACT %≥21) through
+2020, and the state's census tests (STAR Stanford 9 and CST, CAHSEE, CAASPP) through 2025, with
+instrument changes marked on the series and the two-ruler attenuation constant (ρ ≈ .79)
+disclosed. Secondary series: UC applicants per 100 seniors by fixed advantage quintile 1999–2025;
+AP exams per 100 seniors and the share scored 3+, 1999–2020; the enrollee-vs.-all-tester SAT gap
+2006–2015; and applicant-GPA drift at flat SAT, 2010–2016. All series are precomputed into
+[`history/data_history.js`](history/data_history.js) by `build/build_history_data.py` and checked
+by `build/verify_history_anchors.py`.
+
 ---
 
 ## The question

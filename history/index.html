@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The long view — admission chances and school achievement, 1999–2025</title>
+<style>
+  :root{
+    --ink:#1a1a1a; --muted:#5c6470; --line:#e2e6ec; --bg:#ffffff; --card:#fbfcfe;
+    --accent:#2b6cb0; --cb:#2a78d6; --act:#7b61c8; --cen:#c2410c;
+    --q1:#1f6feb; --q2:#54aeff; --q3:#8c959f; --q4:#fb8f44; --q5:#cf222e;
+    --shadow:0 1px 3px rgba(20,30,50,.07),0 6px 24px rgba(20,30,50,.06);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;color:var(--ink);background:var(--bg);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1200px;margin:0 auto;padding:22px 20px 60px;}
+  .backlink{font-size:12.5px;margin-bottom:6px;}
+  a{color:var(--accent);}
+  header h1{font-size:23px;margin:0 0 4px;letter-spacing:-.01em;}
+  header p.sub{margin:0;color:var(--muted);}
+  .controls{display:flex;flex-wrap:wrap;gap:12px 16px;align-items:flex-end;
+    margin:18px 0 10px;padding:14px 16px;background:var(--card);border:1px solid var(--line);
+    border-radius:12px;box-shadow:var(--shadow);position:sticky;top:0;z-index:30;}
+  .ctl{display:flex;flex-direction:column;gap:5px;}
+  .ctl label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);}
+  .chiprow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+  .chip{font:inherit;font-size:12.5px;font-weight:600;border:1px solid #cfd6e0;background:#fff;
+    color:var(--muted);border-radius:999px;padding:5px 12px;cursor:pointer;}
+  .chip:hover{border-color:#9fb0c6;color:var(--ink);}
+  .chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .chip.small{font-size:11.5px;font-weight:500;padding:4px 10px;}
+  .fnote{font-size:11.5px;color:var(--muted);}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);
+    padding:16px 18px 12px;margin-top:20px;}
+  .kicker{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
+  .card h2{font-size:18px;font-weight:650;margin:2px 0 2px;}
+  .card .what{color:var(--muted);font-size:13px;margin:0 0 4px;}
+  .chart{margin-top:10px;}
+  svg{display:block;width:100%;height:auto;font-family:inherit;}
+  svg text{fill:var(--muted);font-size:11px;}
+  .legend{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:8px;
+    font-size:12px;color:var(--muted);}
+  .lk{display:inline-flex;align-items:center;gap:7px;}
+  .lk .line{width:16px;height:0;border-top:2.5px solid;border-radius:2px;}
+  .lk .dot{width:10px;height:10px;border-radius:50%;}
+  .lk .ring{width:8px;height:8px;border-radius:50%;border:2px solid;background:#fff;}
+  .lk button.chip{margin-left:2px;}
+  .sumline{margin-top:8px;font-size:13px;color:#3a4150;}
+  .sumline b{font-weight:650;}
+  .seg{display:inline-flex;border:1px solid #cfd6e0;border-radius:999px;overflow:hidden;background:#fff;}
+  .seg button{font:inherit;font-size:12.5px;font-weight:600;border:0;background:none;color:var(--muted);
+    padding:5px 13px;cursor:pointer;}
+  .seg button+button{border-left:1px solid #cfd6e0;}
+  .seg button[aria-pressed="true"]{background:var(--accent);color:#fff;}
+  .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px;}
+  .toolbar .flab{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);}
+  .ratiostrip{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;font-size:12.5px;color:var(--muted);}
+  .ratiostrip .rs{border:1px solid var(--line);border-radius:8px;padding:4px 10px;background:#fff;}
+  .ratiostrip .rs b{color:var(--ink);font-weight:650;}
+  .minigrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-top:10px;}
+  .mini{border:1px solid var(--line);border-radius:10px;background:#fff;padding:6px 6px 2px;cursor:pointer;}
+  .mini:hover{border-color:#9fb0c6;}
+  .mini.sel{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent);}
+  .mini .mt{font-size:12px;font-weight:650;color:var(--ink);padding:2px 4px 0;}
+  .drift2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:10px;}
+  .drift2 h3{font-size:13.5px;font-weight:650;margin:0 0 2px;}
+  .drift2 p{font-size:12.5px;color:var(--muted);margin:0 0 6px;}
+  .qbtn{font:inherit;display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;
+    border-radius:50%;border:1px solid #cfd6e0;background:#fff;color:var(--muted);font-size:11px;
+    font-weight:700;cursor:pointer;vertical-align:2px;margin-left:5px;padding:0;line-height:1;}
+  .qbtn:hover{border-color:var(--accent);color:var(--accent);}
+  .pop{position:fixed;z-index:60;max-width:360px;background:#fff;border:1px solid #cfd6e0;border-radius:10px;
+    box-shadow:0 10px 30px rgba(20,30,50,.18);padding:12px 14px;font-size:12.5px;color:#3a4150;line-height:1.55;}
+  .pop[hidden]{display:none;}
+  .pop .pt{font-weight:650;color:var(--ink);margin-bottom:4px;}
+  .tooltip{position:fixed;pointer-events:none;background:#11151c;color:#fff;font-size:12px;
+    padding:8px 10px;border-radius:8px;max-width:300px;opacity:0;transition:opacity .08s;z-index:50;
+    box-shadow:0 6px 20px rgba(0,0,0,.3);line-height:1.5;}
+  .tooltip .t{font-weight:650;}
+  .tooltip .r{display:flex;align-items:center;gap:7px;white-space:nowrap;}
+  .tooltip .r .k{width:12px;border-top:2.5px solid;flex:none;border-radius:2px;}
+  .tooltip .r b{font-weight:650;}
+  .tooltip .r span.lbl{color:#aeb6c2;}
+  details.notes{margin-top:22px;border:1px solid var(--line);border-radius:12px;background:var(--card);padding:0 16px;}
+  details.notes summary{cursor:pointer;font-weight:600;padding:13px 0;}
+  details.notes div.body{padding:0 0 14px;color:#3a4150;font-size:13.5px;}
+  details.notes li{margin:6px 0;}
+  details.tbl{margin-top:12px;font-size:12.5px;}
+  details.tbl summary{cursor:pointer;font-weight:600;color:var(--muted);}
+  table{border-collapse:collapse;margin-top:10px;font-variant-numeric:tabular-nums;}
+  th,td{padding:4px 14px 4px 0;text-align:right;border-bottom:1px solid var(--line);font-size:12.5px;}
+  th{color:var(--muted);font-weight:600;font-size:11px;}
+  th:first-child,td:first-child{text-align:left;}
+  footer{margin-top:26px;color:var(--muted);font-size:12px;line-height:1.6;border-top:1px solid var(--line);padding-top:14px;}
+  .vintage{margin-top:26px;border-top:1px solid var(--line);padding-top:14px;
+    color:var(--muted);font-size:12px;line-height:1.65;}
+  .vintage h2{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ink);margin:0 0 8px;}
+  .vintage dl{margin:0;display:grid;grid-template-columns:max-content 1fr;gap:3px 16px;}
+  .vintage dt{font-weight:650;color:var(--ink);}
+  .vintage dd{margin:0;}
+  .vintage .updated{margin:10px 0 0;}
+  @media (max-width:700px){
+    .wrap{padding:12px 10px 40px;}
+    header h1{font-size:19px;}
+    header p.sub{font-size:13px;}
+    .controls{gap:8px 10px;padding:10px 12px;position:static;}
+    .card{padding:10px 8px 8px;}
+    .drift2{grid-template-columns:1fr;}
+    .vintage dl{grid-template-columns:1fr;gap:0;}
+    .vintage dt{margin-top:7px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="backlink"><a href="../">&larr; Back to the main explorer</a> &middot;
+      <a href="../context/">neighborhood context</a> &middot;
+      <a href="../trends/">outcomes over time</a> &middot;
+      <a href="../denied/">admitted vs. denied</a></div>
+    <h1>The long view &mdash; admission chances and school achievement, 1999&ndash;2025</h1>
+    <p class="sub">For each UC campus and each admission year since 1999, one question: across California
+    public high schools, did a school&rsquo;s achievement level that year predict its applicants&rsquo; chance of
+    admission? Two independent measurement families answer it &mdash; the <b style="color:#1c5cab">college-bound
+    tests</b> (SAT, ACT), taken by self-selected testers through 2020, and the state&rsquo;s
+    <b style="color:#a33a12">census tests</b> (STAR, CAHSEE, CAASPP), taken by every enrolled student, through
+    2025. Where the two families overlap they agree, which is what permits reading the series as one arc.
+    The association was positive for two decades, began to decay around 2016 &mdash; before the test-blind
+    decision &mdash; and turns negative only after 2020, and only at some campuses.</p>
+  </header>
+
+  <div class="controls">
+    <div class="ctl"><label>Campus</label>
+      <div class="chiprow" id="campusChips"></div>
+    </div>
+  </div>
+
+  <!-- 1 · the arc -->
+  <section class="card" id="cardArc">
+    <div class="kicker">Admit rate &times; school achievement, year by year</div>
+    <h2 id="titleArc"></h2>
+    <p class="what">Each point is one admission year: the correlation (Pearson&nbsp;<i>r</i>), across California
+      public high schools with at least 25 applicants to the campus, between each school&rsquo;s admit rate and its
+      achievement level measured the prior spring. Points above zero mean higher-achieving schools saw higher
+      admit rates that year; points below zero mean they saw lower ones. Solid census points sit on the era&rsquo;s
+      main instrument (STAR&nbsp;CST, then CAASPP); hollow points sit on an instrument with known top-end
+      compression (Stanford&nbsp;9 in 2000, CAHSEE in 2002 and 2014&ndash;15) and read attenuated. Dashed
+      connections mark instrument splices, not measured change. Hover any point for the exact value.
+      <button type="button" class="qbtn" id="qArc" aria-label="How to read this">?</button></p>
+    <div class="chart" id="cArc"></div>
+    <div class="legend" id="lArc"></div>
+    <p class="sumline" id="sumArc"></p>
+    <details class="tbl"><summary>Table &mdash; every value plotted for this campus</summary>
+      <div id="tblArc"></div></details>
+  </section>
+
+  <!-- 2 · all campuses -->
+  <section class="card" id="cardGrid">
+    <div class="kicker">The same series at every campus</div>
+    <h2>Ten campuses, one axis</h2>
+    <p class="what">Identical scales throughout; click a panel to load it above. The post-2020 inversion is
+      confined to the more selective campuses. <span id="gridNote"></span></p>
+    <div class="minigrid" id="miniGrid"></div>
+  </section>
+
+  <!-- 3 · volume backcast -->
+  <section class="card" id="cardVol">
+    <div class="kicker">Application volume by school advantage</div>
+    <h2>UC applicants per 100 seniors, 1999&ndash;2025</h2>
+    <p class="what">A fixed panel of 757 schools observed in both 1999&ndash;2003 and 2021&ndash;2025, assigned
+      once to five advantage quintiles on their long-run share of low-income, English-learner and foster
+      students (UPP) &mdash; Q1 lowest need, Q5 highest. Lines are ratio-of-sums within quintile: total UC
+      applicants per 100 seniors. The denominator is CDE grade-12 enrollment through 2016 and the ACGR cohort
+      after (splice validated at r&nbsp;&asymp;&nbsp;.98). The gap by advantage is at least a quarter-century
+      old and has been narrowing in relative terms; the narrowing stalls after about 2013.</p>
+    <div class="chart" id="cVol"></div>
+    <div class="legend" id="lVol"></div>
+    <div class="ratiostrip" id="rsVol"></div>
+  </section>
+
+  <!-- 4 · AP expansion -->
+  <section class="card" id="cardAP">
+    <div class="kicker">Advanced Placement expansion</div>
+    <h2 id="titleAP">AP exams per 100 seniors, 1999&ndash;2020</h2>
+    <p class="what">The same fixed-quintile design applied to the AP series &mdash; its own fixed panel of
+      <span id="apN"></span> schools with AP data at both ends of the window (by coincidence also 757; it
+      shares 745 schools with the application panel above but is not the same set). Counts are <i>exams</i>,
+      not students &mdash; one student may take several &mdash; and exam totals after 2005&ndash;06 are
+      derived from the published score distribution. The second view shows what share of those exams scored
+      3 or higher: participation multiplied severalfold everywhere, while the score mix rose slightly at the
+      most advantaged schools and fell at the highest-need ones.</p>
+    <div class="toolbar">
+      <span class="flab">View</span>
+      <span class="seg" id="apMode">
+        <button type="button" data-mode="exams" aria-pressed="true">Exams per 100 seniors</button>
+        <button type="button" data-mode="pass" aria-pressed="false">Share of exams scored 3+</button>
+      </span>
+    </div>
+    <div class="chart" id="cAP"></div>
+    <div class="legend" id="lAP"></div>
+  </section>
+
+  <!-- 5 · the wedge -->
+  <section class="card" id="cardWedge">
+    <div class="kicker">The gap between a school&rsquo;s testers and its UC entrants</div>
+    <h2>Enrollee SAT reading minus the school&rsquo;s all-tester average, 2006&ndash;2015</h2>
+    <p class="what">For every school-year where both are published: the mean SAT critical-reading score of the
+      students who <i>enrolled at UC</i> from a school, minus the mean of <i>all SAT takers</i> at that school
+      the same year. The line is the yearly mean, the band the interquartile range across schools. UC&rsquo;s
+      intake sat well above its schools&rsquo; testing populations everywhere &mdash; positive in
+      <span id="wPos"></span> of <span id="wN"></span> school-years, overall mean
+      +<span id="wMean"></span>&nbsp;points &mdash; and the margin widened over the decade. It is wider at
+      lower-achieving schools (r&nbsp;=&nbsp;<span id="wR"></span> with the school&rsquo;s later CAASPP level).</p>
+    <div class="chart" id="cWedge"></div>
+    <div class="legend" id="lWedge"></div>
+  </section>
+
+  <!-- 6 · GPA drift -->
+  <section class="card" id="cardDrift">
+    <div class="kicker">Applicant grades against a flat yardstick</div>
+    <h2>Applicant GPA drift, 2010&ndash;2016 &mdash; and what it is not</h2>
+    <p class="what">Each dot is a school in the Berkeley applicant pool with at least five observed years of
+      both series. The left panel plots each school&rsquo;s applicant-GPA trend against its SAT trend over the
+      same years; in the shaded band the external yardstick was flat, yet applicant GPA still rose at
+      <span id="dFlatShare"></span> of those <span id="dFlatN"></span> schools
+      (mean <span id="dFlatSlope"></span>&nbsp;GPA&nbsp;points/year). The climb predates the CAASPP era and
+      2020. The right panel checks the natural suspect: schools&rsquo; AP expansion is essentially unrelated to
+      their grade climb (r&nbsp;=&nbsp;<span id="dApR"></span>), and schools whose grades rose carry the same
+      climb whether their AP programs expanded or stayed flat (index <span id="dSplit"></span>) &mdash; so
+      course-mix expansion does not account for it.</p>
+    <div class="drift2">
+      <div>
+        <h3>GPA trend vs. SAT trend, per school</h3>
+        <p>Shaded band: |SAT trend| &le; 0.02 z/year (&ldquo;flat yardstick&rdquo;). Hover a dot for the school.</p>
+        <div class="chart" id="cDriftA"></div>
+      </div>
+      <div>
+        <h3>Grade climb vs. AP expansion, per school</h3>
+        <p>Inflation index (2015&ndash;19 vs. 2008&ndash;12) against the change in AP exams per senior. Hover a dot.</p>
+        <div class="chart" id="cDriftB"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · methodology -->
+  <details class="notes" id="methods">
+    <summary>Methods &mdash; two rulers, one constant; and every caveat that governs this page</summary>
+    <div class="body">
+      <p>The page rests on two families of achievement measurement that are <b>different constructs, not one
+      construct with noise</b>. The college-bound family (SAT, ACT, AP) is measured on self-selected testers
+      &mdash; the college-bound core of a school. The census family (STAR, CAHSEE, CAASPP) is measured on
+      essentially all enrolled students. Their school-level correlation is remarkably stable:</p>
+      <div class="chart" id="cRulers"></div>
+      <div class="legend" id="lRulers"></div>
+      <p>Across fifteen pre-2015 years the census and college-bound measures correlate at a mean of
+      <b>r&nbsp;=&nbsp;<span id="rulPre"></span></b> across schools (STAR-CST years alone:
+      <span id="rulCst"></span>), and in 2015&ndash;19 SAT&nbsp;&times;&nbsp;CAASPP runs .78&ndash;.81 &mdash;
+      the same constant, two decades apart, on different instruments. The dips are instrument artifacts: the
+      CAHSEE years (2002, 2014&ndash;15) sit lower because CAHSEE is a graduation bar that compresses the top
+      of the scale, and 2002 additionally reflects its early administration.</p>
+      <ul>
+        <li><b>Attenuation, and which way it points.</b> With a between-family correlation of
+        &rho;&nbsp;&asymp;&nbsp;.79, a correlation measured on the census ruler reads about 21% closer to zero
+        than the same association measured on the college-bound ruler. All post-2020 points are census-ruler
+        points (CAASPP is the only measure left after test-blind), so the post-2020 segment of the arc is
+        <b>understated, not inflated</b>, relative to the pre-2020 college-bound segment &mdash; assuming the
+        constant holds after 2020, which is untestable because the college-bound series ends there.</li>
+        <li><b>No pooling across scale eras.</b> The SAT changed scale twice and its reporting basis twice
+        more; STAR&rsquo;s vocabulary changed in 2003; the census instrument changed twice. Every series here is
+        built within (year&nbsp;&times;&nbsp;instrument) &mdash; correlations are computed within a single year
+        on a single instrument, and raw levels are never compared across eras. Where a line crosses an
+        instrument boundary the connection is drawn dashed and means only &ldquo;the series continues,&rdquo;
+        never &ldquo;this is measured change.&rdquo;</li>
+        <li><b>CAHSEE&rsquo;s ceiling, quantified.</b> On the 2,487 schools present on both sides of the
+        2013 STAR&rarr;CAHSEE switch, the lowest decile moves +0.82&nbsp;z and the top decile &minus;0.30&nbsp;z
+        with no change in the schools &mdash; pure ceiling compression (strong schools pile up at 99&ndash;100%
+        pass). CAHSEE-year correlations (hollow points) are therefore attenuated beyond the ordinary
+        &rho;&nbsp;&asymp;&nbsp;.79. The 2001 CAHSEE sitting was a voluntary grade-9 administration and is
+        excluded entirely.</li>
+        <li><b>Gaps are real gaps.</b> No usable census measure exists for the 2001 admission cycle
+        (2000&ndash;01 school year); CAASPP was cancelled in spring 2020 and is excluded as non-representative
+        for spring 2021, so the 2020&ndash;21 census points are absent. The college-bound series ends at the
+        2020 cycle. The 2019&ndash;20 SAT points sit on a grade-12-slice reporting basis (a population change,
+        carried as its own era); San Diego&rsquo;s 2020 college-bound point is anomalous under that change and
+        should be read cautiously.</li>
+        <li><b>Santa Barbara diverges for real.</b> At every other campus the two families agree up to the
+        attenuation constant. Santa Barbara is the one campus with a genuine residual between the rulers
+        (&minus;0.117, every year 2015&ndash;19, with ACT siding against CAASPP as well) &mdash; there the two
+        measures pull in opposite directions for reasons not established. Its panels carry this flag.</li>
+        <li><b>Participation.</b> The share of students taking the SAT (<code>percent_tested</code>) is
+        published only through 2017&ndash;18; no participation-adjusted view is offered after that.</li>
+        <li><b>AP semantics.</b> AP counts are exams, not students; totals after 2005&ndash;06 are derived
+        from the published score distribution; the AP series is shown from 1999 on its own fixed panel.</li>
+        <li><b>What a point is, and is not.</b> Every correlation is across <i>schools</i> (gate: &ge;25
+        applicants to the campus; &ge;40 such schools, else no point), between the school&rsquo;s admit rate
+        (admits&nbsp;&divide;&nbsp;applicants) and one achievement measure. It describes how a campus&rsquo;s
+        admission outcomes distribute over schools; it is not a statement about any individual applicant, and
+        association is not attribution.</li>
+        <li><b>Counts universe.</b> Admit rates are computed from the same published school &times;
+        campus &times; year counts the rest of the explorer uses. The compilation behind the correlation
+        series omits some very small schools (documented with the admitted-vs.-denied page); none of them
+        passes the 25-applicant gate, and at the anchor point (Berkeley 2016) the full-universe counts give
+        the identical result (r&nbsp;+0.50, n&nbsp;440).</li>
+        <li><b>Advantage quintiles.</b> UPP (unduplicated pupil percentage: the share of a school&rsquo;s
+        students who are low-income, English learner, or foster youth, counted once) averaged over all observed
+        years, quintiled once &mdash; membership never changes, so trends cannot be group-switching artifacts.</li>
+      </ul>
+    </div>
+  </details>
+
+  <section class="vintage">
+    <h2>Data vintage</h2>
+    <dl>
+      <dt>Admissions</dt>
+      <dd>UC Information Center, freshman admissions by source high school (California public HS),
+        admission years fall&nbsp;1999&ndash;2025; school-year admit rates and applicant counts as compiled
+        for the explorer&rsquo;s school&times;year panel.</dd>
+      <dt>College-bound achievement</dt>
+      <dd>CDE SAT, ACT and AP research files by school, 1998&ndash;99 to 2019&ndash;20, compiled to one row
+        per school&times;year with per-year rank-space bridges across the SAT&rsquo;s scale eras; CDS-code
+        defect in the 2012&ndash;13 (and ACT 2007&ndash;08) files repaired before use.</dd>
+      <dt>Census achievement</dt>
+      <dd>CDE STAR (Stanford&nbsp;9 spring 2000; CST 2003&ndash;2013), CAHSEE (2002, 2014&ndash;15) and
+        CAASPP grade&nbsp;11 (2015&ndash;2025, spring 2020 cancelled and spring 2021 excluded), carried as a
+        single per-school census series with its instrument recorded on every value.</dd>
+      <dt>This page</dt>
+      <dd>Every series precomputed by <code>build/build_history_data.py</code> into
+        <a href="data_history.js">history/data_history.js</a>; no computation happens in the browser beyond
+        drawing.</dd>
+    </dl>
+    <p class="updated">Last updated 1&nbsp;August&nbsp;2026. Revision history is in
+      <a href="https://github.com/hart-hornor-jones/uc-high-school-admissions/blob/main/docs/CHANGELOG.md">docs/CHANGELOG.md</a>.</p>
+  </section>
+  <footer id="footer"></footer>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+<div class="pop" id="pop" hidden></div>
+<script src="data_history.js"></script>
+<script>
+(function(){
+"use strict";
+const D = window.HISTORY_DATA;
+if(!D){ document.querySelector('.wrap').innerHTML =
+  '<p style="color:#b00">Could not load <code>data_history.js</code>. If you opened this file directly, '+
+  'serve the folder over HTTP (e.g. <code>python3 -m http.server</code>) or view it on GitHub Pages.</p>'; return; }
+
+/* ---------------- basics ---------------- */
+const $ = id => document.getElementById(id);
+const NS = 'http://www.w3.org/2000/svg';
+function E(tag, attrs, parent){
+  const n = document.createElementNS(NS, tag);
+  for(const k in attrs) n.setAttribute(k, attrs[k]);
+  if(parent) parent.appendChild(n);
+  return n;
+}
+const MIN = '−';
+function fmtR(v, dp){ dp = dp==null?2:dp;
+  return (v<0?MIN:'+') + Math.abs(v).toFixed(dp); }
+function fmtN(v){ return v.toLocaleString('en-US'); }
+const lin = (d0,d1,r0,r1) => v => r0 + (v-d0)*(r1-r0)/(d1-d0);
+
+const CAMPUSES = ['Berkeley','UCLA','San Diego','Santa Barbara','Davis','Irvine',
+                  'Santa Cruz','Riverside','Merced','UC systemwide'];
+const SRC_NAME = {s9:'Stanford 9 percentile', cahsee:'CAHSEE pass rate',
+                  cst:'STAR CST proficiency', caaspp:'CAASPP % met+'};
+const HOLLOW = {s9:1, cahsee:1};
+const state = { campus:'Berkeley', showSAT:true, showACT:false, showCEN:true, apMode:'exams' };
+
+/* tooltip */
+const tip = $('tooltip');
+function showTip(html, x, y){
+  tip.innerHTML = html; tip.style.opacity = 1;
+  const w = tip.offsetWidth, h = tip.offsetHeight;
+  let px = x+14, py = y+12;
+  if(px+w > innerWidth-8)  px = x-w-14;
+  if(py+h > innerHeight-8) py = y-h-12;
+  tip.style.left = px+'px'; tip.style.top = py+'px';
+}
+function hideTip(){ tip.style.opacity = 0; }
+
+/* popover */
+const pop = $('pop');
+function togglePop(btn, html){
+  if(!pop.hidden && pop.dataset.for===btn.id){ pop.hidden = true; return; }
+  pop.innerHTML = html; pop.dataset.for = btn.id; pop.hidden = false;
+  const r = btn.getBoundingClientRect();
+  let px = r.left, py = r.bottom+8;
+  pop.style.left = '0px'; pop.style.top = '0px';
+  const w = pop.offsetWidth;
+  if(px+w > innerWidth-10) px = innerWidth-10-w;
+  pop.style.left = px+'px'; pop.style.top = py+'px';
+}
+document.addEventListener('click', e => {
+  if(!pop.hidden && !pop.contains(e.target) && !(e.target.classList&&e.target.classList.contains('qbtn')))
+    pop.hidden = true;
+});
+
+/* generic hover: registry of screen-space points per svg */
+function attachHover(svg, VBW, VBH, pts, radius){
+  svg.addEventListener('mousemove', e => {
+    const r = svg.getBoundingClientRect();
+    const mx = (e.clientX-r.left)*VBW/r.width, my = (e.clientY-r.top)*VBH/r.height;
+    let best = null, bd = (radius||14)*(radius||14);
+    for(const p of pts){ const dx=p.x-mx, dy=p.y-my, d=dx*dx+dy*dy;
+      if(d < bd){ bd = d; best = p; } }
+    if(best) showTip(best.html, e.clientX, e.clientY); else hideTip();
+  });
+  svg.addEventListener('mouseleave', hideTip);
+}
+
+/* axes */
+function yGrid(g, x0, x1, sy, ticks, fmt){
+  for(const t of ticks){
+    const y = sy(t);
+    E('line', {x1:x0, x2:x1, y1:y, y2:y, stroke: t===0?'#9aa3af':'#eef1f5',
+               'stroke-width': t===0?1.4:1}, g);
+    E('text', {x:x0-8, y:y+4, 'text-anchor':'end'}, g).textContent = fmt?fmt(t):t;
+  }
+}
+function xYears(g, y, sx, from, to, step){
+  for(let t=from; t<=to; t+=step){
+    E('text', {x:sx(t), y:y, 'text-anchor':'middle'}, g).textContent = t;
+  }
+}
+
+/* path from [year,value] pairs with gap/dash segmentation */
+function segPath(g, pts, sx, sy, color, width, dashWhen){
+  for(let i=1;i<pts.length;i++){
+    const a=pts[i-1], b=pts[i];
+    const dashed = dashWhen ? dashWhen(a,b) : false;
+    E('line',{x1:sx(a[0]),y1:sy(a[1]),x2:sx(b[0]),y2:sy(b[1]),stroke:color,
+      'stroke-width':width,'stroke-dasharray':dashed?'4 4':'none',
+      'stroke-linecap':'round',opacity:dashed?0.65:1},g);
+  }
+}
+
+/* ================= 1 · THE ARC ================= */
+const ARC_W=1160, ARC_H=430, AM={l:52,r:14,t:34,b:26};
+const AX0=AM.l, AX1=ARC_W-AM.r, AY0=AM.t, AY1=ARC_H-AM.b;
+const asx = lin(1998.4, 2025.9, AX0, AX1);
+const asy = lin(-0.7, 0.9, AY1, AY0);
+const ANNOT = [ [2002,'comprehensive review'], [2016.5,'decay begins'], [2021,'test-blind'] ];
+
+function censusSeries(campus){
+  // census family = spine points (s9/cahsee/cst) + CAASPP points, one family
+  const a = D.arc[campus];
+  const pts = a.census.map(p => ({y:p[0], r:p[1], n:p[2], src:p[3]}));
+  for(const p of a.caaspp) pts.push({y:p[0], r:p[1], n:p[2], src:'caaspp'});
+  pts.sort((u,v)=>u.y-v.y || (u.src==='caaspp'?1:-1));
+  // if a year appears twice (2015 cahsee + caaspp), keep both as points but
+  // route the connecting path through the caaspp value
+  const path = [];
+  const seen = {};
+  for(const p of pts){ if(!(p.y in seen) || p.src==='caaspp'){ seen[p.y]=p; } }
+  Object.keys(seen).map(Number).sort((a,b)=>a-b).forEach(y=>path.push(seen[y]));
+  return {pts, path};
+}
+
+function renderArc(){
+  const campus = state.campus, a = D.arc[campus];
+  $('titleArc').textContent = campus + ', 1999–2025';
+  const holder = $('cArc'); holder.innerHTML = '';
+  const svg = E('svg',{viewBox:`0 0 ${ARC_W} ${ARC_H}`});
+  holder.appendChild(svg);
+  const hov = [];
+
+  yGrid(svg, AX0, AX1, asy, [-0.6,-0.4,-0.2,0,0.2,0.4,0.6,0.8], t=>t===0?'0':fmtR(t,1));
+  xYears(svg, AY1+18, asx, 2000, 2025, 5);
+  E('text',{x:AX0-40,y:(AY0+AY1)/2,transform:`rotate(-90 ${AX0-40} ${(AY0+AY1)/2})`,
+    'text-anchor':'middle','font-size':11},svg).textContent='r (admit rate × school achievement)';
+
+  for(const [x,t] of ANNOT){
+    E('line',{x1:asx(x),x2:asx(x),y1:AY0-4,y2:AY1,stroke:'#b6bfca','stroke-width':1,
+      'stroke-dasharray':'2 4'},svg);
+    E('text',{x:asx(x),y:AY0-10,'text-anchor':'middle','font-size':10.5},svg).textContent=t;
+  }
+
+  // college-bound: SAT
+  if(state.showSAT && a.sat.length){
+    segPath(svg, a.sat, asx, asy, 'var(--cb)', 2.4);
+    for(const [y,r,n] of a.sat){
+      const c = E('circle',{cx:asx(y),cy:asy(r),r:2.7,fill:'var(--cb)'},svg);
+      hov.push({x:asx(y),y:asy(r),html:
+        `<div class="t">${y} · ${campus}</div>`+
+        `<div class="r"><span class="k" style="border-color:var(--cb)"></span>College-bound (SAT, era-bridged z)</div>`+
+        `<div class="r">r = <b>${fmtR(r)}</b>&nbsp;<span class="lbl">· ${fmtN(n)} schools</span></div>`});
+    }
+  }
+  // college-bound: ACT
+  if(state.showACT && a.act.length){
+    segPath(svg, a.act, asx, asy, 'var(--act)', 1.6);
+    for(const [y,r,n] of a.act){
+      E('circle',{cx:asx(y),cy:asy(r),r:2.2,fill:'var(--act)'},svg);
+      hov.push({x:asx(y),y:asy(r),html:
+        `<div class="t">${y} · ${campus}</div>`+
+        `<div class="r"><span class="k" style="border-color:var(--act)"></span>College-bound (ACT %≥21, z)</div>`+
+        `<div class="r">r = <b>${fmtR(r)}</b>&nbsp;<span class="lbl">· ${fmtN(n)} schools</span></div>`});
+    }
+  }
+  // census family
+  if(state.showCEN){
+    const {pts, path} = censusSeries(campus);
+    segPath(svg, path.map(p=>[p.y,p.r]), asx, asy, 'var(--cen)', 2.4,
+      (u,v)=>{ // dashed when years skip or instrument changes
+        const pu = path.find(p=>p.y===u[0]), pv = path.find(p=>p.y===v[0]);
+        return (v[0]-u[0]>1) || (pu && pv && pu.src!==pv.src); });
+    for(const p of pts){
+      const hollow = HOLLOW[p.src];
+      E('circle',{cx:asx(p.y),cy:asy(p.r),r:hollow?3.4:3.0,
+        fill:hollow?'#fff':'var(--cen)',stroke:'var(--cen)','stroke-width':hollow?1.8:0},svg);
+      hov.push({x:asx(p.y),y:asy(p.r),html:
+        `<div class="t">${p.y} · ${campus}</div>`+
+        `<div class="r"><span class="k" style="border-color:var(--cen)"></span>Census (${SRC_NAME[p.src]})</div>`+
+        `<div class="r">r = <b>${fmtR(p.r)}</b>&nbsp;<span class="lbl">· ${fmtN(p.n)} schools</span></div>`+
+        (HOLLOW[p.src]?`<div class="r"><span class="lbl">compressed instrument — reads attenuated</span></div>`:'')});
+    }
+  }
+  attachHover(svg, ARC_W, ARC_H, hov);
+
+  /* legend with family toggles */
+  const lg = $('lArc'); lg.innerHTML='';
+  const items = [
+    ['showSAT','line','var(--cb)','College-bound — SAT (era-bridged z), 1999–2020'],
+    ['showACT','line','var(--act)','College-bound — ACT %≥21 (z), 1999–2020'],
+    ['showCEN','line','var(--cen)','Census — STAR → CAHSEE → CAASPP, 2000–2025'],
+  ];
+  for(const [key,kind,color,label] of items){
+    const sp=document.createElement('span'); sp.className='lk';
+    const b=document.createElement('button'); b.className='chip small';
+    b.setAttribute('aria-pressed', state[key]?'true':'false');
+    b.innerHTML = `<span style="display:inline-block;width:14px;border-top:2.5px solid ${color};border-radius:2px;vertical-align:3px;margin-right:6px"></span>${label}`;
+    b.addEventListener('click',()=>{ state[key]=!state[key]; renderArc(); });
+    sp.appendChild(b); lg.appendChild(sp);
+  }
+  const hollowKey=document.createElement('span'); hollowKey.className='lk';
+  hollowKey.innerHTML=`<span class="ring" style="border-color:var(--cen)"></span>
+    <span>hollow = compressed instrument (Stanford&nbsp;9, CAHSEE)</span>`;
+  lg.appendChild(hollowKey);
+
+  /* computed summary line */
+  const cs = D.campus_summary[campus];
+  const cen = censusSeries(campus).path;
+  const post = cen.filter(p=>p.y>=2022);
+  const postMean = post.length ? post.reduce((s,p)=>s+p.r,0)/post.length : null;
+  let s = '';
+  if(cs.sat_peak!=null) s += `College-bound peak <b>${fmtR(cs.sat_peak)}</b> in ${cs.sat_peak_year}; `;
+  if(cs.sat_last_positive!=null) s += `last positive college-bound year <b>${cs.sat_last_positive}</b>; `;
+  if(postMean!=null) s += `census ruler 2022–25 mean <b>${fmtR(postMean)}</b>.`;
+  if(campus==='Santa Barbara') s += ' <b>†</b> The two rulers genuinely disagree at this campus — see methods.';
+  $('sumArc').innerHTML = s;
+
+  /* table */
+  const rows = {};
+  const put=(y,k,v)=>{ (rows[y]=rows[y]||{})[k]=v; };
+  for(const [y,r,n] of a.sat) put(y,'sat',`${fmtR(r)} (${n})`);
+  for(const [y,r,n] of a.act) put(y,'act',`${fmtR(r)} (${n})`);
+  for(const p of censusSeries(campus).pts) put(p.y,'cen',`${fmtR(p.r)} (${p.n}) ${p.src.toUpperCase()}`);
+  let html = '<table><tr><th>Admission year</th><th>College-bound SAT r (schools)</th>'+
+             '<th>College-bound ACT r (schools)</th><th>Census r (schools) &middot; instrument</th></tr>';
+  for(const y of Object.keys(rows).map(Number).sort((a,b)=>a-b)){
+    const r0=rows[y];
+    html += `<tr><td>${y}</td><td>${r0.sat||'—'}</td><td>${r0.act||'—'}</td><td>${r0.cen||'—'}</td></tr>`;
+  }
+  $('tblArc').innerHTML = html+'</table>';
+}
+
+$('qArc').addEventListener('click', e => {
+  togglePop(e.currentTarget,
+   `<div class="pt">How to read one point</div>
+    Take Berkeley, 2016: across the ${fmtN(D.anchors.berkeley_2016_sat_n)} California public high schools
+    that sent Berkeley at least 25 applicants, schools with higher SAT averages had higher Berkeley admit
+    rates — correlation ${fmtR(D.anchors.berkeley_2016_sat_r)}, the strongest of the era. The same
+    reading applies to every point: one year, one campus, one achievement measure, association across
+    schools. It says nothing about any single student, and association is not attribution.`);
+  e.stopPropagation();
+});
+
+/* campus chips */
+(function(){
+  const row = $('campusChips');
+  for(const c of CAMPUSES){
+    const b=document.createElement('button'); b.className='chip'; b.textContent=c;
+    b.setAttribute('aria-pressed', c===state.campus?'true':'false');
+    b.addEventListener('click',()=>{
+      state.campus=c;
+      for(const x of row.children) x.setAttribute('aria-pressed', x.textContent===c?'true':'false');
+      renderArc(); markMini();
+    });
+    row.appendChild(b);
+  }
+})();
+
+/* ================= 2 · MINIS ================= */
+const MW=224, MH=132, MM={l:8,r:6,t:20,b:6};
+const msx = lin(1998.4,2025.9,MM.l,MW-MM.r), msy = lin(-0.7,0.9,MH-MM.b,MM.t);
+function renderMinis(){
+  const grid=$('miniGrid'); grid.innerHTML='';
+  for(const c of CAMPUSES){
+    const a=D.arc[c];
+    const div=document.createElement('div'); div.className='mini'; div.dataset.campus=c;
+    const t=document.createElement('div'); t.className='mt'; t.textContent=c; div.appendChild(t);
+    const svg=E('svg',{viewBox:`0 0 ${MW} ${MH}`}); div.appendChild(svg);
+    E('line',{x1:MM.l,x2:MW-MM.r,y1:msy(0),y2:msy(0),stroke:'#c9d1da','stroke-width':1},svg);
+    E('line',{x1:msx(2021),x2:msx(2021),y1:MM.t-4,y2:MH-MM.b,stroke:'#d6dce4','stroke-width':1,'stroke-dasharray':'2 3'},svg);
+    if(a.sat.length) segPath(svg,a.sat,msx,msy,'var(--cb)',1.5);
+    const {path}=censusSeries(c);
+    segPath(svg,path.map(p=>[p.y,p.r]),msx,msy,'var(--cen)',1.5,
+      (u,v)=>{const pu=path.find(p=>p.y===u[0]),pv=path.find(p=>p.y===v[0]);
+              return (v[0]-u[0]>1)||(pu&&pv&&pu.src!==pv.src);});
+    div.addEventListener('click',()=>{
+      state.campus=c;
+      for(const x of $('campusChips').children) x.setAttribute('aria-pressed', x.textContent===c?'true':'false');
+      renderArc(); markMini();
+      if($('cardArc').scrollIntoView) $('cardArc').scrollIntoView({behavior:'smooth',block:'start'});
+    });
+    grid.appendChild(div);
+  }
+  markMini();
+}
+function markMini(){
+  for(const d of $('miniGrid').children) d.classList.toggle('sel', d.dataset.campus===state.campus);
+}
+/* computed post-blind note */
+(function(){
+  const entries = CAMPUSES.map(c=>{
+    const v=D.campus_summary[c].post_blind_mean;
+    return v==null?null:[c,v];
+  }).filter(Boolean).sort((a,b)=>a[1]-b[1]);
+  $('gridNote').innerHTML = 'Census-ruler mean, 2022–25: ' +
+    entries.map(([c,v])=>`${c} <b>${fmtR(v)}</b>`).join(' · ') +
+    '. Riverside and Merced never invert; Irvine and Santa Cruz remain positive.';
+})();
+
+/* ================= 3 · VOLUME ================= */
+const QCOLORS = {'Q1 most advantaged':'var(--q1)','Q2':'var(--q2)','Q3':'var(--q3)',
+                 'Q4':'var(--q4)','Q5 highest need':'var(--q5)'};
+const QORDER = ['Q1 most advantaged','Q2','Q3','Q4','Q5 highest need'];
+function lineChartCard(holderId, legendId, series, opts){
+  const W=1160,H=380,M={l:52,r:14,t:18,b:26};
+  const x0=M.l,x1=W-M.r,y0=M.t,y1=H-M.b;
+  const sx=lin(opts.xmin,opts.xmax,x0,x1), sy=lin(opts.ymin,opts.ymax,y1,y0);
+  const holder=$(holderId); holder.innerHTML='';
+  const svg=E('svg',{viewBox:`0 0 ${W} ${H}`}); holder.appendChild(svg);
+  yGrid(svg,x0,x1,sy,opts.yticks,opts.yfmt);
+  xYears(svg,y1+18,sx,opts.xtick0,opts.xtick1,opts.xstep);
+  E('text',{x:x0-40,y:(y0+y1)/2,transform:`rotate(-90 ${x0-40} ${(y0+y1)/2})`,
+    'text-anchor':'middle','font-size':11},svg).textContent=opts.ylabel;
+  for(const an of (opts.annot||[])){
+    E('line',{x1:sx(an[0]),x2:sx(an[0]),y1:y0,y2:y1,stroke:'#b6bfca','stroke-width':1,'stroke-dasharray':'2 4'},svg);
+    E('text',{x:sx(an[0]),y:y0-4,'text-anchor':'middle','font-size':10.5},svg).textContent=an[1];
+  }
+  const hov=[];
+  for(const q of QORDER){
+    const s=series[q]; if(!s) continue;
+    segPath(svg,s,sx,sy,QCOLORS[q],2.2,(u,v)=>v[0]-u[0]>1);
+    for(const [y,v] of s){
+      E('circle',{cx:sx(y),cy:sy(v),r:2.2,fill:QCOLORS[q]},svg);
+    }
+  }
+  // hover: whole-year column
+  const years={};
+  for(const q of QORDER){ for(const [y,v] of (series[q]||[])) (years[y]=years[y]||{})[q]=v; }
+  for(const y of Object.keys(years).map(Number)){
+    let html=`<div class="t">${y}</div>`;
+    for(const q of QORDER){ if(years[y][q]!=null)
+      html+=`<div class="r"><span class="k" style="border-color:${QCOLORS[q]}"></span>${q}: <b>${years[y][q].toFixed(1)}</b></div>`; }
+    const q1=years[y]['Q1 most advantaged'], q5=years[y]['Q5 highest need'];
+    if(q1!=null&&q5!=null&&opts.ratio) html+=`<div class="r"><span class="lbl">Q1÷Q5 = ${(q1/q5).toFixed(2)}</span></div>`;
+    hov.push({x:sx(y),y:(y0+y1)/2,html});
+  }
+  svg.addEventListener('mousemove',e=>{
+    const r=svg.getBoundingClientRect();
+    const mx=(e.clientX-r.left)*W/r.width;
+    let best=null,bd=1e9;
+    for(const p of hov){const d=Math.abs(p.x-mx); if(d<bd&&d<20){bd=d;best=p;}}
+    if(best) showTip(best.html,e.clientX,e.clientY); else hideTip();
+  });
+  svg.addEventListener('mouseleave',hideTip);
+  const lg=$(legendId); lg.innerHTML='';
+  for(const q of QORDER){ if(!series[q]) continue;
+    const sp=document.createElement('span'); sp.className='lk';
+    sp.innerHTML=`<span class="line" style="border-color:${QCOLORS[q]}"></span><span>${q}</span>`;
+    lg.appendChild(sp);
+  }
+}
+function renderVolume(){
+  lineChartCard('cVol','lVol',D.volume.series,{
+    xmin:1998.4,xmax:2025.9,ymin:0,ymax:48,
+    yticks:[0,10,20,30,40],xtick0:2000,xtick1:2025,xstep:5,
+    ylabel:'UC applicants per 100 seniors',ratio:true,
+    annot:[[2016.5,'denominator splice (g12 → ACGR)'],[2021,'test-blind']]});
+  const rs=$('rsVol'); rs.innerHTML='';
+  const R=D.volume.ratio_eras;
+  for(const era of ['1999-2005','2006-2012','2013-2019','2021-2025']){
+    const d=document.createElement('span'); d.className='rs';
+    d.innerHTML=`${era.replace('-','–')}: Q1÷Q5 = <b>${R[era].toFixed(2)}</b>`;
+    rs.appendChild(d);
+  }
+}
+
+/* ================= 4 · AP ================= */
+function renderAP(){
+  const mode=state.apMode;
+  $('titleAP').textContent = mode==='exams'
+    ? 'AP exams per 100 seniors, 1999–2020'
+    : 'Share of AP exams scored 3 or higher, 1999–2020';
+  const series = mode==='exams' ? D.ap_expansion.series : D.ap_expansion.pass_share;
+  lineChartCard('cAP','lAP',series,{
+    xmin:1998.4,xmax:2020.9,
+    ymin:0,ymax: mode==='exams'?280:100,
+    yticks: mode==='exams'?[0,50,100,150,200,250]:[0,20,40,60,80,100],
+    xtick0:2000,xtick1:2020,xstep:5,
+    ylabel: mode==='exams'?'AP exams per 100 seniors':'% of exams scored 3+',
+    ratio:false, annot:[]});
+}
+$('apN').textContent = fmtN(D.ap_expansion.n_schools);
+$('apMode').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  state.apMode=b.dataset.mode;
+  for(const x of $('apMode').children) x.setAttribute('aria-pressed', x===b?'true':'false');
+  renderAP();
+});
+
+/* ================= 5 · WEDGE ================= */
+function renderWedge(){
+  const W=1160,H=340,M={l:52,r:14,t:16,b:26};
+  const x0=M.l,x1=W-M.r,y0=M.t,y1=H-M.b;
+  const yr=D.wedge.yearly;
+  const sx=lin(2005.5,2015.5,x0,x1), sy=lin(0,110,y1,y0);
+  const holder=$('cWedge'); holder.innerHTML='';
+  const svg=E('svg',{viewBox:`0 0 ${W} ${H}`}); holder.appendChild(svg);
+  yGrid(svg,x0,x1,sy,[0,25,50,75,100],t=>t);
+  xYears(svg,y1+18,sx,2006,2015,1);
+  E('text',{x:x0-40,y:(y0+y1)/2,transform:`rotate(-90 ${x0-40} ${(y0+y1)/2})`,
+    'text-anchor':'middle','font-size':11},svg).textContent='SAT reading points';
+  // IQR band
+  let dTop='',dBot='';
+  yr.forEach((p,i)=>{ dTop += (i?'L':'M')+sx(p[0])+' '+sy(p[3])+' '; });
+  for(let i=yr.length-1;i>=0;i--){ dBot += 'L'+sx(yr[i][0])+' '+sy(yr[i][2])+' '; }
+  E('path',{d:dTop+dBot+'Z',fill:'var(--cb)',opacity:0.13},svg);
+  segPath(svg,yr.map(p=>[p[0],p[1]]),sx,sy,'var(--cb)',2.4);
+  const hov=[];
+  for(const [y,m,q25,q75,n] of yr){
+    E('circle',{cx:sx(y),cy:sy(m),r:3,fill:'var(--cb)'},svg);
+    hov.push({x:sx(y),y:sy(m),html:
+      `<div class="t">Admission cycle ${y}</div>`+
+      `<div class="r">mean gap <b>+${m.toFixed(0)} pts</b></div>`+
+      `<div class="r"><span class="lbl">interquartile +${q25.toFixed(0)} to +${q75.toFixed(0)} · ${fmtN(n)} schools</span></div>`});
+  }
+  attachHover(svg,W,H,hov,20);
+  $('lWedge').innerHTML =
+    `<span class="lk"><span class="line" style="border-color:var(--cb)"></span><span>yearly mean across schools</span></span>
+     <span class="lk"><span class="dot" style="background:var(--cb);opacity:.2"></span><span>interquartile range</span></span>`;
+  $('wPos').textContent=(D.wedge.share_positive*100).toFixed(1)+'%';
+  $('wN').textContent=fmtN(D.wedge.n);
+  $('wMean').textContent=D.wedge.overall_mean.toFixed(0);
+  $('wR').textContent=fmtR(D.wedge.r_school_achievement);
+}
+
+/* ================= 6 · DRIFT SCATTERS ================= */
+function scatter(holderId, pts, opts){
+  const W=560,H=380,M={l:52,r:12,t:14,b:34};
+  const x0=M.l,x1=W-M.r,y0=M.t,y1=H-M.b;
+  const sx=lin(opts.xmin,opts.xmax,x0,x1), sy=lin(opts.ymin,opts.ymax,y1,y0);
+  const holder=$(holderId); holder.innerHTML='';
+  const svg=E('svg',{viewBox:`0 0 ${W} ${H}`}); holder.appendChild(svg);
+  if(opts.band){ // vertical shaded band [a,b]
+    E('rect',{x:sx(opts.band[0]),y:y0,width:sx(opts.band[1])-sx(opts.band[0]),
+      height:y1-y0,fill:'var(--cen)',opacity:0.08},svg);
+  }
+  yGrid(svg,x0,x1,sy,opts.yticks,opts.yfmt||(t=>t));
+  for(const t of opts.xticks){
+    E('text',{x:sx(t),y:y1+16,'text-anchor':'middle'},svg).textContent=opts.xfmt?opts.xfmt(t):t;
+    E('line',{x1:sx(t),x2:sx(t),y1:y1,y2:y1+3,stroke:'#c9d1da'},svg);
+  }
+  if(opts.xzero!==false) E('line',{x1:sx(0),x2:sx(0),y1:y0,y2:y1,stroke:'#c9d1da','stroke-width':1},svg);
+  E('text',{x:(x0+x1)/2,y:H-4,'text-anchor':'middle','font-size':11},svg).textContent=opts.xlabel;
+  E('text',{x:x0-40,y:(y0+y1)/2,transform:`rotate(-90 ${x0-40} ${(y0+y1)/2})`,
+    'text-anchor':'middle','font-size':11},svg).textContent=opts.ylabel;
+  const hov=[];
+  for(const p of pts){
+    const inBand = opts.band && p[0]>=opts.band[0] && p[0]<=opts.band[1];
+    const cx=sx(Math.max(opts.xmin,Math.min(opts.xmax,p[0]))),
+          cy=sy(Math.max(opts.ymin,Math.min(opts.ymax,p[1])));
+    E('circle',{cx,cy,r:2.3,fill:inBand?'var(--cen)':'#5c7ca6',opacity:inBand?0.75:0.45},svg);
+    hov.push({x:cx,y:cy,html:
+      `<div class="t">${p[2]||''}</div>`+
+      `<div class="r">${opts.xlabel}: <b>${fmtR(p[0],opts.xdp==null?3:opts.xdp)}</b></div>`+
+      `<div class="r">${opts.ylabel}: <b>${fmtR(p[1],opts.ydp==null?3:opts.ydp)}</b></div>`});
+  }
+  attachHover(svg,W,H,hov,11);
+}
+function renderDrift(){
+  const g=D.gpa_drift;
+  scatter('cDriftA', g.points, {
+    xmin:-0.16,xmax:0.16,ymin:-0.08,ymax:0.08,
+    xticks:[-0.1,0,0.1],yticks:[-0.06,-0.03,0,0.03,0.06],
+    yfmt:t=>t.toFixed(2), xfmt:t=>t.toFixed(1),
+    xlabel:'SAT trend (z per year)', ylabel:'applicant-GPA trend (points per year)',
+    band:[-0.02,0.02], xdp:3, ydp:4});
+  $('dFlatShare').textContent=(g.flat.share_rising*100).toFixed(0)+'%';
+  $('dFlatN').textContent=fmtN(g.flat.n);
+  $('dFlatSlope').textContent=fmtR(g.flat.mean_gpa_slope,4);
+  const x=D.ap_drift;
+  scatter('cDriftB', x.points, {
+    xmin:-15,xmax:15,ymin:-0.15,ymax:0.5,
+    xticks:[-10,-5,0,5,10],yticks:[-0.1,0,0.1,0.2,0.3,0.4,0.5],
+    yfmt:t=>t.toFixed(1), xfmt:t=>t,
+    xlabel:'change in AP exams per 100 seniors (2008–12 → 2016–20)',
+    ylabel:'grade-climb index', xdp:1, ydp:3});
+  $('dApR').textContent=fmtR(x.r_index);
+  $('dSplit').textContent=`${x.split.grew.I.toFixed(3)} expanded vs. ${x.split.flat.I.toFixed(3)} flat`;
+}
+
+/* ================= 7 · TWO RULERS ================= */
+function renderRulers(){
+  const W=1120,H=300,M={l:52,r:14,t:16,b:26};
+  const x0=M.l,x1=W-M.r,y0=M.t,y1=H-M.b;
+  const sx=lin(1999.4,2020.6,x0,x1), sy=lin(0,1,y1,y0);
+  const holder=$('cRulers'); holder.innerHTML='';
+  const svg=E('svg',{viewBox:`0 0 ${W} ${H}`}); holder.appendChild(svg);
+  yGrid(svg,x0,x1,sy,[0,0.2,0.4,0.6,0.8,1],t=>t.toFixed(1));
+  xYears(svg,y1+18,sx,2000,2020,5);
+  E('text',{x:x0-40,y:(y0+y1)/2,transform:`rotate(-90 ${x0-40} ${(y0+y1)/2})`,
+    'text-anchor':'middle','font-size':11},svg).textContent='r between the two rulers, across schools';
+  E('line',{x1:x0,x2:x1,y1:sy(0.79),y2:sy(0.79),stroke:'#9aa3af','stroke-width':1,'stroke-dasharray':'5 4'},svg);
+  E('text',{x:x1-4,y:sy(0.79)-6,'text-anchor':'end','font-size':10.5},svg).textContent='ρ ≈ .79';
+  const hov=[];
+  for(const [y,r,n,src] of D.rulers.census_x_collegebound){
+    const hollow=HOLLOW[src];
+    E('circle',{cx:sx(y),cy:sy(r),r:hollow?4:3.4,fill:hollow?'#fff':'var(--cen)',
+      stroke:'var(--cen)','stroke-width':hollow?1.8:0},svg);
+    hov.push({x:sx(y),y:sy(r),html:
+      `<div class="t">${y} admission cycle</div>`+
+      `<div class="r">census (${SRC_NAME[src]}) × college-bound (SAT z)</div>`+
+      `<div class="r">r = <b>${fmtR(r)}</b>&nbsp;<span class="lbl">· ${fmtN(n)} schools</span></div>`});
+  }
+  for(const [y,r,n] of D.rulers.sat_x_caaspp){
+    const g=E('g',{transform:`translate(${sx(y)} ${sy(r)}) rotate(45)`},svg);
+    E('rect',{x:-3.2,y:-3.2,width:6.4,height:6.4,fill:'var(--cb)'},g);
+    hov.push({x:sx(y),y:sy(r),html:
+      `<div class="t">${y} admission cycle</div>`+
+      `<div class="r">CAASPP × college-bound (SAT z)</div>`+
+      `<div class="r">r = <b>${fmtR(r)}</b>&nbsp;<span class="lbl">· ${fmtN(n)} schools</span></div>`});
+  }
+  attachHover(svg,W,H,hov,16);
+  $('lRulers').innerHTML =
+   `<span class="lk"><span class="dot" style="background:var(--cen)"></span><span>census × SAT (solid = STAR CST)</span></span>
+    <span class="lk"><span class="ring" style="border-color:var(--cen)"></span><span>census × SAT (hollow = Stanford 9 / CAHSEE)</span></span>
+    <span class="lk"><span style="display:inline-block;width:9px;height:9px;background:var(--cb);transform:rotate(45deg)"></span><span>CAASPP × SAT, 2015–19</span></span>`;
+  $('rulPre').textContent=D.rulers.pre_mean.toFixed(2).replace('0.','.');
+  $('rulCst').textContent=D.rulers.cst_mean.toFixed(2).replace('0.','.');
+}
+
+/* ================= boot ================= */
+renderArc(); renderMinis(); renderVolume(); renderAP(); renderWedge(); renderDrift(); renderRulers();
+
+$('footer').innerHTML =
+  `Data: UC Information Center, freshman admissions by source high school, fall 1999–2025; `+
+  `CDE SAT/ACT/AP research files 1998–99 to 2019–20 (CDS defect repaired); CDE STAR, CAHSEE and `+
+  `CAASPP research files 1999–00 to 2024–25. Correlation gate: ≥25 applicants, ≥40 schools. `+
+  `All series precomputed into <code>data_history.js</code> by <code>build/build_history_data.py</code>; `+
+  `built ${D.generated}. Part of the <a href="../">UC admissions explorer</a>.`;
+})();
+</script>
+</body>
+</html>

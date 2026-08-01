@@ -9,6 +9,46 @@ day of the change, not necessarily to the day of the commit that carried it.
 
 ---
 
+## 2026-08-01 — The long view: fourth companion page (`history/`)
+
+**Added**
+- `history/` — per-campus annotated series of the admit-rate × school-achievement correlation,
+  1999–2025 (gate ≥25 applicants to the campus, ≥40 schools per point), on two independent
+  measurement families: **college-bound** (SAT era-bridged z, ACT %≥21 z; 1999–2020) and
+  **census** (STAR Stanford 9 for 2000, CAHSEE for 2002 and 2014–15, STAR CST 2003–2013, CAASPP
+  2015–2025), with instrument splices drawn dashed and compressed instruments (Stanford 9,
+  CAHSEE) drawn hollow. The census family is new to the site: it extends the census-ruler series
+  back from 2015 to 2000 using the STAR/CAHSEE school panel built 2026-07-31. Where the families
+  overlap they agree; the between-family correlation is stable at ρ ≈ .79 (mean .794 across
+  fifteen pre-2015 years; .78–.81 for SAT × CAASPP 2015–19), which is what licenses the page's
+  attenuation disclosure — census-ruler correlations read ≈21% toward zero, so the post-2020
+  segment is understated, not inflated, relative to the college-bound era.
+- Secondary sections, all precomputed: UC applicants per 100 seniors by fixed advantage quintile,
+  1999–2025 (Q1/Q5 ratio 2.96 → 2.63 → 1.95 → 1.98); AP exams per 100 seniors and the share
+  scored 3+, by quintile, 1999–2020 (its own fixed panel of 757 schools — exams, not students;
+  totals after 2005-06 derived from the score distribution); the enrollee-minus-all-tester SAT
+  reading gap, 2006–2015 (mean +76 points, positive in 99.9% of 6,121 school-years, rising
+  ≈69 → ≈90); applicant-GPA drift at flat SAT, 2010–2016 (+0.0067 GPA/yr across 301 flat-SAT
+  schools, 70% rising), paired with the AP-expansion null (r = +0.04 against the grade-climb
+  index; the split halves carry identical indexes, 0.127 vs. 0.126).
+- `history/data_history.js` (static, ≈95 KB) built by `build/build_history_data.py` from the
+  AP/SAT/ACT test-context panel, the STAR/CAHSEE census panel and spine, the correlation-study
+  counts compilation, and the precomputed analysis outputs. Verified by
+  `build/verify_history_anchors.py` — 50/50 checks, including the Berkeley 2016 anchor
+  (r = +0.4965, n = 440) reproduced from raw sources by an independent code path, every
+  census-arc spot value, every two-rulers year, and all secondary-exhibit statistics — and by a
+  43-assertion jsdom suite, `build/test_history_page.js`.
+- Navigation: `history/` added to the main page's companions paragraph and to the backlink rows
+  of `context/`, `trends/` and `denied/`; a companion-page paragraph added to the README.
+
+**Known**
+- The correlation series' counts come from the same compilation the correlation study used, not
+  `data/dv_admissions_all9.csv`; under the 25-applicant gate the two sources give identical
+  results at the anchor (checked exactly: r = +0.4965, n = 440 either way). No usable census
+  measure exists for the 2001 admission cycle; CAASPP 2020 and 2021 are absent (cancelled /
+  excluded as non-representative); the 2001 CAHSEE administration was a voluntary grade-9
+  sitting and is excluded throughout.
+
 ## 2026-07-31 — Admitted vs. denied: counts universe repaired
 
 **Fixed**
