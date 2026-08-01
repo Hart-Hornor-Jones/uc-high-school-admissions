@@ -122,12 +122,14 @@
       <a href="../trends/">outcomes over time</a> &middot;
       <a href="../denied/">admitted vs. denied</a></div>
     <h1>The long view &mdash; admission chances and school achievement, 1999&ndash;2025</h1>
-    <p class="sub">For each UC campus and each admission year since 1999, one question: across California
-    public high schools, did a school&rsquo;s achievement level that year predict its applicants&rsquo; chance of
+    <p class="sub">For each UC campus and each graduating class since 1999, one question: across California
+    public high schools, did a school&rsquo;s achievement level predict that class&rsquo;s chance of
     admission? Two independent measurement families answer it &mdash; the <b style="color:#1c5cab">college-bound
     tests</b> (SAT, ACT), taken by self-selected testers through 2020, and the state&rsquo;s
     <b style="color:#a33a12">census tests</b> (STAR, CAHSEE, CAASPP), taken by every enrolled student, through
-    2025. Where the two families overlap they agree, which is what permits reading the series as one arc.
+    2025. Every point is dated by the <b>graduating class</b> it describes, so each test is matched to the
+    students who actually sat it &mdash; a grade-11 test in spring 2019 describes the class of 2020.
+    Where the two families overlap they agree, which is what permits reading the series as one arc.
     The association was positive for two decades, began to decay around 2016 &mdash; before the test-blind
     decision &mdash; and turns negative only after 2020, and only at some campuses.</p>
   </header>
@@ -142,13 +144,15 @@
   <section class="card" id="cardArc">
     <div class="kicker">Admit rate &times; school achievement, year by year</div>
     <h2 id="titleArc"></h2>
-    <p class="what">Each point is one admission year: the correlation (Pearson&nbsp;<i>r</i>), across California
-      public high schools with at least 25 applicants to the campus, between each school&rsquo;s admit rate and its
-      achievement level measured the prior spring. Points above zero mean higher-achieving schools saw higher
+    <p class="what">Each point is one graduating class: the correlation (Pearson&nbsp;<i>r</i>), across California
+      public high schools with at least 25 applicants to the campus, between each school&rsquo;s admit rate for that
+      class and its achievement level, each instrument taken in the spring that class actually sat it. Points above zero mean higher-achieving schools saw higher
       admit rates that year; points below zero mean they saw lower ones. Solid census points sit on the era&rsquo;s
-      main instrument (STAR&nbsp;CST, then CAASPP); hollow points sit on an instrument with known top-end
-      compression (Stanford&nbsp;9 in 2000, CAHSEE in 2002 and 2014&ndash;15) and read attenuated. Dashed
-      connections mark instrument splices, not measured change. Hover any point for the exact value.
+      main grade-11 instrument (STAR&nbsp;CST, then CAASPP); hollow points sit on an instrument with known
+      top-end compression (Stanford&nbsp;9, CAHSEE) and read attenuated. Small open marks are a
+      <i>second</i> census instrument describing the same class &mdash; where both exist they corroborate
+      each other closely. Dashed connections mark instrument splices, not measured change. Hover any point
+      for its instrument, its test spring and the exact value.
       <button type="button" class="qbtn" id="qArc" aria-label="How to read this">?</button></p>
     <div class="chart" id="cArc"></div>
     <div class="legend" id="lArc"></div>
@@ -161,7 +165,7 @@
   <section class="card" id="cardGrid">
     <div class="kicker">The same series at every campus</div>
     <h2>Ten campuses, one axis</h2>
-    <p class="what">Identical scales throughout; click a panel to load it above. The post-2020 inversion is
+    <p class="what">Identical scales throughout, graduating class on every axis; click a panel to load it above. The post-2020 inversion is
       confined to the more selective campuses. <span id="gridNote"></span></p>
     <div class="minigrid" id="miniGrid"></div>
   </section>
@@ -261,6 +265,20 @@
       the same constant, two decades apart, on different instruments. The dips are instrument artifacts: the
       CAHSEE years (2002, 2014&ndash;15) sit lower because CAHSEE is a graduation bar that compresses the top
       of the scale, and 2002 additionally reflects its early administration.</p>
+      <p><b>Dating: every point is the graduating class, not the testing year.</b> A test measures the
+      students who sat it, and those students reach UC in a known year: the class of Y sits grade&nbsp;9 in
+      spring&nbsp;Y&minus;3, grade&nbsp;10 in spring&nbsp;Y&minus;2, grade&nbsp;11 in spring&nbsp;Y&minus;1 and
+      grade&nbsp;12 in spring&nbsp;Y, then enters in fall&nbsp;Y. Each instrument is therefore shifted from its
+      own test spring to the class it describes, so a point at 2020 always means the class of 2020 whichever
+      instrument drew it.</p>
+      <div id="alignTable"></div>
+      <p>Two consequences worth stating. First, this is the same convention the rest of this site uses, so the
+      census gap sits in the same place on every page. Second, it is <i>checkable</i>: in the years when two
+      different census instruments &mdash; different grades, different springs, different scales &mdash;
+      both describe the same graduating class, they land in nearly the same place, a mean absolute difference
+      of <b><span id="agDiff"></span></b> in <i>r</i> across <span id="agPairs"></span> campus-class pairs.
+      Those second instruments are the small open marks on the chart. The alignment was not chosen to produce
+      that agreement; the agreement is what the alignment buys.</p>
       <ul>
         <li><b>Attenuation, and which way it points.</b> With a between-family correlation of
         &rho;&nbsp;&asymp;&nbsp;.79, a correlation measured on the census ruler reads about 21% closer to zero
@@ -280,16 +298,37 @@
         pass). CAHSEE-year correlations (hollow points) are therefore attenuated beyond the ordinary
         &rho;&nbsp;&asymp;&nbsp;.79. The 2001 CAHSEE sitting was a voluntary grade-9 administration and is
         excluded entirely.</li>
-        <li><b>Gaps are real gaps.</b> No usable census measure exists for the 2001 admission cycle
-        (2000&ndash;01 school year); CAASPP was cancelled in spring 2020 and is excluded as non-representative
-        for spring 2021, so the 2020&ndash;21 census points are absent. The college-bound series ends at the
-        2020 cycle. The 2019&ndash;20 SAT points sit on a grade-12-slice reporting basis (a population change,
+        <li><b>Gaps are real gaps.</b> On the census side the classes of 1999&ndash;2001 and 2003 have no
+        instrument: grade-11 CST proficiency begins in spring&nbsp;2003 (the class of 2004) and the grade-10
+        CAHSEE census begins in spring&nbsp;2002 (the class of 2004), while the spring-2001 CAHSEE sitting was
+        a voluntary grade-9 administration and is excluded throughout. The class of 2002 is carried only by
+        Stanford&nbsp;9. The classes of <b>2021 and 2022</b> have none: their grade-11 springs were 2020,
+        cancelled, and 2021, excluded as non-representative. California also ended STAR after spring 2013 and
+        ran spring 2014 only as a CAASPP field test with no reported results &mdash; that hole falls on the
+        <i>testing</i> timeline, and on the class timeline it closes, because the class of 2014 is covered by
+        grade-11 CST in spring 2013 and the class of 2015 by grade-10 CAHSEE in the same spring. The
+        college-bound series ends with the class of 2020, the last one to apply with scores required. The 2019&ndash;20 SAT points sit on a grade-12-slice reporting basis (a population change,
         carried as its own era); San Diego&rsquo;s 2020 college-bound point is anomalous under that change and
         should be read cautiously.</li>
         <li><b>Santa Barbara diverges for real.</b> At every other campus the two families agree up to the
         attenuation constant. Santa Barbara is the one campus with a genuine residual between the rulers
         (&minus;0.117, every year 2015&ndash;19, with ACT siding against CAASPP as well) &mdash; there the two
         measures pull in opposite directions for reasons not established. Its panels carry this flag.</li>
+        <li><b>2020 is a one-year step, not part of the trend</b> (ringed on the chart). The
+        college-bound value moves sharply at most campuses in the 2020 cycle &mdash; up at San Diego,
+        Santa Barbara and Irvine, down at Berkeley. It is not a measurement effect: the SAT reporting
+        population changed a year earlier, at 2019, so it cannot produce a 2019&ndash;2020 step; the
+        school measure itself is stable against a fixed external anchor (r = .77&ndash;.81 with a frozen
+        spring-2019 census measure, every year 2016&ndash;2020); the step survives holding the
+        achievement measure completely fixed; and the census family, which is an entirely separate
+        instrument, shows the same step on the chart &mdash; at San Diego it runs &minus;0.17 to +0.29
+        against the college-bound &minus;0.19 to +0.30, and at Berkeley it turns down in the same year the
+        college-bound line does. What moved was admission rates. The 2020 cycle was decided in
+        March&ndash;April 2020, and campuses expanded admissions unevenly across schools: at San Diego
+        the highest-achieving quartile of schools went from a 25.9% to a 35.0% mean admit rate while
+        the lowest-achieving quartile fell from 30.9% to 28.6% &mdash; a reversal of that campus&rsquo;s
+        prior ordering within a single year. Berkeley moved the other way. Read 2020 as its own event;
+        the surrounding trend is what the rest of the series shows.</li>
         <li><b>Participation.</b> The share of students taking the SAT (<code>percent_tested</code>) is
         published only through 2017&ndash;18; no participation-adjusted view is offered after that.</li>
         <li><b>AP semantics.</b> AP counts are exams, not students; totals after 2005&ndash;06 are derived
@@ -323,9 +362,15 @@
         per school&times;year with per-year rank-space bridges across the SAT&rsquo;s scale eras; CDS-code
         defect in the 2012&ndash;13 (and ACT 2007&ndash;08) files repaired before use.</dd>
       <dt>Census achievement</dt>
-      <dd>CDE STAR (Stanford&nbsp;9 spring 2000; CST 2003&ndash;2013), CAHSEE (2002, 2014&ndash;15) and
-        CAASPP grade&nbsp;11 (2015&ndash;2025, spring 2020 cancelled and spring 2021 excluded), carried as a
-        single per-school census series with its instrument recorded on every value.</dd>
+      <dd>CDE STAR CST <b>grade&nbsp;11</b> ELA proficiency (springs 2003&ndash;2013) &mdash; the same
+        construct CAASPP measures &mdash; with CDE CAHSEE grade&nbsp;10 (springs 2002&ndash;2015), CAASPP
+        grade&nbsp;11 (springs 2015&ndash;2024; spring 2020 cancelled, spring 2021 excluded) and Stanford&nbsp;9
+        (spring 2000, grades 9&ndash;11 pooled). Each value is dated by the graduating class that sat it,
+        with its instrument and test spring recorded on every point.</dd>
+      <dt>Dating</dt>
+      <dd>Every series is dated by the normative graduating class, which is also the UC admission year:
+        grade&nbsp;11 tests shift +1 year from their spring, grade&nbsp;10 tests +2, and the senior-weighted
+        SAT/ACT files need no shift. The methods note gives the full table.</dd>
       <dt>This page</dt>
       <dd>Every series precomputed by <code>build/build_history_data.py</code> into
         <a href="data_history.js">history/data_history.js</a>; no computation happens in the browser beyond
@@ -366,7 +411,9 @@ const lin = (d0,d1,r0,r1) => v => r0 + (v-d0)*(r1-r0)/(d1-d0);
 const CAMPUSES = ['Berkeley','UCLA','San Diego','Santa Barbara','Davis','Irvine',
                   'Santa Cruz','Riverside','Merced','UC systemwide'];
 const SRC_NAME = {s9:'Stanford 9 percentile', cahsee:'CAHSEE pass rate',
-                  cst:'STAR CST proficiency', caaspp:'CAASPP % met+'};
+                  cst11:'STAR CST proficiency', cst:'STAR CST proficiency', caaspp:'CAASPP % met+'};
+const SRC_GRADE = {s9:'grades 9–11 pooled', cahsee:'grade 10', cst11:'grade 11', caaspp:'grade 11'};
+const SRC_RANK = {caaspp:0, cst11:1, cahsee:2, s9:3};
 const HOLLOW = {s9:1, cahsee:1};
 const state = { campus:'Berkeley', showSAT:true, showACT:false, showCEN:true, apMode:'exams' };
 
@@ -446,18 +493,17 @@ const asy = lin(-0.7, 0.9, AY1, AY0);
 const ANNOT = [ [2002,'comprehensive review'], [2016.5,'decay begins'], [2021,'test-blind'] ];
 
 function censusSeries(campus){
-  // census family = spine points (s9/cahsee/cst) + CAASPP points, one family
-  const a = D.arc[campus];
-  const pts = a.census.map(p => ({y:p[0], r:p[1], n:p[2], src:p[3]}));
-  for(const p of a.caaspp) pts.push({y:p[0], r:p[1], n:p[2], src:'caaspp'});
-  pts.sort((u,v)=>u.y-v.y || (u.src==='caaspp'?1:-1));
-  // if a year appears twice (2015 cahsee + caaspp), keep both as points but
-  // route the connecting path through the caaspp value
-  const path = [];
-  const seen = {};
-  for(const p of pts){ if(!(p.y in seen) || p.src==='caaspp'){ seen[p.y]=p; } }
-  Object.keys(seen).map(Number).sort((a,b)=>a-b).forEach(y=>path.push(seen[y]));
-  return {pts, path};
+  // one census family on the graduating-class axis; where two instruments
+  // describe the same class, the better-ranked one carries the line and the
+  // other is drawn as a corroborating mark.
+  const pts = D.arc[campus].census.map(
+    p => ({y:p[0], r:p[1], n:p[2], src:p[3], spring:p[4]}));
+  const best = {};
+  for(const p of pts)
+    if(!(p.y in best) || SRC_RANK[p.src] < SRC_RANK[best[p.y].src]) best[p.y] = p;
+  const path = Object.keys(best).map(Number).sort((a,b)=>a-b).map(y=>best[y]);
+  const isPrimary = p => best[p.y] === p;
+  return {pts, path, isPrimary};
 }
 
 function renderArc(){
@@ -472,6 +518,7 @@ function renderArc(){
   xYears(svg, AY1+18, asx, 2000, 2025, 5);
   E('text',{x:AX0-40,y:(AY0+AY1)/2,transform:`rotate(-90 ${AX0-40} ${(AY0+AY1)/2})`,
     'text-anchor':'middle','font-size':11},svg).textContent='r (admit rate × school achievement)';
+  E('text',{x:(AX0+AX1)/2,y:ARC_H-2,'text-anchor':'middle','font-size':11},svg).textContent='graduating class';
 
   for(const [x,t] of ANNOT){
     E('line',{x1:asx(x),x2:asx(x),y1:AY0-4,y2:AY1,stroke:'#b6bfca','stroke-width':1,
@@ -479,15 +526,24 @@ function renderArc(){
     E('text',{x:asx(x),y:AY0-10,'text-anchor':'middle','font-size':10.5},svg).textContent=t;
   }
 
+  // 2020 is a single-year anomaly at most campuses — see methods
+  const NOTE2020 = `<div class="r"><span class="lbl">2020 moves on the admissions side, not the `+
+    `test side: it is a one-year step, not part of the trend. See methods.</span></div>`;
+  function halo(x, y, color){
+    E('circle',{cx:x,cy:y,r:6.4,fill:'none',stroke:color,'stroke-width':1.1,opacity:0.55},svg);
+  }
+
   // college-bound: SAT
   if(state.showSAT && a.sat.length){
     segPath(svg, a.sat, asx, asy, 'var(--cb)', 2.4);
     for(const [y,r,n] of a.sat){
-      const c = E('circle',{cx:asx(y),cy:asy(r),r:2.7,fill:'var(--cb)'},svg);
+      E('circle',{cx:asx(y),cy:asy(r),r:2.7,fill:'var(--cb)'},svg);
+      if(y===2020) halo(asx(y), asy(r), 'var(--cb)');
       hov.push({x:asx(y),y:asy(r),html:
         `<div class="t">${y} · ${campus}</div>`+
         `<div class="r"><span class="k" style="border-color:var(--cb)"></span>College-bound (SAT, era-bridged z)</div>`+
-        `<div class="r">r = <b>${fmtR(r)}</b>&nbsp;<span class="lbl">· ${fmtN(n)} schools</span></div>`});
+        `<div class="r">r = <b>${fmtR(r)}</b>&nbsp;<span class="lbl">· ${fmtN(n)} schools</span></div>`+
+        (y===2020?NOTE2020:'')});
     }
   }
   // college-bound: ACT
@@ -495,28 +551,37 @@ function renderArc(){
     segPath(svg, a.act, asx, asy, 'var(--act)', 1.6);
     for(const [y,r,n] of a.act){
       E('circle',{cx:asx(y),cy:asy(r),r:2.2,fill:'var(--act)'},svg);
+      if(y===2020) halo(asx(y), asy(r), 'var(--act)');
       hov.push({x:asx(y),y:asy(r),html:
         `<div class="t">${y} · ${campus}</div>`+
         `<div class="r"><span class="k" style="border-color:var(--act)"></span>College-bound (ACT %≥21, z)</div>`+
-        `<div class="r">r = <b>${fmtR(r)}</b>&nbsp;<span class="lbl">· ${fmtN(n)} schools</span></div>`});
+        `<div class="r">r = <b>${fmtR(r)}</b>&nbsp;<span class="lbl">· ${fmtN(n)} schools</span></div>`+
+        (y===2020?NOTE2020:'')});
     }
   }
   // census family
   if(state.showCEN){
-    const {pts, path} = censusSeries(campus);
+    const {pts, path, isPrimary} = censusSeries(campus);
     segPath(svg, path.map(p=>[p.y,p.r]), asx, asy, 'var(--cen)', 2.4,
-      (u,v)=>{ // dashed when years skip or instrument changes
+      (u,v)=>{ // dashed when class years skip or the instrument changes
         const pu = path.find(p=>p.y===u[0]), pv = path.find(p=>p.y===v[0]);
         return (v[0]-u[0]>1) || (pu && pv && pu.src!==pv.src); });
     for(const p of pts){
-      const hollow = HOLLOW[p.src];
-      E('circle',{cx:asx(p.y),cy:asy(p.r),r:hollow?3.4:3.0,
-        fill:hollow?'#fff':'var(--cen)',stroke:'var(--cen)','stroke-width':hollow?1.8:0},svg);
+      const prim = isPrimary(p), hollow = HOLLOW[p.src];
+      if(prim){
+        E('circle',{cx:asx(p.y),cy:asy(p.r),r:hollow?3.4:3.0,
+          fill:hollow?'#fff':'var(--cen)',stroke:'var(--cen)','stroke-width':hollow?1.8:0},svg);
+      } else {
+        E('circle',{cx:asx(p.y),cy:asy(p.r),r:2.2,fill:'none',
+          stroke:'var(--cen)','stroke-width':1.1,opacity:0.5},svg);
+      }
       hov.push({x:asx(p.y),y:asy(p.r),html:
-        `<div class="t">${p.y} · ${campus}</div>`+
-        `<div class="r"><span class="k" style="border-color:var(--cen)"></span>Census (${SRC_NAME[p.src]})</div>`+
+        `<div class="t">Class of ${p.y} · ${campus}</div>`+
+        `<div class="r"><span class="k" style="border-color:var(--cen)"></span>Census — ${SRC_NAME[p.src]}</div>`+
         `<div class="r">r = <b>${fmtR(p.r)}</b>&nbsp;<span class="lbl">· ${fmtN(p.n)} schools</span></div>`+
-        (HOLLOW[p.src]?`<div class="r"><span class="lbl">compressed instrument — reads attenuated</span></div>`:'')});
+        `<div class="r"><span class="lbl">${SRC_GRADE[p.src]}, tested spring ${p.spring}`+
+        (prim?'':' · second instrument for this class')+`</span></div>`+
+        (hollow?`<div class="r"><span class="lbl">compressed instrument — reads attenuated</span></div>`:'')});
     }
   }
   attachHover(svg, ARC_W, ARC_H, hov);
@@ -540,16 +605,22 @@ function renderArc(){
   hollowKey.innerHTML=`<span class="ring" style="border-color:var(--cen)"></span>
     <span>hollow = compressed instrument (Stanford&nbsp;9, CAHSEE)</span>`;
   lg.appendChild(hollowKey);
+  const anomKey=document.createElement('span'); anomKey.className='lk';
+  anomKey.innerHTML=`<span class="ring" style="border-color:#8a94a2;width:11px;height:11px"></span>
+    <span>ringed = 2020, a one-year step (<a href="#methods" id="lnk2020">why</a>)</span>`;
+  lg.appendChild(anomKey);
+  const l20=lg.querySelector('#lnk2020');
+  if(l20) l20.addEventListener('click',()=>{ const m=$('methods'); if(m&&!m.open) m.open=true; });
 
   /* computed summary line */
   const cs = D.campus_summary[campus];
   const cen = censusSeries(campus).path;
-  const post = cen.filter(p=>p.y>=2022);
+  const post = cen.filter(p=>p.y>=2023);
   const postMean = post.length ? post.reduce((s,p)=>s+p.r,0)/post.length : null;
   let s = '';
   if(cs.sat_peak!=null) s += `College-bound peak <b>${fmtR(cs.sat_peak)}</b> in ${cs.sat_peak_year}; `;
   if(cs.sat_last_positive!=null) s += `last positive college-bound year <b>${cs.sat_last_positive}</b>; `;
-  if(postMean!=null) s += `census ruler 2022–25 mean <b>${fmtR(postMean)}</b>.`;
+  if(postMean!=null) s += `census ruler, classes of 2023–25, mean <b>${fmtR(postMean)}</b>.`;
   if(campus==='Santa Barbara') s += ' <b>†</b> The two rulers genuinely disagree at this campus — see methods.';
   $('sumArc').innerHTML = s;
 
@@ -558,9 +629,12 @@ function renderArc(){
   const put=(y,k,v)=>{ (rows[y]=rows[y]||{})[k]=v; };
   for(const [y,r,n] of a.sat) put(y,'sat',`${fmtR(r)} (${n})`);
   for(const [y,r,n] of a.act) put(y,'act',`${fmtR(r)} (${n})`);
-  for(const p of censusSeries(campus).pts) put(p.y,'cen',`${fmtR(p.r)} (${p.n}) ${p.src.toUpperCase()}`);
-  let html = '<table><tr><th>Admission year</th><th>College-bound SAT r (schools)</th>'+
-             '<th>College-bound ACT r (schools)</th><th>Census r (schools) &middot; instrument</th></tr>';
+  for(const p of censusSeries(campus).pts){
+    const cell = `${fmtR(p.r)} (${p.n}) ${SRC_NAME[p.src].split(' ')[0]} spr${p.spring}`;
+    put(p.y,'cen', rows[p.y] && rows[p.y].cen ? rows[p.y].cen + ' · ' + cell : cell);
+  }
+  let html = '<table><tr><th>Graduating class</th><th>College-bound SAT r (schools)</th>'+
+             '<th>College-bound ACT r (schools)</th><th>Census r (schools) &middot; instrument &middot; spring</th></tr>';
   for(const y of Object.keys(rows).map(Number).sort((a,b)=>a-b)){
     const r0=rows[y];
     html += `<tr><td>${y}</td><td>${r0.sat||'—'}</td><td>${r0.act||'—'}</td><td>${r0.cen||'—'}</td></tr>`;
@@ -630,7 +704,7 @@ function markMini(){
     const v=D.campus_summary[c].post_blind_mean;
     return v==null?null:[c,v];
   }).filter(Boolean).sort((a,b)=>a[1]-b[1]);
-  $('gridNote').innerHTML = 'Census-ruler mean, 2022–25: ' +
+  $('gridNote').innerHTML = 'Census-ruler mean, classes of 2023–25: ' +
     entries.map(([c,v])=>`${c} <b>${fmtR(v)}</b>`).join(' · ') +
     '. Riverside and Merced never invert; Irvine and Santa Cruz remain positive.';
 })();
@@ -827,6 +901,7 @@ function renderRulers(){
   xYears(svg,y1+18,sx,2000,2020,5);
   E('text',{x:x0-40,y:(y0+y1)/2,transform:`rotate(-90 ${x0-40} ${(y0+y1)/2})`,
     'text-anchor':'middle','font-size':11},svg).textContent='r between the two rulers, across schools';
+  E('text',{x:(x0+x1)/2,y:H-2,'text-anchor':'middle','font-size':11},svg).textContent='test spring (this chart compares instruments, so it is dated by the testing year, not by class)';
   E('line',{x1:x0,x2:x1,y1:sy(0.79),y2:sy(0.79),stroke:'#9aa3af','stroke-width':1,'stroke-dasharray':'5 4'},svg);
   E('text',{x:x1-4,y:sy(0.79)-6,'text-anchor':'end','font-size':10.5},svg).textContent='ρ ≈ .79';
   const hov=[];
@@ -835,7 +910,7 @@ function renderRulers(){
     E('circle',{cx:sx(y),cy:sy(r),r:hollow?4:3.4,fill:hollow?'#fff':'var(--cen)',
       stroke:'var(--cen)','stroke-width':hollow?1.8:0},svg);
     hov.push({x:sx(y),y:sy(r),html:
-      `<div class="t">${y} admission cycle</div>`+
+      `<div class="t">tested spring ${y}</div>`+
       `<div class="r">census (${SRC_NAME[src]}) × college-bound (SAT z)</div>`+
       `<div class="r">r = <b>${fmtR(r)}</b>&nbsp;<span class="lbl">· ${fmtN(n)} schools</span></div>`});
   }
@@ -843,7 +918,7 @@ function renderRulers(){
     const g=E('g',{transform:`translate(${sx(y)} ${sy(r)}) rotate(45)`},svg);
     E('rect',{x:-3.2,y:-3.2,width:6.4,height:6.4,fill:'var(--cb)'},g);
     hov.push({x:sx(y),y:sy(r),html:
-      `<div class="t">${y} admission cycle</div>`+
+      `<div class="t">tested spring ${y}</div>`+
       `<div class="r">CAASPP × college-bound (SAT z)</div>`+
       `<div class="r">r = <b>${fmtR(r)}</b>&nbsp;<span class="lbl">· ${fmtN(n)} schools</span></div>`});
   }
@@ -855,6 +930,20 @@ function renderRulers(){
   $('rulPre').textContent=D.rulers.pre_mean.toFixed(2).replace('0.','.');
   $('rulCst').textContent=D.rulers.cst_mean.toFixed(2).replace('0.','.');
 }
+
+/* ================= alignment table (methods) ================= */
+(function(){
+  const A = D.alignment; if(!A) return;
+  let h = '<table><tr><th>Instrument</th><th>Grade tested</th><th>Test spring &rarr; class</th>'+
+          '<th>Shift</th></tr>';
+  for(const [key,label,grade,off,note] of A.rows){
+    h += `<tr><td>${label}</td><td>${grade}</td><td>${note}</td>`+
+         `<td>${off===0?'none':'+'+off+' yr'}</td></tr>`;
+  }
+  $('alignTable').innerHTML = h + '</table>';
+  $('agDiff').textContent = D.census_agreement.mean_abs_diff.toFixed(3);
+  $('agPairs').textContent = fmtN(D.census_agreement.pairs);
+})();
 
 /* ================= boot ================= */
 renderArc(); renderMinis(); renderVolume(); renderAP(); renderWedge(); renderDrift(); renderRulers();

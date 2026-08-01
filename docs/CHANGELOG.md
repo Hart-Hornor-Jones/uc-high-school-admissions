@@ -9,6 +9,52 @@ day of the change, not necessarily to the day of the commit that carried it.
 
 ---
 
+## 2026-08-01 (later) — The long view: dated by graduating class
+
+**Changed**
+- Every series on `history/` is now dated by the **normative graduating class**, which is also the UC
+  admission year, instead of by the year the test was administered. A test describes the students who
+  sat it, and those students reach UC in a known year: the class of Y sits grade 11 in spring Y−1 and
+  grade 10 in spring Y−2. Each instrument is shifted from its test spring to the class it describes —
+  CAASPP and STAR CST grade 11 **+1 year**, CAHSEE grade 10 **+2**, Stanford 9 (grades 9–11 pooled)
+  +2 and flagged as having no single class; the senior-weighted SAT/ACT files already carried the
+  class-of-Y convention and are **unshifted**. A table of the offsets is stated in the methods note.
+  This is the convention the main explorer and `context/` already use, so the census gap now falls in
+  the same place on every page.
+- The STAR era now uses **grade-11 CST ELA proficiency** (`star_ela_g11_pct_prof_plus`, 878–1,254
+  CEEB-matched schools per spring, 2003–2013) rather than the grades 9–11 pool. This is both
+  cohort-clean and the same construct CAASPP measures, so the STAR→CAASPP splice is like-for-like.
+- Consequences, all visible on the page: the classes of **2021 and 2022** now carry no census value
+  (their grade-11 springs were 2020, cancelled, and 2021, excluded) while the class of **2020 gains
+  one** from spring 2019; the census line runs unbroken across the classes of **2004–2020**, because
+  the spring-2014 instrument hole — STAR ended after spring 2013 and spring 2014 was a CAASPP field
+  test with no reported results — falls on the testing timeline and closes on the class timeline
+  (class of 2014 from grade-11 CST spring 2013, class of 2015 from grade-10 CAHSEE the same spring).
+  The classes of 1999–2001 and 2003 have no census instrument and are correctly empty.
+- **No college-bound value moved.** The Berkeley 2016 anchor is unchanged at r = +0.4965, n = 440.
+
+**Verified**
+- Where two different census instruments — different grades, different springs, different scales —
+  describe the same graduating class, they agree to a mean absolute difference of **0.054** in r
+  across **129** campus-class pairs (median 0.046). The alignment was not fitted to produce this.
+  Those second instruments are drawn as small open marks.
+- The independent Python twin was rewritten to recompute the census family by a separate code path,
+  reading each instrument at its own grade and applying the offsets by hand: **481/481 checks**,
+  covering every census point at four campuses (value, school count and test spring), the four empty
+  class years at all ten campuses, and the unmoved SAT anchor. The jsdom suite is now **60/60**.
+
+**Also annotated**
+- The 2020 point is ringed on the arc and explained in methods: it moves on the admissions side, not
+  the test side. The SAT reporting population changed a year earlier (2019), the school measure is
+  stable against a fixed external anchor (r = .77–.81, 2016–2020), and the step survives holding the
+  achievement measure completely fixed. What moved was admit rates — at San Diego the highest-achieving
+  quartile of schools went from a 25.9% to a 35.0% mean admit rate while the lowest-achieving quartile
+  fell from 30.9% to 28.6%, reversing that campus's prior ordering in one year; Berkeley moved the
+  other way. Under the new dating the census family shows the same step independently (San Diego
+  −0.17 → +0.29 against the college-bound −0.19 → +0.30), so the corroboration is now on the chart.
+
+---
+
 ## 2026-08-01 — The long view: fourth companion page (`history/`)
 
 **Added**

@@ -48,6 +48,24 @@ SRC_LABEL = {"star_s9_pac50_reading": "s9",
              "star_cst_ela_pct_prof_plus": "cst",
              "caaspp_avg_pct_met": "caaspp"}
 
+# ---------------------------------------------------------------------------
+# COHORT ALIGNMENT.  The x-axis is the normative GRADUATING CLASS year, which
+# equals the UC admission year: the class of Y applies in fall Y-1 and enters
+# in fall Y.  A student in the class of Y sits in grade 9 in spring Y-3,
+# grade 10 in spring Y-2, grade 11 in spring Y-1, grade 12 in spring Y.
+# Each census instrument therefore carries its own offset from its test spring
+# to the class it describes:
+#     CAASPP        grade 11, spring S  ->  class S+1
+#     STAR CST g11  grade 11, spring S  ->  class S+1
+#     CAHSEE        grade 10, spring S  ->  class S+2
+#     Stanford 9    grades 9-11 pooled  ->  no single class; centred on S+2
+# The college-bound SAT/ACT files run over academic year S-1/S and are
+# senior-weighted, so their existing uc_cycle_year (= S) is already the
+# class-of-S convention and is left untouched.
+COHORT_OFFSET = {"caaspp": 1, "cst11": 1, "cahsee": 2, "s9": 2}
+# preference when more than one instrument speaks for the same class
+SRC_RANK = {"caaspp": 0, "cst11": 1, "cahsee": 2, "s9": 3}
+
 def r4(x):  return None if x is None or (isinstance(x, float) and not np.isfinite(x)) else round(float(x), 4)
 def r2(x):  return None if x is None or (isinstance(x, float) and not np.isfinite(x)) else round(float(x), 2)
 
@@ -65,34 +83,57 @@ out = {"generated": _dt.date.today().isoformat(), "gate": GATE, "min_n": MIN_N}
 # College-bound + CAASPP families: as published (era_arc_correlations.csv).
 arc_pub = pd.read_csv(os.path.join(AN, "era_arc_correlations.csv"))
 arc_pub = arc_pub[arc_pub.gate == GATE]
-MEAS = {"SAT (era-bridged z)": "sat", "ACT pct>=21 (z)": "act",
-        "CAASPP avg pct met": "caaspp"}
+MEAS = {"SAT (era-bridged z)": "sat", "ACT pct>=21 (z)": "act"}
 
-# Census family (new): identical convention to era_arc.py, achievement =
-# spine census_pct, one correlation per (campus, cycle year, instrument).
-sp = spine[spine.ceeb.notna()].copy()
-sp["ceeb"] = sp.ceeb.str.zfill(6)
-cen = sp[["ceeb", "uc_cycle_year", "census_pct", "census_source"]].rename(
-    columns={"uc_cycle_year": "year"})
+# Census family, on the graduating-class axis.  Each instrument is taken at
+# its own grade from the STAR/CAHSEE panel -- grade 11 for the CST era, so the
+# STAR years measure the same construct CAASPP does -- and shifted by its own
+# cohort offset.
+starp_full = pd.read_csv(A.star_panel, dtype={"cds14": str, "ceeb": str}, low_memory=False,
+                         usecols=["ceeb", "uc_cycle_year", "star_ela_g11_pct_prof_plus",
+                                  "cahsee_ela_pct_passed_census", "star_s9_read_pac50"])
+starp_full = starp_full[starp_full.ceeb.notna()].copy()
+starp_full["ceeb"] = starp_full.ceeb.str.zfill(6)
+
+def measure(col, src, spring_lo=None, spring_hi=None):
+    """One instrument as (ceeb, spring, class year, value)."""
+    d = starp_full[["ceeb", "uc_cycle_year", col]].dropna().rename(
+        columns={"uc_cycle_year": "spring", col: "v"})
+    if spring_lo is not None: d = d[d.spring >= spring_lo]
+    if spring_hi is not None: d = d[d.spring <= spring_hi]
+    d = d.copy()
+    d["year"] = d.spring + COHORT_OFFSET[src]
+    d["source"] = src
+    return d[["ceeb", "spring", "year", "v", "source"]]
+
+# CAASPP comes from the counts compilation (the spine's CAASPP rows carry no CEEB)
+caaspp = syw[["ceeb", "year", "avg_pct_met"]].dropna().rename(
+    columns={"year": "spring", "avg_pct_met": "v"}).copy()
+caaspp["year"] = caaspp.spring + COHORT_OFFSET["caaspp"]
+caaspp["source"] = "caaspp"
+
+cen = pd.concat([
+    measure("star_ela_g11_pct_prof_plus", "cst11"),
+    measure("cahsee_ela_pct_passed_census", "cahsee"),
+    measure("star_s9_read_pac50", "s9", spring_lo=2000, spring_hi=2000),
+    caaspp[["ceeb", "spring", "year", "v", "source"]],
+], ignore_index=True)
 
 census_rows = []
-for year in sorted(cen.year.unique()):
+for (year, src), t in cen.groupby(["year", "source"]):
     s = syw[syw.year == year]
     if s.empty: continue
-    t = cen[cen.year == year]
-    j = s.merge(t, on="ceeb", how="left")            # same convention as era_arc.py
+    j = s.merge(t[["ceeb", "v"]], on="ceeb", how="left")
     for pref, name in CAMPS.items():
         ar, ap_ = f"{pref}_admit_rate", f"{pref}_applicants"
         if ar not in j.columns: continue
-        sub = j[j[ap_] >= GATE]
-        for src, dd in sub.groupby("census_source"):
-            d = dd[[ar, "census_pct"]].dropna()
-            if len(d) >= MIN_N:
-                census_rows.append(dict(campus=name, year=int(year),
-                                        source=SRC_LABEL[src],
-                                        r=stats.pearsonr(d[ar], d["census_pct"])[0],
-                                        n=len(d)))
+        d = j[j[ap_] >= GATE][[ar, "v"]].dropna()
+        if len(d) >= MIN_N:
+            census_rows.append(dict(campus=name, year=int(year), source=src,
+                                    spring=int(t.spring.iloc[0]),
+                                    r=stats.pearsonr(d[ar], d["v"])[0], n=len(d)))
 census = pd.DataFrame(census_rows)
+census["rank"] = census.source.map(SRC_RANK)
 
 arc = {}
 for name in CAMPS.values():
@@ -101,8 +142,8 @@ for name in CAMPS.values():
         dd = arc_pub[(arc_pub.campus == name) & (arc_pub.measure == meas)].sort_values("year")
         e[key] = [[int(y), r4(r), int(n)] for y, r, n in zip(dd.year, dd.r, dd.n)]
     dd = census[census.campus == name].sort_values("year") if len(census) else pd.DataFrame()
-    e["census"] = ([[int(y), r4(r), int(n), s] for y, r, n, s in
-                    zip(dd.year, dd.r, dd.n, dd.source)] if len(dd) else [])
+    e["census"] = ([[int(y), r4(r), int(n), s, int(sp_)] for y, r, n, s, sp_ in
+                    zip(dd.year, dd.r, dd.n, dd.source, dd.spring)] if len(dd) else [])
     arc[name] = e
 out["arc"] = arc
 
@@ -110,8 +151,8 @@ out["arc"] = arc
 # census ruler (CAASPP 2022-25) and last positive college-bound year.
 groups = {}
 for name in CAMPS.values():
-    ca = arc_pub[(arc_pub.campus == name) & (arc_pub.measure == "CAASPP avg pct met")
-                 & (arc_pub.year >= 2022)]
+    ca = census[(census.campus == name) & (census.source == "caaspp")
+                & (census.year >= 2023)] if len(census) else pd.DataFrame(columns=["r"])
     sat = arc_pub[(arc_pub.campus == name) & (arc_pub.measure == "SAT (era-bridged z)")]
     pos = sat[sat.r > 0]
     groups[name] = {"post_blind_mean": r4(ca.r.mean() if len(ca) else None),
@@ -119,6 +160,26 @@ for name in CAMPS.values():
                     "sat_peak": r4(sat.r.max() if len(sat) else None),
                     "sat_peak_year": int(sat.loc[sat.r.idxmax()].year) if len(sat) else None}
 out["campus_summary"] = groups
+
+# how well two census instruments describing the SAME class agree
+_ag = []
+for (nm, yy), g in census.groupby(["campus", "year"]):
+    if len(g) > 1:
+        vv = g.sort_values("rank").r.tolist()
+        _ag.append(abs(vv[0] - vv[1]))
+out["census_agreement"] = {"pairs": len(_ag),
+                           "mean_abs_diff": r4(np.mean(_ag)) if _ag else None,
+                           "median_abs_diff": r4(np.median(_ag)) if _ag else None}
+
+out["alignment"] = {
+    "axis": "graduating class year (= UC admission year)",
+    "rows": [
+        ["caaspp", "CAASPP", "11", 1, "spring S describes the class of S+1"],
+        ["cst11",  "STAR CST", "11", 1, "spring S describes the class of S+1"],
+        ["cahsee", "CAHSEE", "10", 2, "spring S describes the class of S+2"],
+        ["s9",     "Stanford 9", "9-11 pooled", 2, "no single class; centered on S+2"],
+        ["sat",    "SAT / ACT", "12 (senior-weighted)", 0, "academic year S-1/S describes the class of S"],
+    ]}
 
 # ------------------------------------------------------- 2. two rulers chart
 # (a) census x college-bound per academic year — the validation battery's own

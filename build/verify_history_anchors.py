@@ -46,25 +46,49 @@ r = stats.pearsonr(j.berk_admit_rate, j.z_sat_primary)[0]
 check("Berkeley 2016 college-bound r", round(r, 4), D["anchors"]["berkeley_2016_sat_r"])
 check("Berkeley 2016 n schools", len(j), D["anchors"]["berkeley_2016_sat_n"])
 
-# --- 2. census-arc spot values, from spine + admit rates --------------------
-spine = pd.read_csv(A.spine, dtype={"cds14": str, "ceeb": str}, low_memory=False)
-sp = spine[spine.ceeb.notna()].copy(); sp["ceeb"] = sp.ceeb.str.zfill(6)
-def census_r(campus_prefix, cycle, source):
-    tt = sp[(sp.uc_cycle_year == cycle) & (sp.census_source == source)][["ceeb", "census_pct"]]
-    ss = syw[syw.year == cycle]
-    jj = ss.merge(tt, on="ceeb", how="left")
-    jj = jj[jj[f"{campus_prefix}_applicants"] >= 25][[f"{campus_prefix}_admit_rate", "census_pct"]].dropna()
-    return round(stats.pearsonr(jj[f"{campus_prefix}_admit_rate"], jj.census_pct)[0], 4), len(jj)
-shipped = {c: {tuple(p[:1] + p[3:]): (p[1], p[2]) for p in D["arc"][c]["census"]} for c in D["arc"]}
-for camp, pref in [("Berkeley", "berk"), ("Riverside", "riverside"), ("San Diego", "sd")]:
-    for cyc, src, key in [(2013, "star_cst_ela_pct_prof_plus", "cst"),
-                          (2000, "star_s9_pac50_reading", "s9"),
-                          (2014, "cahsee_ela_pct_passed", "cahsee")]:
-        want = shipped[camp].get((cyc, key))
-        if want is None: continue
-        got_r, got_n = census_r(pref, cyc, src)
-        check(f"{camp} {cyc} census ({key}) r", got_r, want[0])
-        check(f"{camp} {cyc} census n", got_n, want[1])
+# --- 2. census arc on the graduating-class axis, recomputed independently ---
+# Deliberately a separate code path: read each instrument straight from the
+# STAR/CAHSEE panel at its own grade, apply the cohort offset by hand, and
+# recompute. Offsets asserted here, not imported from the builder.
+OFFSET = {"caaspp": 1, "cst11": 1, "cahsee": 2, "s9": 2}
+COL = {"cst11": "star_ela_g11_pct_prof_plus", "cahsee": "cahsee_ela_pct_passed_census",
+       "s9": "star_s9_read_pac50"}
+stp = pd.read_csv(A.star_panel, dtype={"cds14": str, "ceeb": str}, low_memory=False,
+                  usecols=["ceeb", "uc_cycle_year"] + list(COL.values()))
+stp = stp[stp.ceeb.notna()].copy(); stp["ceeb"] = stp.ceeb.str.zfill(6)
+
+def recompute(pref, cls_year, src):
+    if src == "caaspp":
+        t = syw[syw.year == cls_year - OFFSET[src]][["ceeb", "avg_pct_met"]].rename(
+            columns={"avg_pct_met": "v"})
+    else:
+        t = stp[stp.uc_cycle_year == cls_year - OFFSET[src]][["ceeb", COL[src]]].rename(
+            columns={COL[src]: "v"})
+    t = t.dropna()
+    ss = syw[syw.year == cls_year]
+    jj = ss.merge(t, on="ceeb", how="left")
+    jj = jj[jj[f"{pref}_applicants"] >= 25][[f"{pref}_admit_rate", "v"]].dropna()
+    return round(stats.pearsonr(jj[f"{pref}_admit_rate"], jj.v)[0], 4), len(jj)
+
+shipped = {c: {(p[0], p[3]): (p[1], p[2], p[4]) for p in D["arc"][c]["census"]} for c in D["arc"]}
+for camp, pref in [("Berkeley", "berk"), ("Riverside", "riverside"), ("San Diego", "sd"),
+                   ("Irvine", "irvine")]:
+    for (cls, src), (r_s, n_s, spring_s) in sorted(shipped[camp].items()):
+        # the shipped spring must equal class minus this instrument's offset
+        check(f"{camp} class {cls} {src}: spring", spring_s, cls - OFFSET[src])
+        got_r, got_n = recompute(pref, cls, src)
+        check(f"{camp} class {cls} {src}: r", got_r, r_s)
+        check(f"{camp} class {cls} {src}: n", got_n, n_s)
+
+# the classes with no possible census instrument must be absent everywhere
+for camp in D["arc"]:
+    yrs = {p[0] for p in D["arc"][camp]["census"]}
+    for gap in (2001, 2003, 2021, 2022):
+        check(f"{camp}: class {gap} absent from census", gap in yrs, False)
+
+# SAT/ACT must be untouched by the re-alignment
+b16 = [p for p in D["arc"]["Berkeley"]["sat"] if p[0] == 2016][0]
+check("SAT series unmoved by re-alignment (Berkeley 2016)", b16[1], 0.4965)
 
 # --- 3. two-rulers series, from star panel + test panel ---------------------
 starp = pd.read_csv(A.star_panel, dtype={"cds14": str}, low_memory=False,

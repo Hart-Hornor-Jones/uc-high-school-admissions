@@ -31,7 +31,7 @@ const txt = el => el.textContent;
 ok(!!window.HISTORY_DATA, 'data object loads');
 ok(txt($('titleArc')) === 'Berkeley, 1999–2025', 'default campus is Berkeley');
 ok($('tblArc').innerHTML.includes('+0.50 (440)'),
-   'anchor: Berkeley 2016 college-bound r=+0.50 n=440 in the table');
+   'anchor: Berkeley 2016 college-bound r=+0.50 n=440 in the table (unchanged by re-alignment)');
 ok($('tblArc').innerHTML.includes('2016'), 'table carries year rows');
 
 // census points drawn, hollow for compressed instruments
@@ -48,6 +48,21 @@ ok(dashed.length >= 2, 'dashed instrument-splice connections present: ' + dashed
 // summary line computed from data
 ok(txt($('sumArc')).includes('+0.50') && txt($('sumArc')).includes('2016'),
    'Berkeley summary line carries computed peak');
+
+// ---- cohort alignment
+const cenB = D.arc['Berkeley'].census;
+ok(cenB.every(p => p.length === 5), 'census points carry [class, r, n, source, spring]');
+ok(cenB.every(p => (p[3] === 'cahsee' || p[3] === 's9') ? p[0] === p[4] + 2 : p[0] === p[4] + 1),
+   'every census point is shifted from its test spring by its own cohort offset');
+const cls = new Set(cenB.map(p => p[0]));
+ok(!cls.has(2021) && !cls.has(2022), 'classes of 2021-22 absent (grade-11 springs cancelled/excluded)');
+ok(cls.has(2020), 'class of 2020 HAS a census point (spring 2019) — was missing pre-realignment');
+ok(cls.has(2014) && cls.has(2015), 'the 2014-15 census hole closes on the class timeline');
+ok(!cls.has(2003), 'class of 2003 correctly absent (no grade-11 census instrument)');
+ok(D.census_agreement.pairs > 100 && D.census_agreement.mean_abs_diff < 0.08,
+   `two census instruments agree on the same class: mean |diff| ${D.census_agreement.mean_abs_diff} over ${D.census_agreement.pairs} pairs`);
+ok(doc.getElementById('alignTable').innerHTML.includes('CAHSEE'), 'alignment table rendered in methods');
+ok(txt($('agDiff')).length > 0 && txt($('agPairs')).length > 0, 'agreement figures injected from data');
 
 // ---- 2. campus interaction
 const chips = [...$('campusChips').children];
@@ -124,6 +139,21 @@ ok(bodyText.includes('Santa Barbara'), 'SB divergence disclosed');
 ok(bodyText.includes('voluntary grade-9'), 'CAHSEE 2001 exclusion disclosed');
 ok(/association is not attribution/.test(bodyText), 'non-causal framing present');
 ok($('footer').textContent.includes('build_history_data.py'), 'footer names the builder');
+
+// ---- 11. 2020 annotation
+chips.find(c => c.textContent === 'San Diego').click();
+const rings = [...$('cArc').querySelectorAll('circle')].filter(c =>
+  c.getAttribute('fill') === 'none' && parseFloat(c.getAttribute('r')) > 5);
+ok(rings.length >= 1, '2020 anomaly ring drawn on the arc: ' + rings.length);
+ok(txt($('lArc')).includes('one-year step'), 'legend carries the 2020 key');
+const mtext = $('methods').textContent;
+ok(mtext.includes('one-year step, not part of the trend'), 'methods: 2020 bullet present');
+ok(mtext.includes('35.0%') && mtext.includes('25.9%'), 'methods: 2020 quartile evidence stated');
+ok(mtext.includes('field test'), 'methods: 2014 STAR/CAASPP instrument gap explained');
+ok(mtext.includes('on the class timeline it closes'), 'methods: 2014 hole closing on class axis stated');
+ok(mtext.includes('graduating class, not the testing year'), 'methods: cohort dating convention stated');
+ok(doc.body.textContent.includes('graduating class'), 'axis named in page text');
+chips.find(c => c.textContent === 'Berkeley').click();
 
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

@@ -80,12 +80,15 @@ zero. Dataset: [`data/school_campus_year_admitted_denied.csv`](data/school_campu
 built by [`scripts/make_denied_data.py`](scripts/make_denied_data.py).
 
 **Companion page — [`history/`](history/):** the long view, 1999–2025. For each campus and each
-admission year, the correlation across California public high schools (≥25 applicants) between a
+**graduating class**, the correlation across California public high schools (≥25 applicants) between a
 school's admit rate and its achievement level, carried across four testing regimes on two
-independent measurement families — the college-bound tests (SAT, era-bridged; ACT %≥21) through
-2020, and the state's census tests (STAR Stanford 9 and CST, CAHSEE, CAASPP) through 2025, with
-instrument changes marked on the series and the two-ruler attenuation constant (ρ ≈ .79)
-disclosed. Secondary series: UC applicants per 100 seniors by fixed advantage quintile 1999–2025;
+independent measurement families — the college-bound tests (SAT, era-bridged; ACT %≥21) through the
+class of 2020, and the state's census tests (STAR CST grade 11, CAHSEE grade 10, CAASPP grade 11,
+Stanford 9) through 2025. Every point is dated by the class that sat the test, not by the testing
+year, so each instrument carries its own shift (grade-11 tests +1 year, grade-10 tests +2); where two
+census instruments describe the same class they agree to a mean absolute difference of 0.054 in *r*
+across 129 campus-class pairs. Instrument changes are marked on the series and the two-ruler
+attenuation constant (ρ ≈ .79) is disclosed. Secondary series: UC applicants per 100 seniors by fixed advantage quintile 1999–2025;
 AP exams per 100 seniors and the share scored 3+, 1999–2020; the enrollee-vs.-all-tester SAT gap
 2006–2015; and applicant-GPA drift at flat SAT, 2010–2016. All series are precomputed into
 [`history/data_history.js`](history/data_history.js) by `build/build_history_data.py` and checked
