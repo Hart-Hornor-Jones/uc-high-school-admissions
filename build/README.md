@@ -192,3 +192,12 @@ exists.
 **Two ID universes.** UC sources (admissions) use the 6-digit CEEB code; CDE sources (CAASPP,
 A-G, CUPC) use the 14-digit CDS code. The crosswalk is the only thing connecting them, which
 is why so much of the pipeline is about building and finalizing it.
+
+## School coordinates (distance to campus)
+
+`build_school_locations.py /path/to/ca_school_cde_location_by_cds.csv` slims the CDE Public Schools &
+Districts directory join (CDS code → latitude/longitude, produced by the hs-data context pipeline from
+`pubschls.txt`) to `data/components/school_locations.csv` for the crosswalked schools. The site computes
+each school's great-circle distance to the selected campus from it, against the campus coordinates in
+`scripts/make_site_data.py`.
+

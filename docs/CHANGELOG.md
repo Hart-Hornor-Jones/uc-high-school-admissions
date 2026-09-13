@@ -9,6 +9,64 @@ day of the change, not necessarily to the day of the commit that carried it.
 
 ---
 
+## 2026-09-13 — A fourth denominator, distance to the campus, and the denominators side by side
+
+**Added**
+- **Per-graduate rates.** Applicants, admits and enrollees can now be divided by the school's
+  **graduates** — the regular-diploma graduates in the class of the admission year, from CDE's
+  four-year adjusted cohort and diploma rate (`data/ag_eligibility_cleaned.csv`, classes of
+  2017–2025). The funnel can therefore be read per applicant, per graduate, per A–G completer or per
+  student enrolled in grades 9–12, and the outcome menu now groups the rates by that base so the
+  same stage is easy to find under each. Graduates join the panel array as a fifteenth element
+  (`Gr`, index 14; null before the class of 2017) and `cross_section_all9.csv` gains `graduates`,
+  `apps_per_graduate`, `admits_per_graduate` and `enr_per_graduate`. Rows where a funnel count
+  exceeds the graduates count are dropped from the per-graduate rates, as they already were for
+  enrollment. The CALPADS reporting failure that zeroes A–G counts also zeroes a school's diploma
+  rate in isolated years (a 97% school reporting under 1% for one class), so a year's graduates are
+  suppressed when its diploma rate falls below 60% of the school's median over its other years, or
+  when fewer than 10 graduates result; genuine, stable low rates are kept. A per-graduate view of a
+  period before 2017 now explains itself instead of showing an empty chart.
+- **Other denominators, same X.** The campus panel gains a block that reports, for the funnel stage on
+  the Y-axis, the correlation with the current X under every available base at once — the same
+  schools, filters and reliability gating as the headline — with the *Applicants ÷ base* line
+  showing the application half of a per-base rate (admits ÷ base = admits ÷ applicants ×
+  applicants ÷ base). Each line switches the chart to that rate. On the default view the four
+  figures for Berkeley 2023–2025 read −0.22 (÷ applicants, n=860), +0.52 (÷ graduates, n=848),
+  +0.33 (÷ A–G completers, n=849) and +0.56 (÷ enrollment, n=846); applicants ÷ graduates is +0.65.
+- **Distance to the campus.** Each school's straight-line (great-circle) miles to the selected campus,
+  from the CDE Public Schools & Districts directory coordinates (`data/components/school_locations.csv`,
+  1,471 of the 1,517 crosswalked CDS codes; built by `build/build_school_locations.py`), against the
+  campus coordinates listed in `scripts/make_site_data.py` and shipped as `campusLL`. Offered as a
+  *Color by* option (near = dark, far = light, saturating at 400 miles), as a context X-axis
+  (`dist`), in the tooltip and in every profile. It changes with the campus selector. `meta` rows
+  carry latitude and longitude as elements 4 and 5; `cross_section_all9.csv` gains `distance_mi`.
+- **Profiles** list graduates among the base counts (the four-year cohort stays as the A–G completion
+  base) and the three per-graduate rates with their numerator ÷ denominator.
+- **`context/`** offers the three per-graduate rates as outcomes, with the same gating; its note on
+  per-eligible outcomes now covers every per-base rate.
+
+**Changed**
+- Menu labels name the base rather than the abbreviation ("A–G completers" for what was "A–G eligible"
+  in the rate labels; the count is unchanged). The "How to read" notes gain a *Denominators* entry that
+  states the identity between the per-applicant and per-base rates and why they can point in opposite
+  directions, and a *Distance* entry.
+
+**Verified**
+- Headline anchors are unchanged: Berkeley 2023–2025 admit rate vs CAASPP avg −0.22, n=860; admits ÷
+  enrollment +0.56, n=846. An independent Python port from `panel_all9_by_year.csv` and
+  `ag_eligibility_cleaned.csv` (not from `data.js`) reproduces every new per-graduate figure exactly:
+  Berkeley 2023–2025 +0.520/848, +0.651/1095 (applicants), +0.363/459 (enrollees); San Diego
+  +0.366/1025; Berkeley 2016–2019 preset +0.551/697 (pooling 2017–2019, the years with graduates).
+  A jsdom sweep renders every outcome × X pair, every strip metric, the distance colouring, the
+  denominators block (including its click-to-switch), the profile, three campuses, three periods and
+  the 390 px layout; `context/` loads the new data layer without error and renders a per-graduate outcome.
+- University High (Irvine) → Berkeley, 2023–2025: 798 applicants, 94 admits, 1,603 graduates — admit rate
+  0.118, applicants ÷ graduates 0.498, admits ÷ graduates 0.059, 383 miles. Hollywood High (Los Angeles):
+  126 / 20 / 791 — 0.159, 0.159, 0.025, 341 miles. Mission High (San Francisco): 244 / 102 / 625 —
+  0.418, 0.390, 0.163, 12 miles.
+
+---
+
 ## 2026-08-01 (later) — The long view: dated by graduating class
 
 **Changed**

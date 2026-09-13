@@ -83,6 +83,15 @@
   .rbasis{font-size:10.5px;color:var(--muted);font-weight:400;font-variant-numeric:tabular-nums;margin-top:1px;line-height:1.35;}
   .rcap{font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-size:10.5px;}
   .spark{margin-top:10px;}
+  /* same numerator, other denominators (sidebar) */
+  .denoms{margin-top:10px;border-top:1px dashed var(--line);padding-top:8px;}
+  .denoms .sl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-weight:600;}
+  .denrow{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;padding:3px 0;cursor:pointer;color:var(--ink);}
+  .denrow:hover .k{text-decoration:underline;}
+  .denrow .k{color:var(--muted);} .denrow .v{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .denrow.cur{cursor:default;} .denrow.cur .k{color:var(--ink);font-weight:600;text-decoration:none;}
+  .denrow.sub .k{padding-left:12px;}
+  .denoms .dn{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.4;}
   .spark .sl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-weight:600;}
   .empty{color:var(--muted);font-size:13px;padding:20px 4px;text-align:center;}
   .tooltip{position:fixed;pointer-events:none;background:#11151c;color:#fff;font-size:12px;
@@ -159,8 +168,9 @@
     <h1>UC admissions &amp; high-school academic indicators</h1>
     <p class="sub">Each dot is a California high school. Compare any UC campus, any admission year or
     pooled period, and any indicator &mdash; academic strength (CAASPP, A&ndash;G), the unduplicated&ndash;pupil share (UPP), or the
-    admissions funnel itself (apply&nbsp;&rarr;&nbsp;admit&nbsp;&rarr;&nbsp;enroll, against several denominators)
-    &mdash; and what becomes of each school's entrants at UC: first-year retention and 4-/5-/6-year graduation.
+    admissions funnel itself (apply&nbsp;&rarr;&nbsp;admit&nbsp;&rarr;&nbsp;enroll, per applicant, per graduate,
+    per A&ndash;G completer or per student enrolled) &mdash; and what becomes of each school's entrants at UC:
+    first-year retention and 4-/5-/6-year graduation. Color or sort schools by their distance from the campus.
     Search a school or click a dot for its full profile.</p>
     <p class="sub" style="margin-top:6px">Companions: <a href="context/">neighborhood context &amp; admissions</a> &mdash;
     census-tract measures of each school's surroundings (income, education, poverty), and how much of the
@@ -187,6 +197,7 @@
       <select id="colorby">
         <option value="upp">Unduplicated pupils (UPP %)</option>
         <option value="lcff">LCFF+ status</option>
+        <option value="dist">Distance to this campus</option>
         <option value="none">Single color</option>
       </select>
     </div>
@@ -224,6 +235,7 @@
         <div class="statline"><span class="k" id="kOverall">Overall</span><span class="v" id="sOverall"></span></div>
         <div class="statline"><span class="k" id="kPooled" title="The pooled, enrollment/applicant-weighted rate (sum of numerators ÷ sum of denominators) — dominated by large schools; shown for reference, not the central tendency of the dots.">Student-weighted</span><span class="v" id="sPooled"></span></div>
         <div class="statline"><span class="k">LCFF+ vs other (gap)</span><span class="v" id="sGap"></span></div>
+        <div class="denoms" id="denoms"></div>
         <div class="spark" id="campusSpark">
           <div class="sl" id="sparkLbl">Correlation over time</div>
           <svg id="sparkSvg" height="94"></svg>
@@ -241,12 +253,13 @@
       <ul>
         <li><b>Dots</b> are California high schools, drawn one uniform size by default. Tick <b>Dot size &rarr;
           Scale by sample size</b> to size each dot by the <i>denominator of the metric you're viewing</i>
-          &mdash; applicants for admit rate, admits for yield, A&ndash;G eligible for per&ndash;eligible rates,
-          grade&nbsp;9&ndash;12 enrollment for per&ndash;head rates, cohort for A&ndash;G completion &mdash; so a
+          &mdash; applicants for admit rate, admits for yield, graduates for per&ndash;graduate rates, A&ndash;G
+          completers for per&ndash;completer rates, grade&nbsp;9&ndash;12 enrollment for per&ndash;head rates, cohort
+          for A&ndash;G completion &mdash; so a
           bigger dot means a larger base for that rate. Only schools at or above <b>Min applicants</b> are shown
           (a fixed sample floor). Scale ranges are padded by the largest dot radius so whole dots stay in frame.</li>
         <li><b>Reading the rates.</b> All <b>outcome rates are shown as proportions</b> (an admit rate reads
-          0.241, a yield 0.45) so the eight funnel ratios share one scale; the academic/context measures
+          0.241, a yield 0.45) so the eleven funnel ratios share one scale; the academic/context measures
           (CAASPP, A&ndash;G completion, UPP, ELWR) stay as the percentages they natively are. The <b>admit rate
           is to the selected campus only</b> (admits&div;applicants there), <i>not</i> a UC system&ndash;wide rate.</li>
         <li><b>&ldquo;Mean across schools&rdquo;</b> (the dashed line and headline figure) is the <i>arithmetic
@@ -254,6 +267,30 @@
           measures. The separate <b>Student&ndash;weighted</b> figure is the pooled
           &Sigma;numerator&div;&Sigma;denominator rate, dominated by large schools and shown only for reference;
           the LCFF+ gap is likewise a difference of school&ndash;level means.</li>
+        <li><b>Denominators.</b> The same funnel stage can be divided by four bases, and the outcome menu
+          groups them: <b>applicants</b> (UC's count of the school's freshman applicants to this campus),
+          <b>graduates</b> (the school's regular&ndash;diploma graduates in the class of the admission year, from
+          CDE's four&ndash;year cohort and diploma rate; classes of 2017 on), <b>A&ndash;G completers</b> (the
+          graduates who met UC/CSU course requirements, cleaned as described below) and <b>grade&nbsp;9&ndash;12
+          enrollment</b> (everyone in the building). They answer different questions. The <i>admit rate</i>
+          (admits&nbsp;&div;&nbsp;applicants) is the campus's decision among the students who put themselves
+          before it. <i>Admits&nbsp;&div;&nbsp;graduates</i> is a graduate's chance of holding an offer, and it
+          is exactly the admit rate multiplied by the share of the class that applied
+          (admits&div;graduates&nbsp;=&nbsp;admits&div;applicants&nbsp;&times;&nbsp;applicants&div;graduates), so it
+          carries the school's application behaviour along with the campus's decision; the same holds per
+          A&ndash;G completer and per student enrolled. Because application rates rise steeply with a school's
+          achievement, a stage can correlate negatively with achievement per applicant and positively per
+          graduate at the same time &mdash; neither is wrong, they measure different things. The sidebar's
+          <b>other denominators</b> block reports the current correlation under each base at once (same X, same
+          filters), and the <i>Applicants&nbsp;&div;</i> line shows the application half of a per&ndash;base rate;
+          click a line to switch the chart to it. Per&ndash;graduate rates exist for the classes of 2017&ndash;2025,
+          so the 2016&ndash;2019 preset pools 2017&ndash;2019 for them.</li>
+        <li><b>Distance to the campus.</b> Straight&ndash;line (great&ndash;circle) miles from the school's CDE
+          directory coordinates to the selected campus; it changes with the campus selector. Students apply more
+          readily to campuses near home, so two schools at very different distances are not a clean pair on any
+          per&ndash;graduate or per&ndash;head rate. Use it as a colour, as an X&ndash;axis, or read it in a
+          school's profile before comparing two schools. About 50 of the 1,500 schools have no coordinates
+          on file and are grey under that colouring.</li>
         <li><b>UPP &amp; LCFF+.</b> The axis labelled UPP is the <b>Unduplicated Pupil Percentage</b> &mdash; the
           CALPADS/LCFF share of a school's students who are low&ndash;income (free&ndash; or reduced&ndash;price&ndash;meal
           eligible), English learners, or foster youth, counted once if in more than one category, and so broader than a
@@ -266,7 +303,7 @@
           &mdash; handy for spreading piled&ndash;up dots enough to click one. <b>Click the trend line</b> to bring
           it in front of the dots (click again to send it back). <b>Focus mode</b> (top&ndash;right)
           hides the control bar and side panels for a clean, full&ndash;width view. You can divide any funnel stage
-          by A&ndash;G&nbsp;eligible or by grade&nbsp;9&ndash;12 enrollment via the metric menu.</li>
+          by applicants, graduates, A&ndash;G&nbsp;completers or grade&nbsp;9&ndash;12 enrollment via the metric menu.</li>
         <li><b>Drop outliers.</b> Ticking the box removes, <i>for the current view</i>, any school flagged by the
           standard <b>Tukey 1.5&times;IQR</b> rule on either plotted axis (the single metric in strip view). Dropped
           points leave the chart, the correlation <i>r</i>, the trend line, the mean and the LCFF+ gap; the number
@@ -279,8 +316,8 @@
           pooled <i>r</i> stronger (more negative here) than any single year. The dashed line on the panel marks the
           pooled value for the selected period, with the axis widened to include it, so the two can be read together.</li>
         <li><b>Base counts.</b> A selected school's profile lists the raw denominators behind its rates
-          &mdash; A&ndash;G eligible, grade&nbsp;9&ndash;12 enrollment and graduating cohort &mdash; and every rate
-          row also shows its own numerator&nbsp;&div;&nbsp;denominator.</li>
+          &mdash; graduates, A&ndash;G completers, grade&nbsp;9&ndash;12 enrollment and the four&ndash;year cohort
+          &mdash; and every rate row also shows its own numerator&nbsp;&div;&nbsp;denominator.</li>
         <li><b>Cross-universe ratios.</b> Applicant/admit/enrollee counts come from UC (CEEB); &ldquo;eligible&rdquo;
           (A&ndash;G completers) and enrollment come from CDE (CDS). Ratios mixing them are school-level indicators,
           not exact per-student rates.</li>
@@ -302,7 +339,11 @@
           percentage), not a missing value.</li>
         <li><b>Impossible denominators.</b> A handful of schools have a corrupted grade&nbsp;9–12 enrollment far
           smaller than their applicant count (e.g. Wheatland). Rows where a funnel count exceeds total enrollment
-          are dropped from the &ldquo;÷ enrollment&rdquo; metrics rather than plotted as &gt;1.</li>
+          are dropped from the &ldquo;÷ enrollment&rdquo; metrics rather than plotted as &gt;1; the same rule
+          applies to graduates. The CALPADS reporting failure that zeroes A&ndash;G counts also zeroes a school's
+          diploma rate in isolated years (a 97% school reporting under 1% for one class), so a year's graduates
+          are suppressed when its diploma rate falls below 60% of the school's median in its other years, or
+          when fewer than 10 graduates result; a school's genuine, stable low rate is kept.</li>
         <li><b>Capacity dynamic.</b> High-admit inland campuses (Merced, Riverside, Santa Cruz) show a <i>positive</i>
           academic&ndash;admit correlation &mdash; they admit most qualified applicants &mdash; so read them differently.</li>
         <li><b>ELWR met at entry.</b> The writing&ndash;requirement figure is the share of a school's UC
@@ -365,6 +406,13 @@
       <dd>CDE CAASPP grade&nbsp;11 (Smarter Balanced), spring 2015&ndash;2025. Spring 2020 was cancelled
         and spring 2021 is excluded as non-representative; each entering class is matched to its own
         grade-11 test the prior spring, so the 2021 and 2022 entering classes carry no CAASPP value.</dd>
+      <dt>Graduates</dt>
+      <dd>CDE four-year adjusted cohort and regular-diploma rate, classes of 2017&ndash;2025; A&ndash;G
+        completers from the same files. Grade&nbsp;9&ndash;12 enrollment and UPP from CALPADS, 2016&ndash;17
+        to 2024&ndash;25.</dd>
+      <dt>School locations</dt>
+      <dd>CDE Public Schools &amp; Districts directory coordinates; distances are great-circle miles to the
+        campus.</dd>
       <dt>UC outcomes</dt>
       <dd>Entry cohorts 1999&ndash;2024. A rate appears only where its window has closed: six-year
         completion through the 2019 entering cohort, five-year through 2020, four-year through 2021,
@@ -373,7 +421,7 @@
       <dd>U.S. Census Bureau ACS 5-year estimates at census-tract level; ACS year set to the school
         year, with 2025 school years carrying the 2024 release.</dd>
     </dl>
-    <p class="updated">Last updated 31&nbsp;July&nbsp;2026. Build dates for each data layer are given with
+    <p class="updated">Last updated 13&nbsp;September&nbsp;2026. Build dates for each data layer are given with
       the sources below; revision history is in
       <a href="https://github.com/hart-hornor-jones/uc-high-school-admissions/blob/main/docs/CHANGELOG.md">docs/CHANGELOG.md</a>.</p>
   </section>
@@ -390,8 +438,9 @@
     '<p style="color:#b00">Could not load <code>data.js</code>. If you opened this file directly, '+
     'serve the folder over HTTP (e.g. <code>python3 -m http.server</code>) or view it on GitHub Pages.</p>'; return; }
 
-  // panel row layout: [year,A,D,E,C,Gc,H,ela,math,upp,Gp,agpa,dgpa,egpa]
-  const IX = {year:0,A:1,D:2,E:3,C:4,G:5,H:6,ela:7,math:8,upp:9,Gp:10,agpa:11,dgpa:12,egpa:13};
+  // panel row layout: [year,A,D,E,C,Gc,H,ela,math,upp,Gp,agpa,dgpa,egpa,Gr]
+  //   Gr = diploma graduates of the class (per-graduate denominator; classes of 2017+, null before)
+  const IX = {year:0,A:1,D:2,E:3,C:4,G:5,H:6,ela:7,math:8,upp:9,Gp:10,agpa:11,dgpa:12,egpa:13,Gr:14};
   const METRICS = D.metrics, MByKey = Object.fromEntries(METRICS.map(m=>[m.key,m]));
   // X axis offers academic/context metrics plus outcome metrics flagged xaxis (the same-period UC
   // retention/graduation rates: later outcomes read as indicators of academic strength present at application).
@@ -399,12 +448,26 @@
   const Y_KEYS = METRICS.filter(m=>m.role==='outcome').map(m=>m.key);
   const ALL_KEYS = METRICS.map(m=>m.key);
   const periodByKey = Object.fromEntries(D.periods.map(p=>[p.key,p]));
+  // straight-line (great-circle) miles from a school's CDE directory coordinates (meta[4],meta[5]) to the
+  // selected campus (D.campusLL); cached per campus. Null when the school has no coordinates on file.
+  const distCache={};
+  function distOf(ceeb){ const ci=state.campus, c=(distCache[ci]=distCache[ci]||{});
+    if(ceeb in c) return c[ceeb];
+    const md=D.meta[ceeb], ll=D.campusLL&&D.campusLL[ci]; let v=null;
+    if(md&&md[4]!=null&&md[5]!=null&&ll){ const R=3958.8, toR=Math.PI/180;
+      const p1=md[4]*toR, p2=ll[0]*toR, dp=p2-p1, dl=(ll[1]-md[5])*toR;
+      const h=Math.sin(dp/2)**2+Math.cos(p1)*Math.cos(p2)*Math.sin(dl/2)**2;
+      v=2*R*Math.asin(Math.sqrt(h)); }
+    return c[ceeb]=v; }
   // CAASPP (Smarter Balanced) was not administered in 2020 (cancelled) or 2021 (~25% tested), so the
   // academic axis is blank for those years while every other variable is present. Detect that case
   // so a CAASPP view explains itself instead of showing an empty chart.
   const NO_CAASPP_YEARS = new Set([2021,2022]);
   const isCaasppKey = k => k==='avg'||k==='ela'||k==='math';
   function caasppMissingForPeriod(){ const ys=periodByKey[state.period].years; return ys.length>0 && ys.every(y=>NO_CAASPP_YEARS.has(y)); }
+  // per-graduate rates need the class's diploma-graduate count, on file for the classes of 2017 on
+  const GRADS_FIRST=2017, GRADS_MSG='Per-graduate rates divide by the school\u2019s diploma graduates, which are on file for the classes of 2017 on \u2014 pick 2017 or later, or a pooled period (the 2016\u20132019 preset pools 2017\u20132019 for these rates).';
+  function gradsMissingForPeriod(k){ const m=MByKey[k]; if(!(m&&m.den==='Gr')) return false; return periodByKey[state.period].years.every(y=>y<GRADS_FIRST); }
   function caasppMsg(){ const ys=periodByKey[state.period].years, y21=ys.includes(2021), y22=ys.includes(2022);
     const lead='The CAASPP shown for a class is from when those students were in 11th grade — the test they took the spring before applying to college. ';
     const tail=' Admissions, GPA, A–G completion, UPP and graduation are all available — switch the axis to one of those, or pick another year.';
@@ -433,7 +496,7 @@
   //   enrollment (logically impossible — a corrupted H) are dropped from the headcount denominator.
   function jsum(rows,num,den){ let sn=0,sd=0,ok=false,denAll=0,denOK=false;
     for(const r of rows){ const a=r[IX[num]],b=r[IX[den]]; if(b==null) continue;
-      if(den==='H'&&a!=null&&a>b) continue;
+      if((den==='H'||den==='Gr')&&a!=null&&a>b) continue;   // funnel count exceeds the base: corrupted row
       denAll+=b; denOK=true; if(a!=null){ sn+=a; sd+=b; ok=true; } }
     return (ok&&sd>0)?{sn,sd,cov:(denOK&&denAll>0)?sd/denAll:1}:null; }
   // ---------- UC graduation rates by source high school (UC Info Center) ----------
@@ -467,6 +530,7 @@
     const m=MByKey[key], rows=school.rows;
     if(m.grad) return gradVal(school.ceeb,m);
     if(key==='awpe') return school.awpe;
+    if(key==='dist') return school.ceeb?distOf(school.ceeb):null;
     if(key==='avg'){ let s=0,n=0; for(const r of rows){ const e=r[IX.ela],t=r[IX.math];
         if(e!=null&&t!=null){s+=(e+t)/2;n++;} else if(e!=null){s+=e;n++;} else if(t!=null){s+=t;n++;} } return n?s/n:null; }
     if(key==='ela')  return meanIdx(rows,IX.ela);
@@ -484,14 +548,14 @@
   function rateInfo(school,key){ const m=MByKey[key]; if(!(m&&m.num&&m.den)) return null;
     const rows=school.rows, s=jsum(rows,m.num,m.den); if(!s) return null;
     let supp=0,obs=0; for(const r of rows){ const a=r[IX[m.num]],b=r[IX[m.den]];
-      if(b==null) continue; if(m.den==='H'&&a!=null&&a>b) continue; if(a!=null) obs++; else supp++; }
+      if(b==null) continue; if((m.den==='H'||m.den==='Gr')&&a!=null&&a>b) continue; if(a!=null) obs++; else supp++; }
     return {sn:s.sn,sd:s.sd,cov:s.cov,reliable:s.cov>=COV_MIN,supp,obs,
             val:m.fmt==='pct'?100*s.sn/s.sd:s.sn/s.sd}; }
   // A value is "reliable" unless it is a suppression-collapsed funnel rate (non-rate metrics always pass).
   function reliable(school,key){ const m=MByKey[key]; if(!(m&&m.num&&m.den)) return true;
     const ri=rateInfo(school,key); return ri?ri.reliable:true; }
   const NUMLBL={A:'applicants',D:'admits',E:'enrollees',G:'A–G completers'},
-        DENLBL={A:'applicants',D:'admits',E:'enrollees',Gp:'A–G eligible',H:'gr 9–12 enrollment',C:'cohort'};
+        DENLBL={A:'applicants',D:'admits',E:'enrollees',Gr:'graduates',Gp:'A–G completers',H:'gr 9–12 enrollment',C:'cohort'};
   function rateRow(s,k){ const m=MByKey[k], ri=rateInfo(s,k);
     if(!ri) return `<tr><td class="k">${m.label}</td><td class="v">—</td></tr>`;
     const basis=`${fmtN(ri.sn)} ÷ ${fmtN(ri.sd)}`;
@@ -499,10 +563,10 @@
     return `<tr${ri.reliable?'':' class="lowconf"'}><td class="k">${m.label}`+
       `<div class="rbasis">${basis}${note}</div></td><td class="v">${fmtVal(ri.val,k)}</td></tr>`; }
   function fmtVal(v,key){ if(v==null) return '—'; const m=MByKey[key];
-    return m.fmt==='pct'? v.toFixed(1)+'%' : (m.fmt==='gpa'? v.toFixed(2) : v.toFixed(3)); }
+    return m.fmt==='pct'? v.toFixed(1)+'%' : (m.fmt==='gpa'? v.toFixed(2) : (m.fmt==='mi'? Math.round(v)+' mi' : v.toFixed(3))); }
 
   // ---------- denominators, dot-size basis, central tendency, outliers, zoom ----------
-  const DEN_IDX={A:IX.A,D:IX.D,E:IX.E,Gp:IX.Gp,H:IX.H,C:IX.C};
+  const DEN_IDX={A:IX.A,D:IX.D,E:IX.E,Gr:IX.Gr,Gp:IX.Gp,H:IX.H,C:IX.C};
   function sumIdx(rows,idx){ let s=0,seen=false; for(const r of rows){ if(r[idx]!=null){ s+=r[idx]; seen=true; } } return seen?s:null; }
   // the count a metric's rate divides by (its denominator), summed over the selected period
   function denomCount(school,key){ const m=MByKey[key]; if(!(m&&m.den)) return null; return sumIdx(school.rows,DEN_IDX[m.den]); }
@@ -580,7 +644,11 @@
   function shown(){ return schools().filter(s=>s.apps>=state.minApps); }
 
   const uppColor=d3.scaleLinear().domain([0,50,100]).range(['#2166ac','#f4e08a','#b2182b']).clamp(true);
+  // distance: near = dark, far = light (sqrt scale so the 0–100 mi band, where most variation in application
+  // behaviour sits, gets most of the ramp); >=400 mi saturates
+  const distColor=d3.scaleSequentialSqrt(d3.interpolateViridis).domain([400,0]).clamp(true);
   function dotColor(s){ if(state.colorby==='upp') return s.upp==null?'#bbb':uppColor(s.upp);
+    if(state.colorby==='dist'){ const dv=distOf(s.ceeb); return dv==null?'#bbb':distColor(dv); }
     // LCFF+ status is derived from UPP, so when UPP is missing (e.g. 2015–2016) the status is unknown,
     // not "non-LCFF+": color it gray, exactly as the UPP view does.
     if(state.colorby==='lcff') return s.upp==null?'#bbb':(s.lcff?'var(--lcff)':'var(--nonlcff)'); return '#3b7fc4'; }
@@ -593,7 +661,13 @@
     const mx=d3.mean(pts,p=>p[0]),my=d3.mean(pts,p=>p[1]); let sxy=0,sxx=0;
     pts.forEach(p=>{const dx=p[0]-mx;sxy+=dx*(p[1]-my);sxx+=dx*dx;}); return sxx?{b:sxy/sxx,a:my-(sxy/sxx)*mx}:null; }
 
-  function fill(sel,keys,val){ sel.innerHTML=''; keys.forEach(k=>{const o=document.createElement('option');o.value=k;o.textContent=MByKey[k].label;sel.appendChild(o);}); sel.value=val; }
+  // menus: metrics that carry a `group` are listed under an <optgroup> (outcome rates are grouped by
+  // denominator, so the same stage can be read per applicant / per graduate / per A–G completer / per head)
+  function fill(sel,keys,val){ sel.innerHTML=''; let cur=null,parent=sel;
+    keys.forEach(k=>{ const m=MByKey[k], g=m.group||null;
+      if(g!==cur){ cur=g; if(g){ parent=document.createElement('optgroup'); parent.label=g; sel.appendChild(parent); } else parent=sel; }
+      const o=document.createElement('option'); o.value=k; o.textContent=m.label; parent.appendChild(o); });
+    sel.value=val; }
   function rebuildMetricSelects(){
     if(state.view==='scatter'){
       $('ctlB').classList.remove('hide'); $('labelA').textContent='X-axis (academic / context)'; $('labelB').textContent='Y-axis (outcome rate)';
@@ -628,7 +702,7 @@
     if(cur) lines.push(cur);
     const t=svg.append('text').attr('text-anchor','middle').attr('fill','#999').attr('font-size',13);
     lines.forEach((ln,i)=>t.append('tspan').attr('x',w/2).attr('y',h/2+(i-(lines.length-1)/2)*19).text(ln)); }
-  function axisFmt(key){ const m=MByKey[key]; return v=> m.fmt==='pct'? v+'%' : v; }
+  function axisFmt(key){ const m=MByKey[key]; return v=> m.fmt==='pct'? v+'%' : (m.fmt==='mi'? v+' mi' : v); }
 
   function renderScatter(){
     const {w,h,m}=dims(); svg.attr('width',w).attr('height',h).selectAll('*').remove();
@@ -640,7 +714,7 @@
     $('plotSub').textContent=`${drawn.length} schools · ${state.dotVary?`size = ${sizeLabelFor(yk)}`:'dots uniform size'} · dashed = mean of school rates`
       +(state.dropOut&&A.dropped?` · ${A.dropped} outlier${A.dropped>1?'s':''} hidden`:'')
       +(gradNote(xk,yk)?` · ${gradNote(xk,yk)}`:'');
-    if(!drawn.length){ const _m=(isCaasppKey(xk)&&caasppMissingForPeriod())?caasppMsg():((MByKey[xk].grad||MByKey[yk].grad)?'No mature graduation cohorts in this selection — 6-yr rates exist through entry 2019, 4-yr through 2021 (try the 2016–2019 preset).':'No schools with both metrics in this selection.'); emptyMsg(w,h,_m); return; }
+    if(!drawn.length){ const _m=(isCaasppKey(xk)&&caasppMissingForPeriod())?caasppMsg():((MByKey[xk].grad||MByKey[yk].grad)?'No mature graduation cohorts in this selection — 6-yr rates exist through entry 2019, 4-yr through 2021 (try the 2016–2019 preset).':(gradsMissingForPeriod(yk)?GRADS_MSG:'No schools with both metrics in this selection.')); emptyMsg(w,h,_m); return; }
     // dot size encodes the active denominator (yk's denominator) when "Scale by sample size" is on;
     // otherwise every dot is one uniform size. Reserve max radius so whole dots stay in-frame.
     const bvals=drawn.map(d=>sizeBasis(d.s,yk)), bmin=d3.min(bvals), bmax=d3.max(bvals)||1;
@@ -704,7 +778,7 @@
       +(state.dropOut&&A.dropped?` · ${A.dropped} outlier${A.dropped>1?'s':''} hidden`:'')
       +(gradNote(mk)?` · ${gradNote(mk)}`:'');
     if(!drawn.length){ svg.attr('width',w).attr('height',baseH).selectAll('*').remove();
-      const _m=(isCaasppKey(mk)&&caasppMissingForPeriod())?caasppMsg():(MByKey[mk].grad?'No mature graduation cohorts in this selection — 6-yr rates exist through entry 2019, 4-yr through 2021 (try the 2016–2019 preset).':'No schools with this metric in this selection.'); emptyMsg(w,baseH,_m); return; }
+      const _m=(isCaasppKey(mk)&&caasppMissingForPeriod())?caasppMsg():(MByKey[mk].grad?'No mature graduation cohorts in this selection — 6-yr rates exist through entry 2019, 4-yr through 2021 (try the 2016–2019 preset).':(gradsMissingForPeriod(mk)?GRADS_MSG:'No schools with this metric in this selection.')); emptyMsg(w,baseH,_m); return; }
     const RMAX=20;
     const x=d3.scaleLinear().domain(d3.extent(drawn,d=>d.v)).nice().range([m.left+RMAX,w-m.right-RMAX]);
     // Dot-size scale (design range). With ~1,000 schools the beeswarm can need far more vertical room
@@ -773,6 +847,7 @@
       const dir=r<0?'negative':'positive'; let plain='';
       if(MByKey[xk].role==='academic') plain=r<0?' — higher-scoring schools have a lower rate on this outcome here.':' — higher-scoring schools have a higher rate on this outcome here.';
       else if(xk==='upp') plain=r>0?' — higher-UPP schools have a higher rate on this outcome here.':' — higher-UPP schools have a lower rate on this outcome here.';
+      else if(xk==='dist') plain=r>0?' — schools farther from the campus have a higher rate on this outcome here.':' — schools farther from the campus have a lower rate on this outcome here.';
       txt=`${strg} ${dir} relationship${plain}`; }
     $('interp').textContent=txt;
     $('sNshown').textContent=fmtN(data.length);
@@ -787,7 +862,32 @@
     const lc=okSchools.filter(s=>s.lcff).map(s=>valOf(s,ok)).filter(v=>v!=null), nc=okSchools.filter(s=>s.upp!=null&&!s.lcff).map(s=>valOf(s,ok)).filter(v=>v!=null);
     if(lc.length&&nc.length){ const gap=d3.mean(lc)-d3.mean(nc); const mm=MByKey[ok];
       $('sGap').textContent=(gap>=0?'+':'')+(mm.fmt==='pct'?gap.toFixed(1)+' pts':gap.toFixed(3)); } else $('sGap').textContent='—';
+    renderDenoms(data,xk,yk,isScatter);
     renderSpark(xk,yk,r);
+  }
+
+  // Same numerator, other denominators: for the funnel stage on the Y-axis (applicants, admits or
+  // enrollees), the correlation with the same X under each available base — applicants, graduates,
+  // A–G completers, grade 9–12 enrollment — computed with the identical gating as the headline. For an
+  // admits- or enrollees-based rate the "Applicants ÷ base" line shows the application half of it
+  // (admits÷base = admits÷applicants × applicants÷base). Rows are clickable and switch the chart.
+  const DEN_ORDER=['A','Gr','Gp','H'];
+  function keyFor(num,den){ const m=METRICS.find(m=>m.role==='outcome'&&m.num===num&&m.den===den); return m?m.key:null; }
+  function renderDenoms(data,xk,yk,isScatter){ const box=$('denoms'); const m=MByKey[yk];
+    if(!(m&&m.num&&m.den)||m.key==='yield'){ box.innerHTML=''; box.style.display='none'; return; }
+    const rows=[]; const stage=NUMLBL[m.num]||m.num;
+    for(const dn of DEN_ORDER){ if(dn===m.num) continue; const k=keyFor(m.num,dn); if(!k) continue;
+      const P=analysisXY(data,xk,k), pr=pearson(P.keep.map(d=>[d.x,d.y]));
+      rows.push({k,lbl:`${stage.charAt(0).toUpperCase()+stage.slice(1)} ÷ ${DENLBL[dn]}`,r:pr.r,n:pr.n,cur:k===yk,sub:false}); }
+    if(m.num!=='A'&&m.den!=='A'){ const k=keyFor('A',m.den);
+      if(k){ const P=analysisXY(data,xk,k), pr=pearson(P.keep.map(d=>[d.x,d.y]));
+        rows.push({k,lbl:`Applicants ÷ ${DENLBL[m.den]} (who applies)`,r:pr.r,n:pr.n,cur:false,sub:true}); } }
+    box.style.display=''; box.innerHTML=`<div class="sl">Other denominators, same X (${MByKey[xk].short})</div>`+
+      rows.map(o=>`<div class="denrow${o.cur?' cur':''}${o.sub?' sub':''}" data-k="${o.k}" title="${o.cur?'current chart':'click to switch the chart to this rate'}">`+
+        `<span class="k">${o.lbl}</span><span class="v">${o.r==null?'—':(o.r>=0?'+':'')+o.r.toFixed(2)} <span style="font-weight:400;color:var(--muted)">n=${o.n}</span></span></div>`).join('')+
+      `<div class="dn">r under each base, same schools, filters and gating. A per-base rate = admit rate × the share of that base applying, so it moves with who applies as well as with the campus's decision.</div>`;
+    box.querySelectorAll('.denrow:not(.cur)').forEach(el=>el.onclick=()=>{ const k=el.dataset.k;
+      if(isScatter){ state.yMetric=k; } else { state.stripMetric=k; } render(); });
   }
 
   // per-year value for the over-time correlation: grad metrics re-anchor their entry-year
@@ -831,6 +931,8 @@
     const sk=state.view==='scatter'?state.yMetric:state.stripMetric;
     if(state.colorby==='upp') L.innerHTML=`<span><b>Color:</b> unduplicated pupils (UPP)</span><span style="display:inline-flex;align-items:center;gap:6px">0%<span class="grad" style="background:linear-gradient(90deg,#2166ac,#f4e08a,#b2182b)"></span>100%</span>`;
     else if(state.colorby==='lcff') L.innerHTML=`<span><b>Color:</b></span><span><span class="sw" style="background:var(--lcff)"></span>LCFF+ (UPP≥75%)</span><span><span class="sw" style="background:var(--nonlcff)"></span>other</span><span><span class="sw" style="background:#bbb"></span>no UPP data</span>`;
+    else if(state.colorby==='dist'){ const stops=[0,25,100,225,400].map(v=>distColor(v)).join(',');
+      L.innerHTML=`<span><b>Color:</b> distance to ${D.campuses[state.campus]}</span><span style="display:inline-flex;align-items:center;gap:6px">0 mi<span class="grad" style="background:linear-gradient(90deg,${stops})"></span>400+ mi</span><span><span class="sw" style="background:#bbb"></span>no coordinates</span>`; }
     else L.innerHTML=`<span><b>Color:</b> single</span>`;
     L.innerHTML+=`<span class="sz"><b>Size:</b> ${sizeLabelFor(sk)} <span class="sw" style="width:7px;height:7px;background:#888;border:0"></span>&rarr;<span class="sw" style="width:14px;height:14px;background:#888;border:0"></span></span>`;
     L.innerHTML+=`<span class="sz"><span style="display:inline-block;width:11px;height:11px;border-radius:50%;border:1.5px dashed #aab2bf;background:#fff;vertical-align:-1px"></span> low-confidence rate (suppressed cells; excluded from <i>r</i>)</span>`;
@@ -848,7 +950,8 @@
     tooltip.style.opacity=1; tooltip.style.left=Math.min(window.innerWidth-260,e.clientX+14)+'px'; tooltip.style.top=(e.clientY+14)+'px';
     let html=`<b>${s.name}</b><br><span class="tl">${s.city||''}</span><br><span class="tl">${MByKey[mk].short}:</span> ${tipVal(s,mk)}<br>`;
     if(xk) html+=`<span class="tl">${MByKey[xk].short}:</span> ${tipVal(s,xk)}<br>`;
-    html+=`<span class="tl">Applicants:</span> ${fmtN(s.apps||0)} · ${s.upp==null?'LCFF+ n/a':(s.lcff?'LCFF+':'non-LCFF+')}`; tooltip.innerHTML=html; }
+    const dv=distOf(s.ceeb);
+    html+=`<span class="tl">Applicants:</span> ${fmtN(s.apps||0)} · ${s.upp==null?'LCFF+ n/a':(s.lcff?'LCFF+':'non-LCFF+')}${dv==null?'':` · ${Math.round(dv)} mi`}`; tooltip.innerHTML=html; }
   function hideTip(){ tooltip.style.opacity=0; }
 
   function select(s){ state.sel=s; renderProfile(s);
@@ -891,8 +994,9 @@
       if(aw!=null) testRows+=`<tr><td class="k">Avg ACT — writing-section takers (enrollees)${yy}</td><td class="v">${Math.round(aw)}</td></tr>`;
     }
     const awpeVal=s.awpe==null?'—':s.awpe.toFixed(1)+'%'+(s.awpe_y?` (’${(''+s.awpe_y).slice(2)})`:'');
+    const _dv=distOf(s.ceeb);
     p.innerHTML=`<h3>${s.name}</h3>`+
-      `<div class="ploc">${s.city||''}${s.county?', '+s.county+' County':''} · ${D.campuses[state.campus]} · ${periodLabel()} `+
+      `<div class="ploc">${s.city||''}${s.county?', '+s.county+' County':''}${_dv==null?'':' · '+Math.round(_dv)+' mi from '+D.campuses[state.campus]} · ${D.campuses[state.campus]} · ${periodLabel()} `+
       `<span class="badge ${s.upp==null?'na':(s.lcff?'lcff':'non')}">${s.upp==null?'LCFF+ n/a':(s.lcff?'LCFF+':'non-LCFF+')}</span></div>`+
       `<table class="ptable">`+
       `<tr class="sec"><td>Funnel to this campus (summed over period) <span class="rcap">\u2014 = suppressed by UC in every year shown (blank \u2260 0)</span></td><td class="v"></td></tr>`+
@@ -900,11 +1004,14 @@
       `<tr><td class="k">Admits</td><td class="v">${fcnt(IX.D)}</td></tr>`+
       `<tr><td class="k">Enrollees</td><td class="v">${fcnt(IX.E)}</td></tr>`+
       `<tr class="sec"><td>Base counts <span class="rcap">the denominators behind the rates below</span></td><td class="v"></td></tr>`+
-      `<tr><td class="k">A–G eligible <span class="rcap">(per-eligible base)</span></td><td class="v">${cnt(IX.Gp)}</td></tr>`+
+      `<tr><td class="k">Graduates <span class="rcap">(per-graduate base; diploma graduates, classes of 2017+)</span></td><td class="v">${cnt(IX.Gr)}</td></tr>`+
+      `<tr><td class="k">A–G completers <span class="rcap">(per-completer base)</span></td><td class="v">${cnt(IX.Gp)}</td></tr>`+
       `<tr><td class="k">Grade 9–12 enrollment <span class="rcap">(per-head base)</span></td><td class="v">${cnt(IX.H)}</td></tr>`+
-      `<tr><td class="k">Graduating cohort <span class="rcap">(A–G completion base)</span></td><td class="v">${cnt(IX.C)}</td></tr>`+
+      `<tr><td class="k">Four-year cohort <span class="rcap">(A–G completion base)</span></td><td class="v">${cnt(IX.C)}</td></tr>`+
       `<tr class="sec"><td>Outcome rates <span class="rcap">numerator ÷ denominator over years both are reported</span></td><td class="v"></td></tr>`+
-      rateRow(s,'admit_rate')+rateRow(s,'yield')+rateRow(s,'app_rate')+rateRow(s,'adm_per_elig')+rateRow(s,'enr_per_elig')+rateRow(s,'app_per_head')+rateRow(s,'adm_per_head')+rateRow(s,'enr_per_head')+
+      rateRow(s,'admit_rate')+rateRow(s,'yield')+
+      rateRow(s,'app_per_grad')+rateRow(s,'adm_per_grad')+rateRow(s,'enr_per_grad')+
+      rateRow(s,'app_rate')+rateRow(s,'adm_per_elig')+rateRow(s,'enr_per_elig')+rateRow(s,'app_per_head')+rateRow(s,'adm_per_head')+rateRow(s,'enr_per_head')+
       `<tr class="sec"><td>Applicant &amp; admit GPA <span class="rcap">UC weighted-capped, mean over period</span></td><td class="v"></td></tr>`+
       row('app_gpa','Applicant GPA')+row('adm_gpa','Admit GPA')+
       `<tr><td class="k">Enrollee GPA</td><td class="v">${egTxt}</td></tr>`+
@@ -917,6 +1024,7 @@
       gradRowCam(s,'r1','1st-year retention \u2014 entrants to '+D.campuses[state.campus]+' only')+
       `<tr class="sec"><td>Academic / context</td><td class="v"></td></tr>`+
       row('avg')+row('ela')+row('math')+rateRow(s,'ag')+row('upp')+
+      `<tr><td class="k">Distance to ${D.campuses[state.campus]} <span class="rcap">straight-line, from CDE coordinates</span></td><td class="v">${fmtVal(distOf(s.ceeb),'dist')}</td></tr>`+
       `<tr><td class="k">ELWR met at entry — no remediation (enrollees)<div class="rbasis">met via AWPE exam or AP/IB/SAT/ACT/transferable course; not “ever met”</div></td><td class="v">${awpeVal}</td></tr>`+
       testRows+
       `</table>`+
@@ -973,7 +1081,7 @@
   let rt; window.addEventListener('resize',()=>{ clearTimeout(rt); rt=setTimeout(render,180); });
 
   $('footer').innerHTML=`Data: UC Information Center (admissions by source school, 1994–2025; freshman retention &amp; graduation rates by source high school, entry cohorts 1999–2024), California Dept. of Education `+
-    `(CAASPP grade-11 proficiency, A–G completion, CALPADS UPP &amp; enrollment) and UC ELWR/AWPE files. Built ${D.generated}. `+
+    `(CAASPP grade-11 proficiency, A–G completion &amp; diploma graduates, CALPADS UPP &amp; enrollment, school directory coordinates) and UC ELWR/AWPE files. Built ${D.generated}. `+
     `Visual design modeled on the SF Chronicle's UC explorer; independent project, not affiliated. Methodology &amp; full data in the repository.`;
 
   rebuildMetricSelects(); rebuildDatalist(); render();

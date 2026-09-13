@@ -22,17 +22,19 @@ selected period. You can:
 - **Switch views** — a *scatter* (an academic/context metric on x vs. an outcome rate on y, with a
   least-squares fit and a live Pearson *r*), or a Chronicle-style *strip/beeswarm*.
 - **Choose the X metric** (academic / context): CAASPP grade-11 proficiency (ELA / Math / average),
-  A–G completion, unduplicated pupils (UPP %), or ELWR/AWPE writing.
-- **Choose the Y outcome rate** — the admissions funnel against several denominators:
-  - **Admit rate** = admits ÷ applicants
-  - **Enrollment yield** = enrollees ÷ admits
-  - **Application rate** = applicants ÷ A–G eligible
-  - **Admits ÷ eligible**, **Enrollees ÷ eligible**
-  - **Applicants / Admits / Enrollees ÷ grade 9–12 enrollment** (the headcount denominator)
-- **Color** dots by unduplicated-pupil share (UPP gradient) or LCFF+ status; **filter** by minimum applicants;
-  **search** any school; **click a dot** for a full profile (every metric + a sparkline of the
-  selected rate over time). The campus panel shows how the selected relationship's correlation
-  has evolved year by year.
+  A–G completion, applicant-pool and admit GPA, UC outcomes of earlier entrants, unduplicated pupils
+  (UPP %), ELWR/AWPE writing, or the school's straight-line distance to the selected campus.
+- **Choose the Y outcome rate** — the admissions funnel against four denominators, grouped by base:
+  - **Per applicant / per admit:** admit rate = admits ÷ applicants; enrollment yield = enrollees ÷ admits
+  - **Per graduate** (CDE diploma graduates, classes of 2017+): applicants / admits / enrollees ÷ graduates
+  - **Per A–G completer:** applicants / admits / enrollees ÷ graduates who met UC/CSU course requirements
+  - **Per student enrolled:** applicants / admits / enrollees ÷ grade 9–12 enrollment
+  - plus first-year retention and 4-/6-year graduation of the period's entrants to that campus
+- **Color** dots by unduplicated-pupil share (UPP gradient), LCFF+ status, or distance to the campus;
+  **filter** by minimum applicants; **search** any school; **click a dot** for a full profile (every
+  metric, every base count, a sparkline of the selected rate over time). The campus panel shows how
+  the selected relationship's correlation has evolved year by year and, for any funnel stage, what
+  the same correlation is under each of the other denominators.
 
 The visual design is modeled on the San Francisco Chronicle's UC-admissions explorer. This is an
 **independent project, not affiliated with or endorsed by the Chronicle**, and contains none of
@@ -145,6 +147,17 @@ rates, and every non-GPA statistic were never affected.
 > (see [`data/cross_section_summary.csv`](data/cross_section_summary.csv) and the verification in
 > [`docs/`](docs/)).
 
+**The same stage under other denominators.** The admit rate is the campus's decision among the
+students who applied. Dividing the same admits by the school's *graduates*, its *A–G completers* or
+its *grade 9–12 enrollment* instead gives a different quantity: admits ÷ graduates = (admits ÷
+applicants) × (applicants ÷ graduates), so every per-base rate carries the school's application
+behaviour along with the campus's decision. Because application rates rise steeply with a school's
+achievement (Berkeley 2023–2025: applicants ÷ graduates vs CAASPP avg, r = +0.65), the per-base rates
+correlate *positively* with achievement where the per-applicant rate correlates negatively — Berkeley
+2023–2025, same schools and gating: −0.22 per applicant (n=860), +0.52 per graduate (848), +0.33 per
+A–G completer (849), +0.56 per student enrolled (846). Neither sign is wrong; they answer different
+questions, and the site reports all four together in the campus panel.
+
 ---
 
 ## Repository layout
@@ -163,7 +176,7 @@ rates, and every non-GPA statistic were never affected.
 │   ├── panel_all9_by_year.csv  #   MASTER: one row per CEEB × campus × year, all 9 campuses, 2015–2025
 │   ├── dv_admissions_all9.csv  #   admissions funnel only (apply/admit/enroll), all 9 campuses, 1994–2025
 │   ├── cross_section_all9.csv  #   tidy pooled cross-section for the default period (all rates)
-│   ├── components/             #   per-year covariates: CAASPP, A–G eligibility, UPP/headcount
+│   ├── components/             #   per-year covariates: CAASPP, A–G eligibility, UPP/headcount, school coordinates
 │   ├── ag_eligibility_cleaned.csv  #   A–G eligible counts + data-quality flags (the cleaned denominator)
 │   ├── ceeb_cds_crosswalk.csv  #   UC(CEEB) ↔ CDE(CDS) bridge
 │   ├── school_year_panel.csv   #   Berkeley & San Diego long panel (verified subset, with admit GPA)
@@ -176,6 +189,7 @@ rates, and every non-GPA statistic were never affected.
 │   └── make_trends_data.py     # data/trends/*.csv  →  trends/data_trends.js
 ├── build/                      # documented upstream pipeline (raw public files → data/)
 │   ├── extract_dv_all9.py      #   the one step needing the ~12 GB raw dump → dv_admissions_all9.csv
+│   ├── build_school_locations.py  # CDE directory coordinates → data/components/school_locations.csv
 │   ├── parse_caaspp_groups.py  #   CAASPP research files → grade-11 SED/EL composition (context page)
 │   └── README.md               #   runbook
 └── docs/                       # methodology, data dictionary, and CHANGELOG.md (revision history)
@@ -189,9 +203,14 @@ For a selected period, each rate is a **ratio of sums** over the years in which 
 numerator and denominator are observed, e.g. admit rate = Σadmits ÷ Σapplicants. This makes
 rates comparable across periods of different length and handles UC's cell suppression per rate.
 Academic/context metrics (CAASPP, UPP) are averaged over available years; A–G completion is
-Σeligible ÷ Σcohort. Applicant/admit/enrollee counts are UC (CEEB); "A–G eligible" and grade
-9–12 enrollment are CDE (CDS) — ratios mixing them are school-level indicators, not exact
-per-student rates.
+Σeligible ÷ Σcohort. Applicant/admit/enrollee counts are UC (CEEB); graduates, "A–G eligible" and
+grade 9–12 enrollment are CDE (CDS) — ratios mixing them are school-level indicators, not exact
+per-student rates. **Graduates** are the class's regular-diploma graduates (CDE four-year adjusted
+cohort × diploma rate, classes of 2017 on); a year is suppressed when its diploma rate collapses to
+below 60% of the school's median in its other years (a CALPADS reporting failure, not a real class)
+or when fewer than 10 graduates result, and rows where a funnel count exceeds graduates or enrollment
+are dropped from those rates. **Distance** is the great-circle distance from the school's CDE
+directory coordinates to the selected campus.
 
 **A–G data-quality cleaning.** CDE's published "Met UC/CSU" (A–G eligible) count collapses to
 near-zero for a number of school-years — a CALPADS course-data reporting failure (high diploma
@@ -230,6 +249,8 @@ compact **derived** datasets are included, under `data/`.
 - **CDE A–G / graduate completion** — UC/CSU "a–g" eligibility.
   https://www.cde.ca.gov/ds/ad/agcompletiondata.asp
 - **CDE CALPADS Unduplicated Pupil Percentage (UPP / LCFF+) & enrollment** — unduplicated-pupil share & headcount.
+- **CDE Public Schools & Districts directory** — school coordinates, for distance to each campus.
+  https://www.cde.ca.gov/ds/si/ds/pubschls.asp
 - **Ed-Data** — school context. https://www.ed-data.org/
 - **LAUSD Open Data** — district context. https://opendata.lausd.org/
 
@@ -244,6 +265,8 @@ The same block appears at the foot of every published page.
 |---|---|
 | Admissions | UC Information Center, admission years through fall 2025. |
 | Achievement | CDE CAASPP grade 11 (Smarter Balanced), spring 2015–2025. Spring 2020 was cancelled and spring 2021 is excluded as non-representative; each entering class is matched to its own grade-11 test the prior spring, so the 2021 and 2022 entering classes carry no CAASPP value. |
+| Graduates | CDE four-year adjusted cohort and regular-diploma rate, classes of 2017–2025; A–G completers from the same files. Grade 9–12 enrollment and UPP from CALPADS, 2016–17 to 2024–25. |
+| School locations | CDE Public Schools & Districts directory coordinates; distances are great-circle miles to the campus. |
 | UC outcomes | Entry cohorts 1999–2024. A rate appears only where its window has closed: six-year completion through the 2019 entering cohort, five-year through 2020, four-year through 2021, first-year retention through 2024. |
 | Neighborhood | U.S. Census Bureau ACS 5-year estimates at census-tract level; ACS year set to the school year, with 2025 school years carrying the 2024 release. |
 

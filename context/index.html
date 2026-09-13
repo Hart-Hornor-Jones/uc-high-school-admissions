@@ -283,9 +283,10 @@
           match, the partial correlation &mdash; asks what remains. Three cautions. (1) The own-campus
           application rate and any outcome built on applicants (the admit rate above all) share the applicant
           count, so part of any association between them is mechanical; the other-8 rate is the
-          shared-term-free alternative and tracks the own-campus rate closely. (2) Per-eligible outcomes are
-          flat-to-positive across schools unconditionally; inside application-rate bands they can turn
-          negative &mdash; a composition effect of the conditioning itself. (3) Applicant counts under 3 are
+          shared-term-free alternative and tracks the own-campus rate closely. (2) Per-graduate, per-completer
+          and per-head outcomes are flat-to-positive across schools unconditionally (each is the admit rate
+          times the share of that base applying, so it carries application behavior by construction); inside
+          application-rate bands they can turn negative &mdash; a composition effect of the conditioning itself. (3) Applicant counts under 3 are
           suppressed in the source, so the other-8 sum can slightly undercount at very small schools.</li>
         <li><b>Applicant-pool GPA outcomes.</b> Applicant GPA and admit GPA are UC-recalculated
           weighted-capped GPAs (grades 10&ndash;11, A&ndash;G coursework), averaged over the school's
@@ -317,6 +318,10 @@
       <dd>CDE CAASPP grade&nbsp;11 (Smarter Balanced), spring 2015&ndash;2025. Spring 2020 was cancelled
         and spring 2021 is excluded as non-representative; each entering class is matched to its own
         grade-11 test the prior spring, so the 2021 and 2022 entering classes carry no CAASPP value.</dd>
+      <dt>Graduates</dt>
+      <dd>CDE four-year adjusted cohort and regular-diploma rate, classes of 2017&ndash;2025; A&ndash;G
+        completers from the same files. Grade&nbsp;9&ndash;12 enrollment and UPP from CALPADS, 2016&ndash;17
+        to 2024&ndash;25.</dd>
       <dt>UC outcomes</dt>
       <dd>Entry cohorts 1999&ndash;2024. A rate appears only where its window has closed: six-year
         completion through the 2019 entering cohort, five-year through 2020, four-year through 2021,
@@ -325,7 +330,7 @@
       <dd>U.S. Census Bureau ACS 5-year estimates at census-tract level; ACS year set to the school
         year, with 2025 school years carrying the 2024 release.</dd>
     </dl>
-    <p class="updated">Last updated 31&nbsp;July&nbsp;2026. Build dates for each data layer are given with
+    <p class="updated">Last updated 13&nbsp;September&nbsp;2026. Build dates for each data layer are given with
       the sources below; revision history is in
       <a href="https://github.com/hart-hornor-jones/uc-high-school-admissions/blob/main/docs/CHANGELOG.md">docs/CHANGELOG.md</a>.</p>
   </section>
@@ -352,7 +357,7 @@
     'serve the repo over HTTP (e.g. <code>python3 -m http.server</code>) or view it on GitHub Pages.</p>'; return; }
 
   // panel row layout (identical to the main explorer)
-  const IX = {year:0,A:1,D:2,E:3,C:4,G:5,H:6,ela:7,math:8,upp:9,Gp:10,agpa:11,dgpa:12,egpa:13};
+  const IX = {year:0,A:1,D:2,E:3,C:4,G:5,H:6,ela:7,math:8,upp:9,Gp:10,agpa:11,dgpa:12,egpa:13,Gr:14};   // Gr = diploma graduates (classes of 2017+)
   const CIX = Object.fromEntries(X.cvars.map((k,i)=>[k,i]));   // context row layout
   const periodByKey = Object.fromEntries(D.periods.map(p=>[p.key,p]));
   const MByKey = Object.fromEntries(D.metrics.map(m=>[m.key,m]));
@@ -395,7 +400,7 @@
     {key:'ag',       label:'A–G completion — % of cohort UC/CSU-eligible', short:'A–G completion', fmt:'pct', num:'G', den:'C'},
   ];
   // outcome metrics: reuse the main explorer's funnel definitions (num/den) verbatim
-  const OUT_KEYS = ['admit_rate','yield','app_rate','adm_per_elig','enr_per_elig','app_per_head','adm_per_head','enr_per_head'];
+  const OUT_KEYS = ['admit_rate','yield','app_per_grad','adm_per_grad','enr_per_grad','app_rate','adm_per_elig','enr_per_elig','app_per_head','adm_per_head','enr_per_head'];
   const OUT_METRICS = OUT_KEYS.map(k=>MByKey[k]).filter(Boolean)
       .map(m=>Object.assign({},m,{group:'Admissions funnel — this campus'}))
     .concat(['app_gpa','adm_gpa'].map(k=>MByKey[k]).filter(Boolean)
@@ -461,7 +466,7 @@
   function meanIdx(rows,idx){ let s=0,n=0; for(const r of rows){ if(r[idx]!=null){s+=r[idx];n++;} } return n?s/n:null; }
   function jsum(rows,num,den){ let sn=0,sd=0,ok=false,denAll=0,denOK=false;
     for(const r of rows){ const a=r[IX[num]],b=r[IX[den]]; if(b==null) continue;
-      if(den==='H'&&a!=null&&a>b) continue;
+      if((den==='H'||den==='Gr')&&a!=null&&a>b) continue;
       denAll+=b; denOK=true; if(a!=null){ sn+=a; sd+=b; ok=true; } }
     return (ok&&sd>0)?{sn,sd,cov:(denOK&&denAll>0)?sd/denAll:1}:null; }
   const COV_MIN=0.5;
@@ -642,8 +647,8 @@
       } else if(om&&(om.num==='A'||om.den==='A')){
         notes.push('Caution: '+om.short.toLowerCase()+' and '+cm.short+' are built from the same applicant count, so part of any association between them is mechanical. For conditioning, the other-8 application rate shares no term with this campus\u2019s rates.');
       }
-      if(om&&om.den==='Gp'&&om.num!=='A'){
-        notes.push('Per-eligible outcomes are flat-to-positive across schools unconditionally; if they turn negative inside application-rate bands, that is a composition effect of the conditioning itself \u2014 not independent evidence.');
+      if(om&&(om.den==='Gp'||om.den==='Gr'||om.den==='H')&&om.num!=='A'){
+        notes.push('Per-graduate, per-completer and per-head outcomes are flat-to-positive across schools unconditionally (each equals the admit rate times the share of that base applying); if they turn negative inside application-rate bands, that is a composition effect of the conditioning itself \u2014 not independent evidence.');
       }
     }
     return notes.length? '<div class="note">'+notes.join(' ')+'</div>' : '';

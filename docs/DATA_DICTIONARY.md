@@ -45,3 +45,13 @@ Grain: **one row per campus × school**, pooling the three most recent admission
 | `upp_pct_2425`, `lcff_plus` | from CUPC 2024-25 |
 | `ag_cohort_2425`, `ag_met_2425`, `admits_per_eligible` | from A-G 2024-25 |
 | `match_method`, `match_score` | traces of the matching process |
+
+### `data.js` panel row (site data layer)
+Per (campus, CEEB): `[year, A, D, E, C, Gc, H, ela, math, upp, Gp, agpa, dgpa, egpa, Gr]` —
+applicants, admits, enrollees, four-year cohort, cleaned A–G completers (completion axis), grade 9–12
+enrollment, CAASPP ELA/Math % met, UPP %, cleaned A–G completers (per-completer rates), applicant /
+admit / enrollee GPA, and **`Gr` = diploma graduates of the class** (cohort × diploma rate, classes of
+2017 on; null before, and null where the diploma rate collapsed or fewer than 10 graduates result).
+`meta[ceeb]` = `[name, city, county, cds14, latitude, longitude]` (coordinates null for ~50 schools);
+`campusLL` lists the nine campus coordinates in `campuses` order, for the distance metric.
+

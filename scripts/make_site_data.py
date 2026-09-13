@@ -11,6 +11,10 @@ data.js stores a per-(campus,school) panel of raw yearly counts + covariates; th
 across the selected year/period and computes every rate client-side (ratio-of-sums over
 jointly-observed years), so years/periods are explorable just like campuses.
 
+Denominators carried per school-year: applicants (UC), graduates (CDE diploma graduates, classes
+of 2017+), A-G completers (CDE, cleaned) and grade 9-12 enrollment (CALPADS). School coordinates
+(CDE directory) ride along in `meta` so the site can compute each school's distance to a campus.
+
 Run:  python3 scripts/make_site_data.py
 """
 import csv, json, os, datetime
@@ -78,6 +82,41 @@ def clean_G(cds, yr, raw_G):
     if action == "FLOOR": return raw_G, None
     return raw_G, raw_G
 
+# ---- graduates: the per-graduate denominator (CDE four-year cohort x regular-diploma rate) ----
+# ag_eligibility_cleaned.csv carries, per (cds14, class year), the ACGR cohort and the school's
+# regular-high-school-diploma rate. graduates = round(cohort * diploma_rate / 100). The same CALPADS
+# reporting failure that zeroes A-G counts also zeroes a school's diploma rate in isolated years
+# (e.g. a 97% school reporting 0.7% for one class), so a year is SUPPRESSED (None) when its diploma
+# rate is below 60% of the school's median over its other years, or when it leaves fewer than 10
+# graduates (the same floor the per-eligible rates use). A school's genuine, stable low rate is kept.
+DIPL = defaultdict(dict)   # cds14 -> {year: (cohort, diploma_rate)}
+if os.path.exists(_agc):
+    for r in csv.DictReader(open(_agc, encoding="utf-8")):
+        c = fnum(r.get("cohort")); d = fnum(r.get("diploma_rate"))
+        if c is not None and d is not None: DIPL[r["cds14"]][int(r["year"])] = (c, d)
+def graduates(cds, yr):
+    rec = DIPL.get(cds, {}).get(yr)
+    if not rec: return None
+    c, d = rec
+    others = sorted(v[1] for y, v in DIPL[cds].items() if y != yr)
+    if others:
+        med = others[len(others)//2] if len(others) % 2 else (others[len(others)//2-1] + others[len(others)//2]) / 2
+        if med > 0 and d < 0.6 * med: return None      # isolated collapse (reporting failure), not a real class
+    g = int(round(c * d / 100))
+    return g if g >= 10 else None
+
+# ---- school coordinates (CDE directory, via build/build_school_locations.py) ----
+LOC = {}
+_loc = os.path.join(DATA, "components", "school_locations.csv")
+if os.path.exists(_loc):
+    for r in csv.DictReader(open(_loc, encoding="utf-8")):
+        la = fnum(r.get("latitude")); lo = fnum(r.get("longitude"))
+        if la is not None and lo is not None: LOC[r["cds14"].zfill(14)] = (la, lo)
+# main-campus coordinates (used client-side for straight-line distance school -> campus)
+CAMPUS_LL = {"Berkeley":[37.8719,-122.2585],"Davis":[38.5382,-121.7617],"Irvine":[33.6405,-117.8443],
+             "Los Angeles":[34.0689,-118.4452],"Merced":[37.3661,-120.4227],"Riverside":[33.9737,-117.3281],
+             "San Diego":[32.8801,-117.2340],"Santa Barbara":[34.4140,-119.8489],"Santa Cruz":[36.9916,-122.0583]}
+
 # ---- UC freshman graduation rates by source high school (UC Info Center dashboard) ----
 # data/grad_rates_by_hs.csv (built by build/parse_grad_rates.py): per (campus, ceeb, entry year),
 # the school's UC freshman entrants that fall (cohort_n, shown only when >=10) and their
@@ -97,9 +136,9 @@ if os.path.exists(_gr):
     for k in grad: grad[k].sort()
     for k in gradC: gradC[k].sort()
 
-# ---- panel: (campusIdx|ceeb) -> [[year,A,D,E,C,Gc,H,ela,math,upp,Gp,agpa,dgpa,egpa], ...] ----
+# ---- panel: (campusIdx|ceeb) -> [[year,A,D,E,C,Gc,H,ela,math,upp,Gp,agpa,dgpa,egpa,Gr], ...] ----
 panel = defaultdict(list)
-meta = {}              # ceeb -> [name, city, county, cds] (latest year wins)
+meta = {}              # ceeb -> [name, city, county, cds, lat, lon] (latest year wins; lat/lon null if unlocated)
 meta_year = {}
 for r in csv.DictReader(open(os.path.join(DATA, "panel_all9_by_year.csv"), encoding="utf-8")):
     camp = r["campus"]
@@ -115,49 +154,65 @@ for r in csv.DictReader(open(os.path.join(DATA, "panel_all9_by_year.csv"), encod
     if A is None and D is None and E is None and ela is None and upp is None and G is None:
         continue
     Gc, Gp = clean_G(r["cds14"], yr, G)   # A-G eligible: cleaned for completion (Gc) and per-eligible rates (Gp)
-    panel[f"{CIDX[camp]}|{ce}"].append([yr, A, D, E, C, Gc, H, ela, math, upp, Gp, agpa, dgpa, egpa])
+    Gr = graduates(r["cds14"], yr)        # diploma graduates of the class (per-graduate denominator)
+    panel[f"{CIDX[camp]}|{ce}"].append([yr, A, D, E, C, Gc, H, ela, math, upp, Gp, agpa, dgpa, egpa, Gr])
     if ce not in meta_year or yr >= meta_year[ce]:
-        meta[ce] = [r["school_name"], r["city"], r["county"], r["cds14"]]; meta_year[ce] = yr
+        ll = LOC.get((r["cds14"] or "").zfill(14)) or (None, None)
+        meta[ce] = [r["school_name"], r["city"], r["county"], r["cds14"], ll[0], ll[1]]; meta_year[ce] = yr
 for k in panel: panel[k].sort()
 
 # ---- metric metadata (X-axis academic/context + selectable outcome rates) ----
-# num/den letters map to panel array indices in index.html: A=1 D=2 E=3 C=4 G=5 H=6
+# num/den letters map to panel array indices in index.html: A=1 D=2 E=3 C=4 G=5 H=6 Gp=10 Gr=14
+# `group` labels the <optgroup> a metric sits under in the menus (outcome rates are grouped by
+# denominator, so the same funnel stage can be read per applicant, per graduate, per A-G completer
+# or per student enrolled, side by side).
+G_ACAD = "School achievement (all students)"; G_GPA = "Applicant & admit GPA (UC)"; G_UCX = "UC outcomes as indicators (any campus)"
+G_CTX = "Context"; G_APP = "Per applicant / per admit"; G_GRAD = "Per graduate (CDE diploma graduates, classes of 2017+)"
+G_ELIG = "Per A–G completer (UC/CSU-eligible graduates)"; G_HEAD = "Per student enrolled (grades 9–12)"; G_OUT = "After enrollment (entrants to this campus)"
 METRICS = [
   # academic / context (typical X-axis)
-  {"key":"avg",  "label":"CAASPP proficiency — avg % met (gr 11)", "short":"CAASPP avg % met", "role":"academic",   "fmt":"pct"},
-  {"key":"ela",  "label":"CAASPP ELA — % met (gr 11)",  "short":"CAASPP ELA % met",  "role":"academic",   "fmt":"pct"},
-  {"key":"math", "label":"CAASPP Math — % met (gr 11)", "short":"CAASPP Math % met", "role":"academic",   "fmt":"pct"},
-  {"key":"ag",   "label":"A–G completion — % of cohort UC/CSU-eligible", "short":"A–G completion", "role":"academic", "fmt":"pct", "num":"G", "den":"C"},
-  {"key":"upp",  "label":"Unduplicated pupils — UPP % (FRPM/EL/foster, gr 9–12)", "short":"UPP %", "role":"context", "fmt":"pct"},
-  {"key":"awpe", "label":"Writing req. met — ELWR/AWPE (enrollees)", "short":"ELWR/AWPE", "role":"context", "fmt":"pct",
+  {"key":"avg",  "group":G_ACAD,  "label":"CAASPP proficiency — avg % met (gr 11)", "short":"CAASPP avg % met", "role":"academic",   "fmt":"pct"},
+  {"key":"ela",  "group":G_ACAD,  "label":"CAASPP ELA — % met (gr 11)",  "short":"CAASPP ELA % met",  "role":"academic",   "fmt":"pct"},
+  {"key":"math", "group":G_ACAD, "label":"CAASPP Math — % met (gr 11)", "short":"CAASPP Math % met", "role":"academic",   "fmt":"pct"},
+  {"key":"ag",   "group":G_ACAD, "label":"A–G completion — % of cohort UC/CSU-eligible", "short":"A–G completion", "role":"academic", "fmt":"pct", "num":"G", "den":"C"},
+  {"key":"upp",  "group":G_CTX,  "label":"Unduplicated pupils — UPP % (FRPM/EL/foster, gr 9–12)", "short":"UPP %", "role":"context", "fmt":"pct"},
+  {"key":"awpe", "group":G_CTX, "label":"Writing req. met — ELWR/AWPE (enrollees)", "short":"ELWR/AWPE", "role":"context", "fmt":"pct",
                  "caveat":"UC enrollees only (self-selected, small N); latest year available per school."},
-  {"key":"app_gpa","label":"Applicant GPA — UC weighted-capped (gr 10–11)","short":"Applicant GPA","role":"academic","fmt":"gpa",
+  {"key":"dist", "group":G_CTX, "label":"Distance to this campus (straight-line miles)", "short":"Distance to campus", "role":"context", "fmt":"mi",
+                 "caveat":"Great-circle distance from the school's CDE directory coordinates to the selected campus. Students are likelier to apply to campuses near home, so distance is one way to check whether two schools' funnel rates are comparable; it changes with the campus selector."},
+  {"key":"app_gpa","group":G_GPA,"label":"Applicant GPA — UC weighted-capped (gr 10–11)","short":"Applicant GPA","role":"academic","fmt":"gpa",
                  "caveat":"Mean UC-recalculated GPA of the school's UC freshman APPLICANTS (weighted, honors-capped). An applicant-pool measure — distinct from CAASPP, which covers all grade-11 students."},
-  {"key":"adm_gpa","label":"Admit GPA — UC weighted-capped (admitted students)","short":"Admit GPA","role":"academic","fmt":"gpa",
+  {"key":"adm_gpa","group":G_GPA,"label":"Admit GPA — UC weighted-capped (admitted students)","short":"Admit GPA","role":"academic","fmt":"gpa",
                  "caveat":"Mean GPA of ADMITTED students. Partly downstream of the admit decision (a more selective campus shows a higher bar), so read it as the GPA level UC accepted at the school, not a pure measure of school strength."},
-  {"key":"grad6_prior","label":"UC-wide 6-yr graduation — earlier entrants, any campus (cohorts 6–10 yrs before period)","short":"UC-wide 6-yr grad (prior cohorts)","role":"academic","fmt":"pct","grad":{"col":"g6","win":"prior"},
+  {"key":"grad6_prior","group":G_UCX,"label":"UC-wide 6-yr graduation — earlier entrants, any campus (cohorts 6–10 yrs before period)","short":"UC-wide 6-yr grad (prior cohorts)","role":"academic","fmt":"pct","grad":{"col":"g6","win":"prior"},
                  "caveat":"N-weighted 6-yr UC graduation rate of the school's earlier UC entrants (entry cohorts 6-10 years before the selected period starts) - the most recent rates fully observable, and knowable to admissions readers, by decision time. All-UC-campus rates; cohorts shown only when >=10 entrants."},
   # outcome rates (selectable Y-axis); computed period-consistently as ratio-of-sums
-  {"key":"ret1_same","label":"UC-wide 1st-year retention — this period's entrants, any campus","short":"UC-wide 1st-yr retention","role":"academic","fmt":"pct","grad":{"col":"r1","win":"same"},
+  {"key":"ret1_same","group":G_UCX,"label":"UC-wide 1st-year retention — this period's entrants, any campus","short":"UC-wide 1st-yr retention","role":"academic","fmt":"pct","grad":{"col":"r1","win":"same"},
                  "caveat":"Share of the school's UC freshman entrants in the selected period still enrolled after one year (available through entry 2024). SCOPE: counts the school's entrants to ANY UC campus (pooled), not only the selected one - so a school can carry a rate even when its admits/enrollees to this campus are zero or suppressed."},
-  {"key":"grad4_same","label":"UC-wide 4-yr graduation — this period's entrants, any campus","short":"UC-wide 4-yr grad","role":"academic","fmt":"pct","grad":{"col":"g4","win":"same"},
+  {"key":"grad4_same","group":G_UCX,"label":"UC-wide 4-yr graduation — this period's entrants, any campus","short":"UC-wide 4-yr grad","role":"academic","fmt":"pct","grad":{"col":"g4","win":"same"},
                  "caveat":"4-year UC graduation rate of entrants in the selected period; mature only through entry 2021 (empty for recent periods - try 2016-2019). SCOPE: counts the school's entrants to ANY UC campus (pooled), not only the selected one - so a school can carry a rate even when its admits/enrollees to this campus are zero or suppressed."},
-  {"key":"grad6_same","label":"UC-wide 6-yr graduation — this period's entrants, any campus","short":"UC-wide 6-yr grad","role":"academic","fmt":"pct","grad":{"col":"g6","win":"same"},
+  {"key":"grad6_same","group":G_UCX,"label":"UC-wide 6-yr graduation — this period's entrants, any campus","short":"UC-wide 6-yr grad","role":"academic","fmt":"pct","grad":{"col":"g6","win":"same"},
                  "caveat":"6-year UC graduation rate of entrants in the selected period; mature only through entry 2019 (empty for recent periods - try 2016-2019). SCOPE: counts the school's entrants to ANY UC campus (pooled), not only the selected one - so a school can carry a rate even when its admits/enrollees to this campus are zero or suppressed."},
-  {"key":"ret1_camp","label":"1st-year retention at this campus — this period's entrants","short":"Retention (this campus)","role":"outcome","fmt":"pct","grad":{"col":"r1","win":"same","src":"campus"},
+  {"key":"admit_rate","group":G_APP, "label":"Admit rate to this campus (admits ÷ applicants)",        "short":"Admit rate",        "role":"outcome","fmt":"ratio","num":"D","den":"A"},
+  {"key":"yield",     "group":G_APP, "label":"Enrollment yield (enrollees ÷ admits)",      "short":"Yield (enroll÷adm)","role":"outcome","fmt":"ratio","num":"E","den":"D"},
+  {"key":"app_per_grad","group":G_GRAD,"label":"Applicants ÷ graduates (share of the class applying)","short":"Apps ÷ graduates","role":"outcome","fmt":"ratio","num":"A","den":"Gr",
+                 "caveat":"Graduates = the school's regular-diploma graduates in the class of the admission year (CDE four-year cohort × diploma rate), available for classes of 2017 on. Applicants are UC's count of the school's freshman applicants to this campus; the two come from different agencies, so treat the ratio as a school-level indicator."},
+  {"key":"adm_per_grad","group":G_GRAD,"label":"Admits ÷ graduates (share of the class admitted)",    "short":"Admits ÷ graduates","role":"outcome","fmt":"ratio","num":"D","den":"Gr",
+                 "caveat":"Admits per graduate = (admits ÷ applicants) × (applicants ÷ graduates): it folds the school's application behaviour into the campus's decision. Graduates available for classes of 2017 on."},
+  {"key":"enr_per_grad","group":G_GRAD,"label":"Enrollees ÷ graduates (share of the class enrolling)",  "short":"Enroll ÷ graduates","role":"outcome","fmt":"ratio","num":"E","den":"Gr",
+                 "caveat":"Enrollees per graduate = yield × admit rate × application rate. Graduates available for classes of 2017 on."},
+  {"key":"app_rate",  "group":G_ELIG,"label":"Applicants ÷ A–G completers (application rate)","short":"Apps ÷ A–G completers",  "role":"outcome","fmt":"ratio","num":"A","den":"Gp"},
+  {"key":"adm_per_elig","group":G_ELIG,"label":"Admits ÷ A–G completers",                    "short":"Admits ÷ A–G completers", "role":"outcome","fmt":"ratio","num":"D","den":"Gp"},
+  {"key":"enr_per_elig","group":G_ELIG,"label":"Enrollees ÷ A–G completers",                 "short":"Enroll ÷ A–G completers", "role":"outcome","fmt":"ratio","num":"E","den":"Gp"},
+  {"key":"app_per_head","group":G_HEAD,"label":"Applicants ÷ grade 9–12 enrollment",       "short":"Apps ÷ enrollment", "role":"outcome","fmt":"ratio","num":"A","den":"H"},
+  {"key":"adm_per_head","group":G_HEAD,"label":"Admits ÷ grade 9–12 enrollment",           "short":"Admits ÷ enrollment","role":"outcome","fmt":"ratio","num":"D","den":"H"},
+  {"key":"enr_per_head","group":G_HEAD,"label":"Enrollees ÷ grade 9–12 enrollment",        "short":"Enroll ÷ enrollment","role":"outcome","fmt":"ratio","num":"E","den":"H"},
+  {"key":"ret1_camp","group":G_OUT,"label":"1st-year retention at this campus — this period's entrants","short":"Retention (this campus)","role":"outcome","fmt":"pct","grad":{"col":"r1","win":"same","src":"campus"},
                  "caveat":"Entrants to the SELECTED campus only (UC dashboard per-campus series). A school-year is reported only when >=10 of its students entered this campus that fall, so mostly larger feeder schools appear - far fewer dots than other outcomes. Retention is available through entry 2024."},
-  {"key":"grad4_camp","label":"4-yr graduation at this campus — this period's entrants","short":"4-yr grad (this campus)","role":"outcome","fmt":"pct","grad":{"col":"g4","win":"same","src":"campus"},
+  {"key":"grad4_camp","group":G_OUT,"label":"4-yr graduation at this campus — this period's entrants","short":"4-yr grad (this campus)","role":"outcome","fmt":"pct","grad":{"col":"g4","win":"same","src":"campus"},
                  "caveat":"Entrants to the SELECTED campus only (UC dashboard per-campus series). A school-year is reported only when >=10 of its students entered this campus that fall, so mostly larger feeder schools appear - far fewer dots than other outcomes. Mature only through entry 2021 (empty for recent periods - try 2016-2019)."},
-  {"key":"grad6_camp","label":"6-yr graduation at this campus — this period's entrants","short":"6-yr grad (this campus)","role":"outcome","fmt":"pct","grad":{"col":"g6","win":"same","src":"campus"},
+  {"key":"grad6_camp","group":G_OUT,"label":"6-yr graduation at this campus — this period's entrants","short":"6-yr grad (this campus)","role":"outcome","fmt":"pct","grad":{"col":"g6","win":"same","src":"campus"},
                  "caveat":"Entrants to the SELECTED campus only (UC dashboard per-campus series). A school-year is reported only when >=10 of its students entered this campus that fall, so mostly larger feeder schools appear - far fewer dots than other outcomes. Mature only through entry 2019 (empty for recent periods - try 2016-2019)."},
-  {"key":"admit_rate","label":"Admit rate to this campus (admits ÷ applicants)",        "short":"Admit rate",        "role":"outcome","fmt":"ratio","num":"D","den":"A"},
-  {"key":"yield",     "label":"Enrollment yield (enrollees ÷ admits)",      "short":"Yield (enroll÷adm)","role":"outcome","fmt":"ratio","num":"E","den":"D"},
-  {"key":"app_rate",  "label":"Application rate (applicants ÷ A–G eligible)","short":"Application rate",  "role":"outcome","fmt":"ratio","num":"A","den":"Gp"},
-  {"key":"adm_per_elig","label":"Admits ÷ A–G eligible",                    "short":"Admits ÷ eligible", "role":"outcome","fmt":"ratio","num":"D","den":"Gp"},
-  {"key":"enr_per_elig","label":"Enrollees ÷ A–G eligible",                 "short":"Enroll ÷ eligible", "role":"outcome","fmt":"ratio","num":"E","den":"Gp"},
-  {"key":"app_per_head","label":"Applicants ÷ grade 9–12 enrollment",       "short":"Apps ÷ enrollment", "role":"outcome","fmt":"ratio","num":"A","den":"H"},
-  {"key":"adm_per_head","label":"Admits ÷ grade 9–12 enrollment",           "short":"Admits ÷ enrollment","role":"outcome","fmt":"ratio","num":"D","den":"H"},
-  {"key":"enr_per_head","label":"Enrollees ÷ grade 9–12 enrollment",        "short":"Enroll ÷ enrollment","role":"outcome","fmt":"ratio","num":"E","den":"H"},
 ]
 
 # ---- periods (presets + single years) ----
@@ -171,6 +226,7 @@ UCDATA = {
   "generated": datetime.date.today().isoformat(),
   "startYear": START,
   "campuses": CAMPUSES,
+  "campusLL": [CAMPUS_LL[c] for c in CAMPUSES],
   "meta": meta,
   "awpe": awpe,
   "tests": tests,
@@ -188,13 +244,23 @@ with open(os.path.join(REPO, "data.js"), "w", encoding="utf-8") as fh:
     fh.write(";\n")
 
 # ---- tidy unified CSV for the DEFAULT pooled period ----
-IDX = {"A":1,"D":2,"E":3,"C":4,"G":5,"H":6,"Gp":10}
+IDX = {"A":1,"D":2,"E":3,"C":4,"G":5,"H":6,"Gp":10,"Gr":14}
 def jsum(rows, num, den):
     sn = sd = 0.0; ok = False
     for row in rows:
         a = row[IDX[num]]; b = row[IDX[den]]
-        if a is not None and b is not None: sn += a; sd += b; ok = True
+        if b is None: continue
+        if den in ("H", "Gr") and a is not None and a > b: continue   # funnel count exceeds the base: corrupted row
+        if a is not None: sn += a; sd += b; ok = True
     return (sn, sd) if (ok and sd > 0) else (None, None)
+import math as _math
+def dist_mi(ceeb, ci):
+    md = meta.get(ceeb); la, lo = (md[4], md[5]) if md else (None, None)
+    if la is None or lo is None: return None
+    la2, lo2 = CAMPUS_LL[CAMPUSES[ci]]
+    p1, p2 = _math.radians(la), _math.radians(la2); dp = p2 - p1; dl = _math.radians(lo2 - lo)
+    h = _math.sin(dp/2)**2 + _math.cos(p1)*_math.cos(p2)*_math.sin(dl/2)**2
+    return round(2 * 3958.8 * _math.asin(_math.sqrt(h)), 1)
 def meanof(rows, idx):
     vals = [row[idx] for row in rows if row[idx] is not None]
     return sum(vals)/len(vals) if vals else None
@@ -217,6 +283,7 @@ dp = next(p for p in PERIODS if p["key"] == DEFAULT_PERIOD)["years"]
 cols = ["campus","ceeb","cds14","school_name","city","county","applicants","admits","enrollees",
         "admit_rate","yield","application_rate","admits_per_eligible","enr_per_eligible",
         "apps_per_enrollment","admits_per_enrollment","enr_per_enrollment",
+        "graduates","apps_per_graduate","admits_per_graduate","enr_per_graduate","distance_mi",
         "caaspp_ela_pct_met","caaspp_math_pct_met","caaspp_avg_pct_met","ag_completion_pct",
         "upp_pct","lcff_plus","awpe_writing_met_pct","awpe_year","applicant_gpa","admit_gpa",
         "uc_grad6_prior_pct","uc_grad6_prior_n","uc_ret1_same_pct","uc_ret1_same_n"]
@@ -231,13 +298,15 @@ for key, allrows in panel.items():
     ela = meanof(rows, 7); math = meanof(rows, 8); upp = meanof(rows, 9)
     avg = round((ela+math)/2, 2) if (ela is not None and math is not None) else (round(ela,2) if ela is not None else (round(math,2) if math is not None else None))
     snG, sdC = jsum(rows, "G", "C"); agpct = round(100*snG/sdC,2) if snG is not None else None
-    nm, city, cty, cds = meta.get(ce, ["","","",""])
+    nm, city, cty, cds = meta.get(ce, ["","","","",None,None])[:4]
     aw = awpe.get(ce, [None, None])
     agpa_m = meanof(rows, 11); dgpa_m = meanof(rows, 12)
     out.append([CAMPUSES[ci], ce, cds, nm, city, cty, sumA, sumD, sumE,
         rate(rows,"D","A",True), rate(rows,"E","D",True), rate(rows,"A","Gp",False),
         rate(rows,"D","Gp",False), rate(rows,"E","Gp",False), rate(rows,"A","H",False),
         rate(rows,"D","H",False), rate(rows,"E","H",False),
+        sum(r[14] for r in rows if r[14] is not None) or None,
+        rate(rows,"A","Gr",False), rate(rows,"D","Gr",False), rate(rows,"E","Gr",False), dist_mi(ce, ci),
         round(ela,1) if ela is not None else None, round(math,1) if math is not None else None, avg, agpct,
         round(upp,1) if upp is not None else None,
         "Y" if (upp is not None and upp >= 75) else "N", aw[0], aw[1],
@@ -252,6 +321,8 @@ size = os.path.getsize(os.path.join(REPO, "data.js"))
 print(f"panel keys (campus×school): {len(panel)}")
 print(f"school meta (unique CEEB)  : {len(meta)}")
 print(f"AWPE schools               : {len(awpe)}")
+print(f"located schools (lat/lon)  : {sum(1 for v in meta.values() if v[4] is not None)} of {len(meta)}")
+print(f"school-years with graduates: {sum(1 for rows in panel.values() for row in rows if row[14] is not None)}")
 print(f"grad-rate schools (All-UC) : {len(grad)} | campus-specific keys: {len(gradC)}")
 print(f"data.js                    : {size/1024/1024:.2f} MB")
 print(f"cross_section_all9 rows     : {len(out)} (default period {dp})")
