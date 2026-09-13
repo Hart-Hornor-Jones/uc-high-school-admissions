@@ -35,6 +35,10 @@ selected period. You can:
   metric, every base count, a sparkline of the selected rate over time). The campus panel shows how
   the selected relationship's correlation has evolved year by year and, for any funnel stage, what
   the same correlation is under each of the other denominators.
+- **Export any chart** — the *Export figure* menu on the chart saves the current view, with title,
+  headline *r*/*n*, legend and source line, as SVG (vector), PNG at 2× or 4× (print resolution), PDF
+  (via the browser's print dialog), a clipboard image, or a CSV of the plotted schools; the over-time
+  panel exports too.
 
 The visual design is modeled on the San Francisco Chronicle's UC-admissions explorer. This is an
 **independent project, not affiliated with or endorsed by the Chronicle**, and contains none of

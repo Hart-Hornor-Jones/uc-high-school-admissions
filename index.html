@@ -38,8 +38,8 @@
   @media (max-width:880px){.layout{grid-template-columns:1fr;}}
   .card{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);}
   .chartcard{padding:8px 8px 4px;position:relative;min-height:520px;}
-  .chartcard .plot-title{font-size:13px;font-weight:600;padding:8px 10px 0;color:var(--ink);}
-  .chartcard .plot-sub{font-size:12px;color:var(--muted);padding:0 10px 6px;}
+  .chartcard .plot-title{font-size:13px;font-weight:600;padding:8px 350px 0 10px;color:var(--ink);}  /* right: room for the zoom hint + export button */
+  .chartcard .plot-sub{font-size:12px;color:var(--muted);padding:0 350px 6px 10px;}
   svg{display:block;width:100%;height:auto;}
   .axis path,.axis line{stroke:#cdd4de;}
   .axis text{fill:var(--muted);font-size:11px;}
@@ -117,9 +117,30 @@
   body.focus .chartcard{min-height:600px;}
   /* zoom affordances */
   #chart{cursor:grab;} #chart:active{cursor:grabbing;}
-  .zoomhint{position:absolute;right:12px;top:10px;font-size:11px;color:var(--muted);background:rgba(255,255,255,.82);
+  .chartbar{position:absolute;right:12px;top:10px;display:flex;align-items:center;gap:8px;z-index:6;}
+  .zoomhint{font-size:11px;color:var(--muted);background:rgba(255,255,255,.82);
     border:1px solid var(--line);border-radius:7px;padding:3px 8px;pointer-events:none;}
   .zoomhint b{font-weight:600;color:var(--ink);}
+  /* figure export (SVG / PNG / PDF of the current chart, with title, legend and source line) */
+  .exportwrap{position:relative;}
+  .exportbtn{font:inherit;font-size:11px;font-weight:600;color:var(--accent);background:rgba(255,255,255,.92);
+    border:1px solid #cfd6e0;border-radius:7px;padding:3px 9px;cursor:pointer;}
+  .exportbtn:hover{background:#f0f5fb;}
+  .exportmenu{display:none;position:absolute;right:0;top:26px;min-width:250px;background:#fff;border:1px solid #cfd6e0;
+    border-radius:9px;box-shadow:0 8px 28px rgba(20,30,50,.16);padding:6px 0;text-align:left;}
+  .exportmenu.open{display:block;}
+  .exportmenu button{display:block;width:100%;font:inherit;font-size:12.5px;text-align:left;border:0;background:none;
+    padding:6px 12px;cursor:pointer;color:var(--ink);}
+  .exportmenu button:hover{background:#f0f5fb;}
+  .exportmenu button small{display:block;font-size:10.5px;color:var(--muted);}
+  .exportmenu .hd{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding:5px 12px 2px;}
+  .exportmenu .sep{border-top:1px solid var(--line);margin:4px 0;}
+  .exportnote{position:absolute;left:12px;bottom:10px;font-size:11px;color:var(--muted);background:rgba(255,255,255,.92);
+    border:1px solid var(--line);border-radius:7px;padding:3px 8px;opacity:0;transition:opacity .15s;pointer-events:none;}
+  .exportnote.show{opacity:1;}
+  .sparkx{float:right;font-weight:400;text-transform:none;letter-spacing:0;}
+  .sparkx a{cursor:pointer;color:var(--accent);text-decoration:none;font-size:10.5px;}
+  .sparkx a:hover{text-decoration:underline;}
   /* ---- small screens (phones) ---- */
   @media (max-width:700px){
     .wrap{padding:12px 10px 40px;}
@@ -133,6 +154,7 @@
     .rangewrap{width:100%;} input[type=range]{flex:1;width:auto;}
     .chk{width:100%;justify-content:flex-start;}
     .chartcard{min-height:0;padding:6px 2px 2px;}
+    .chartcard .plot-title{padding-right:112px;} .chartcard .plot-sub{padding-right:112px;}
     .zoomhint{display:none;}
     .focusbtn{padding:5px 9px;font-size:11px;}
     .legend{font-size:11px;gap:4px 10px;padding:6px 8px 8px;}
@@ -221,7 +243,25 @@
       <div class="card chartcard">
         <div class="plot-title" id="plotTitle"></div>
         <div class="plot-sub" id="plotSub"></div>
-        <div class="zoomhint" id="zoomhint"><b>scroll</b> zoom · <b>drag</b> pan · <b>dbl-click</b> reset</div>
+        <div class="chartbar">
+          <div class="zoomhint" id="zoomhint"><b>scroll</b> zoom · <b>drag</b> pan · <b>dbl-click</b> reset</div>
+          <div class="exportwrap">
+            <button class="exportbtn" id="exportBtn" title="Download this chart as a publication-quality image (title, legend and source line included)">Export figure &#9662;</button>
+            <div class="exportmenu" id="exportMenu">
+              <div class="hd">Vector (any resolution)</div>
+              <button data-x="svg">SVG<small>opens in Illustrator, Inkscape, Word, PowerPoint; scales without loss</small></button>
+              <button data-x="pdf">PDF<small>opens the print dialog sized to the figure &mdash; choose &ldquo;Save as PDF&rdquo;</small></button>
+              <div class="hd">Raster</div>
+              <button data-x="png2">PNG at 2&times;<small>screen / web, ~2,000 px wide</small></button>
+              <button data-x="png4">PNG at 4&times;<small>print, ~4,000 px wide (about 380 dpi at 10 in)</small></button>
+              <button data-x="copy">Copy PNG to clipboard<small>2&times;; paste straight into a document</small></button>
+              <div class="sep"></div>
+              <div class="hd">Data behind this chart</div>
+              <button data-x="csv">CSV of the plotted schools<small>one row per dot: school, city, x, y, applicants, UPP, distance, reliability</small></button>
+            </div>
+          </div>
+        </div>
+        <div class="exportnote" id="exportNote"></div>
         <svg id="chart"></svg>
         <div class="legend" id="legend"></div>
       </div>
@@ -237,7 +277,7 @@
         <div class="statline"><span class="k">LCFF+ vs other (gap)</span><span class="v" id="sGap"></span></div>
         <div class="denoms" id="denoms"></div>
         <div class="spark" id="campusSpark">
-          <div class="sl" id="sparkLbl">Correlation over time</div>
+          <div class="sl"><span class="sparkx" title="Download this panel as an image"><a data-x="svg">svg</a> · <a data-x="png4">png</a></span><span id="sparkLbl">Correlation over time</span></div>
           <svg id="sparkSvg" height="94"></svg>
         </div>
       </div>
@@ -304,6 +344,16 @@
           it in front of the dots (click again to send it back). <b>Focus mode</b> (top&ndash;right)
           hides the control bar and side panels for a clean, full&ndash;width view. You can divide any funnel stage
           by applicants, graduates, A&ndash;G&nbsp;completers or grade&nbsp;9&ndash;12 enrollment via the metric menu.</li>
+        <li><b>Export a figure.</b> <b>Export figure</b> (top&ndash;right of the chart) saves the chart exactly as
+          shown &mdash; current zoom, colouring, highlight and outlier setting &mdash; with its title, the headline
+          <i>r</i> and <i>n</i>, a legend and a source line, as <b>SVG</b> (vector: opens in Illustrator, Inkscape,
+          Word or PowerPoint and scales without loss), <b>PNG</b> at 2&times; or 4&times; the on-screen size (the
+          4&times; file is roughly 4,000&nbsp;px wide, print quality), a copy to the clipboard, or a <b>PDF</b> through
+          the browser's print dialog (choose &ldquo;Save as PDF&rdquo;; the page is sized to the figure). The export
+          is as wide as the chart on your screen, so use a desktop&ndash;width window for a wide figure. The same menu
+          gives a <b>CSV of the plotted schools</b> (one row per dot, with the x and y values, counts, UPP, distance and
+          reliability flags) for redrawing the chart in your own software; the over&ndash;time panel has its own
+          <i>svg&nbsp;&middot;&nbsp;png</i> links and is redrawn at figure size, with axes, for export.</li>
         <li><b>Drop outliers.</b> Ticking the box removes, <i>for the current view</i>, any school flagged by the
           standard <b>Tukey 1.5&times;IQR</b> rule on either plotted axis (the single metric in strip view). Dropped
           points leave the chart, the correlation <i>r</i>, the trend line, the mean and the LCFF+ gap; the number
@@ -611,7 +661,7 @@
     return {pts,used,keep,low:pts.length-used.length,dropped:pts.filter(d=>d.out).length}; }
 
   // shared zoom behavior; each render installs a `zoomApply(transform)` closure to redraw at that zoom
-  let zoomApply=null;
+  let zoomApply=null, lastDrawn=null, lastStat=null, lastSpark=null;
   const zoomBehavior=d3.zoom().scaleExtent([1,12])
     .filter(ev=> ev.type==='wheel' ? !ev.button
       : (ev.type.startsWith('touch') ? (ev.touches && ev.touches.length>=2)   // two-finger pinch/pan only
@@ -710,6 +760,7 @@
     const A=analysisXY(shown(),xk,yk);
     const drawn=A.pts.filter(d=>!(state.dropOut&&d.out));   // hide dropped outliers; low-conf stay (hollow)
     const keep=A.keep;                                       // reliable & non-dropped → fit, mean, stats
+    lastDrawn={mode:'scatter',xk,yk,pts:drawn};              // for the figure / CSV export
     $('plotTitle').textContent=`${D.campuses[state.campus]} · ${periodLabel()}: ${MByKey[yk].short} vs. ${MByKey[xk].short}`;
     $('plotSub').textContent=`${drawn.length} schools · ${state.dotVary?`size = ${sizeLabelFor(yk)}`:'dots uniform size'} · dashed = mean of school rates`
       +(state.dropOut&&A.dropped?` · ${A.dropped} outlier${A.dropped>1?'s':''} hidden`:'')
@@ -773,6 +824,7 @@
     const mk=state.stripMetric;
     const A=analysisOne(shown(),mk);
     const drawn=A.pts.filter(d=>!(state.dropOut&&d.out)); const keep=A.keep;
+    lastDrawn={mode:'strip',xk:null,yk:mk,pts:drawn};        // for the figure / CSV export
     $('plotTitle').textContent=`${D.campuses[state.campus]} · ${periodLabel()}: schools by ${MByKey[mk].short}`;
     $('plotSub').textContent=`${drawn.length} schools · ${state.dotVary?`size = ${sizeLabelFor(mk)}`:'dots uniform size'} · each dot is one high school`
       +(state.dropOut&&A.dropped?` · ${A.dropped} outlier${A.dropped>1?'s':''} hidden`:'')
@@ -842,6 +894,7 @@
     const ex=[]; if(P.low) ex.push(`${fmtN(P.low)} low-confidence`); if(state.dropOut&&P.dropped) ex.push(`${fmtN(P.dropped)} outlier${P.dropped>1?'s':''}`);
     const exTxt=ex.length?`; ${ex.join(' + ')} excluded`:'';
     $('bigr').innerHTML=(r==null?'—':(r>=0?'+':'')+r.toFixed(2))+`<span class="lbl">r (${MByKey[yk].short} vs ${MByKey[xk].short}, n=${n}${exTxt})</span>`;
+    lastStat={r,n,exTxt,xk,yk};                                  // for the figure export's stat line
     let txt='';
     if(r!=null){ const strg=Math.abs(r)<.1?'essentially no':Math.abs(r)<.25?'a weak':Math.abs(r)<.45?'a moderate':'a strong';
       const dir=r<0?'negative':'positive'; let plain='';
@@ -906,6 +959,7 @@
         const xv=valOfAt(sObj,xk,yr), yv=valOfAt(sObj,yk,yr);
         if(xv==null||yv==null) continue; (byYear[yr]=byYear[yr]||[]).push([xv,yv]); } }
     const ser=Object.keys(byYear).map(y=>+y).sort((a,b)=>a-b).map(y=>{const pr=pearson(byYear[y]); return {y,r:pr.r,n:pr.n};}).filter(d=>d.r!=null&&d.n>=5);
+    lastSpark={ser,pooledR,xk,yk};                                   // for the figure export (redrawn larger, with axes)
     const s=d3.select('#sparkSvg'); s.selectAll('*').remove();
     const W=document.querySelector('.spark').clientWidth||300,H=94,pad=16,padTop=20,padBot=20; s.attr('width',W).attr('height',H);
     if(ser.length<2){ s.append('text').attr('x',8).attr('y',40).attr('fill','#999').attr('font-size',12).text('not enough data for this pair'); return; }
@@ -1079,6 +1133,208 @@
     $('focusBtn').textContent=on?'Exit focus mode':'Focus mode'; setTimeout(render,40); };  // re-render: chart width changed
   $('search').oninput=onSearch; $('search').onchange=onSearch;
   let rt; window.addEventListener('resize',()=>{ clearTimeout(rt); rt=setTimeout(render,180); });
+
+  // ================= figure export (SVG / PNG / PDF / CSV) =================
+  // The chart is a live SVG styled by the page's stylesheet and CSS variables, so a copy of the
+  // node alone would come out unstyled. Export = (1) deep-clone the SVG and write every element's
+  // COMPUTED fill/stroke/font onto the clone as inline style (this also resolves var(--…) and the
+  // !important dim rule); (2) wrap it in a new, self-contained SVG with a title, the subtitle, the
+  // headline statistic, a redrawn legend and a source line; (3) hand that to the browser as a file:
+  // SVG as-is, PNG by painting it onto a canvas at 2× or 4× device pixels, PDF through the browser's
+  // print dialog ("Save as PDF": vector, real fonts). What you see is what you get — the current zoom,
+  // search highlight and outlier setting.
+  const XP=['fill','fill-opacity','stroke','stroke-width','stroke-opacity','stroke-dasharray','stroke-linecap',
+            'opacity','font-family','font-size','font-weight','font-style','text-anchor','dominant-baseline','letter-spacing','visibility'];
+  function cloneStyled(srcSvg){
+    const clone=srcSvg.cloneNode(true);
+    const a=[srcSvg,...srcSvg.querySelectorAll('*')], b=[clone,...clone.querySelectorAll('*')];
+    for(let i=0;i<a.length;i++){ const cs=getComputedStyle(a[i]), el=b[i];
+      if(cs.display==='none'){ el.remove(); continue; }
+      for(const p of XP){ const v=cs.getPropertyValue(p); if(v) el.style.setProperty(p,v); }
+      el.removeAttribute('class'); if(el.tagName!=='clipPath') el.removeAttribute('id'); el.style.removeProperty('cursor'); el.style.removeProperty('pointer-events'); }
+    clone.querySelectorAll('title').forEach(t=>t.remove());
+    // hit-target lines are transparent 12px strokes; drop them. Keep ids on defs/clip targets.
+    clone.querySelectorAll('line').forEach(l=>{ const st=l.style.stroke||''; if(/rgba\(\s*0,\s*0,\s*0,\s*0\)|transparent/.test(st)) l.remove(); });
+    return clone; }
+  function sanitize(s){ return String(s||'').replace(/[^\w.\-]+/g,'_').replace(/^_+|_+$/g,'').slice(0,60); }
+  function wrapText(str,maxChars){ const words=String(str).split(/\s+/), lines=[]; let cur='';
+    for(const w of words){ if(cur && (cur+' '+w).length>maxChars){ lines.push(cur); cur=w; } else cur=cur?cur+' '+w:w; }
+    if(cur) lines.push(cur); return lines; }
+  const NS='http://www.w3.org/2000/svg';
+  function mk(tag,attrs,text){ const e=document.createElementNS(NS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); if(text!=null) e.textContent=text; return e; }
+  // legend redrawn as SVG from state (the on-screen legend is HTML). Returns the height used.
+  function drawLegend(root,x0,y0,W,fontFam){
+    const items=[]; const FS=11, gap=16;
+    if(state.colorby==='upp') items.push({type:'grad',label:'Color: unduplicated pupils (UPP)',lo:'0%',hi:'100%',stops:['#2166ac','#f4e08a','#b2182b']});
+    else if(state.colorby==='lcff'){ items.push({type:'txt',label:'Color:'});
+      items.push({type:'sw',color:getComputedStyle(document.documentElement).getPropertyValue('--lcff').trim()||'#d7642a',label:'LCFF+ (UPP≥75%)'});
+      items.push({type:'sw',color:getComputedStyle(document.documentElement).getPropertyValue('--nonlcff').trim()||'#2e74b5',label:'other'});
+      items.push({type:'sw',color:'#bbb',label:'no UPP data'}); }
+    else if(state.colorby==='dist'){ items.push({type:'grad',label:`Color: distance to ${D.campuses[state.campus]}`,lo:'0 mi',hi:'400+ mi',stops:[0,25,100,225,400].map(v=>distColor(v))});
+      items.push({type:'sw',color:'#bbb',label:'no coordinates'}); }
+    else items.push({type:'txt',label:'Color: single'});
+    const sk=state.view==='scatter'?state.yMetric:state.stripMetric;
+    if(state.dotVary) items.push({type:'size',label:`Size: ${sizeLabelFor(sk)}`}); else items.push({type:'txt',label:'Dots: uniform size'});
+    items.push({type:'lowconf',label:'low-confidence rate (suppressed cells; excluded from r)'});
+    if(state.dropOut) items.push({type:'txt',label:'Outliers hidden (Tukey 1.5×IQR, per view)',color:'#9c3a12',bold:true});
+    const est=s=>s.length*FS*0.52;
+    let x=x0, y=y0, lineH=18, gid=0;
+    const g=mk('g',{'font-family':fontFam,'font-size':FS,fill:'#5c6470'}); root.appendChild(g);
+    for(const it of items){
+      let w=0;
+      if(it.type==='txt') w=est(it.label);
+      else if(it.type==='sw') w=15+est(it.label);
+      else if(it.type==='grad') w=est(it.label)+8+est(it.lo)+6+90+6+est(it.hi);
+      else if(it.type==='size') w=est(it.label)+8+7+14+14+6;
+      else if(it.type==='lowconf') w=15+est(it.label);
+      if(x>x0 && x+w>x0+W){ x=x0; y+=lineH; }
+      const cy=y+FS*0.35;
+      if(it.type==='txt'){ const t=mk('text',{x,y:y+FS*0.8},it.label); if(it.color) t.setAttribute('fill',it.color); if(it.bold) t.setAttribute('font-weight','600'); g.appendChild(t); }
+      else if(it.type==='sw'){ g.appendChild(mk('circle',{cx:x+5.5,cy,r:5.5,fill:it.color,stroke:'#2b2f36','stroke-width':1}));
+        g.appendChild(mk('text',{x:x+15,y:y+FS*0.8},it.label)); }
+      else if(it.type==='grad'){ const id='lg'+(gid++); const defs=mk('defs',{}); const lg=mk('linearGradient',{id,x1:0,x2:1,y1:0,y2:0});
+        it.stops.forEach((c,i)=>lg.appendChild(mk('stop',{offset:(i/(it.stops.length-1)*100)+'%','stop-color':c}))); defs.appendChild(lg); g.appendChild(defs);
+        let cx=x; g.appendChild(mk('text',{x:cx,y:y+FS*0.8},it.label)); cx+=est(it.label)+8;
+        g.appendChild(mk('text',{x:cx,y:y+FS*0.8},it.lo)); cx+=est(it.lo)+6;
+        g.appendChild(mk('rect',{x:cx,y:cy-5,width:90,height:10,rx:5,fill:`url(#${id})`,stroke:'#ccc','stroke-width':1})); cx+=96;
+        g.appendChild(mk('text',{x:cx,y:y+FS*0.8},it.hi)); }
+      else if(it.type==='size'){ let cx=x; g.appendChild(mk('text',{x:cx,y:y+FS*0.8},it.label)); cx+=est(it.label)+8;
+        g.appendChild(mk('circle',{cx:cx+3.5,cy,r:3.5,fill:'#888'})); cx+=12;
+        g.appendChild(mk('text',{x:cx,y:y+FS*0.8},'→')); cx+=12;
+        g.appendChild(mk('circle',{cx:cx+7,cy,r:7,fill:'#888'})); }
+      else if(it.type==='lowconf'){ g.appendChild(mk('circle',{cx:x+5.5,cy,r:5,fill:'#fff',stroke:'#aab2bf','stroke-width':1.5,'stroke-dasharray':'2.5 1.5'}));
+        g.appendChild(mk('text',{x:x+15,y:y+FS*0.8},it.label)); }
+      x+=w+gap; }
+    return y+lineH-y0; }
+  // The on-screen over-time panel is a 300×94 sparkline; for export it is redrawn at figure size with
+  // axes, the zero line, the pooled reference and a label on every year. Built detached, styled by attribute.
+  function bigSpark(){ if(!lastSpark||lastSpark.ser.length<2) return null;
+    const {ser,pooledR}=lastSpark, W=680, H=310, m={top:18,right:24,bottom:52,left:52};
+    const svg=d3.select(document.createElementNS(NS,'svg')).attr('width',W).attr('height',H).attr('font-family',getComputedStyle(document.body).fontFamily);
+    const x=d3.scaleLinear().domain(d3.extent(ser,d=>d.y)).range([m.left,W-m.right]);
+    const pys=periodByKey[state.period].years, showRef=pys.length>1&&pooledR!=null;
+    let yd=[d3.min([-.1,d3.min(ser,d=>d.r)]),d3.max([.1,d3.max(ser,d=>d.r)])]; if(showRef) yd=[Math.min(yd[0],pooledR-.02),Math.max(yd[1],pooledR+.02)];
+    yd=[yd[0]-.05,yd[1]+.05];
+    const y=d3.scaleLinear().domain(yd).nice().range([H-m.bottom,m.top]);
+    const styleAxis=g=>{ g.selectAll('path,line').attr('stroke','#cdd4de'); g.selectAll('text').attr('fill','#5c6470').attr('font-size',11); };
+    svg.append('g').selectAll('line').data(y.ticks(6)).join('line').attr('x1',m.left).attr('x2',W-m.right).attr('y1',d=>y(d)).attr('y2',d=>y(d)).attr('stroke','#eef1f5');
+    svg.append('g').attr('transform',`translate(0,${H-m.bottom})`).call(d3.axisBottom(x).ticks(ser.length).tickFormat(d3.format('d'))).call(styleAxis);
+    svg.append('g').attr('transform',`translate(${m.left},0)`).call(d3.axisLeft(y).ticks(6).tickFormat(d=>(d>0?'+':'')+d.toFixed(1))).call(styleAxis);
+    svg.append('text').attr('x',(m.left+W-m.right)/2).attr('y',H-4).attr('text-anchor','middle').attr('fill','#5c6470').attr('font-size',12).text('Admission year');
+    svg.append('text').attr('transform','rotate(-90)').attr('x',-(m.top+H-m.bottom)/2).attr('y',14).attr('text-anchor','middle').attr('fill','#5c6470').attr('font-size',12).text('Pearson r across schools');
+    svg.append('line').attr('x1',m.left).attr('x2',W-m.right).attr('y1',y(0)).attr('y2',y(0)).attr('stroke','#999').attr('stroke-dasharray','3 3');
+    if(showRef){ const py0=Math.min(...pys), py1=Math.max(...pys);
+      svg.append('line').attr('x1',m.left).attr('x2',W-m.right).attr('y1',y(pooledR)).attr('y2',y(pooledR)).attr('stroke','#9c3a12').attr('stroke-width',1.4).attr('stroke-dasharray','5 3');
+      svg.append('text').attr('x',m.left+6).attr('y',y(pooledR)-5).attr('text-anchor','start').attr('fill','#9c3a12').attr('font-size',11)
+        .text(`pooled ${py0}–${String(py1).slice(2)}: ${(pooledR>=0?'+':'')+pooledR.toFixed(2)}`); }
+    svg.append('path').datum(ser).attr('fill','none').attr('stroke','#2b6cb0').attr('stroke-width',2.2).attr('d',d3.line().x(d=>x(d.y)).y(d=>y(d.r)));
+    svg.append('g').selectAll('circle').data(ser).join('circle').attr('r',3.6).attr('cx',d=>x(d.y)).attr('cy',d=>y(d.r)).attr('fill','#2b6cb0').attr('stroke','#fff').attr('stroke-width',1.2);
+    svg.append('g').selectAll('text').data(ser).join('text').attr('x',d=>x(d.y)).attr('y',d=>y(d.r)+(d.r>=0?-9:15)).attr('text-anchor','middle')
+      .attr('font-size',10.5).attr('fill','#333').text(d=>(d.r>=0?'+':'')+d.r.toFixed(2));
+    svg.append('g').selectAll('text').data(ser).join('text').attr('x',d=>x(d.y)).attr('y',H-m.bottom+26).attr('text-anchor','middle')
+      .attr('font-size',9).attr('fill','#8a919c').text(d=>'n='+d.n);
+    return svg.node(); }
+  // Compose the exportable figure. which = 'chart' (main panel) | 'spark' (correlation over time).
+  function buildFigure(which){
+    const src= which==='spark'? bigSpark() : $('chart');
+    if(!src) return null;
+    const cw=+src.getAttribute('width')||src.clientWidth, ch=+src.getAttribute('height')||src.clientHeight;
+    if(!cw||!ch||!src.childNodes.length) return null;
+    const fontFam=getComputedStyle(document.body).fontFamily;
+    const PAD=18, W=Math.max(cw+2*PAD, which==='spark'?520:0), inner=W-2*PAD;
+    const root=mk('svg',{xmlns:NS,'xmlns:xlink':'http://www.w3.org/1999/xlink',version:'1.1'});
+    root.appendChild(mk('rect',{x:0,y:0,width:'100%',height:'100%',fill:'#fff'}));
+    let y=PAD;
+    const addLines=(str,fs,weight,color,maxChars)=>{ const t=mk('text',{x:PAD,y:0,'font-family':fontFam,'font-size':fs,'font-weight':weight,fill:color});
+      wrapText(str,maxChars).forEach((ln,i)=>{ const ts=mk('tspan',{x:PAD,y:y+fs*0.85},ln); t.appendChild(ts); y+=fs*1.35; }); root.appendChild(t); };
+    const maxChars=Math.floor(inner/8.2);
+    const title= which==='spark'? `${D.campuses[state.campus]} · ${$('sparkLbl').textContent.replace(/\s+/g,' ').trim()}` : $('plotTitle').textContent;
+    addLines(title,15,'600','#1a1a1a',Math.floor(inner/8.6));
+    const sub= which==='spark'
+      ? `Pearson r across schools, computed separately for each admission year (schools with ≥${state.minApps} applicants that year; n under each year)${periodByKey[state.period].years.length>1?`; dashed line = pooled ${periodLabel()}`:''}`
+      : $('plotSub').textContent;
+    addLines(sub,11.5,'400','#5c6470',maxChars);
+    if(which!=='spark'){
+      let stat='';
+      if(lastDrawn&&lastDrawn.mode==='scatter'&&lastStat&&lastStat.r!=null)
+        stat=`Pearson r = ${(lastStat.r>=0?'+':'')+lastStat.r.toFixed(2)} (n = ${fmtN(lastStat.n)}${lastStat.exTxt}) · schools with ≥${state.minApps} applicants · line = least-squares fit`;
+      else if(lastDrawn) stat=`mean across schools = ${$('sOverall').textContent} · student-weighted = ${$('sPooled').textContent} · schools with ≥${state.minApps} applicants`;
+      if(stat) addLines(stat,11.5,'400','#5c6470',maxChars); }
+    y+=4;
+    // the styled clone's children move into a translated <g> (a nested <svg> trips some converters)
+    const chart= which==='spark'? src : cloneStyled(src), cg=mk('g',{transform:`translate(${PAD+(inner-cw)/2},${y})`,'font-family':fontFam});
+    if(chart.getAttribute('style')) cg.setAttribute('style',chart.getAttribute('style').replace(/display:[^;]+;?/,''));
+    while(chart.firstChild) cg.appendChild(chart.firstChild);
+    root.appendChild(cg); y+=ch+8;
+    if(which!=='spark') y+=drawLegend(root,PAD,y,inner,fontFam);
+    y+=4; root.appendChild(mk('line',{x1:PAD,x2:W-PAD,y1:y,y2:y,stroke:'#e2e6ec'})); y+=6;
+    const page=(location.protocol.startsWith('http')?location.host+location.pathname:'uc-merit-admissions').replace(/index\.html$/,'');
+    const today=new Date().toISOString().slice(0,10);
+    addLines(`Source: UC admissions & high-school academic indicators — interactive explorer (${page}), data build ${D.generated}, figure exported ${today}. `+
+      `Underlying data: UC Information Center (admissions by source school; retention & graduation by source school), California Dept. of Education (CAASPP, A–G completion & graduates, CALPADS UPP & enrollment, school directory).`,
+      10,'400','#7a828e',Math.floor(inner/6.2));
+    y+=PAD-6;
+    root.setAttribute('width',W); root.setAttribute('height',Math.round(y)); root.setAttribute('viewBox',`0 0 ${W} ${Math.round(y)}`);
+    return {svg:root,w:W,h:Math.round(y)}; }
+  function figName(which,ext){
+    const c=sanitize(D.campuses[state.campus]), p=sanitize(periodByKey[state.period].label);
+    const m= state.view==='scatter'? `${sanitize(MByKey[state.yMetric].short)}_vs_${sanitize(MByKey[state.xMetric].short)}` : sanitize(MByKey[state.stripMetric].short);
+    return `uc-explorer_${which==='spark'?'over-time_':''}${c}_${p}_${m}.${ext}`; }
+  function serialize(svgEl){ return '<?xml version="1.0" encoding="UTF-8"?>\n'+new XMLSerializer().serializeToString(svgEl); }
+  function download(blob,name){ const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click();
+    setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },1500); }
+  function rasterize(fig,scale){ return new Promise((res,rej)=>{
+    const img=new Image(); img.decoding='sync';
+    img.onload=()=>{ const c=document.createElement('canvas'); c.width=Math.round(fig.w*scale); c.height=Math.round(fig.h*scale);
+      const ctx=c.getContext('2d'); ctx.fillStyle='#fff'; ctx.fillRect(0,0,c.width,c.height); ctx.drawImage(img,0,0,c.width,c.height);
+      c.toBlob(b=> b?res(b):rej(new Error('canvas export failed')),'image/png'); };
+    img.onerror=()=>rej(new Error('could not rasterize SVG'));
+    img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(serialize(fig.svg)); }); }
+  let noteT; function note(msg,ms){ const n=$('exportNote'); n.textContent=msg; n.classList.add('show'); clearTimeout(noteT); if(ms) noteT=setTimeout(()=>n.classList.remove('show'),ms); }
+  // PDF: the figure is opened in a print window sized exactly to it; the browser's print dialog then
+  // writes a vector PDF ("Save as PDF" / "Microsoft Print to PDF" / macOS "Save as PDF") with the page's
+  // real fonts and every glyph. (A pure-JS converter was tried and rejected: jsPDF's built-in faces are
+  // WinAnsi-only, so ≥ and – came out as garbage and everything set in Times.)
+  function exportPdf(fig,name){
+    const w=window.open('','_blank'); if(!w){ note('Pop-up blocked — allow pop-ups for this site, or export SVG instead.',5000); return; }
+    w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>${name}</title>`+
+      `<style>@page{size:${fig.w}px ${fig.h}px;margin:0}html,body{margin:0;padding:0;background:#fff}svg{display:block}`+
+      `.hint{font:13px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#5c6470;padding:10px 14px;border-bottom:1px solid #e2e6ec;background:#fbfcfe}`+
+      `@media print{.hint{display:none}}</style></head><body>`+
+      `<div class="hint">In the print dialog choose <b>Save as PDF</b> (destination / printer), keep margins at <b>None</b> and scale at <b>100%</b>, and the page size will match the figure. Close this tab afterwards.</div>`+
+      serialize(fig.svg).replace(/^<\?xml[^>]*>\n?/,'')+`</body></html>`);
+    w.document.close(); w.focus(); setTimeout(()=>{ w.print(); },400); }
+  function csvOfChart(){ if(!lastDrawn||!lastDrawn.pts.length) return null;
+    const {mode,xk,yk,pts}=lastDrawn; const q=s=>'"'+String(s==null?'':s).replace(/"/g,'""')+'"';
+    const cols=['school','city','county','ceeb','cds'];
+    if(mode==='scatter') cols.push(`x:${MByKey[xk].key}`,`y:${MByKey[yk].key}`); else cols.push(`value:${MByKey[yk].key}`);
+    cols.push('applicants','admits','enrollees','upp_pct','lcff_plus','distance_mi','reliable','outlier_flag');
+    const rows=[cols.join(',')];
+    for(const d of pts){ const s=d.s; const dv=distOf(s.ceeb);
+      const base=[q(s.name),q(s.city),q(s.county),s.ceeb,q(s.cds)];
+      const vals= mode==='scatter'? [d.x,d.y] : [d.v];
+      rows.push(base.concat(vals.map(v=>v==null?'':+v.toFixed(4)),[sumIdx(s.rows,IX.A)??'',sumIdx(s.rows,IX.D)??'',sumIdx(s.rows,IX.E)??'',
+        s.upp==null?'':s.upp.toFixed(1),s.upp==null?'':(s.lcff?1:0),dv==null?'':dv.toFixed(1),d.rel?1:0,d.out?1:0]).join(',')); }
+    const hdr=`# ${$('plotTitle').textContent}\n# ${$('plotSub').textContent}\n# ${state.view==='scatter'&&lastStat&&lastStat.r!=null?`Pearson r = ${lastStat.r.toFixed(3)}, n = ${lastStat.n}${lastStat.exTxt} (reliable, non-outlier rows only)`:''}\n# min applicants ${state.minApps}; data build ${D.generated}; exported ${new Date().toISOString().slice(0,10)}\n`;
+    return hdr+rows.join('\n')+'\n'; }
+  async function doExport(kind,which){
+    if(kind==='csv'){ const c=csvOfChart(); if(!c){ note('Nothing plotted to export.',3000); return; }
+      download(new Blob([c],{type:'text/csv;charset=utf-8'}),figName('chart','csv')); note('CSV downloaded.',2500); return; }
+    const fig=buildFigure(which); if(!fig){ note('Nothing plotted to export.',3000); return; }
+    try{
+      if(kind==='svg'){ download(new Blob([serialize(fig.svg)],{type:'image/svg+xml;charset=utf-8'}),figName(which,'svg')); note('SVG downloaded (vector).',2500); }
+      else if(kind==='png2'||kind==='png4'){ const sc=kind==='png4'?4:2; note(`Rendering PNG at ${sc}×…`);
+        const b=await rasterize(fig,sc); download(b,figName(which,'png').replace(/\.png$/,`_${sc}x.png`)); note(`PNG downloaded: ${Math.round(fig.w*sc)}×${Math.round(fig.h*sc)} px.`,3500); }
+      else if(kind==='copy'){ note('Rendering PNG…'); const b=await rasterize(fig,2);
+        if(navigator.clipboard&&window.ClipboardItem){ await navigator.clipboard.write([new ClipboardItem({'image/png':b})]); note('PNG copied to the clipboard (2×).',3000); }
+        else { download(b,figName(which,'png').replace(/\.png$/,'_2x.png')); note('Clipboard images not supported here — downloaded the PNG instead.',4000); } }
+      else if(kind==='pdf'){ exportPdf(fig,figName(which,'pdf')); note('Print dialog opened — choose “Save as PDF”.',4000); }
+    } catch(e){ console.error(e); note('Export failed: '+(e&&e.message||e),5000); } }
+  $('exportBtn').onclick=e=>{ e.stopPropagation(); $('exportMenu').classList.toggle('open'); };
+  document.addEventListener('click',()=>$('exportMenu').classList.remove('open'));
+  $('exportMenu').querySelectorAll('button').forEach(b=>b.onclick=e=>{ e.stopPropagation(); $('exportMenu').classList.remove('open'); doExport(b.dataset.x,'chart'); });
+  document.querySelectorAll('.sparkx a').forEach(a=>a.onclick=e=>{ e.preventDefault(); doExport(a.dataset.x,'spark'); });
+  window.UCEXPORT={buildFigure,serialize,csvOfChart};   // for scripted use (tests, batch export from the console)
 
   $('footer').innerHTML=`Data: UC Information Center (admissions by source school, 1994–2025; freshman retention &amp; graduation rates by source high school, entry cohorts 1999–2024), California Dept. of Education `+
     `(CAASPP grade-11 proficiency, A–G completion &amp; diploma graduates, CALPADS UPP &amp; enrollment, school directory coordinates) and UC ELWR/AWPE files. Built ${D.generated}. `+

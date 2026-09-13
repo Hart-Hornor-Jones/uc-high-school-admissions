@@ -9,6 +9,24 @@ day of the change, not necessarily to the day of the commit that carried it.
 
 ---
 
+## 2026-09-13 (later) — Figure export
+
+**Added**
+- **Export figure** menu on the chart card (and *svg · png* links on the over-time panel). The current
+  chart — exactly as displayed: zoom, colouring, search highlight, dot sizing, outlier setting — is
+  composed into a self-contained figure with its title, the subtitle, the headline Pearson *r* and *n*
+  (or the mean for a strip), a redrawn legend and a source line carrying the page address, the data
+  build date and the export date. Formats: **SVG** (vector; every element's computed style is written
+  inline, so the file renders identically outside the browser — verified with an independent renderer),
+  **PNG** at 2× or 4× the on-screen size (≈4,000 px wide at 4×), **copy to clipboard** (PNG), and
+  **PDF** through the browser's print dialog, with the page sized to the figure (a pure-JS PDF converter
+  was tried and rejected: its built-in fonts lack ≥ and – and set everything in Times). The over-time
+  panel is redrawn at figure size for export, with axes, the zero line, the pooled reference and a
+  labelled *r* and *n* for every year. The menu also downloads a **CSV of the plotted schools** (one
+  row per dot: school, city, county, CEEB, CDS, the x and y values, applicants/admits/enrollees, UPP,
+  LCFF+ flag, distance, reliability and outlier flags), so a chart can be redrawn in R, Stata or Python.
+- No new dependencies; nothing is fetched at export time. Numbers and figures elsewhere are unchanged.
+
 ## 2026-09-13 — A fourth denominator, distance to the campus, and the denominators side by side
 
 **Added**
