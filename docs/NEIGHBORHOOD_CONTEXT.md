@@ -42,9 +42,11 @@ association is carried by where the school sits — and how much by who applies?
    *students*, not its *applicants* to any campus.
 4. **Site data layer.** `scripts/make_context_data.py` joins the slim CSV and the composition CSV
    to the site's school universe (CEEB ↔ CDS from the panel) plus CAASPP **mean scale scores** from
-   `data/components/caaspp_*.csv`, and writes `context/data_context.js` (`window.UCCTX`).
-   The page loads it alongside the root `data.js`, so every admissions number is *identical*
-   to the main explorer's.
+   `data/components/caaspp_*.csv`, and writes `context/data_context.js` (`window.UCCTX`) plus
+   `context/data_parts/` (the tract rows of each year, the grade-11 composition and the scale-score
+   means, fetched when a period, a metric or the profile card reads them).
+   The page loads it alongside the root `data.js` and its parts, so every admissions number is
+   *identical* to the main explorer's.
 
 ## Alignment & composites
 
