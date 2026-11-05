@@ -479,14 +479,42 @@
 </div>
 
 <div class="tooltip" id="tooltip"></div>
+<script src="ucparts.js"></script>
 <script src="data.js"></script>
 <script>
 (function(){
   "use strict";
   const D = window.UCDATA;
-  if(!D){ document.querySelector('.wrap').innerHTML =
+  if(!D||!window.UCPARTS){ document.querySelector('.wrap').innerHTML =
     '<p style="color:#b00">Could not load <code>data.js</code>. If you opened this file directly, '+
     'serve the folder over HTTP (e.g. <code>python3 -m http.server</code>) or view it on GitHub Pages.</p>'; return; }
+
+  // ---------- data parts (ucparts.js) ----------
+  // data.js is the small core; the panel arrives one campus at a time (joined with the shared
+  // school-year covariates by UCPARTS.sitePanel) and the UC outcome tables (grad, gradC, tests)
+  // come when a graduation axis or a school profile first needs them.
+  const PARTS=window.UCPARTS, partUrl=f=>D.parts.base+f;
+  D.panel={};                                     // "ci|ceeb" -> rows, filled as campus parts arrive
+  function campusReady(ci){ return PARTS.has('site:schools')&&PARTS.has('site:campus_'+ci)&&PARTS.sitePanel(D,ci); }
+  function loadCampus(ci){ return PARTS.loadAll([[partUrl(D.parts.schools),'site:schools'],[partUrl(D.parts.campus[ci]),'site:campus_'+ci]]).then(()=>{ PARTS.sitePanel(D,ci); }); }
+  // D.grad / D.gradC / D.tests are read through getters: a read before the part has arrived
+  // returns an empty table and marks the part wanted, so the render repeats once it is here.
+  const outcomes={grad:{},gradC:{},tests:{}}; let outcomesWanted=false, outcomesInstalled=false;
+  const outcomesReady=()=>outcomesInstalled;
+  ['grad','gradC','tests'].forEach(k=>Object.defineProperty(D,k,{get(){ if(!outcomesInstalled) outcomesWanted=true; return outcomes[k]; }}));
+  function loadOutcomes(){ return PARTS.load(partUrl(D.parts.ucOutcomes),'site:uc_outcomes').then(p=>{
+    if(outcomesInstalled) return;
+    for(const k in p.grad) outcomes.grad[k]=PARTS.rows(p.grad[k]);
+    for(const k in p.gradC) outcomes.gradC[k]=PARTS.rows(p.gradC[k]);
+    outcomes.tests=p.tests; outcomesInstalled=true; }); }
+  let renderSeq=0;                                // a render started after a load was requested supersedes it
+  function partFail(e){ console.error(e); const {w,h}=dims(); svg.attr('width',w).attr('height',h).selectAll('*').remove();
+    emptyMsg(w,h,'Could not load part of the data ('+(e&&e.message||e)+'). Reload the page, or view it on GitHub Pages.'); }
+  function showLoading(){ const {w,h}=dims(); svg.attr('width',w).attr('height',h).selectAll('*').remove(); emptyMsg(w,h,'Loading data…'); }
+  // run fn once the selected campus's part is in place (at once when it already is)
+  function whenCampus(fn){ if(campusReady(state.campus)){ fn(); return; }
+    const seq=++renderSeq, ci=state.campus; showLoading();
+    loadCampus(ci).then(()=>{ if(seq===renderSeq) fn(); }, partFail); }
 
   // panel row layout: [year,A,D,E,C,Gc,H,ela,math,upp,Gp,agpa,dgpa,egpa,Gr]
   //   Gr = diploma graduates of the class (per-graduate denominator; classes of 2017+, null before)
@@ -677,6 +705,7 @@
   function schools(){
     const ck=state.campus+'|'+state.period;
     if(cache[ck]) return cache[ck];
+    if(!campusReady(state.campus)) return [];   // the campus part is still on its way: nothing to cache yet
     const years=new Set(periodByKey[state.period].years);
     const pre=state.campus+'|', arr=[];
     for(const k in D.panel){ if(k.lastIndexOf(pre,0)!==0) continue;
@@ -744,7 +773,16 @@
     return {w,h,m:{top:14,right:small?12:18,bottom:48,left:small?46:60}}; }
   function periodLabel(){ return periodByKey[state.period].label; }
 
-  function render(){ rebuildMetricSelects(); state.view==='scatter'?renderScatter():renderStrip(); renderStats(); renderLegend(); }
+  // the UC outcome tables are needed when a graduation/retention axis is on, or a profile is open
+  function needsOutcomes(){ const ks=state.view==='scatter'?[state.xMetric,state.yMetric]:[state.stripMetric];
+    return !!state.sel || ks.some(k=>MByKey[k]&&MByKey[k].grad); }
+  function render(){ const seq=++renderSeq;
+    if(!campusReady(state.campus)){ showLoading(); loadCampus(state.campus).then(()=>{ if(seq===renderSeq) render(); }, partFail); return; }
+    if(needsOutcomes()&&!outcomesReady()){ showLoading(); loadOutcomes().then(()=>{ if(seq===renderSeq) render(); }, partFail); return; }
+    outcomesWanted=false;
+    rebuildMetricSelects(); state.view==='scatter'?renderScatter():renderStrip(); renderStats(); renderLegend();
+    if(outcomesWanted&&!outcomesReady()) loadOutcomes().then(()=>{ if(seq===renderSeq) render(); }, partFail);   // safety net
+  }
   // empty-state message, word-wrapped to the frame (a single <text> clips at the svg edge)
   function emptyMsg(w,h,msg){ const maxc=Math.max(24,Math.floor((w-70)/7));
     const words=msg.split(' '), lines=[]; let cur='';
@@ -1008,7 +1046,10 @@
     html+=`<span class="tl">Applicants:</span> ${fmtN(s.apps||0)} · ${s.upp==null?'LCFF+ n/a':(s.lcff?'LCFF+':'non-LCFF+')}${dv==null?'':` · ${Math.round(dv)} mi`}`; tooltip.innerHTML=html; }
   function hideTip(){ tooltip.style.opacity=0; }
 
-  function select(s){ state.sel=s; renderProfile(s);
+  function select(s){ state.sel=s;
+    if(!outcomesReady()){ $('profile').innerHTML='<div class="empty">Loading…</div>';   // the profile card reads the UC outcome tables
+      loadOutcomes().then(()=>{ if(state.sel===s) select(s); }, partFail); return; }
+    renderProfile(s);
     svg.selectAll('circle.dot').classed('sel',d=>!!d&&!!d.s&&d.s.ceeb===s.ceeb);   // keep zoom on click
     if(window.innerWidth<=880) $('profile').scrollIntoView({behavior:'smooth',block:'nearest'}); }
   // pooled (N-weighted) grad figure over ALL cohorts a column is mature for, with its basis
@@ -1119,9 +1160,9 @@
     else render(); }
 
   $('campus').onchange=()=>{ state.campus=+$('campus').value; state.sel=null; state.query=''; $('search').value='';
-    $('profile').innerHTML='<div class="empty">Click a dot (or search a school) to see its full profile.</div>'; rebuildDatalist(); render(); };
-  $('period').onchange=()=>{ state.period=$('period').value; state.sel=null; rebuildDatalist();
-    $('profile').innerHTML='<div class="empty">Click a dot (or search a school) to see its full profile.</div>'; render(); };
+    $('profile').innerHTML='<div class="empty">Click a dot (or search a school) to see its full profile.</div>'; whenCampus(()=>{ rebuildDatalist(); render(); }); };
+  $('period').onchange=()=>{ state.period=$('period').value; state.sel=null;
+    $('profile').innerHTML='<div class="empty">Click a dot (or search a school) to see its full profile.</div>'; whenCampus(()=>{ rebuildDatalist(); render(); }); };
   document.querySelectorAll('#view button').forEach(b=>b.onclick=()=>{ document.querySelectorAll('#view button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); state.view=b.dataset.v; render(); });
   $('metricA').onchange=()=>{ if(state.view==='scatter') state.xMetric=$('metricA').value; else state.stripMetric=$('metricA').value; render(); };
   $('metricB').onchange=()=>{ state.yMetric=$('metricB').value; render(); };
@@ -1340,7 +1381,7 @@
     `(CAASPP grade-11 proficiency, A–G completion &amp; diploma graduates, CALPADS UPP &amp; enrollment, school directory coordinates) and UC ELWR/AWPE files. Built ${D.generated}. `+
     `Visual design modeled on the SF Chronicle's UC explorer; independent project, not affiliated. Methodology &amp; full data in the repository.`;
 
-  rebuildMetricSelects(); rebuildDatalist(); render();
+  rebuildMetricSelects(); whenCampus(()=>{ rebuildDatalist(); render(); });
 })();
 </script>
 </body>

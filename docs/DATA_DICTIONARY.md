@@ -47,7 +47,9 @@ Grain: **one row per campus × school**, pooling the three most recent admission
 | `match_method`, `match_score` | traces of the matching process |
 
 ### `data.js` panel row (site data layer)
-Per (campus, CEEB): `[year, A, D, E, C, Gc, H, ela, math, upp, Gp, agpa, dgpa, egpa, Gr]` —
+The panel reaches the page in parts (`data_parts/schools.js` holds the school-year covariates
+once; `data_parts/campus_<i>.js` holds one campus's funnel; `ucparts.js` joins them), but the row
+the page reads is unchanged. Per (campus, CEEB): `[year, A, D, E, C, Gc, H, ela, math, upp, Gp, agpa, dgpa, egpa, Gr]` —
 applicants, admits, enrollees, four-year cohort, cleaned A–G completers (completion axis), grade 9–12
 enrollment, CAASPP ELA/Math % met, UPP %, cleaned A–G completers (per-completer rates), applicant /
 admit / enrollee GPA, and **`Gr` = diploma graduates of the class** (cohort × diploma rate, classes of

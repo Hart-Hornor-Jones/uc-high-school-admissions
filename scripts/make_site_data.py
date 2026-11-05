@@ -5,6 +5,8 @@ make_site_data.py  -  build the data layer for the interactive site (per-year st
 Reads data/panel_all9_by_year.csv (built by build_panel_all9.py) and the ELWR/AWPE file,
 and writes:
   - data.js                      (window.UCDATA = {...}; loaded by index.html at repo root)
+  - data_parts/*.js              (school covariates, one funnel part per campus, UC outcomes;
+                                  fetched on demand by ucparts.js - see the write section)
   - data/cross_section_all9.csv  (tidy unified file for the DEFAULT pooled period)
 
 data.js stores a per-(campus,school) panel of raw yearly counts + covariates; the site pools
@@ -15,14 +17,17 @@ Denominators carried per school-year: applicants (UC), graduates (CDE diploma gr
 of 2017+), A-G completers (CDE, cleaned) and grade 9-12 enrollment (CALPADS). School coordinates
 (CDE directory) ride along in `meta` so the site can compute each school's distance to a campus.
 
-Run:  python3 scripts/make_site_data.py
+Run:  python3 scripts/make_site_data.py [--generated YYYY-MM-DD]
 """
-import csv, json, os, datetime
+import csv, json, os, sys, datetime
 from collections import defaultdict
 
 HERE = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.dirname(HERE)
 DATA = os.path.join(REPO, "data")
 START = 2015   # first admission year kept in the site panel (covariate era)
+# `generated` is the build date printed in the page footer. It defaults to today; pass
+# --generated YYYY-MM-DD to keep an earlier date when only the file layout is rebuilt.
+GENERATED = sys.argv[sys.argv.index("--generated") + 1] if "--generated" in sys.argv else datetime.date.today().isoformat()
 
 CAMPUSES = ["Berkeley","Davis","Irvine","Los Angeles","Merced",
             "Riverside","San Diego","Santa Barbara","Santa Cruz"]
@@ -222,26 +227,68 @@ PERIODS = [
 ] + [{"key":f"y{y}","label":str(y),"years":[y]} for y in (2025,2024,2023,2022,2021,2020,2019,2018,2017,2016)]
 DEFAULT_PERIOD = "p2325"
 
+# ---- write: a small core (data.js) plus data parts the pages fetch on demand ----
+# data.js carries everything the explorer needs before its first chart except the panel; the
+# panel is split so the default view (one campus) costs one campus part plus the school part:
+#   data_parts/schools.js      per school-year covariates [C,Gc,H,ela,math,upp,Gp,Gr], stored
+#                              once (they are the same under every campus - asserted below)
+#   data_parts/campus_<i>.js   that campus's funnel [A,D,E,agpa,dgpa,egpa] per school-year
+#   data_parts/uc_outcomes.js  grad, gradC and tests (the profile card and the UC-outcome axes)
+# ucparts.js joins a campus part with the school part back into the row layout above.
+from siteparts import pack, write_core, write_part
+PARTS_DIR = os.path.join(REPO, "data_parts"); GEN = "scripts/make_site_data.py"
+COV = (4, 5, 6, 7, 8, 9, 10, 14)      # covariate slots of a panel row
+FUN = (0, 1, 2, 3, 11, 12, 13)        # year + funnel slots
+cov = {}                              # (ceeb, year) -> covariate tuple
+for key, rows in panel.items():
+    ce = key.split("|")[1]
+    for row in rows:
+        c = tuple(row[i] for i in COV)
+        prev = cov.setdefault((ce, row[0]), c)
+        assert prev == c, f"covariates differ between campuses for {ce} {row[0]}: {prev} vs {c}"
+cov_by_school = defaultdict(list)
+for (ce, yr), c in sorted(cov.items()):
+    cov_by_school[ce].append((yr,) + c)
+school_ceebs = list(cov_by_school)
+schools_part = {
+  "cols": ["year", "C", "Gc", "H", "ela", "math", "upp", "Gp", "Gr"],
+  "ceebs": school_ceebs,
+  "data": [[pack([r[i] for r in cov_by_school[ce]]) for i in range(9)] for ce in school_ceebs],
+}
+part_sizes = {"schools": write_part(os.path.join(PARTS_DIR, "schools.js"), "site:schools", schools_part, GEN)}
+for ci, cname in enumerate(CAMPUSES):
+    pre = f"{ci}|"
+    ceebs = [k[len(pre):] for k in panel if k.startswith(pre)]      # the panel's own order
+    campus_part = {
+      "campus": ci, "name": cname,
+      "cols": ["year", "A", "D", "E", "agpa", "dgpa", "egpa"],
+      "ceebs": ceebs,
+      "data": [[pack([r[i] for r in panel[pre + ce]]) for i in FUN] for ce in ceebs],
+    }
+    part_sizes[f"campus_{ci}"] = write_part(os.path.join(PARTS_DIR, f"campus_{ci}.js"), f"site:campus_{ci}", campus_part, GEN)
+outcomes_part = {
+  "cols": ["entry_year", "N", "ret1", "g4", "g5", "g6"],
+  "grad":  {k: [pack([r[i] for r in rows]) for i in range(6)] for k, rows in grad.items()},
+  "gradC": {k: [pack([r[i] for r in rows]) for i in range(6)] for k, rows in gradC.items()},
+  "tests": tests,
+}
+part_sizes["uc_outcomes"] = write_part(os.path.join(PARTS_DIR, "uc_outcomes.js"), "site:uc_outcomes", outcomes_part, GEN)
+
 UCDATA = {
-  "generated": datetime.date.today().isoformat(),
+  "generated": GENERATED,
   "startYear": START,
   "campuses": CAMPUSES,
   "campusLL": [CAMPUS_LL[c] for c in CAMPUSES],
   "meta": meta,
   "awpe": awpe,
-  "tests": tests,
-  "panel": panel,
-  "grad": grad,
-  "gradC": gradC,
   "metrics": METRICS,
   "periods": PERIODS,
   "defaultPeriod": DEFAULT_PERIOD,
+  # the parts and where they live (relative to data.js); ucparts.js loads them on demand
+  "parts": {"base": "data_parts/", "schools": "schools.js", "ucOutcomes": "uc_outcomes.js",
+            "campus": [f"campus_{ci}.js" for ci in range(len(CAMPUSES))]},
 }
-with open(os.path.join(REPO, "data.js"), "w", encoding="utf-8") as fh:
-    fh.write("/* Auto-generated by scripts/make_site_data.py — do not edit by hand. */\n")
-    fh.write("window.UCDATA = ")
-    json.dump(UCDATA, fh, separators=(",", ":"), ensure_ascii=False)
-    fh.write(";\n")
+core_size = write_core(os.path.join(REPO, "data.js"), "UCDATA", UCDATA, GEN)
 
 # ---- tidy unified CSV for the DEFAULT pooled period ----
 IDX = {"A":1,"D":2,"E":3,"C":4,"G":5,"H":6,"Gp":10,"Gr":14}
@@ -317,14 +364,15 @@ with open(os.path.join(DATA, "cross_section_all9.csv"), "w", newline="", encodin
     w = csv.writer(fh); w.writerow(cols); w.writerows(out)
 
 # ---- report ----
-size = os.path.getsize(os.path.join(REPO, "data.js"))
+size = core_size + sum(part_sizes.values())
 print(f"panel keys (campus×school): {len(panel)}")
 print(f"school meta (unique CEEB)  : {len(meta)}")
 print(f"AWPE schools               : {len(awpe)}")
 print(f"located schools (lat/lon)  : {sum(1 for v in meta.values() if v[4] is not None)} of {len(meta)}")
 print(f"school-years with graduates: {sum(1 for rows in panel.values() for row in rows if row[14] is not None)}")
 print(f"grad-rate schools (All-UC) : {len(grad)} | campus-specific keys: {len(gradC)}")
-print(f"data.js                    : {size/1024/1024:.2f} MB")
+print(f"data.js + data_parts/      : {size/1024/1024:.2f} MB  (core {core_size/1024:.0f} KB; "
+      + "; ".join(f"{k} {v/1024:.0f} KB" for k, v in part_sizes.items()) + ")")
 print(f"cross_section_all9 rows     : {len(out)} (default period {dp})")
 yrs = sorted({row[0] for rows in panel.values() for row in rows})
 print(f"years in panel             : {yrs}")

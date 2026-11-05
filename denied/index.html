@@ -263,14 +263,40 @@
 </div>
 
 <div class="tooltip" id="tooltip"></div>
+<script src="../ucparts.js"></script>
 <script src="data_denied.js"></script>
 <script>
 (function(){
 "use strict";
 const D = window.UCDENIED;
-if(!D){ document.querySelector('.wrap').innerHTML =
+if(!D||!window.UCPARTS){ document.querySelector('.wrap').innerHTML =
   '<p style="color:#b00">Could not load <code>data_denied.js</code>. If you opened this file directly, '+
   'serve the folder over HTTP (e.g. <code>python3 -m http.server</code>) or view it on GitHub Pages.</p>'; return; }
+
+// ---------- data parts (../ucparts.js) ----------
+// data_denied.js carries the school list and the pooled marginals. The per-school series come in
+// parts: one per campus (every school's rows for that campus - the field scatter and its movers)
+// and one per bucket of schools (one school's rows for all ten campuses - the timeline and the
+// wall). Rows are installed into D.series[si][ci] from whichever part brings them first.
+const PARTS=window.UCPARTS, partUrl=f=>D.parts.base+f;
+const nCampus=D.campuses.length, nSchool=D.schools.length;
+D.series=Array.from({length:nSchool},()=>new Array(nCampus).fill(null));
+const campusDone=new Array(nCampus).fill(false), bucketDone={};
+const bucketOf=si=>Math.floor(si/D.parts.bucket);
+function putRows(si,ci,cols){ if(D.series[si][ci]==null) D.series[si][ci]=cols?PARTS.rows(cols):[]; }
+function installCampus(ci,p){ if(campusDone[ci]) return; p.series.forEach((cols,si)=>putRows(si,ci,cols)); campusDone[ci]=true; buildField(ci); }
+function installBucket(b,p){ if(bucketDone[b]) return; p.index.forEach((si,i)=>p.series[i].forEach((cols,ci)=>putRows(si,ci,cols))); bucketDone[b]=true; }
+const loadCampus=ci=>PARTS.load(partUrl(D.parts.campus[ci]),'denied:campus_'+ci).then(p=>installCampus(ci,p));
+const loadBucket=b=>PARTS.load(partUrl(D.parts.schools[b]),'denied:'+D.parts.schools[b].slice(0,-3)).then(p=>installBucket(b,p));
+let loadSeq=0;
+// start whatever the selection still lacks; the promises of what is in flight
+function needed(){ const ps=[]; if(!campusDone[state.campus]) ps.push(loadCampus(state.campus));
+  if(state.school!==ALL&&!bucketDone[bucketOf(state.school)]) ps.push(loadBucket(bucketOf(state.school))); return ps; }
+// run fn once the selection's parts are here (at once when they already are)
+function ready(fn){ const ps=needed(); if(!ps.length){ fn(); return; }
+  const seq=++loadSeq; showLoading(); Promise.all(ps).then(()=>{ if(seq===loadSeq) fn(); }, partFail); }
+function showLoading(){ for(const id of ['cT','cF']){ const h=$(id); clear(h); emptyNote(h,"Loading data\u2026"); } }
+function partFail(e){ console.error(e); const h=$('cT'); clear(h); emptyNote(h,"Could not load part of the data ("+(e&&e.message||e)+"). Reload the page, or view it on GitHub Pages."); }
 
 const Y0 = D.y0, NY = D.nYears, YEARS = Array.from({length:NY},(_,i)=>Y0+i);
 const CAMPS = D.campuses;
@@ -297,7 +323,7 @@ function tc(s){ return s.toLowerCase().replace(/\b[a-z]/g, ch=>ch.toUpperCase())
 // app/adm -1 = absent; gpa 0 = absent. denied = applicants - admits (not stored).
 // gd was masked at build (denied<10 or outside (0,5)); pooled rows are not subject to that mask.
 const ALL = null;                              // school id meaning "all CA public high schools"
-function packed(si, ci){ return si===ALL ? (D.agg[ci]||[]) : D.series[si][ci]; }
+function packed(si, ci){ return si===ALL ? (D.agg[ci]||[]) : (D.series[si][ci]||[]); }
 function rows(si, ci){
   const out = YEARS.map(y=>({y, app:null, adm:null, den:null, gm:null, gd:null, ns:null}));
   for(const p of packed(si,ci)){
@@ -329,11 +355,13 @@ function pooled(ci, yi){
   return null;
 }
 // field index: campus -> yearIdx -> [si, gm, gd, app, adm][] (both GPAs present; gd implies denied>=10)
+// built for a campus when its part arrives (installCampus)
 const FIELD = CAMPS.map(()=>YEARS.map(()=>[]));
-for(let si=0; si<D.schools.length; si++)
-  for(let ci=0; ci<CAMPS.length; ci++)
-    for(const p of D.series[si][ci])
+function buildField(ci){
+  for(let si=0; si<D.schools.length; si++)
+    for(const p of (D.series[si][ci]||[]))
       if(p[3] && p[4]) FIELD[ci][p[0]].push([si, p[3]/100, p[4]/100, p[1], p[2]]);
+}
 
 const state = { school:ALL, campus:1, fys:[2015,2020,2025], wallMode:"abs", view:null };
 
@@ -925,7 +953,7 @@ function buildCampusChips(){
     b.className="chip"; b.type="button"; b.textContent=CAMP_LABEL(c);
     b.setAttribute("aria-pressed",state.campus===ci?"true":"false");
     b.addEventListener("click",()=>{ state.campus=ci; state.view=null;
-      buildCampusChips(); renderT(); renderF(); });
+      buildCampusChips(); ready(()=>{ renderT(); renderF(); }); });
     host.appendChild(b);
   });
 }
@@ -934,7 +962,7 @@ function buildYearSelects(){
     const sel=$(id); clear(sel);
     for(const y of YEARS){ const o=document.createElement("option"); o.value=y; o.textContent=y; sel.appendChild(o); }
     sel.value=state.fys[k];
-    sel.addEventListener("change",()=>{ state.fys[k]=+sel.value; state.view=null; renderF(); });
+    sel.addEventListener("change",()=>{ state.fys[k]=+sel.value; state.view=null; ready(renderF); });
   });
 }
 function buildWallMode(){
@@ -944,7 +972,7 @@ function buildWallMode(){
   }
 }
 
-function renderAll(){ syncScope(); renderT(); renderW(); renderF(); }
+function renderAll(){ ready(()=>{ syncScope(); renderT(); renderW(); renderF(); }); }
 
 $('search').addEventListener('change',onSearch);
 $('search').addEventListener('input',()=>{

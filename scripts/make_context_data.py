@@ -22,7 +22,7 @@ ACS year = school year (spring); 2025 rows carry ACS 2024 (latest 5-year release
 The neighborhood SES index is a per-year z-score composite over ALL CA high schools
 in the enrichment universe (not just UC-panel schools), so its scale is stable.
 
-Run:  python3 scripts/make_context_data.py [--acs-file PATH]
+Run:  python3 scripts/make_context_data.py [--acs-file PATH] [--generated YYYY-MM-DD]
 """
 import argparse, csv, json, math, os, datetime
 from collections import defaultdict
@@ -88,6 +88,8 @@ def extract(acs_file):
     print(f"extract: wrote {len(rows)} rows -> {os.path.relpath(SLIM, REPO)}")
 
 # ---------- stage 2: build data_context.js ----------
+GENERATED = datetime.date.today().isoformat()   # overridden by --generated
+
 def build():
     # site universe: ceeb -> cds14 (latest year wins, same rule as make_site_data)
     ceeb_cds = {}; latest = {}
@@ -197,38 +199,66 @@ def build():
         if sc:
             out_sch[ce] = [[y] + v for y, v in sorted(sc.items())]
 
+    # The page reads every tract variable except pop (tract population), which no view, profile
+    # or export uses (checked by build/test_unused_fields.js); it stays in tract_context.csv and
+    # is left out of the data layer.
+    DROP = {"pop"}
+    keep_idx = [i for i, k in enumerate(["year"] + CVARS) if k not in DROP]
+    from siteparts import pack, write_core, write_part
+    GEN = "scripts/make_context_data.py"; PARTS_DIR = os.path.join(OUTDIR, "data_parts")
+    # tract rows -> one part per year (a period reads only its classes' years): for each year the
+    # schools with a row and one packed column per variable across those schools
+    by_year = defaultdict(list)
+    for ce, rows in out_ctx.items():
+        for r in rows:
+            by_year[r[0]].append((ce, r))
+    ctx_files = {str(yr): f"ctx_{yr}.js" for yr in sorted(by_year)}
+    # sch (grade-11 composition) and means (CAASPP scale scores) are read only when one of
+    # their metrics is selected or a school profile is open, so they travel as parts
+    sch_part = {"svars": ["year", "sed", "el", "r_hisp", "r_white", "r_asian", "r_black", "r_urg"],
+                "sch": {ce: [pack([r[i] for r in rows]) for i in range(8)] for ce, rows in out_sch.items()}}
+    means_part = {"means": out_means}
+    os.makedirs(OUTDIR, exist_ok=True)
+    sizes = {"sch": write_part(os.path.join(PARTS_DIR, "sch.js"), "context:sch", sch_part, GEN),
+             "means": write_part(os.path.join(PARTS_DIR, "means.js"), "context:means", means_part, GEN)}
+    for yr in sorted(by_year):
+        recs = sorted(by_year[yr])
+        part = {"year": yr, "ceebs": [ce for ce, _ in recs],
+                "cols": [pack([r[i] for _, r in recs]) for i in keep_idx if i != 0]}
+        sizes[f"ctx_{yr}"] = write_part(os.path.join(PARTS_DIR, ctx_files[str(yr)]), f"context:ctx_{yr}", part, GEN)
     UCCTX = {
-        "generated": datetime.date.today().isoformat(),
+        "generated": GENERATED,
         "note": ("Tract-level ACS 5-year context assigned from current CDE school coordinates "
                  "via the Census Geocoder; ACS year = school year (2025 uses ACS 2024). "
                  "SES index = per-year z-score composite (income, BA%, home value, "
                  "minus poverty, minus unemployment) over all CA public high schools."),
-        "cvars": ["year"] + CVARS,
-        "ctx": out_ctx,        # ceeb -> [[year, inc, pov, ba, hs, unemp, homeval, rent, own, hisp, white, black, asian, pop, ses], ...]
+        "cvars": [k for k in ["year"] + CVARS if k not in DROP],
         "geo": out_geo,        # ceeb -> [tract_geoid, zcta]
-        "means": out_means,    # ceeb -> {year: [ela_mean, math_mean]}
-        "svars": ["year", "sed", "el", "r_hisp", "r_white", "r_asian", "r_black", "r_urg"],
-        "sch": out_sch,        # ceeb -> [[year, sed, el, r_hisp, r_white, r_asian, r_black, r_urg], ...]
-                               # sed/el: grade-11 (CAASPP-reported enrollment), 2016+;
-                               # r_*: CDE enrollment shares gr 9-12, keyed by spring year, 2014+
+        # parts (relative to this file), loaded on demand by ../ucparts.js:
+        #   ctx_<year>.js  the tract rows of one year: ceebs + packed columns
+        #                  [inc, pov, ba, hs, unemp, homeval, rent, own, hisp, white, black, asian, ses]
+        #   means.js       ceeb -> {year: [ela_mean, math_mean]}
+        #   sch.js         ceeb -> packed columns [year, sed, el, r_hisp, r_white, r_asian, r_black, r_urg]
+        #                  sed/el: grade-11 (CAASPP-reported enrollment), 2016+;
+        #                  r_*: CDE enrollment shares gr 9-12, keyed by spring year, 2014+
+        "parts": {"base": "data_parts/", "sch": "sch.js", "means": "means.js", "ctx": ctx_files},
     }
-    os.makedirs(OUTDIR, exist_ok=True)
     dest = os.path.join(OUTDIR, "data_context.js")
-    with open(dest, "w", encoding="utf-8") as fh:
-        fh.write("/* Auto-generated by scripts/make_context_data.py — do not edit by hand. */\n")
-        fh.write("window.UCCTX = ")
-        json.dump(UCCTX, fh, separators=(",", ":"), ensure_ascii=False)
-        fh.write(";\n")
+    core_size = write_core(dest, "UCCTX", UCCTX, GEN)
     print(f"build: {n_ok}/{len(ceeb_cds)} site schools with tract context; "
           f"{len(out_means)} with CAASPP means; {len(out_sch)} with grade-11 composition "
-          f"-> {os.path.relpath(dest, REPO)} ({os.path.getsize(dest)/1e6:.2f} MB)")
+          f"-> {os.path.relpath(dest, REPO)} ({core_size/1e6:.2f} MB) + data_parts/ "
+          + ", ".join(f"{k} {v/1e6:.2f} MB" for k, v in sizes.items()))
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--acs-file", default=None,
                     help="path to the upstream ca_high_school_rows_with_acs_context.csv (optional)")
     ap.add_argument("--skip-extract", action="store_true")
+    ap.add_argument("--generated", default=datetime.date.today().isoformat(),
+                    help="build date printed in the page footer (default: today)")
     a = ap.parse_args()
+    GENERATED = a.generated
     if not a.skip_extract and a.acs_file and os.path.exists(a.acs_file):
         extract(a.acs_file)
     elif not os.path.exists(SLIM):

@@ -1,16 +1,22 @@
 #!/usr/bin/env python3
-"""Bundle data/trends/*.csv into trends/data_trends.js (window.TRENDS_DATA).
+"""Bundle data/trends/*.csv into trends/data_trends.js (window.TRENDS_DATA) and
+trends/data_parts/*.js (the by-institution, GPA-band and UCSD series, loaded on demand).
 
 Everything the page shows is precomputed here; the page ships no raw data
 beyond these aggregates. Values are already display-rounded by the parsers.
+
+Run:  python3 scripts/make_trends_data.py [--generated YYYY-MM-DD]
 """
 import csv, json, os, sys, datetime
+from siteparts import pack, write_core, write_part
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 D = os.path.join(REPO, 'data', 'trends')
+# the build date shown in the page footer: today, or --generated YYYY-MM-DD
+GENERATED = sys.argv[sys.argv.index('--generated') + 1] if '--generated' in sys.argv else datetime.date.today().isoformat()
 
 def rd(name):
-    with open(os.path.join(D, name), newline='') as fh:
+    with open(os.path.join(D, name), newline='', encoding='utf-8') as fh:
         return list(csv.DictReader(fh))
 
 def fnum(v):
@@ -179,7 +185,7 @@ for k in mseries:
 out['majors'] = {'titles': titles, 'series': mseries}
 
 out['meta'] = {
-    'built': datetime.date.today().isoformat(),
+    'built': GENERATED,
     'counts': {k: (len(v) if isinstance(v, dict) else None) for k, v in out.items()},
     'sources': {
         'uc_ic': 'UC Information Center UG Outcomes & Admissions-by-source-school dashboards (harvested June 2026)',
@@ -190,12 +196,29 @@ out['meta'] = {
     },
 }
 
-js = 'window.TRENDS_DATA = ' + json.dumps(out, separators=(',', ':'), ensure_ascii=False) + ';\n'
+# ---- write: core + parts ----
+# The page opens on the systemwide view; the by-institution series (hs, ccc), the GPA bands and
+# the UCSD deep dive are each fetched by ../ucparts.js when their mode is chosen. Series rows
+# inside parts travel as packed columns (see scripts/siteparts.py).
+GEN = 'scripts/make_trends_data.py'
+PARTS_DIR = os.path.join(REPO, 'trends', 'data_parts')
+def packed_series(series, ncols):
+    return {c: {k: pack_rows(v, ncols) for k, v in s.items()} for c, s in series.items()}
+def pack_rows(rows, ncols):
+    return [pack([r[i] for r in rows]) for i in range(ncols)]
+parts = {
+    'hs':   {'names': out['hs']['names'],  'series': packed_series(out['hs']['series'], 6)},
+    'ccc':  {'names': out['ccc']['names'], 'series': packed_series(out['ccc']['series'], 6)},
+    'gpa':  {'rates': {k: pack_rows(v, 11) for k, v in out['gpa']['rates'].items()},
+             'cuts':  {k: pack_rows(v, 5) for k, v in out['gpa']['cuts'].items()}},
+    'ucsd': out['ucsd'],
+}
+core = {k: v for k, v in out.items() if k not in parts}
+core['parts'] = {'base': 'data_parts/', 'files': {k: k + '.js' for k in parts}}
+sizes = {k: write_part(os.path.join(PARTS_DIR, k + '.js'), 'trends:' + k, v, GEN) for k, v in parts.items()}
 dst = os.path.join(REPO, 'trends', 'data_trends.js')
-os.makedirs(os.path.dirname(dst), exist_ok=True)
-with open(dst, 'w', encoding='utf-8') as fh:
-    fh.write(js)
-print('wrote', dst, len(js), 'bytes')
+core_size = write_core(dst, 'TRENDS_DATA', core, GEN)
+print('wrote', dst, core_size, 'bytes; parts:', ', '.join(f'{k} {v} bytes' for k, v in sizes.items()))
 for k, v in out.items():
     if isinstance(v, dict):
         print(' ', k, {kk: len(vv) if isinstance(vv, (dict, list)) else '' for kk, vv in list(v.items())[:6] if isinstance(vv, (dict, list))})

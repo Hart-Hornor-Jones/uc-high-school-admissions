@@ -9,6 +9,30 @@ day of the change, not necessarily to the day of the commit that carried it.
 
 ---
 
+## 2026-11-05 — Faster cold load: the data layer is split into parts; no number changes
+
+**Changed**
+- Each page now loads a small core script and fetches the rest of its data in parts, on demand,
+  through `ucparts.js` (plain `<script>` insertion, so opening the pages from disk still works).
+  The explorer opens with the school list and one campus's funnel (`data_parts/schools.js`,
+  `data_parts/campus_<i>.js`) and asks for another campus, the UC outcome tables or a school's
+  profile data only when a control reads them; the context page fetches tract rows per year and the
+  grade-11 composition and scale-score means per metric; the trends page fetches the by-school,
+  by-college, GPA-band and UCSD series per mode; the denied page fetches one campus's series for the
+  field and one bucket of schools for the timeline and wall. Numeric columns inside parts are packed
+  strings written with the shortest exact decimal of each value: nothing is rounded.
+- Two fields no page read are no longer shipped: the tract population column of the context rows and
+  the trends file's table-size dictionary (`build/test_unused_fields.js` proves both unread).
+- Cold load at 1.6 Mbit/s with a 150 ms round trip, time to the first drawn chart: root 46.5 s →
+  6.0 s (8,986 KB → 1,089 KB); context 57.2 s → 8.8 s (11,072 KB → 1,624 KB); trends 12.2 s → 2.3 s
+  (2,333 KB → 409 KB); denied 24.8 s → 3.4 s (4,754 KB → 585 KB); history unchanged at 1.0 s.
+  Method and the full table: [LOAD_PERFORMANCE.md](LOAD_PERFORMANCE.md).
+- Every displayed value is unchanged: `build/check_data_parts.py` rebuilds the old single-file
+  objects from the parts and finds every value equal, and `build/compare_pages.js` drives 41 control
+  states across the five pages on the old and new copies and finds identical SVG text, Pearson r
+  readouts, statistics and SVG markup. The build dates printed in the footers are kept
+  (`--generated` on the generator scripts), since the data did not change.
+
 ## 2026-10-02 — UC outcomes refreshed to UCOP's September 9, 2026 vintage
 
 **Changed**

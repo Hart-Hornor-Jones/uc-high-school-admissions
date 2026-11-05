@@ -312,11 +312,36 @@
 </div>
 <div class="tooltip" id="tooltip"></div>
 
+<script src="../ucparts.js"></script>
 <script src="data_trends.js"></script>
 <script>
 (function(){
 'use strict';
 const T = window.TRENDS_DATA;
+if(!T||!window.UCPARTS){ document.querySelector('.wrap').innerHTML =
+  '<p style="color:#b00">Could not load <code>data_trends.js</code>. If you opened this file directly, '+
+  'serve the folder over HTTP (e.g. <code>python3 -m http.server</code>) or view it on GitHub Pages.</p>'; return; }
+
+/* ---------- data parts (../ucparts.js) ----------
+   data_trends.js carries the systemwide, federal, Berkeley and majors series. The by-high-school,
+   by-community-college, GPA-band and UCSD series are parts, fetched when their mode is chosen.
+   Until a part is here T.<name> reads as an empty table and is noted as wanted. */
+const PARTS=window.UCPARTS, PART_OF={hs:'hs',ccc:'ccc',gpa:'gpa',ucsd:'ucsd'};
+const partStub={hs:{names:{},series:{}},ccc:{names:{},series:{}},gpa:{rates:{},cuts:{}},ucsd:{schools:[],series:{}}};
+const partDone={}; let partWanted=null, loadSeq=0;
+Object.keys(PART_OF).forEach(k=>Object.defineProperty(T,k,{get(){ if(!partDone[k]) partWanted=partWanted||k; return partStub[k]; }}));
+function installPart(k,p){ if(partDone[k]) return; const st=partStub[k];
+  if(k==='hs'||k==='ccc'){ st.names=p.names; for(const c in p.series){ st.series[c]={}; for(const id in p.series[c]) st.series[c][id]=PARTS.rows(p.series[c][id]); } }
+  else if(k==='gpa'){ for(const key in p.rates) st.rates[key]=PARTS.rows(p.rates[key]); for(const key in p.cuts) st.cuts[key]=PARTS.rows(p.cuts[key]); }
+  else { st.schools=p.schools; st.series=p.series; }
+  partDone[k]=true; if(k==='gpa') computeGpaMat(); }
+const loadPart=k=>PARTS.load(T.parts.base+T.parts.files[k],'trends:'+k).then(p=>installPart(k,p));
+const modePart=()=>PART_OF[state.mode]||null;
+function showLoading(){ const box=document.getElementById('chart'); box.innerHTML='<div style="color:#5c6470;font-size:13px;padding:20px 8px">Loading data\u2026</div>'; }
+function partFail(e){ console.error(e); document.getElementById('chart').innerHTML='<div style="color:#b00;font-size:13px;padding:20px 8px">Could not load part of the data ('+(e&&e.message||e)+'). Reload the page, or view it on GitHub Pages.</div>'; }
+/* run fn once the current mode's part is here (at once when it already is, or when the mode needs none) */
+function ensureMode(fn){ const k=modePart(); if(!k||partDone[k]){ fn(); return; }
+  const seq=++loadSeq; showLoading(); loadPart(k).then(()=>{ if(seq===loadSeq) fn(); }, partFail); }
 const $ = id => document.getElementById(id);
 const tooltip = $('tooltip');
 const fmtN = d3.format(',');
@@ -437,12 +462,14 @@ const SYS_N = {FR:{},TR:{}};
   ((T.sys[L+'|all|all|all|all']||{}).ret1||[]).forEach(p=>{ if(p[2]) SYS_N[L][p[0]]=p[2]; });
 });
 const GPA_MAT = {FR:{m2:0,m3:0}, TR:{m2:0,m3:0}};  // last cohorts with closed 2nd/3rd windows
-for(const k in T.gpa.rates){
-  const e=k.slice(0,2);
-  T.gpa.rates[k].forEach(r=>{
-    if((r[6]||0)>0 && r[0]>GPA_MAT[e].m2) GPA_MAT[e].m2=r[0];
-    if((r[7]||0)>0 && r[0]>GPA_MAT[e].m3) GPA_MAT[e].m3=r[0];
-  });
+function computeGpaMat(){                              // (re)computed when the GPA part arrives
+  for(const k in T.gpa.rates){
+    const e=k.slice(0,2);
+    T.gpa.rates[k].forEach(r=>{
+      if((r[6]||0)>0 && r[0]>GPA_MAT[e].m2) GPA_MAT[e].m2=r[0];
+      if((r[7]||0)>0 && r[0]>GPA_MAT[e].m3) GPA_MAT[e].m3=r[0];
+    });
+  }
 }
 
 /* ---------- state ---------- */
@@ -537,7 +564,7 @@ function fmtBand(b){ // [band, lo, hi]
 /* ---------- controls ---------- */
 const modeSel = $('mode');
 MODES.forEach(([v,l])=>opt(modeSel,v,l,v===state.mode));
-modeSel.addEventListener('change',()=>{ state.mode=modeSel.value; buildControls(); update(); });
+modeSel.addEventListener('change',()=>{ state.mode=modeSel.value; ensureMode(()=>{ buildControls(); update(); }); });
 
 $('level').addEventListener('click',ev=>{
   const b=ev.target.closest('button'); if(!b) return;
@@ -1031,8 +1058,9 @@ function assemble(){
 
 function showCutnote(){
   const cn=$('cutnote');
+  if(state.mode!=='gpa'){ cn.style.display='none'; return; }     // (the GPA part is read only in GPA mode)
   const cuts=T.gpa.cuts[state.level+'|All'];
-  if(state.mode!=='gpa'||!cuts){ cn.style.display='none'; return; }
+  if(!cuts){ cn.style.display='none'; return; }
   const last=cuts[cuts.length-1], first=cuts[0];
   cn.style.display='block';
   cn.textContent='Boundaries between bands (band 1–2 / band 2–3) — '+first[0]+': '+first[2].toFixed(2)+' / '+first[3].toFixed(2)+
@@ -1108,6 +1136,8 @@ function drawDots(groups){
 /* ---------- line chart ---------- */
 let lastView=null;
 function update(){
+  const k=modePart(); if(k&&!partDone[k]){ ensureMode(update); return; }   // the mode's part first
+  partWanted=null;
   if(state.mode==='money'){ renderMoney(); setBadge('fed'); return; }
   const v=assemble();
   lastView=v;
@@ -1122,6 +1152,8 @@ function update(){
   showCutnote();
   drawLines(v);
   buildChips();
+  if(partWanted&&!partDone[partWanted]){            // safety net: a read this mode did not predict
+    const w=partWanted, seq=++loadSeq; loadPart(w).then(()=>{ if(seq===loadSeq){ buildControls(); update(); } }, partFail); }
 }
 
 const U_TXT={uc:'UC data', fed:'Federal data', ucsd:'UC San Diego data', ucb:'UC Berkeley data'};

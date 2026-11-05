@@ -169,13 +169,21 @@ questions, and the site reports all four together in the campus panel.
 ```
 .
 ├── index.html                  # the interactive explorer (self-contained, D3)
-├── data.js                     # generated app data (window.UCDATA, per-year panel); rebuilt by scripts/
+├── ucparts.js                  # loads the generated data parts on demand (plain <script> tags; file:// works)
+├── data.js                     # generated core (window.UCDATA: school list, metrics, periods); rebuilt by scripts/
+├── data_parts/                 # generated parts the explorer fetches as needed (see "Data layer" below)
+│   ├── schools.js              #   school-year covariates, stored once (CAASPP, UPP, A–G, graduates, enrollment)
+│   ├── campus_<0..8>.js        #   one campus's funnel counts and GPAs per school-year
+│   └── uc_outcomes.js          #   UC retention/graduation by source school; enrollee test averages
 ├── context/                    # companion page: neighborhood context (see docs/NEIGHBORHOOD_CONTEXT.md)
 │   ├── index.html              #   conditioning scatter · local correlation · twin schools · variance decomposition
-│   └── data_context.js         #   generated (window.UCCTX): tract ACS + CAASPP means; rebuilt by scripts/
+│   ├── data_context.js         #   generated core (window.UCCTX): variables, geography; rebuilt by scripts/
+│   └── data_parts/             #   tract rows per year (ctx_<year>.js), grade-11 composition (sch.js), scale-score means
 ├── trends/                     # companion page: undergraduate outcomes over time (see docs/OUTCOMES_TRENDS.md)
 │   ├── index.html              #   cohort trend explorer: groups · campuses · schools · GPA bands · majors · money
-│   └── data_trends.js          #   generated (window.TRENDS_DATA); rebuilt by scripts/make_trends_data.py
+│   ├── data_trends.js          #   generated core (window.TRENDS_DATA); rebuilt by scripts/make_trends_data.py
+│   └── data_parts/             #   by-high-school, by-community-college, GPA-band and UCSD series, loaded per mode
+├── denied/                     # companion page: admitted vs denied (data_denied.js + data_parts/ per campus and per school)
 ├── data/                       # curated DERIVED datasets (see data/README.md)
 │   ├── panel_all9_by_year.csv  #   MASTER: one row per CEEB × campus × year, all 9 campuses, 2015–2025
 │   ├── dv_admissions_all9.csv  #   admissions funnel only (apply/admit/enroll), all 9 campuses, 1994–2025
@@ -188,13 +196,19 @@ questions, and the site reports all four together in the campus panel.
 │   └── elwr_school_year_wide.csv  # ELWR/AWPE (UC enrollees)
 ├── scripts/
 │   ├── build_panel_all9.py     # data/dv_admissions_all9 + components  →  data/panel_all9_by_year.csv
-│   ├── make_site_data.py       # data/panel_all9_by_year.csv  →  data.js  (+ cross_section_all9.csv)
-│   ├── make_context_data.py    # components/tract_context.csv + caaspp means  →  context/data_context.js
-│   └── make_trends_data.py     # data/trends/*.csv  →  trends/data_trends.js
-├── build/                      # documented upstream pipeline (raw public files → data/)
+│   ├── make_site_data.py       # data/panel_all9_by_year.csv  →  data.js + data_parts/  (+ cross_section_all9.csv)
+│   ├── make_context_data.py    # components/tract_context.csv + caaspp means  →  context/data_context.js + data_parts/
+│   ├── make_trends_data.py     # data/trends/*.csv  →  trends/data_trends.js + data_parts/
+│   ├── make_denied_data.py     # data/school_campus_year_admitted_denied.csv  →  denied/data_denied.js + data_parts/
+│   └── siteparts.py            # shared writer for the core files and parts (packed numeric columns)
+├── build/                      # documented upstream pipeline (raw public files → data/) and the site's checks
 │   ├── extract_dv_all9.py      #   the one step needing the ~12 GB raw dump → dv_admissions_all9.csv
 │   ├── build_school_locations.py  # CDE directory coordinates → data/components/school_locations.csv
 │   ├── parse_caaspp_groups.py  #   CAASPP research files → grade-11 SED/EL composition (context page)
+│   ├── check_data_parts.py     #   the split data layer carries every value of the single-file layer
+│   ├── compare_pages.js        #   headless: old and new pages draw the same charts and r readouts
+│   ├── test_unused_fields.js   #   headless: the fields left out of the data layer are never read
+│   ├── measure_load.js         #   headless: bytes and time to first chart per page, cold, optionally throttled
 │   └── README.md               #   runbook
 └── docs/                       # methodology, data dictionary, and CHANGELOG.md (revision history)
 ```
@@ -285,8 +299,37 @@ Each page's footer also prints the build date of the data layer it loads. Revisi
 
 ```bash
 python3 scripts/build_panel_all9.py     # components + funnel  → data/panel_all9_by_year.csv
-python3 scripts/make_site_data.py       # panel                → data.js (+ cross_section_all9.csv)
+python3 scripts/make_site_data.py       # panel                → data.js + data_parts/ (+ cross_section_all9.csv)
+python3 scripts/make_context_data.py    # tract context        → context/data_context.js + context/data_parts/
+python3 scripts/make_trends_data.py     # data/trends/*.csv    → trends/data_trends.js + trends/data_parts/
+python3 scripts/make_denied_data.py     # admitted vs denied   → denied/data_denied.js + denied/data_parts/
 ```
+
+Each script stamps today's date as the build date printed in the page footer; pass
+`--generated YYYY-MM-DD` to keep an earlier date when only the file layout is rebuilt.
+
+### Data layer: a small core plus parts loaded on demand
+
+Each page loads one small core script and fetches the rest in **parts** as the controls call for
+them, through [`ucparts.js`](ucparts.js): the explorer opens with the school list and one campus's
+funnel, and asks for another campus, the UC outcome tables (graduation axes, the profile card) or the
+grade-11 composition only when a selection reads them. Parts are plain `<script>` files inserted
+into the page, not `fetch()` requests, so opening `index.html` directly from disk still works.
+Inside a part, numeric columns are packed strings (`"78,73,,65"`, an empty cell is null) written
+with the shortest decimal that round-trips each value, so nothing is rounded. The layout is checked
+three ways, all runnable locally (Node 18+, `npm install playwright`, a checkout of the previous
+layout such as `git worktree add ../old <commit>`):
+
+```bash
+python3 build/check_data_parts.py --old ../old          # every value of the old single-file layer is present and equal
+node build/compare_pages.js --old ../old --new .        # 41 control states on five pages: identical SVG text, r readouts, markup
+node build/test_unused_fields.js --old ../old           # the two fields left out (tract population; a table-size dict) are never read
+node build/measure_load.js --dir . --throttle both      # bytes and time to first chart per page, cold, at 1.6 Mbit/s
+```
+
+Where cdnjs is unreachable, pass `--d3 <path to d3.min.js>` to the Node scripts and they serve
+that copy in place of the CDN. Measured load times before and after the split, and what the root
+page still costs: [docs/LOAD_PERFORMANCE.md](docs/LOAD_PERFORMANCE.md).
 
 **Re-extract the funnel from the raw UC dump** (the only step needing the ~12 GB source):
 
@@ -303,7 +346,8 @@ python3 build/parse_grad_rates.py /path/to/ug_outcomes_freshman_grad_rates_by_hs
 **Rebuild the curated covariates from raw public downloads:** follow [`build/README.md`](build/README.md).
 
 **Preview the site locally:** `python3 -m http.server 8000`, then open http://localhost:8000
-(opening `index.html` directly also works — `data.js` is a plain script, not a fetch).
+(opening `index.html` directly also works — `data.js` and the parts under `data_parts/` are plain
+scripts, not fetches).
 
 ---
 

@@ -54,5 +54,5 @@ is 1st-year retention of the period's own entrants.
 
 ```bash
 python3 ../scripts/build_panel_all9.py     # → panel_all9_by_year.csv
-python3 ../scripts/make_site_data.py       # → ../data.js (+ cross_section_all9.csv)
+python3 ../scripts/make_site_data.py       # → ../data.js + ../data_parts/ (+ cross_section_all9.csv)
 ```

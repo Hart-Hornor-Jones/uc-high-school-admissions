@@ -346,15 +346,60 @@
 </div>
 
 <div class="tooltip" id="tooltip"></div>
+<script src="../ucparts.js"></script>
 <script src="../data.js"></script>
 <script src="data_context.js"></script>
 <script>
 (function(){
   "use strict";
   const D = window.UCDATA, X = window.UCCTX;
-  if(!D || !X){ document.querySelector('.wrap').innerHTML =
+  if(!D || !X || !window.UCPARTS){ document.querySelector('.wrap').innerHTML =
     '<p style="color:#b00">Could not load <code>../data.js</code> / <code>data_context.js</code>. If you opened this file directly, '+
     'serve the repo over HTTP (e.g. <code>python3 -m http.server</code>) or view it on GitHub Pages.</p>'; return; }
+
+  // ---------- data parts (../ucparts.js) ----------
+  // ../data.js is the explorer's core; its panel arrives one campus at a time (every campus for
+  // the decomposition, the all-campus curve, the other-eight application rate and the profile
+  // card). data_context.js carries the tract rows; the grade-11 composition (sch) and the CAASPP
+  // scale-score means (means) are parts, fetched when a metric or the profile card reads them.
+  const PARTS=window.UCPARTS, rootUrl=f=>'../'+D.parts.base+f, ctxUrl=f=>X.parts.base+f;
+  D.panel={};                                     // "ci|ceeb" -> rows, filled as campus parts arrive
+  X.ctx={};                                       // ceeb -> [[year, ...cvars], ...], filled as year parts arrive
+  const ctxDone={};
+  // a period reads the tract rows of its classes' grade-11 years, with the Y-1 -> Y -> Y-2 fallback
+  function ctxYearsNeeded(){ const ys=new Set(); for(const y of periodByKey[state.period].years) for(const d of [1,0,2]) if(X.parts.ctx[y-d]) ys.add(y-d); return [...ys].sort(); }
+  const campusReady=ci=>PARTS.has('site:schools')&&PARTS.has('site:campus_'+ci)&&PARTS.sitePanel(D,ci);
+  const extra={sch:{},means:{}}, extraDone={sch:false,means:false}; let extraWanted=false;
+  Object.defineProperty(X,'sch',{get(){ if(!extraDone.sch) extraWanted=true; return extra.sch; }});
+  Object.defineProperty(X,'means',{get(){ if(!extraDone.means) extraWanted=true; return extra.means; }});
+  const SCH_KEYS=new Set(['sed','el','r_hisp','r_white','r_asian','r_black','r_urg']);
+  // the parts the current selection reads, as [url, key] pairs for UCPARTS.loadAll
+  function partsNeeded(){
+    const profile=state.sel!=null;
+    const all=state.view==='decomp'||(state.view==='curve'&&state.allc)||state.ctx==='app_rate_oth'||ctx2Key()==='app_rate_oth'||profile;
+    const p=[[rootUrl(D.parts.schools),'site:schools']];
+    (all?D.campuses.map((c,i)=>i):[state.campus]).forEach(ci=>p.push([rootUrl(D.parts.campus[ci]),'site:campus_'+ci]));
+    ctxYearsNeeded().forEach(y=>p.push([ctxUrl(X.parts.ctx[y]),'context:ctx_'+y]));
+    if(profile||SCH_KEYS.has(state.ctx)||SCH_KEYS.has(ctx2Key()||'')) p.push([ctxUrl(X.parts.sch),'context:sch']);
+    if(profile||state.ach==='ela_mean'||state.ach==='math_mean') p.push([ctxUrl(X.parts.means),'context:means']);
+    return p; }
+  const partsReady=pairs=>pairs.every(pr=>PARTS.has(pr[1]));
+  // put arrived parts in place; school objects bake in sch/means values, so a newly installed
+  // part empties the cache
+  function install(pairs){ let fresh=false;
+    for(const [,k] of pairs){
+      if(k.startsWith('site:campus_')) PARTS.sitePanel(D,+k.slice(12));
+      else if(k.startsWith('context:ctx_')&&!ctxDone[k]){ const p=PARTS.get(k), cols=p.cols.map(PARTS.unpack);
+        p.ceebs.forEach((ce,i)=>{ const row=[p.year]; for(const c of cols) row.push(c[i]); (X.ctx[ce]=X.ctx[ce]||[]).push(row); });
+        ctxDone[k]=true; fresh=true; }
+      else if(k==='context:sch'&&!extraDone.sch){ const p=PARTS.get(k); for(const ce in p.sch) extra.sch[ce]=PARTS.rows(p.sch[ce]); extraDone.sch=true; fresh=true; }
+      else if(k==='context:means'&&!extraDone.means){ extra.means=PARTS.get(k).means; extraDone.means=true; fresh=true; } }
+    if(fresh) cache={}; }
+  let updateSeq=0;
+  function partFail(e){ console.error(e); svg.selectAll('*').remove();
+    svg.append('text').attr('x',20).attr('y',30).attr('fill','#b00').attr('font-size',13).text('Could not load part of the data ('+(e&&e.message||e)+'). Reload the page, or view it on GitHub Pages.'); }
+  function showLoading(){ svg.selectAll('*').remove();
+    svg.append('text').attr('x',20).attr('y',30).attr('fill','#5c6470').attr('font-size',13).text('Loading data…'); }
 
   // panel row layout (identical to the main explorer)
   const IX = {year:0,A:1,D:2,E:3,C:4,G:5,H:6,ela:7,math:8,upp:9,Gp:10,agpa:11,dgpa:12,egpa:13,Gr:14};   // Gr = diploma graduates (classes of 2017+)
@@ -476,6 +521,7 @@
     const ci = campus==null?state.campus:campus;
     const ck = ci+'|'+state.period;
     if(cache[ck]) return cache[ck];
+    if(!campusReady(ci)) return [];   // that campus's part is still on its way: nothing to cache yet
     const years = periodByKey[state.period].years;
     const yset = new Set(years);
     const pre = ci+'|', arr=[];
@@ -491,11 +537,11 @@
       const chosen={};
       for(const y of years){ const r=byY[y-1]||byY[y]||byY[y-2]; if(r) chosen[r[0]]=r; }
       const crows=Object.values(chosen);
-      const sbyY={}; ((X.sch||{})[ceeb]||[]).forEach(r=>{ sbyY[r[0]]=r; });
+      const sbyY={}; (extra.sch[ceeb]||[]).forEach(r=>{ sbyY[r[0]]=r; });   // (parts already here; a missing part is fetched by the selection that reads it)
       const schosen={};
       for(const y of years){ const r=sbyY[y-1]||sbyY[y]||sbyY[y-2]; if(r) schosen[r[0]]=r; }
       const srows=Object.values(schosen);
-      const mm = X.means[ceeb]||{};
+      const mm = extra.means[ceeb]||{};
       let se=0,ne=0,sm=0,nm=0;
       for(const y of years){ const v=mm[String(y-1)]; if(!v) continue;
         if(v[0]!=null){se+=v[0];ne++;} if(v[1]!=null){sm+=v[1];nm++;} }
@@ -715,7 +761,15 @@
   }
 
   // ---- side profile card ----
+  // the card reads the grade-11 composition, the scale-score means and every campus's funnel
+  // (the other-eight application rate): fetch what is missing, then draw it for the school
   function renderProfile(d){
+    if(d){ const need=partsNeeded();
+      if(!partsReady(need)){ $('profile').innerHTML='<div class="empty">Loading…</div>';
+        PARTS.loadAll(need).then(()=>{ install(need); if(state.sel!==d.s.ceeb) return;
+          const s=schools().find(x=>x.ceeb===d.s.ceeb); renderProfileNow(s?Object.assign({},d,{s}):d); }, partFail); return; } }
+    renderProfileNow(d); }
+  function renderProfileNow(d){
     const el=$('profile');
     if(!d){ el.innerHTML='<div class="empty">Click a dot (or a twin pair) for details.</div>'; return; }
     const s=d.s, rows=[];
@@ -1383,12 +1437,18 @@
     $('gapMinVal').textContent = ACHBy[state.ach].fmt==='score' ? Math.round(state.gapMin*2.5)+' pts' : state.gapMin+' pp';
   }
   function update(){
+    const seq=++updateSeq, need=partsNeeded();      // a later update supersedes a pending load
+    if(!partsReady(need)){ showLoading(); PARTS.loadAll(need).then(()=>{ install(need); if(seq===updateSeq) update(); }, partFail); return; }
+    install(need); extraWanted=false;
     writeHash(); updateCtlVisibility();
     document.querySelectorAll('#view button').forEach(b=>b.classList.toggle('on',b.dataset.v===state.view));
     if(state.view==='cond') renderCond();
     else if(state.view==='curve') renderCurve();
     else if(state.view==='twins') renderTwins();
     else renderDecomp();
+    if(extraWanted){                                 // safety net: a read of sch/means this selection did not predict
+      const both=[[ctxUrl(X.parts.sch),'context:sch'],[ctxUrl(X.parts.means),'context:means']];
+      PARTS.loadAll(both).then(()=>{ install(both); if(seq===updateSeq) update(); }, partFail); }
   }
   $('campus').addEventListener('change',e=>{ state.campus=+e.target.value; state.sel=null; state.selPair=null; update(); });
   $('period').addEventListener('change',e=>{ state.period=e.target.value; cache={}; state.band=null; state.sel=null; state.selPair=null; update(); });
