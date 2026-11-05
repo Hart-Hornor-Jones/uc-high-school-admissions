@@ -21,10 +21,10 @@ FR,All,2010,first_gen_status,first_gen,1,1.75,3.47,2485,1337,250,,,
 FR,All,2010,first_gen_status,first_gen,2,3.47,3.79,2572,1029,141,,,
 FR,All,2010,first_gen_status,first_gen,3,3.79,4.0,2327,775,61,,,
 FR,All,2010,first_gen_status,not_first_gen,1,1.75,3.47,2826,1158,195,,,
-FR,All,2010,first_gen_status,not_first_gen,2,3.47,3.79,4241,1083,156,,,
+FR,All,2010,first_gen_status,not_first_gen,2,3.47,3.79,4240,1083,156,,,
 FR,All,2010,first_gen_status,not_first_gen,3,3.79,4.0,5617,979,106,,,
 FR,All,2010,pell_status,non_pell,1,1.75,3.47,2703,1041,191,,,
-FR,All,2010,pell_status,non_pell,2,3.47,3.79,4095,953,117,,,
+FR,All,2010,pell_status,non_pell,2,3.47,3.79,4094,953,117,,,
 FR,All,2010,pell_status,non_pell,3,3.79,4.0,5540,890,100,,,
 FR,All,2010,pell_status,pell,1,1.75,3.47,2895,1582,282,,,
 FR,All,2010,pell_status,pell,2,3.47,3.79,3128,1276,196,,,
@@ -47,13 +47,13 @@ FR,All,2011,ethnicity,international,3,3.8,4.0,553,113,41,,,
 FR,All,2011,ethnicity,white,1,0.87,3.5,1289,466,72,,,
 FR,All,2011,ethnicity,white,2,3.5,3.8,2037,443,66,,,
 FR,All,2011,ethnicity,white,3,3.8,4.0,3085,488,58,,,
-FR,All,2011,first_gen_status,first_gen,1,0.87,3.5,2859,1312,230,,,
+FR,All,2011,first_gen_status,first_gen,1,0.87,3.5,2858,1312,230,,,
 FR,All,2011,first_gen_status,first_gen,2,3.5,3.8,3032,1093,171,,,
 FR,All,2011,first_gen_status,first_gen,3,3.8,4.0,2621,756,103,,,
 FR,All,2011,first_gen_status,not_first_gen,1,0.87,3.5,2990,1046,168,,,
 FR,All,2011,first_gen_status,not_first_gen,2,3.5,3.8,4556,1075,166,,,
 FR,All,2011,first_gen_status,not_first_gen,3,3.8,4.0,6423,1003,146,,,
-FR,All,2011,pell_status,non_pell,1,0.87,3.5,2775,893,149,,,
+FR,All,2011,pell_status,non_pell,1,0.87,3.5,2774,893,149,,,
 FR,All,2011,pell_status,non_pell,2,3.5,3.8,4241,928,152,,,
 FR,All,2011,pell_status,non_pell,3,3.8,4.0,6033,896,127,,,
 FR,All,2011,pell_status,pell,1,0.87,3.5,3176,1517,262,,,
@@ -79,13 +79,13 @@ FR,All,2012,ethnicity,white,2,3.52,3.81,1944,433,66,,,
 FR,All,2012,ethnicity,white,3,3.81,4.0,2887,475,47,,,
 FR,All,2012,first_gen_status,first_gen,1,1.02,3.52,3122,1376,233,,,
 FR,All,2012,first_gen_status,first_gen,2,3.52,3.81,3074,1034,160,,,
-FR,All,2012,first_gen_status,first_gen,3,3.81,4.0,2844,758,101,,,
+FR,All,2012,first_gen_status,first_gen,3,3.81,4.0,2843,758,101,,,
 FR,All,2012,first_gen_status,not_first_gen,1,1.02,3.52,3289,1078,186,,,
 FR,All,2012,first_gen_status,not_first_gen,2,3.52,3.81,4911,1102,188,,,
 FR,All,2012,first_gen_status,not_first_gen,3,3.81,4.0,6681,1090,151,,,
 FR,All,2012,pell_status,non_pell,1,1.02,3.52,3079,949,155,,,
 FR,All,2012,pell_status,non_pell,2,3.52,3.81,4604,981,154,,,
-FR,All,2012,pell_status,non_pell,3,3.81,4.0,6241,938,126,,,
+FR,All,2012,pell_status,non_pell,3,3.81,4.0,6240,938,126,,,
 FR,All,2012,pell_status,pell,1,1.02,3.52,3455,1537,276,,,
 FR,All,2012,pell_status,pell,2,3.52,3.81,3493,1189,201,,,
 FR,All,2012,pell_status,pell,3,3.81,4.0,3427,937,130,,,
@@ -140,12 +140,12 @@ FR,All,2014,ethnicity,white,3,3.86,4.0,2956,365,49,,,
 FR,All,2014,first_gen_status,first_gen,1,0.25,3.59,3494,1309,215,,,
 FR,All,2014,first_gen_status,first_gen,2,3.59,3.86,3525,1045,180,,,
 FR,All,2014,first_gen_status,first_gen,3,3.86,4.0,2906,669,111,,,
-FR,All,2014,first_gen_status,not_first_gen,1,0.25,3.59,3692,948,173,,,
+FR,All,2014,first_gen_status,not_first_gen,1,0.25,3.59,3691,948,173,,,
 FR,All,2014,first_gen_status,not_first_gen,2,3.59,3.86,5362,932,149,,,
-FR,All,2014,first_gen_status,not_first_gen,3,3.86,4.0,7025,949,130,,,
-FR,All,2014,pell_status,non_pell,1,0.25,3.59,3616,909,169,,,
+FR,All,2014,first_gen_status,not_first_gen,3,3.86,4.0,7024,949,130,,,
+FR,All,2014,pell_status,non_pell,1,0.25,3.59,3615,909,169,,,
 FR,All,2014,pell_status,non_pell,2,3.59,3.86,5333,892,135,,,
-FR,All,2014,pell_status,non_pell,3,3.86,4.0,6870,891,114,,,
+FR,All,2014,pell_status,non_pell,3,3.86,4.0,6869,891,114,,,
 FR,All,2014,pell_status,pell,1,0.25,3.59,3683,1392,227,,,
 FR,All,2014,pell_status,pell,2,3.59,3.86,3716,1122,196,,,
 FR,All,2014,pell_status,pell,3,3.86,4.0,3208,757,131,,,
@@ -212,7 +212,7 @@ FR,All,2016,pell_status,pell,3,3.86,4.0,3630,685,78,,,
 FR,All,2017,ethnicity,aian,1,0.0,3.63,40,16,2,,,
 FR,All,2017,ethnicity,aian,2,3.63,3.88,44,6,4,,,
 FR,All,2017,ethnicity,aian,3,3.88,4.0,45,3,1,,,
-FR,All,2017,ethnicity,asian,1,0.0,3.63,3310,529,104,,,
+FR,All,2017,ethnicity,asian,1,0.0,3.63,3309,529,103,,,
 FR,All,2017,ethnicity,asian,2,3.63,3.88,4134,516,86,,,
 FR,All,2017,ethnicity,asian,3,3.88,4.0,4892,428,66,,,
 FR,All,2017,ethnicity,black,1,0.0,3.63,486,147,33,,,
@@ -227,16 +227,16 @@ FR,All,2017,ethnicity,international,3,3.88,4.0,1239,131,34,,,
 FR,All,2017,ethnicity,white,1,0.0,3.63,1384,348,69,,,
 FR,All,2017,ethnicity,white,2,3.63,3.88,2158,322,50,,,
 FR,All,2017,ethnicity,white,3,3.88,4.0,3371,305,41,,,
-FR,All,2017,first_gen_status,first_gen,1,0.0,3.63,4137,988,198,,,
+FR,All,2017,first_gen_status,first_gen,1,0.0,3.63,4136,988,197,,,
 FR,All,2017,first_gen_status,first_gen,2,3.63,3.88,4089,784,127,,,
 FR,All,2017,first_gen_status,first_gen,3,3.88,4.0,3352,463,75,,,
 FR,All,2017,first_gen_status,not_first_gen,1,0.0,3.63,4543,933,197,,,
 FR,All,2017,first_gen_status,not_first_gen,2,3.63,3.88,6292,818,138,,,
 FR,All,2017,first_gen_status,not_first_gen,3,3.88,4.0,8684,787,116,,,
-FR,All,2017,pell_status,non_pell,1,0.0,3.63,4543,902,192,,,
+FR,All,2017,pell_status,non_pell,1,0.0,3.63,4543,902,191,,,
 FR,All,2017,pell_status,non_pell,2,3.63,3.88,6300,808,134,,,
 FR,All,2017,pell_status,non_pell,3,3.88,4.0,8659,755,112,,,
-FR,All,2017,pell_status,pell,1,0.0,3.63,4314,1072,208,,,
+FR,All,2017,pell_status,pell,1,0.0,3.63,4313,1072,208,,,
 FR,All,2017,pell_status,pell,2,3.63,3.88,4288,828,133,,,
 FR,All,2017,pell_status,pell,3,3.88,4.0,3598,513,82,,,
 FR,All,2018,ethnicity,aian,1,0.0,3.68,47,14,1,,,
@@ -251,19 +251,19 @@ FR,All,2018,ethnicity,black,3,3.9,4.0,318,42,12,,,
 FR,All,2018,ethnicity,hispanic_latino,1,0.0,3.68,2622,677,161,,,
 FR,All,2018,ethnicity,hispanic_latino,2,3.68,3.9,2250,495,94,,,
 FR,All,2018,ethnicity,hispanic_latino,3,3.9,4.0,2130,317,63,,,
-FR,All,2018,ethnicity,international,1,0.0,3.68,982,173,47,,,
+FR,All,2018,ethnicity,international,1,0.0,3.68,981,173,47,,,
 FR,All,2018,ethnicity,international,2,3.68,3.9,1069,168,44,,,
 FR,All,2018,ethnicity,international,3,3.9,4.0,1453,173,50,,,
 FR,All,2018,ethnicity,white,1,0.0,3.68,1296,343,64,,,
 FR,All,2018,ethnicity,white,2,3.68,3.9,1941,268,41,,,
 FR,All,2018,ethnicity,white,3,3.9,4.0,3381,358,49,,,
-FR,All,2018,first_gen_status,first_gen,1,0.0,3.68,4145,964,219,,,
+FR,All,2018,first_gen_status,first_gen,1,0.0,3.68,4144,964,219,,,
 FR,All,2018,first_gen_status,first_gen,2,3.68,3.9,3809,718,127,,,
 FR,All,2018,first_gen_status,first_gen,3,3.9,4.0,3586,494,93,,,
 FR,All,2018,first_gen_status,not_first_gen,1,0.0,3.68,4718,904,207,,,
 FR,All,2018,first_gen_status,not_first_gen,2,3.68,3.9,6243,785,160,,,
 FR,All,2018,first_gen_status,not_first_gen,3,3.9,4.0,9435,899,146,,,
-FR,All,2018,pell_status,non_pell,1,0.0,3.68,4787,930,195,,,
+FR,All,2018,pell_status,non_pell,1,0.0,3.68,4786,930,195,,,
 FR,All,2018,pell_status,non_pell,2,3.68,3.9,6292,808,147,,,
 FR,All,2018,pell_status,non_pell,3,3.9,4.0,9326,882,127,,,
 FR,All,2018,pell_status,pell,1,0.0,3.68,4264,976,243,,,
@@ -272,46 +272,46 @@ FR,All,2018,pell_status,pell,3,3.9,4.0,3918,538,119,,,
 FR,All,2019,ethnicity,aian,1,1.38,3.69,33,9,1,,,
 FR,All,2019,ethnicity,aian,2,3.69,3.91,43,6,2,,,
 FR,All,2019,ethnicity,aian,3,3.91,4.0,43,7,1,,,
-FR,All,2019,ethnicity,asian,1,1.38,3.69,3448,561,129,,,
+FR,All,2019,ethnicity,asian,1,1.38,3.69,3444,560,129,,,
 FR,All,2019,ethnicity,asian,2,3.69,3.91,4363,487,96,,,
 FR,All,2019,ethnicity,asian,3,3.91,4.0,5329,433,53,,,
 FR,All,2019,ethnicity,black,1,1.38,3.69,437,126,22,,,
 FR,All,2019,ethnicity,black,2,3.69,3.91,346,73,10,,,
 FR,All,2019,ethnicity,black,3,3.91,4.0,288,39,7,,,
-FR,All,2019,ethnicity,hispanic_latino,1,1.38,3.69,2748,715,146,,,
+FR,All,2019,ethnicity,hispanic_latino,1,1.38,3.69,2744,715,146,,,
 FR,All,2019,ethnicity,hispanic_latino,2,3.69,3.91,2417,491,83,,,
-FR,All,2019,ethnicity,hispanic_latino,3,3.91,4.0,2109,310,50,,,
+FR,All,2019,ethnicity,hispanic_latino,3,3.91,4.0,2108,310,50,,,
 FR,All,2019,ethnicity,international,1,1.38,3.69,817,160,43,,,
 FR,All,2019,ethnicity,international,2,3.69,3.91,1107,146,39,,,
 FR,All,2019,ethnicity,international,3,3.91,4.0,1310,165,39,,,
-FR,All,2019,ethnicity,white,1,1.38,3.69,1411,297,45,,,
+FR,All,2019,ethnicity,white,1,1.38,3.69,1410,297,45,,,
 FR,All,2019,ethnicity,white,2,3.69,3.91,2067,298,37,,,
 FR,All,2019,ethnicity,white,3,3.91,4.0,3282,308,39,,,
-FR,All,2019,first_gen_status,first_gen,1,1.38,3.69,4122,947,193,,,
+FR,All,2019,first_gen_status,first_gen,1,1.38,3.69,4116,947,193,,,
 FR,All,2019,first_gen_status,first_gen,2,3.69,3.91,3883,661,114,,,
 FR,All,2019,first_gen_status,first_gen,3,3.91,4.0,3261,428,63,,,
-FR,All,2019,first_gen_status,not_first_gen,1,1.38,3.69,4767,923,191,,,
+FR,All,2019,first_gen_status,not_first_gen,1,1.38,3.69,4764,922,191,,,
 FR,All,2019,first_gen_status,not_first_gen,2,3.69,3.91,6491,843,155,,,
-FR,All,2019,first_gen_status,not_first_gen,3,3.91,4.0,9303,849,127,,,
-FR,All,2019,overall,overall,1,1.38,3.69,9048,1917,395,,,
+FR,All,2019,first_gen_status,not_first_gen,3,3.91,4.0,9302,849,127,,,
+FR,All,2019,overall,overall,1,1.38,3.69,9039,1916,395,,,
 FR,All,2019,overall,overall,2,3.69,3.91,10580,1536,273,,,
-FR,All,2019,overall,overall,3,3.91,4.0,12791,1303,194,,,
-FR,All,2019,pell_status,non_pell,1,1.38,3.69,4813,937,185,,,
+FR,All,2019,overall,overall,3,3.91,4.0,12790,1303,194,,,
+FR,All,2019,pell_status,non_pell,1,1.38,3.69,4810,936,185,,,
 FR,All,2019,pell_status,non_pell,2,3.69,3.91,6559,834,144,,,
-FR,All,2019,pell_status,non_pell,3,3.91,4.0,9208,822,116,,,
-FR,All,2019,pell_status,pell,1,1.38,3.69,4235,980,210,,,
+FR,All,2019,pell_status,non_pell,3,3.91,4.0,9207,822,116,,,
+FR,All,2019,pell_status,pell,1,1.38,3.69,4229,980,210,,,
 FR,All,2019,pell_status,pell,2,3.69,3.91,4021,702,129,,,
 FR,All,2019,pell_status,pell,3,3.91,4.0,3583,481,78,,,
 FR,All,2020,ethnicity,aian,1,1.1,3.67,24,8,0,,,
 FR,All,2020,ethnicity,aian,2,3.67,3.91,43,7,0,,,
 FR,All,2020,ethnicity,aian,3,3.91,4.0,47,4,0,,,
-FR,All,2020,ethnicity,asian,1,1.1,3.67,3576,688,0,,,
+FR,All,2020,ethnicity,asian,1,1.1,3.67,3572,688,0,,,
 FR,All,2020,ethnicity,asian,2,3.67,3.91,4744,582,0,,,
 FR,All,2020,ethnicity,asian,3,3.91,4.0,5521,359,0,,,
-FR,All,2020,ethnicity,black,1,1.1,3.67,491,149,0,,,
+FR,All,2020,ethnicity,black,1,1.1,3.67,490,149,0,,,
 FR,All,2020,ethnicity,black,2,3.67,3.91,375,68,0,,,
 FR,All,2020,ethnicity,black,3,3.91,4.0,298,45,0,,,
-FR,All,2020,ethnicity,hispanic_latino,1,1.1,3.67,2542,633,0,,,
+FR,All,2020,ethnicity,hispanic_latino,1,1.1,3.67,2541,633,0,,,
 FR,All,2020,ethnicity,hispanic_latino,2,3.67,3.91,2529,443,0,,,
 FR,All,2020,ethnicity,hispanic_latino,3,3.91,4.0,2161,267,0,,,
 FR,All,2020,ethnicity,international,1,1.1,3.67,847,210,0,,,
@@ -320,17 +320,17 @@ FR,All,2020,ethnicity,international,3,3.91,4.0,1170,138,0,,,
 FR,All,2020,ethnicity,white,1,1.1,3.67,1393,314,0,,,
 FR,All,2020,ethnicity,white,2,3.67,3.91,2172,262,0,,,
 FR,All,2020,ethnicity,white,3,3.91,4.0,3177,272,0,,,
-FR,All,2020,first_gen_status,first_gen,1,1.1,3.67,3842,892,0,,,
+FR,All,2020,first_gen_status,first_gen,1,1.1,3.67,3840,892,0,,,
 FR,All,2020,first_gen_status,first_gen,2,3.67,3.91,3951,657,0,,,
 FR,All,2020,first_gen_status,first_gen,3,3.91,4.0,3318,342,0,,,
-FR,All,2020,first_gen_status,not_first_gen,1,1.1,3.67,5024,1079,0,,,
+FR,All,2020,first_gen_status,not_first_gen,1,1.1,3.67,5020,1079,0,,,
 FR,All,2020,first_gen_status,not_first_gen,2,3.67,3.91,7010,861,0,,,
 FR,All,2020,first_gen_status,not_first_gen,3,3.91,4.0,9223,753,0,,,
 FR,All,2020,overall,overall,1,3.91,4.0,12875,1120,0,,,
-FR,All,2020,pell_status,non_pell,1,1.1,3.67,5118,1039,0,,,
+FR,All,2020,pell_status,non_pell,1,1.1,3.67,5113,1039,0,,,
 FR,All,2020,pell_status,non_pell,2,3.67,3.91,7113,866,0,,,
 FR,All,2020,pell_status,non_pell,3,3.91,4.0,9227,717,0,,,
-FR,All,2020,pell_status,pell,1,1.1,3.67,3948,991,0,,,
+FR,All,2020,pell_status,pell,1,1.1,3.67,3947,991,0,,,
 FR,All,2020,pell_status,pell,2,3.67,3.91,4098,688,0,,,
 FR,All,2020,pell_status,pell,3,3.91,4.0,3648,403,0,,,
 FR,All,2021,ethnicity,aian,1,0.0,3.71,41,0,0,,,
@@ -350,7 +350,7 @@ FR,All,2021,ethnicity,international,2,3.71,3.92,1044,0,0,,,
 FR,All,2021,ethnicity,international,3,3.92,4.0,1474,0,0,,,
 FR,All,2021,ethnicity,white,1,0.0,3.71,1436,0,0,,,
 FR,All,2021,ethnicity,white,2,3.71,3.92,2435,0,0,,,
-FR,All,2021,ethnicity,white,3,3.92,4.0,4042,0,0,,,
+FR,All,2021,ethnicity,white,3,3.92,4.0,4041,0,0,,,
 FR,All,2021,first_gen_status,first_gen,1,0.0,3.71,4267,0,0,,,
 FR,All,2021,first_gen_status,first_gen,2,3.71,3.92,3941,0,0,,,
 FR,All,2021,first_gen_status,first_gen,3,3.92,4.0,3466,0,0,,,
@@ -359,7 +359,7 @@ FR,All,2021,first_gen_status,not_first_gen,2,3.71,3.92,7834,0,0,,,
 FR,All,2021,first_gen_status,not_first_gen,3,3.92,4.0,11369,0,0,,,
 FR,All,2021,pell_status,non_pell,1,0.0,3.71,5445,0,0,,,
 FR,All,2021,pell_status,non_pell,2,3.71,3.92,7673,0,0,,,
-FR,All,2021,pell_status,non_pell,3,3.92,4.0,10952,0,0,,,
+FR,All,2021,pell_status,non_pell,3,3.92,4.0,10951,0,0,,,
 FR,All,2021,pell_status,pell,1,0.0,3.71,4557,0,0,,,
 FR,All,2021,pell_status,pell,2,3.71,3.92,4395,0,0,,,
 FR,All,2021,pell_status,pell,3,3.92,4.0,4241,0,0,,,
@@ -443,13 +443,13 @@ FR,Berkeley,2012,ethnicity,white,2,3.52,3.81,124,32,7,,,
 FR,Berkeley,2012,ethnicity,white,3,3.81,4.0,560,95,10,,,
 FR,Berkeley,2012,first_gen_status,first_gen,1,1.02,3.52,45,33,4,,,
 FR,Berkeley,2012,first_gen_status,first_gen,2,3.52,3.81,145,62,14,,,
-FR,Berkeley,2012,first_gen_status,first_gen,3,3.81,4.0,433,127,21,,,
+FR,Berkeley,2012,first_gen_status,first_gen,3,3.81,4.0,432,127,21,,,
 FR,Berkeley,2012,first_gen_status,not_first_gen,1,1.02,3.52,141,49,12,,,
 FR,Berkeley,2012,first_gen_status,not_first_gen,2,3.52,3.81,401,90,13,,,
 FR,Berkeley,2012,first_gen_status,not_first_gen,3,3.81,4.0,1766,216,35,,,
 FR,Berkeley,2012,pell_status,non_pell,1,1.02,3.52,123,44,8,,,
 FR,Berkeley,2012,pell_status,non_pell,2,3.52,3.81,364,78,14,,,
-FR,Berkeley,2012,pell_status,non_pell,3,3.81,4.0,1656,185,30,,,
+FR,Berkeley,2012,pell_status,non_pell,3,3.81,4.0,1655,185,30,,,
 FR,Berkeley,2012,pell_status,pell,1,1.02,3.52,63,39,9,,,
 FR,Berkeley,2012,pell_status,pell,2,3.52,3.81,192,77,15,,,
 FR,Berkeley,2012,pell_status,pell,3,3.81,4.0,571,164,29,,,
@@ -504,12 +504,12 @@ FR,Berkeley,2014,ethnicity,white,3,3.86,4.0,622,84,9,,,
 FR,Berkeley,2014,first_gen_status,first_gen,1,0.25,3.59,75,47,11,,,
 FR,Berkeley,2014,first_gen_status,first_gen,2,3.59,3.86,171,65,8,,,
 FR,Berkeley,2014,first_gen_status,first_gen,3,3.86,4.0,454,120,16,,,
-FR,Berkeley,2014,first_gen_status,not_first_gen,1,0.25,3.59,174,48,6,,,
+FR,Berkeley,2014,first_gen_status,not_first_gen,1,0.25,3.59,173,48,6,,,
 FR,Berkeley,2014,first_gen_status,not_first_gen,2,3.59,3.86,574,99,23,,,
-FR,Berkeley,2014,first_gen_status,not_first_gen,3,3.86,4.0,1827,244,38,,,
-FR,Berkeley,2014,pell_status,non_pell,1,0.25,3.59,164,47,7,,,
+FR,Berkeley,2014,first_gen_status,not_first_gen,3,3.86,4.0,1826,244,38,,,
+FR,Berkeley,2014,pell_status,non_pell,1,0.25,3.59,163,47,7,,,
 FR,Berkeley,2014,pell_status,non_pell,2,3.59,3.86,546,82,16,,,
-FR,Berkeley,2014,pell_status,non_pell,3,3.86,4.0,1733,214,29,,,
+FR,Berkeley,2014,pell_status,non_pell,3,3.86,4.0,1732,214,29,,,
 FR,Berkeley,2014,pell_status,pell,1,0.25,3.59,92,49,10,,,
 FR,Berkeley,2014,pell_status,pell,2,3.59,3.86,213,85,15,,,
 FR,Berkeley,2014,pell_status,pell,3,3.86,4.0,590,159,25,,,
@@ -2387,7 +2387,7 @@ FR,Riverside,2016,pell_status,pell,2,3.59,3.86,394,74,10,,,
 FR,Riverside,2016,pell_status,pell,3,3.86,4.0,99,13,2,,,
 FR,Riverside,2017,ethnicity,aian,1,0.0,3.63,3,4,0,,,
 FR,Riverside,2017,ethnicity,aian,2,3.63,3.88,2,0,0,,,
-FR,Riverside,2017,ethnicity,asian,1,0.0,3.63,1135,127,32,,,
+FR,Riverside,2017,ethnicity,asian,1,0.0,3.63,1134,127,31,,,
 FR,Riverside,2017,ethnicity,asian,2,3.63,3.88,211,18,3,,,
 FR,Riverside,2017,ethnicity,asian,3,3.88,4.0,43,2,1,,,
 FR,Riverside,2017,ethnicity,black,1,0.0,3.63,100,31,5,,,
@@ -2402,16 +2402,16 @@ FR,Riverside,2017,ethnicity,international,3,3.88,4.0,4,0,0,,,
 FR,Riverside,2017,ethnicity,white,1,0.0,3.63,208,49,12,,,
 FR,Riverside,2017,ethnicity,white,2,3.63,3.88,59,10,1,,,
 FR,Riverside,2017,ethnicity,white,3,3.88,4.0,36,1,0,,,
-FR,Riverside,2017,first_gen_status,first_gen,1,0.0,3.63,1198,190,45,,,
+FR,Riverside,2017,first_gen_status,first_gen,1,0.0,3.63,1197,190,44,,,
 FR,Riverside,2017,first_gen_status,first_gen,2,3.63,3.88,301,45,4,,,
 FR,Riverside,2017,first_gen_status,first_gen,3,3.88,4.0,77,4,2,,,
 FR,Riverside,2017,first_gen_status,not_first_gen,1,0.0,3.63,1058,162,42,,,
 FR,Riverside,2017,first_gen_status,not_first_gen,2,3.63,3.88,263,32,5,,,
 FR,Riverside,2017,first_gen_status,not_first_gen,3,3.88,4.0,89,6,1,,,
-FR,Riverside,2017,pell_status,non_pell,1,0.0,3.63,977,143,33,,,
+FR,Riverside,2017,pell_status,non_pell,1,0.0,3.63,977,143,32,,,
 FR,Riverside,2017,pell_status,non_pell,2,3.63,3.88,257,31,3,,,
 FR,Riverside,2017,pell_status,non_pell,3,3.88,4.0,89,1,1,,,
-FR,Riverside,2017,pell_status,pell,1,0.0,3.63,1322,219,54,,,
+FR,Riverside,2017,pell_status,pell,1,0.0,3.63,1321,219,54,,,
 FR,Riverside,2017,pell_status,pell,2,3.63,3.88,319,47,6,,,
 FR,Riverside,2017,pell_status,pell,3,3.88,4.0,81,9,2,,,
 FR,Riverside,2018,ethnicity,asian,1,0.0,3.68,1170,146,24,,,
@@ -2441,44 +2441,43 @@ FR,Riverside,2018,pell_status,non_pell,3,3.9,4.0,86,8,3,,,
 FR,Riverside,2018,pell_status,pell,1,0.0,3.68,1286,204,46,,,
 FR,Riverside,2018,pell_status,pell,2,3.68,3.9,304,55,5,,,
 FR,Riverside,2018,pell_status,pell,3,3.9,4.0,127,10,8,,,
-FR,Riverside,2019,ethnicity,asian,1,1.38,3.69,1236,173,37,,,
+FR,Riverside,2019,ethnicity,asian,1,1.38,3.69,1232,172,37,,,
 FR,Riverside,2019,ethnicity,asian,2,3.69,3.91,264,31,2,,,
 FR,Riverside,2019,ethnicity,asian,3,3.91,4.0,89,6,1,,,
 FR,Riverside,2019,ethnicity,black,1,1.38,3.69,96,18,4,,,
 FR,Riverside,2019,ethnicity,black,2,3.69,3.91,28,4,0,,,
 FR,Riverside,2019,ethnicity,black,3,3.91,4.0,2,0,0,,,
-FR,Riverside,2019,ethnicity,hispanic_latino,1,1.38,3.69,680,145,26,,,
+FR,Riverside,2019,ethnicity,hispanic_latino,1,1.38,3.69,676,145,26,,,
 FR,Riverside,2019,ethnicity,hispanic_latino,2,3.69,3.91,229,43,9,,,
-FR,Riverside,2019,ethnicity,hispanic_latino,3,3.91,4.0,122,13,0,,,
+FR,Riverside,2019,ethnicity,hispanic_latino,3,3.91,4.0,121,13,0,,,
 FR,Riverside,2019,ethnicity,international,1,1.38,3.69,39,2,5,,,
 FR,Riverside,2019,ethnicity,international,2,3.69,3.91,10,6,0,,,
 FR,Riverside,2019,ethnicity,international,3,3.91,4.0,4,1,0,,,
-FR,Riverside,2019,ethnicity,white,1,1.38,3.69,212,36,6,,,
+FR,Riverside,2019,ethnicity,white,1,1.38,3.69,211,36,6,,,
 FR,Riverside,2019,ethnicity,white,2,3.69,3.91,85,7,1,,,
 FR,Riverside,2019,ethnicity,white,3,3.91,4.0,38,2,1,,,
-FR,Riverside,2019,first_gen_status,first_gen,1,1.38,3.69,1095,182,28,,,
+FR,Riverside,2019,first_gen_status,first_gen,1,1.38,3.69,1089,182,28,,,
 FR,Riverside,2019,first_gen_status,first_gen,2,3.69,3.91,324,42,5,,,
 FR,Riverside,2019,first_gen_status,first_gen,3,3.91,4.0,147,11,1,,,
-FR,Riverside,2019,first_gen_status,not_first_gen,1,1.38,3.69,1171,190,47,,,
+FR,Riverside,2019,first_gen_status,not_first_gen,1,1.38,3.69,1168,189,47,,,
 FR,Riverside,2019,first_gen_status,not_first_gen,2,3.69,3.91,290,50,7,,,
-FR,Riverside,2019,first_gen_status,not_first_gen,3,3.91,4.0,106,11,1,,,
-FR,Riverside,2019,overall,overall,1,1.38,3.69,2309,379,78,,,
+FR,Riverside,2019,first_gen_status,not_first_gen,3,3.91,4.0,105,11,1,,,
+FR,Riverside,2019,overall,overall,1,1.38,3.69,2300,378,78,,,
 FR,Riverside,2019,overall,overall,2,3.69,3.91,622,93,12,,,
-FR,Riverside,2019,overall,overall,3,3.91,4.0,259,22,2,,,
-FR,Riverside,2019,pell_status,non_pell,1,1.38,3.69,1092,166,44,,,
+FR,Riverside,2019,overall,overall,3,3.91,4.0,258,22,2,,,
+FR,Riverside,2019,pell_status,non_pell,1,1.38,3.69,1089,165,44,,,
 FR,Riverside,2019,pell_status,non_pell,2,3.69,3.91,298,43,5,,,
-FR,Riverside,2019,pell_status,non_pell,3,3.91,4.0,120,9,0,,,
-FR,Riverside,2019,pell_status,pell,1,1.38,3.69,1217,213,34,,,
+FR,Riverside,2019,pell_status,non_pell,3,3.91,4.0,119,9,0,,,
+FR,Riverside,2019,pell_status,pell,1,1.38,3.69,1211,213,34,,,
 FR,Riverside,2019,pell_status,pell,2,3.69,3.91,324,50,7,,,
 FR,Riverside,2019,pell_status,pell,3,3.91,4.0,139,13,2,,,
-FR,Riverside,2020,ethnicity,aian,1,1.1,3.67,0,0,,,,
-FR,Riverside,2020,ethnicity,asian,1,1.1,3.67,1001,209,0,,,
+FR,Riverside,2020,ethnicity,asian,1,1.1,3.67,997,209,0,,,
 FR,Riverside,2020,ethnicity,asian,2,3.67,3.91,231,33,0,,,
 FR,Riverside,2020,ethnicity,asian,3,3.91,4.0,69,6,0,,,
-FR,Riverside,2020,ethnicity,black,1,1.1,3.67,109,32,0,,,
+FR,Riverside,2020,ethnicity,black,1,1.1,3.67,108,32,0,,,
 FR,Riverside,2020,ethnicity,black,2,3.67,3.91,29,12,0,,,
 FR,Riverside,2020,ethnicity,black,3,3.91,4.0,12,2,0,,,
-FR,Riverside,2020,ethnicity,hispanic_latino,1,1.1,3.67,693,138,0,,,
+FR,Riverside,2020,ethnicity,hispanic_latino,1,1.1,3.67,692,138,0,,,
 FR,Riverside,2020,ethnicity,hispanic_latino,2,3.67,3.91,287,56,0,,,
 FR,Riverside,2020,ethnicity,hispanic_latino,3,3.91,4.0,112,15,0,,,
 FR,Riverside,2020,ethnicity,international,1,1.1,3.67,35,16,0,,,
@@ -2487,17 +2486,17 @@ FR,Riverside,2020,ethnicity,international,3,3.91,4.0,3,0,0,,,
 FR,Riverside,2020,ethnicity,white,1,1.1,3.67,175,42,0,,,
 FR,Riverside,2020,ethnicity,white,2,3.67,3.91,79,6,0,,,
 FR,Riverside,2020,ethnicity,white,3,3.91,4.0,40,0,0,,,
-FR,Riverside,2020,first_gen_status,first_gen,1,1.1,3.67,1021,212,0,,,
+FR,Riverside,2020,first_gen_status,first_gen,1,1.1,3.67,1019,212,0,,,
 FR,Riverside,2020,first_gen_status,first_gen,2,3.67,3.91,344,73,0,,,
 FR,Riverside,2020,first_gen_status,first_gen,3,3.91,4.0,135,14,0,,,
-FR,Riverside,2020,first_gen_status,not_first_gen,1,1.1,3.67,993,214,0,,,
+FR,Riverside,2020,first_gen_status,not_first_gen,1,1.1,3.67,989,214,0,,,
 FR,Riverside,2020,first_gen_status,not_first_gen,2,3.67,3.91,294,38,0,,,
 FR,Riverside,2020,first_gen_status,not_first_gen,3,3.91,4.0,102,10,0,,,
 FR,Riverside,2020,overall,overall,1,3.91,4.0,243,24,0,,,
-FR,Riverside,2020,pell_status,non_pell,1,1.1,3.67,926,205,0,,,
+FR,Riverside,2020,pell_status,non_pell,1,1.1,3.67,921,205,0,,,
 FR,Riverside,2020,pell_status,non_pell,2,3.67,3.91,286,37,0,,,
 FR,Riverside,2020,pell_status,non_pell,3,3.91,4.0,112,7,0,,,
-FR,Riverside,2020,pell_status,pell,1,1.1,3.67,1122,236,0,,,
+FR,Riverside,2020,pell_status,pell,1,1.1,3.67,1121,236,0,,,
 FR,Riverside,2020,pell_status,pell,2,3.67,3.91,363,74,0,,,
 FR,Riverside,2020,pell_status,pell,3,3.91,4.0,131,17,0,,,
 FR,Riverside,2021,ethnicity,aian,1,0.0,3.71,3,0,0,,,
@@ -2516,7 +2515,7 @@ FR,Riverside,2021,ethnicity,international,2,3.71,3.92,10,0,0,,,
 FR,Riverside,2021,ethnicity,international,3,3.92,4.0,6,0,0,,,
 FR,Riverside,2021,ethnicity,white,1,0.0,3.71,202,0,0,,,
 FR,Riverside,2021,ethnicity,white,2,3.71,3.92,94,0,0,,,
-FR,Riverside,2021,ethnicity,white,3,3.92,4.0,41,0,0,,,
+FR,Riverside,2021,ethnicity,white,3,3.92,4.0,40,0,0,,,
 FR,Riverside,2021,first_gen_status,first_gen,1,0.0,3.71,1093,0,0,,,
 FR,Riverside,2021,first_gen_status,first_gen,2,3.71,3.92,332,0,0,,,
 FR,Riverside,2021,first_gen_status,first_gen,3,3.92,4.0,143,0,0,,,
@@ -2525,7 +2524,7 @@ FR,Riverside,2021,first_gen_status,not_first_gen,2,3.71,3.92,390,0,0,,,
 FR,Riverside,2021,first_gen_status,not_first_gen,3,3.92,4.0,133,0,0,,,
 FR,Riverside,2021,pell_status,non_pell,1,0.0,3.71,1120,0,0,,,
 FR,Riverside,2021,pell_status,non_pell,2,3.71,3.92,375,0,0,,,
-FR,Riverside,2021,pell_status,non_pell,3,3.92,4.0,123,0,0,,,
+FR,Riverside,2021,pell_status,non_pell,3,3.92,4.0,122,0,0,,,
 FR,Riverside,2021,pell_status,pell,1,0.0,3.71,1186,0,0,,,
 FR,Riverside,2021,pell_status,pell,2,3.71,3.92,354,0,0,,,
 FR,Riverside,2021,pell_status,pell,3,3.92,4.0,157,0,0,,,
@@ -2914,10 +2913,10 @@ FR,Santa Barbara,2010,first_gen_status,first_gen,1,1.75,3.47,280,57,23,,,
 FR,Santa Barbara,2010,first_gen_status,first_gen,2,3.47,3.79,431,81,10,,,
 FR,Santa Barbara,2010,first_gen_status,first_gen,3,3.79,4.0,175,32,5,,,
 FR,Santa Barbara,2010,first_gen_status,not_first_gen,1,1.75,3.47,367,91,15,,,
-FR,Santa Barbara,2010,first_gen_status,not_first_gen,2,3.47,3.79,752,92,19,,,
+FR,Santa Barbara,2010,first_gen_status,not_first_gen,2,3.47,3.79,751,92,19,,,
 FR,Santa Barbara,2010,first_gen_status,not_first_gen,3,3.79,4.0,421,49,6,,,
 FR,Santa Barbara,2010,pell_status,non_pell,1,1.75,3.47,377,82,17,,,
-FR,Santa Barbara,2010,pell_status,non_pell,2,3.47,3.79,791,89,17,,,
+FR,Santa Barbara,2010,pell_status,non_pell,2,3.47,3.79,790,89,17,,,
 FR,Santa Barbara,2010,pell_status,non_pell,3,3.79,4.0,440,50,5,,,
 FR,Santa Barbara,2010,pell_status,pell,1,1.75,3.47,305,74,22,,,
 FR,Santa Barbara,2010,pell_status,pell,2,3.47,3.79,467,99,14,,,
@@ -2940,13 +2939,13 @@ FR,Santa Barbara,2011,ethnicity,international,3,3.8,4.0,11,3,0,,,
 FR,Santa Barbara,2011,ethnicity,white,1,0.87,3.5,234,58,9,,,
 FR,Santa Barbara,2011,ethnicity,white,2,3.5,3.8,538,62,12,,,
 FR,Santa Barbara,2011,ethnicity,white,3,3.8,4.0,414,28,5,,,
-FR,Santa Barbara,2011,first_gen_status,first_gen,1,0.87,3.5,378,94,23,,,
+FR,Santa Barbara,2011,first_gen_status,first_gen,1,0.87,3.5,377,94,23,,,
 FR,Santa Barbara,2011,first_gen_status,first_gen,2,3.5,3.8,471,89,25,,,
 FR,Santa Barbara,2011,first_gen_status,first_gen,3,3.8,4.0,212,42,4,,,
 FR,Santa Barbara,2011,first_gen_status,not_first_gen,1,0.87,3.5,397,96,15,,,
 FR,Santa Barbara,2011,first_gen_status,not_first_gen,2,3.5,3.8,792,95,21,,,
 FR,Santa Barbara,2011,first_gen_status,not_first_gen,3,3.8,4.0,497,33,8,,,
-FR,Santa Barbara,2011,pell_status,non_pell,1,0.87,3.5,347,87,16,,,
+FR,Santa Barbara,2011,pell_status,non_pell,1,0.87,3.5,346,87,16,,,
 FR,Santa Barbara,2011,pell_status,non_pell,2,3.5,3.8,776,90,24,,,
 FR,Santa Barbara,2011,pell_status,non_pell,3,3.8,4.0,487,37,8,,,
 FR,Santa Barbara,2011,pell_status,pell,1,0.87,3.5,439,107,23,,,
@@ -3144,19 +3143,19 @@ FR,Santa Barbara,2018,ethnicity,black,3,3.9,4.0,26,3,1,,,
 FR,Santa Barbara,2018,ethnicity,hispanic_latino,1,0.0,3.68,269,94,28,,,
 FR,Santa Barbara,2018,ethnicity,hispanic_latino,2,3.68,3.9,281,60,11,,,
 FR,Santa Barbara,2018,ethnicity,hispanic_latino,3,3.9,4.0,193,21,9,,,
-FR,Santa Barbara,2018,ethnicity,international,1,0.0,3.68,87,14,2,,,
+FR,Santa Barbara,2018,ethnicity,international,1,0.0,3.68,86,14,2,,,
 FR,Santa Barbara,2018,ethnicity,international,2,3.68,3.9,151,25,3,,,
 FR,Santa Barbara,2018,ethnicity,international,3,3.9,4.0,156,14,7,,,
 FR,Santa Barbara,2018,ethnicity,white,1,0.0,3.68,192,48,4,,,
 FR,Santa Barbara,2018,ethnicity,white,2,3.68,3.9,367,55,10,,,
 FR,Santa Barbara,2018,ethnicity,white,3,3.9,4.0,430,40,4,,,
-FR,Santa Barbara,2018,first_gen_status,first_gen,1,0.0,3.68,487,124,35,,,
+FR,Santa Barbara,2018,first_gen_status,first_gen,1,0.0,3.68,486,124,35,,,
 FR,Santa Barbara,2018,first_gen_status,first_gen,2,3.68,3.9,507,89,16,,,
 FR,Santa Barbara,2018,first_gen_status,first_gen,3,3.9,4.0,316,39,13,,,
 FR,Santa Barbara,2018,first_gen_status,not_first_gen,1,0.0,3.68,440,93,14,,,
 FR,Santa Barbara,2018,first_gen_status,not_first_gen,2,3.68,3.9,829,115,17,,,
 FR,Santa Barbara,2018,first_gen_status,not_first_gen,3,3.9,4.0,796,72,16,,,
-FR,Santa Barbara,2018,pell_status,non_pell,1,0.0,3.68,448,85,12,,,
+FR,Santa Barbara,2018,pell_status,non_pell,1,0.0,3.68,447,85,12,,,
 FR,Santa Barbara,2018,pell_status,non_pell,2,3.68,3.9,874,113,14,,,
 FR,Santa Barbara,2018,pell_status,non_pell,3,3.9,4.0,821,76,17,,,
 FR,Santa Barbara,2018,pell_status,pell,1,0.0,3.68,494,133,38,,,
@@ -3699,13 +3698,13 @@ TR,All,2012,ethnicity,white,3,3.65,4.0,1169,523,70,61,27,4
 TR,All,2012,first_gen_status,first_gen,1,0.3,3.3,1345,824,169,49,30,6
 TR,All,2012,first_gen_status,first_gen,2,3.3,3.65,1424,775,122,55,30,5
 TR,All,2012,first_gen_status,first_gen,3,3.65,4.0,1462,674,82,60,28,3
-TR,All,2012,first_gen_status,not_first_gen,1,0.3,3.3,1237,660,137,52,28,6
+TR,All,2012,first_gen_status,not_first_gen,1,0.3,3.3,1237,659,137,52,28,6
 TR,All,2012,first_gen_status,not_first_gen,2,3.3,3.65,1458,728,126,56,28,5
 TR,All,2012,first_gen_status,not_first_gen,3,3.65,4.0,1778,846,99,60,28,3
-TR,All,2012,pell_status,non_pell,1,0.3,3.3,1207,521,92,57,25,4
+TR,All,2012,pell_status,non_pell,1,0.3,3.3,1207,521,91,57,25,4
 TR,All,2012,pell_status,non_pell,2,3.3,3.65,1484,566,84,62,24,4
 TR,All,2012,pell_status,non_pell,3,3.65,4.0,1846,661,74,66,24,3
-TR,All,2012,pell_status,pell,1,0.3,3.3,1469,1012,229,45,31,7
+TR,All,2012,pell_status,pell,1,0.3,3.3,1469,1011,229,45,31,7
 TR,All,2012,pell_status,pell,2,3.3,3.65,1488,983,180,50,33,6
 TR,All,2012,pell_status,pell,3,3.65,4.0,1467,916,114,53,33,4
 TR,All,2013,ethnicity,aian,1,0.32,3.31,33,12,1,60,22,2
@@ -3714,7 +3713,7 @@ TR,All,2013,ethnicity,aian,3,3.66,4.0,21,14,2,51,34,5
 TR,All,2013,ethnicity,asian,1,0.32,3.31,758,416,104,51,28,7
 TR,All,2013,ethnicity,asian,2,3.31,3.66,765,509,79,50,34,5
 TR,All,2013,ethnicity,asian,3,3.66,4.0,857,482,59,57,32,4
-TR,All,2013,ethnicity,black,1,0.32,3.31,129,75,28,45,26,10
+TR,All,2013,ethnicity,black,1,0.32,3.31,129,74,28,45,26,10
 TR,All,2013,ethnicity,black,2,3.31,3.66,86,55,13,49,31,7
 TR,All,2013,ethnicity,black,3,3.66,4.0,65,50,9,45,35,6
 TR,All,2013,ethnicity,hispanic_latino,1,0.32,3.31,711,435,85,48,30,6
@@ -3726,17 +3725,17 @@ TR,All,2013,ethnicity,international,3,3.66,4.0,751,224,28,69,21,3
 TR,All,2013,ethnicity,white,1,0.32,3.31,840,430,81,53,27,5
 TR,All,2013,ethnicity,white,2,3.31,3.66,1032,539,87,56,29,5
 TR,All,2013,ethnicity,white,3,3.66,4.0,1191,567,76,61,29,4
-TR,All,2013,first_gen_status,first_gen,1,0.32,3.31,1456,824,165,50,28,6
+TR,All,2013,first_gen_status,first_gen,1,0.32,3.31,1456,823,165,50,28,6
 TR,All,2013,first_gen_status,first_gen,2,3.31,3.66,1454,835,135,53,31,5
 TR,All,2013,first_gen_status,first_gen,3,3.66,4.0,1534,731,101,60,28,4
 TR,All,2013,first_gen_status,not_first_gen,1,0.32,3.31,1245,657,148,52,28,6
-TR,All,2013,first_gen_status,not_first_gen,2,3.31,3.66,1468,794,142,55,30,5
+TR,All,2013,first_gen_status,not_first_gen,2,3.31,3.66,1468,793,142,55,30,5
 TR,All,2013,first_gen_status,not_first_gen,3,3.66,4.0,1808,836,111,61,28,4
 TR,All,2013,pell_status,non_pell,1,0.32,3.31,1224,488,93,58,23,4
 TR,All,2013,pell_status,non_pell,2,3.31,3.66,1549,639,95,61,25,4
 TR,All,2013,pell_status,non_pell,3,3.66,4.0,1993,680,83,68,23,3
-TR,All,2013,pell_status,pell,1,0.32,3.31,1566,1044,231,46,31,7
-TR,All,2013,pell_status,pell,2,3.31,3.66,1458,1037,195,48,34,6
+TR,All,2013,pell_status,pell,1,0.32,3.31,1566,1043,231,46,31,7
+TR,All,2013,pell_status,pell,2,3.31,3.66,1458,1036,195,48,34,6
 TR,All,2013,pell_status,pell,3,3.66,4.0,1426,924,139,52,34,5
 TR,All,2014,ethnicity,aian,1,0.82,3.34,34,20,3,49,29,4
 TR,All,2014,ethnicity,aian,2,3.34,3.68,32,10,4,52,16,7
@@ -3759,13 +3758,13 @@ TR,All,2014,ethnicity,white,3,3.68,4.0,1148,497,71,62,27,4
 TR,All,2014,first_gen_status,first_gen,1,0.82,3.34,1506,860,145,51,29,5
 TR,All,2014,first_gen_status,first_gen,2,3.34,3.68,1531,809,127,55,29,5
 TR,All,2014,first_gen_status,first_gen,3,3.68,4.0,1580,727,112,61,28,4
-TR,All,2014,first_gen_status,not_first_gen,1,0.82,3.34,1241,660,122,52,28,5
+TR,All,2014,first_gen_status,not_first_gen,1,0.82,3.34,1241,659,121,52,28,5
 TR,All,2014,first_gen_status,not_first_gen,2,3.34,3.68,1480,818,122,55,30,5
 TR,All,2014,first_gen_status,not_first_gen,3,3.68,4.0,1815,826,126,61,28,4
-TR,All,2014,pell_status,non_pell,1,0.82,3.34,1226,523,78,58,25,4
+TR,All,2014,pell_status,non_pell,1,0.82,3.34,1226,523,77,59,25,4
 TR,All,2014,pell_status,non_pell,2,3.34,3.68,1582,623,78,63,25,3
 TR,All,2014,pell_status,non_pell,3,3.68,4.0,2001,693,106,67,23,4
-TR,All,2014,pell_status,pell,1,0.82,3.34,1619,1048,201,47,31,6
+TR,All,2014,pell_status,pell,1,0.82,3.34,1619,1047,201,47,31,6
 TR,All,2014,pell_status,pell,2,3.34,3.68,1511,1064,180,48,34,6
 TR,All,2014,pell_status,pell,3,3.68,4.0,1509,912,144,54,33,5
 TR,All,2015,ethnicity,aian,1,1.4,3.34,23,13,3,51,29,7
@@ -3786,18 +3785,18 @@ TR,All,2015,ethnicity,international,3,3.68,4.0,875,237,37,70,19,3
 TR,All,2015,ethnicity,white,1,1.4,3.34,847,401,79,55,26,5
 TR,All,2015,ethnicity,white,2,3.34,3.68,1007,459,64,59,27,4
 TR,All,2015,ethnicity,white,3,3.68,4.0,1176,481,63,64,26,3
-TR,All,2015,first_gen_status,first_gen,1,1.4,3.34,1559,788,155,52,26,5
-TR,All,2015,first_gen_status,first_gen,2,3.34,3.68,1588,767,101,58,28,4
-TR,All,2015,first_gen_status,first_gen,3,3.68,4.0,1561,636,89,63,26,4
-TR,All,2015,first_gen_status,not_first_gen,1,1.4,3.34,1266,614,128,54,26,5
+TR,All,2015,first_gen_status,first_gen,1,1.4,3.34,1559,788,154,52,26,5
+TR,All,2015,first_gen_status,first_gen,2,3.34,3.68,1588,767,100,58,28,4
+TR,All,2015,first_gen_status,first_gen,3,3.68,4.0,1561,636,87,63,26,4
+TR,All,2015,first_gen_status,not_first_gen,1,1.4,3.34,1266,613,128,54,26,5
 TR,All,2015,first_gen_status,not_first_gen,2,3.34,3.68,1471,715,99,58,28,4
-TR,All,2015,first_gen_status,not_first_gen,3,3.68,4.0,1976,814,119,63,26,4
+TR,All,2015,first_gen_status,not_first_gen,3,3.68,4.0,1976,813,118,63,26,4
 TR,All,2015,pell_status,non_pell,1,1.4,3.34,1265,515,82,59,24,4
 TR,All,2015,pell_status,non_pell,2,3.34,3.68,1634,621,76,63,24,3
-TR,All,2015,pell_status,non_pell,3,3.68,4.0,2151,677,84,69,22,3
-TR,All,2015,pell_status,pell,1,1.4,3.34,1654,954,216,49,28,6
-TR,All,2015,pell_status,pell,2,3.34,3.68,1531,920,138,52,31,5
-TR,All,2015,pell_status,pell,3,3.68,4.0,1491,841,133,56,31,5
+TR,All,2015,pell_status,non_pell,3,3.68,4.0,2151,676,84,69,22,3
+TR,All,2015,pell_status,pell,1,1.4,3.34,1654,953,215,49,28,6
+TR,All,2015,pell_status,pell,2,3.34,3.68,1531,920,137,52,31,5
+TR,All,2015,pell_status,pell,3,3.68,4.0,1491,841,130,56,31,5
 TR,All,2016,ethnicity,aian,1,0.36,3.33,27,16,3,48,29,5
 TR,All,2016,ethnicity,aian,2,3.33,3.68,28,12,4,47,20,7
 TR,All,2016,ethnicity,aian,3,3.68,4.0,18,8,2,60,27,7
@@ -3834,28 +3833,28 @@ TR,All,2017,ethnicity,aian,3,3.69,4.0,16,5,0,67,21,0
 TR,All,2017,ethnicity,asian,1,0.3,3.33,876,454,82,53,27,5
 TR,All,2017,ethnicity,asian,2,3.33,3.69,1002,528,89,56,29,5
 TR,All,2017,ethnicity,asian,3,3.69,4.0,1160,518,59,63,28,3
-TR,All,2017,ethnicity,black,1,0.3,3.33,200,106,28,47,25,7
+TR,All,2017,ethnicity,black,1,0.3,3.33,199,106,28,47,25,7
 TR,All,2017,ethnicity,black,2,3.33,3.69,155,82,23,51,27,8
 TR,All,2017,ethnicity,black,3,3.69,4.0,115,48,10,60,25,5
-TR,All,2017,ethnicity,hispanic_latino,1,0.3,3.33,1075,605,123,50,28,6
+TR,All,2017,ethnicity,hispanic_latino,1,0.3,3.33,1074,605,122,50,28,6
 TR,All,2017,ethnicity,hispanic_latino,2,3.33,3.69,883,433,70,56,28,4
 TR,All,2017,ethnicity,hispanic_latino,3,3.69,4.0,692,252,48,64,23,4
 TR,All,2017,ethnicity,international,1,0.3,3.33,314,124,24,58,23,4
 TR,All,2017,ethnicity,international,2,3.33,3.69,597,153,21,70,18,2
 TR,All,2017,ethnicity,international,3,3.69,4.0,998,271,32,72,20,2
-TR,All,2017,ethnicity,white,1,0.3,3.33,891,383,100,56,24,6
+TR,All,2017,ethnicity,white,1,0.3,3.33,891,382,100,56,24,6
 TR,All,2017,ethnicity,white,2,3.33,3.69,1146,485,95,60,25,5
 TR,All,2017,ethnicity,white,3,3.69,4.0,1353,461,81,67,23,4
-TR,All,2017,first_gen_status,first_gen,1,0.3,3.33,1851,960,208,51,27,6
+TR,All,2017,first_gen_status,first_gen,1,0.3,3.33,1850,959,207,51,27,6
 TR,All,2017,first_gen_status,first_gen,2,3.33,3.69,1887,826,161,58,26,5
 TR,All,2017,first_gen_status,first_gen,3,3.69,4.0,1873,711,99,64,24,3
-TR,All,2017,first_gen_status,not_first_gen,1,0.3,3.33,1482,662,142,56,25,5
+TR,All,2017,first_gen_status,not_first_gen,1,0.3,3.33,1481,662,142,56,25,5
 TR,All,2017,first_gen_status,not_first_gen,2,3.33,3.69,1856,837,137,59,27,4
 TR,All,2017,first_gen_status,not_first_gen,3,3.69,4.0,2420,838,122,68,23,3
 TR,All,2017,pell_status,non_pell,1,0.3,3.33,1551,588,104,60,23,4
 TR,All,2017,pell_status,non_pell,2,3.33,3.69,2023,713,95,65,23,3
 TR,All,2017,pell_status,non_pell,3,3.69,4.0,2685,756,102,71,20,3
-TR,All,2017,pell_status,pell,1,0.3,3.33,1901,1127,266,48,29,7
+TR,All,2017,pell_status,pell,1,0.3,3.33,1899,1126,265,48,29,7
 TR,All,2017,pell_status,pell,2,3.33,3.69,1871,1020,215,53,29,6
 TR,All,2017,pell_status,pell,3,3.69,4.0,1762,840,132,60,28,4
 TR,All,2018,ethnicity,aian,1,0.32,3.34,18,11,3,45,28,8
@@ -3869,16 +3868,16 @@ TR,All,2018,ethnicity,black,2,3.34,3.7,179,82,16,58,27,5
 TR,All,2018,ethnicity,black,3,3.7,4.0,106,46,9,59,25,5
 TR,All,2018,ethnicity,hispanic_latino,1,0.32,3.34,1247,611,103,54,26,4
 TR,All,2018,ethnicity,hispanic_latino,2,3.34,3.7,944,428,59,57,26,4
-TR,All,2018,ethnicity,hispanic_latino,3,3.7,4.0,809,255,33,68,21,3
+TR,All,2018,ethnicity,hispanic_latino,3,3.7,4.0,808,255,33,68,21,3
 TR,All,2018,ethnicity,international,1,0.32,3.34,379,138,20,61,22,3
 TR,All,2018,ethnicity,international,2,3.34,3.7,645,149,14,72,17,2
-TR,All,2018,ethnicity,international,3,3.7,4.0,1107,262,34,73,17,2
+TR,All,2018,ethnicity,international,3,3.7,4.0,1107,262,34,74,17,2
 TR,All,2018,ethnicity,white,1,0.32,3.34,913,378,74,56,23,5
 TR,All,2018,ethnicity,white,2,3.34,3.7,1212,429,68,64,23,4
 TR,All,2018,ethnicity,white,3,3.7,4.0,1498,487,52,70,23,2
 TR,All,2018,first_gen_status,first_gen,1,0.32,3.34,1897,959,181,52,26,5
 TR,All,2018,first_gen_status,first_gen,2,3.34,3.7,1958,875,124,59,26,4
-TR,All,2018,first_gen_status,first_gen,3,3.7,4.0,2064,710,71,68,23,2
+TR,All,2018,first_gen_status,first_gen,3,3.7,4.0,2063,710,71,68,23,2
 TR,All,2018,first_gen_status,not_first_gen,1,0.32,3.34,1553,688,112,56,25,4
 TR,All,2018,first_gen_status,not_first_gen,2,3.34,3.7,2060,757,108,64,23,3
 TR,All,2018,first_gen_status,not_first_gen,3,3.7,4.0,2655,832,107,69,22,3
@@ -3887,38 +3886,38 @@ TR,All,2018,pell_status,non_pell,2,3.34,3.7,2292,653,79,69,20,2
 TR,All,2018,pell_status,non_pell,3,3.7,4.0,3039,752,89,74,18,2
 TR,All,2018,pell_status,pell,1,0.32,3.34,1976,1112,221,50,28,6
 TR,All,2018,pell_status,pell,2,3.34,3.7,1881,1035,162,54,30,5
-TR,All,2018,pell_status,pell,3,3.7,4.0,1845,851,98,61,28,3
+TR,All,2018,pell_status,pell,3,3.7,4.0,1844,851,98,61,28,3
 TR,All,2019,ethnicity,aian,1,0.32,3.38,29,6,0,66,14,0
 TR,All,2019,ethnicity,aian,2,3.38,3.73,19,10,2,49,26,5
 TR,All,2019,ethnicity,aian,3,3.73,4.0,21,9,0,68,29,0
 TR,All,2019,ethnicity,asian,1,0.32,3.38,904,455,63,56,28,4
-TR,All,2019,ethnicity,asian,2,3.38,3.73,1124,463,57,63,26,3
+TR,All,2019,ethnicity,asian,2,3.38,3.73,1123,463,57,63,26,3
 TR,All,2019,ethnicity,asian,3,3.73,4.0,1357,489,56,68,24,3
 TR,All,2019,ethnicity,black,1,0.32,3.38,209,93,33,50,22,8
 TR,All,2019,ethnicity,black,2,3.38,3.73,201,74,17,61,22,5
 TR,All,2019,ethnicity,black,3,3.73,4.0,130,41,7,65,21,4
 TR,All,2019,ethnicity,hispanic_latino,1,0.32,3.38,1262,586,118,54,25,5
-TR,All,2019,ethnicity,hispanic_latino,2,3.38,3.73,989,393,67,61,24,4
+TR,All,2019,ethnicity,hispanic_latino,2,3.38,3.73,988,393,67,61,24,4
 TR,All,2019,ethnicity,hispanic_latino,3,3.73,4.0,809,234,29,69,20,2
-TR,All,2019,ethnicity,international,1,0.32,3.38,427,127,21,62,18,3
+TR,All,2019,ethnicity,international,1,0.32,3.38,427,127,20,62,19,3
 TR,All,2019,ethnicity,international,2,3.38,3.73,638,150,32,71,17,4
 TR,All,2019,ethnicity,international,3,3.73,4.0,983,239,40,72,18,3
-TR,All,2019,ethnicity,white,1,0.32,3.38,943,394,80,57,24,5
+TR,All,2019,ethnicity,white,1,0.32,3.38,942,394,80,57,24,5
 TR,All,2019,ethnicity,white,2,3.38,3.73,1173,385,84,64,21,5
 TR,All,2019,ethnicity,white,3,3.73,4.0,1493,426,57,71,20,3
-TR,All,2019,first_gen_status,first_gen,1,0.32,3.38,2047,886,177,56,24,5
-TR,All,2019,first_gen_status,first_gen,2,3.38,3.73,2020,731,111,63,23,3
+TR,All,2019,first_gen_status,first_gen,1,0.32,3.38,2047,886,176,56,24,5
+TR,All,2019,first_gen_status,first_gen,2,3.38,3.73,2019,731,111,63,23,3
 TR,All,2019,first_gen_status,first_gen,3,3.73,4.0,2087,623,77,69,21,3
-TR,All,2019,first_gen_status,not_first_gen,1,0.32,3.38,1614,726,125,57,25,4
+TR,All,2019,first_gen_status,not_first_gen,1,0.32,3.38,1613,726,125,57,26,4
 TR,All,2019,first_gen_status,not_first_gen,2,3.38,3.73,2055,733,140,64,23,4
 TR,All,2019,first_gen_status,not_first_gen,3,3.73,4.0,2645,810,114,70,21,3
-TR,All,2019,overall,overall,1,0.32,3.38,3823,1692,324,56,25,5
-TR,All,2019,overall,overall,2,3.38,3.73,4227,1507,266,63,23,4
+TR,All,2019,overall,overall,1,0.32,3.38,3822,1692,323,56,25,5
+TR,All,2019,overall,overall,2,3.38,3.73,4225,1507,266,63,23,4
 TR,All,2019,overall,overall,3,3.73,4.0,4912,1482,197,70,21,3
-TR,All,2019,pell_status,non_pell,1,0.32,3.38,1841,645,84,62,22,3
-TR,All,2019,pell_status,non_pell,2,3.38,3.73,2363,647,103,69,19,3
+TR,All,2019,pell_status,non_pell,1,0.32,3.38,1841,645,83,62,22,3
+TR,All,2019,pell_status,non_pell,2,3.38,3.73,2361,647,103,69,19,3
 TR,All,2019,pell_status,non_pell,3,3.73,4.0,3009,779,100,73,19,2
-TR,All,2019,pell_status,pell,1,0.32,3.38,1982,1047,240,51,27,6
+TR,All,2019,pell_status,pell,1,0.32,3.38,1981,1047,240,51,27,6
 TR,All,2019,pell_status,pell,2,3.38,3.73,1864,860,163,57,26,5
 TR,All,2019,pell_status,pell,3,3.73,4.0,1903,703,97,65,24,3
 TR,All,2020,ethnicity,aian,1,1.25,3.39,18,12,4,35,23,8
@@ -3927,30 +3926,30 @@ TR,All,2020,ethnicity,aian,3,3.74,4.0,20,13,4,53,34,11
 TR,All,2020,ethnicity,asian,1,1.25,3.39,903,417,100,55,25,6
 TR,All,2020,ethnicity,asian,2,3.39,3.74,1321,523,89,62,25,4
 TR,All,2020,ethnicity,asian,3,3.74,4.0,1476,554,58,66,25,3
-TR,All,2020,ethnicity,black,1,1.25,3.39,219,126,26,43,25,5
+TR,All,2020,ethnicity,black,1,1.25,3.39,219,125,26,44,25,5
 TR,All,2020,ethnicity,black,2,3.39,3.74,185,76,15,56,23,5
 TR,All,2020,ethnicity,black,3,3.74,4.0,132,49,6,63,23,3
-TR,All,2020,ethnicity,hispanic_latino,1,1.25,3.39,1199,584,132,49,24,5
+TR,All,2020,ethnicity,hispanic_latino,1,1.25,3.39,1196,583,132,49,24,5
 TR,All,2020,ethnicity,hispanic_latino,2,3.39,3.74,1057,427,48,59,24,3
 TR,All,2020,ethnicity,hispanic_latino,3,3.74,4.0,844,248,41,68,20,3
-TR,All,2020,ethnicity,international,1,1.25,3.39,367,147,37,53,21,5
+TR,All,2020,ethnicity,international,1,1.25,3.39,367,147,37,54,21,5
 TR,All,2020,ethnicity,international,2,3.39,3.74,571,197,26,65,22,3
 TR,All,2020,ethnicity,international,3,3.74,4.0,897,242,58,69,19,4
-TR,All,2020,ethnicity,white,1,1.25,3.39,855,394,80,53,24,5
+TR,All,2020,ethnicity,white,1,1.25,3.39,854,394,80,53,24,5
 TR,All,2020,ethnicity,white,2,3.39,3.74,1161,415,73,62,22,4
 TR,All,2020,ethnicity,white,3,3.74,4.0,1450,439,61,69,21,3
-TR,All,2020,first_gen_status,first_gen,1,1.25,3.39,1979,907,217,50,23,6
+TR,All,2020,first_gen_status,first_gen,1,1.25,3.39,1976,906,217,50,23,6
 TR,All,2020,first_gen_status,first_gen,2,3.39,3.74,2203,808,126,61,22,4
-TR,All,2020,first_gen_status,first_gen,3,3.74,4.0,1990,588,93,68,20,3
-TR,All,2020,first_gen_status,not_first_gen,1,1.25,3.39,1560,781,161,52,26,5
+TR,All,2020,first_gen_status,first_gen,3,3.74,4.0,1990,588,93,69,20,3
+TR,All,2020,first_gen_status,not_first_gen,1,1.25,3.39,1559,780,161,52,26,5
 TR,All,2020,first_gen_status,not_first_gen,2,3.39,3.74,2070,837,126,61,25,4
-TR,All,2020,first_gen_status,not_first_gen,3,3.74,4.0,2842,983,137,67,23,3
-TR,All,2020,pell_status,non_pell,1,1.25,3.39,1723,695,123,55,22,4
-TR,All,2020,pell_status,non_pell,2,3.39,3.74,2412,826,120,64,22,3
+TR,All,2020,first_gen_status,not_first_gen,3,3.74,4.0,2842,982,137,67,23,3
+TR,All,2020,pell_status,non_pell,1,1.25,3.39,1723,693,123,55,22,4
+TR,All,2020,pell_status,non_pell,2,3.39,3.74,2412,826,120,65,22,3
 TR,All,2020,pell_status,non_pell,3,3.74,4.0,3066,878,133,70,20,3
-TR,All,2020,pell_status,pell,1,1.25,3.39,1937,1041,265,48,26,7
+TR,All,2020,pell_status,pell,1,1.25,3.39,1933,1041,265,48,26,7
 TR,All,2020,pell_status,pell,2,3.39,3.74,2010,865,137,58,25,4
-TR,All,2020,pell_status,pell,3,3.74,4.0,1907,740,106,63,25,4
+TR,All,2020,pell_status,pell,3,3.74,4.0,1907,739,106,64,25,4
 TR,All,2021,ethnicity,aian,1,1.0,3.5,15,9,2,43,26,6
 TR,All,2021,ethnicity,aian,2,3.5,3.82,10,3,7,37,11,26
 TR,All,2021,ethnicity,aian,3,3.82,4.0,23,6,0,74,19,0
@@ -3960,7 +3959,7 @@ TR,All,2021,ethnicity,asian,3,3.82,4.0,1634,498,65,70,21,3
 TR,All,2021,ethnicity,black,1,1.0,3.5,235,87,17,54,20,4
 TR,All,2021,ethnicity,black,2,3.5,3.82,185,78,21,59,25,7
 TR,All,2021,ethnicity,black,3,3.82,4.0,128,55,6,61,26,3
-TR,All,2021,ethnicity,hispanic_latino,1,1.0,3.5,1342,549,106,55,22,4
+TR,All,2021,ethnicity,hispanic_latino,1,1.0,3.5,1342,547,106,55,22,4
 TR,All,2021,ethnicity,hispanic_latino,2,3.5,3.82,1184,397,60,64,22,3
 TR,All,2021,ethnicity,hispanic_latino,3,3.82,4.0,880,230,26,72,19,2
 TR,All,2021,ethnicity,international,1,1.0,3.5,373,121,32,61,20,5
@@ -3969,7 +3968,7 @@ TR,All,2021,ethnicity,international,3,3.82,4.0,866,239,32,70,19,3
 TR,All,2021,ethnicity,white,1,1.0,3.5,984,375,61,60,23,4
 TR,All,2021,ethnicity,white,2,3.5,3.82,1287,376,61,68,20,3
 TR,All,2021,ethnicity,white,3,3.82,4.0,1510,377,64,73,18,3
-TR,All,2021,first_gen_status,first_gen,1,1.0,3.5,2189,887,164,55,22,4
+TR,All,2021,first_gen_status,first_gen,1,1.0,3.5,2189,885,164,55,22,4
 TR,All,2021,first_gen_status,first_gen,2,3.5,3.82,2142,710,121,64,21,4
 TR,All,2021,first_gen_status,first_gen,3,3.82,4.0,2009,578,74,71,20,3
 TR,All,2021,first_gen_status,not_first_gen,1,1.0,3.5,1729,688,134,58,23,5
@@ -3978,7 +3977,7 @@ TR,All,2021,first_gen_status,not_first_gen,3,3.82,4.0,2972,816,116,71,20,3
 TR,All,2021,pell_status,non_pell,1,1.0,3.5,1929,632,109,62,20,3
 TR,All,2021,pell_status,non_pell,2,3.5,3.82,2575,717,97,69,19,3
 TR,All,2021,pell_status,non_pell,3,3.82,4.0,3237,785,100,74,18,2
-TR,All,2021,pell_status,pell,1,1.0,3.5,2109,978,197,53,25,5
+TR,All,2021,pell_status,pell,1,1.0,3.5,2109,976,197,53,25,5
 TR,All,2021,pell_status,pell,2,3.5,3.82,2078,818,153,61,24,5
 TR,All,2021,pell_status,pell,3,3.82,4.0,1915,655,99,67,23,3
 TR,Berkeley,2010,ethnicity,aian,1,0.33,3.25,0,1,0,0,50,0
@@ -4062,13 +4061,13 @@ TR,Berkeley,2012,ethnicity,white,3,3.65,4.0,262,145,13,56,31,3
 TR,Berkeley,2012,first_gen_status,first_gen,1,0.3,3.3,26,22,2,44,37,3
 TR,Berkeley,2012,first_gen_status,first_gen,2,3.3,3.65,135,69,11,56,28,5
 TR,Berkeley,2012,first_gen_status,first_gen,3,3.65,4.0,378,184,24,59,29,4
-TR,Berkeley,2012,first_gen_status,not_first_gen,1,0.3,3.3,22,23,1,39,40,2
+TR,Berkeley,2012,first_gen_status,not_first_gen,1,0.3,3.3,22,22,1,39,39,2
 TR,Berkeley,2012,first_gen_status,not_first_gen,2,3.3,3.65,154,55,12,64,23,5
 TR,Berkeley,2012,first_gen_status,not_first_gen,3,3.65,4.0,515,254,25,59,29,3
 TR,Berkeley,2012,pell_status,non_pell,1,0.3,3.3,14,11,2,44,34,6
 TR,Berkeley,2012,pell_status,non_pell,2,3.3,3.65,139,32,5,69,16,2
 TR,Berkeley,2012,pell_status,non_pell,3,3.65,4.0,512,181,18,66,23,2
-TR,Berkeley,2012,pell_status,pell,1,0.3,3.3,40,35,1,44,38,1
+TR,Berkeley,2012,pell_status,pell,1,0.3,3.3,40,34,1,44,38,1
 TR,Berkeley,2012,pell_status,pell,2,3.3,3.65,157,96,19,52,32,6
 TR,Berkeley,2012,pell_status,pell,3,3.65,4.0,403,277,32,51,35,4
 TR,Berkeley,2013,ethnicity,aian,1,3.31,3.66,4,2,1,57,29,14
@@ -4076,7 +4075,7 @@ TR,Berkeley,2013,ethnicity,aian,2,3.66,4.0,2,3,2,25,38,25
 TR,Berkeley,2013,ethnicity,asian,1,0.32,3.31,8,4,0,50,25,0
 TR,Berkeley,2013,ethnicity,asian,2,3.31,3.66,57,33,3,52,30,3
 TR,Berkeley,2013,ethnicity,asian,3,3.66,4.0,256,133,14,59,31,3
-TR,Berkeley,2013,ethnicity,black,1,0.32,3.31,7,3,2,54,23,15
+TR,Berkeley,2013,ethnicity,black,1,0.32,3.31,7,2,2,58,17,17
 TR,Berkeley,2013,ethnicity,black,2,3.31,3.66,12,12,0,46,46,0
 TR,Berkeley,2013,ethnicity,black,3,3.66,4.0,19,19,4,36,36,8
 TR,Berkeley,2013,ethnicity,hispanic_latino,1,0.32,3.31,20,7,1,54,19,3
@@ -4088,17 +4087,17 @@ TR,Berkeley,2013,ethnicity,international,3,3.66,4.0,293,79,9,71,19,2
 TR,Berkeley,2013,ethnicity,white,1,0.32,3.31,23,4,1,79,14,3
 TR,Berkeley,2013,ethnicity,white,2,3.31,3.66,72,50,7,53,37,5
 TR,Berkeley,2013,ethnicity,white,3,3.66,4.0,293,127,14,63,27,3
-TR,Berkeley,2013,first_gen_status,first_gen,1,0.32,3.31,36,16,2,55,25,3
+TR,Berkeley,2013,first_gen_status,first_gen,1,0.32,3.31,36,15,2,56,23,3
 TR,Berkeley,2013,first_gen_status,first_gen,2,3.31,3.66,130,101,12,49,38,4
 TR,Berkeley,2013,first_gen_status,first_gen,3,3.66,4.0,432,211,28,60,29,4
 TR,Berkeley,2013,first_gen_status,not_first_gen,1,0.32,3.31,42,9,3,71,15,5
-TR,Berkeley,2013,first_gen_status,not_first_gen,2,3.31,3.66,123,59,5,58,28,2
+TR,Berkeley,2013,first_gen_status,not_first_gen,2,3.31,3.66,123,58,5,58,27,2
 TR,Berkeley,2013,first_gen_status,not_first_gen,3,3.66,4.0,555,207,26,65,24,3
 TR,Berkeley,2013,pell_status,non_pell,1,0.32,3.31,31,10,3,66,21,6
 TR,Berkeley,2013,pell_status,non_pell,2,3.31,3.66,115,42,3,64,23,2
 TR,Berkeley,2013,pell_status,non_pell,3,3.66,4.0,606,171,15,71,20,2
-TR,Berkeley,2013,pell_status,pell,1,0.32,3.31,48,16,2,61,20,3
-TR,Berkeley,2013,pell_status,pell,2,3.31,3.66,140,123,14,45,40,5
+TR,Berkeley,2013,pell_status,pell,1,0.32,3.31,48,15,2,62,19,3
+TR,Berkeley,2013,pell_status,pell,2,3.31,3.66,140,122,14,46,40,5
 TR,Berkeley,2013,pell_status,pell,3,3.66,4.0,400,262,44,52,34,6
 TR,Berkeley,2014,ethnicity,aian,1,0.82,3.34,4,2,0,67,33,0
 TR,Berkeley,2014,ethnicity,aian,2,3.34,3.68,5,0,1,71,0,14
@@ -4121,13 +4120,13 @@ TR,Berkeley,2014,ethnicity,white,3,3.68,4.0,256,118,16,62,29,4
 TR,Berkeley,2014,first_gen_status,first_gen,1,0.82,3.34,49,16,8,57,19,9
 TR,Berkeley,2014,first_gen_status,first_gen,2,3.34,3.68,142,84,21,52,31,8
 TR,Berkeley,2014,first_gen_status,first_gen,3,3.68,4.0,373,195,29,57,30,4
-TR,Berkeley,2014,first_gen_status,not_first_gen,1,0.82,3.34,40,19,3,52,25,4
+TR,Berkeley,2014,first_gen_status,not_first_gen,1,0.82,3.34,40,18,2,54,24,3
 TR,Berkeley,2014,first_gen_status,not_first_gen,2,3.34,3.68,138,53,13,62,24,6
 TR,Berkeley,2014,first_gen_status,not_first_gen,3,3.68,4.0,515,210,36,64,26,4
-TR,Berkeley,2014,pell_status,non_pell,1,0.82,3.34,37,10,3,59,16,5
+TR,Berkeley,2014,pell_status,non_pell,1,0.82,3.34,37,10,2,61,16,3
 TR,Berkeley,2014,pell_status,non_pell,2,3.34,3.68,126,43,7,69,23,4
 TR,Berkeley,2014,pell_status,non_pell,3,3.68,4.0,532,175,31,68,22,4
-TR,Berkeley,2014,pell_status,pell,1,0.82,3.34,53,27,9,51,26,9
+TR,Berkeley,2014,pell_status,pell,1,0.82,3.34,53,26,9,51,25,9
 TR,Berkeley,2014,pell_status,pell,2,3.34,3.68,161,101,27,49,31,8
 TR,Berkeley,2014,pell_status,pell,3,3.68,4.0,384,244,37,54,34,5
 TR,Berkeley,2015,ethnicity,aian,1,1.4,3.34,2,0,2,50,0,50
@@ -4148,18 +4147,18 @@ TR,Berkeley,2015,ethnicity,international,3,3.68,4.0,251,71,14,68,19,4
 TR,Berkeley,2015,ethnicity,white,1,1.4,3.34,32,14,6,58,25,11
 TR,Berkeley,2015,ethnicity,white,2,3.34,3.68,111,49,5,64,28,3
 TR,Berkeley,2015,ethnicity,white,3,3.68,4.0,254,129,16,58,30,4
-TR,Berkeley,2015,first_gen_status,first_gen,1,1.4,3.34,61,29,8,55,26,7
-TR,Berkeley,2015,first_gen_status,first_gen,2,3.34,3.68,155,78,12,57,29,4
-TR,Berkeley,2015,first_gen_status,first_gen,3,3.68,4.0,352,156,26,60,27,4
-TR,Berkeley,2015,first_gen_status,not_first_gen,1,1.4,3.34,46,20,8,57,25,10
+TR,Berkeley,2015,first_gen_status,first_gen,1,1.4,3.34,61,29,7,56,27,6
+TR,Berkeley,2015,first_gen_status,first_gen,2,3.34,3.68,155,78,11,57,29,4
+TR,Berkeley,2015,first_gen_status,first_gen,3,3.68,4.0,352,156,24,60,27,4
+TR,Berkeley,2015,first_gen_status,not_first_gen,1,1.4,3.34,46,19,8,58,24,10
 TR,Berkeley,2015,first_gen_status,not_first_gen,2,3.34,3.68,146,50,11,65,22,5
-TR,Berkeley,2015,first_gen_status,not_first_gen,3,3.68,4.0,510,219,33,62,27,4
-TR,Berkeley,2015,pell_status,non_pell,1,1.4,3.34,38,13,6,61,21,10
+TR,Berkeley,2015,first_gen_status,not_first_gen,3,3.68,4.0,510,218,32,62,27,4
+TR,Berkeley,2015,pell_status,non_pell,1,1.4,3.34,38,13,6,62,21,10
 TR,Berkeley,2015,pell_status,non_pell,2,3.34,3.68,143,47,7,66,22,3
-TR,Berkeley,2015,pell_status,non_pell,3,3.68,4.0,540,162,21,69,21,3
-TR,Berkeley,2015,pell_status,pell,1,1.4,3.34,73,37,10,54,27,7
-TR,Berkeley,2015,pell_status,pell,2,3.34,3.68,172,83,16,57,28,5
-TR,Berkeley,2015,pell_status,pell,3,3.68,4.0,340,230,40,51,35,6
+TR,Berkeley,2015,pell_status,non_pell,3,3.68,4.0,540,161,21,69,21,3
+TR,Berkeley,2015,pell_status,pell,1,1.4,3.34,73,36,9,55,27,7
+TR,Berkeley,2015,pell_status,pell,2,3.34,3.68,172,83,15,57,28,5
+TR,Berkeley,2015,pell_status,pell,3,3.68,4.0,340,230,37,51,35,6
 TR,Berkeley,2016,ethnicity,aian,1,0.36,3.33,4,3,0,57,43,0
 TR,Berkeley,2016,ethnicity,aian,2,3.33,3.68,4,1,0,67,17,0
 TR,Berkeley,2016,ethnicity,aian,3,3.68,4.0,5,1,0,71,14,0
@@ -5963,28 +5962,28 @@ TR,Riverside,2017,ethnicity,aian,2,3.33,3.69,4,0,0,100,0,0
 TR,Riverside,2017,ethnicity,asian,1,0.3,3.33,121,64,10,54,29,4
 TR,Riverside,2017,ethnicity,asian,2,3.33,3.69,38,14,2,61,23,3
 TR,Riverside,2017,ethnicity,asian,3,3.69,4.0,19,3,1,68,11,4
-TR,Riverside,2017,ethnicity,black,1,0.3,3.33,36,14,4,48,19,5
+TR,Riverside,2017,ethnicity,black,1,0.3,3.33,35,14,4,47,19,5
 TR,Riverside,2017,ethnicity,black,2,3.33,3.69,10,7,0,50,35,0
 TR,Riverside,2017,ethnicity,black,3,3.69,4.0,3,1,0,60,20,0
-TR,Riverside,2017,ethnicity,hispanic_latino,1,0.3,3.33,234,125,17,51,27,4
-TR,Riverside,2017,ethnicity,hispanic_latino,2,3.33,3.69,61,24,1,62,24,1
+TR,Riverside,2017,ethnicity,hispanic_latino,1,0.3,3.33,233,125,16,51,28,4
+TR,Riverside,2017,ethnicity,hispanic_latino,2,3.33,3.69,61,24,1,63,25,1
 TR,Riverside,2017,ethnicity,hispanic_latino,3,3.69,4.0,24,6,1,71,18,3
 TR,Riverside,2017,ethnicity,international,1,0.3,3.33,61,9,3,69,10,3
 TR,Riverside,2017,ethnicity,international,2,3.33,3.69,19,3,0,73,12,0
 TR,Riverside,2017,ethnicity,international,3,3.69,4.0,8,3,0,73,27,0
-TR,Riverside,2017,ethnicity,white,1,0.3,3.33,75,37,6,54,27,4
+TR,Riverside,2017,ethnicity,white,1,0.3,3.33,75,36,6,55,26,4
 TR,Riverside,2017,ethnicity,white,2,3.33,3.69,31,16,1,57,30,2
 TR,Riverside,2017,ethnicity,white,3,3.69,4.0,11,5,2,50,23,9
-TR,Riverside,2017,first_gen_status,first_gen,1,0.3,3.33,327,161,23,51,25,4
+TR,Riverside,2017,first_gen_status,first_gen,1,0.3,3.33,326,160,22,51,25,3
 TR,Riverside,2017,first_gen_status,first_gen,2,3.33,3.69,105,34,3,67,22,2
 TR,Riverside,2017,first_gen_status,first_gen,3,3.69,4.0,37,11,3,61,18,5
-TR,Riverside,2017,first_gen_status,not_first_gen,1,0.3,3.33,189,75,13,60,24,4
-TR,Riverside,2017,first_gen_status,not_first_gen,2,3.33,3.69,53,26,0,56,27,0
+TR,Riverside,2017,first_gen_status,not_first_gen,1,0.3,3.33,188,75,13,60,24,4
+TR,Riverside,2017,first_gen_status,not_first_gen,2,3.33,3.69,53,26,0,56,28,0
 TR,Riverside,2017,first_gen_status,not_first_gen,3,3.69,4.0,24,6,1,73,18,3
 TR,Riverside,2017,pell_status,non_pell,1,0.3,3.33,199,63,13,61,19,4
 TR,Riverside,2017,pell_status,non_pell,2,3.33,3.69,71,16,2,68,15,2
 TR,Riverside,2017,pell_status,non_pell,3,3.69,4.0,27,7,1,68,18,3
-TR,Riverside,2017,pell_status,pell,1,0.3,3.33,333,189,27,49,28,4
+TR,Riverside,2017,pell_status,pell,1,0.3,3.33,331,188,26,50,28,4
 TR,Riverside,2017,pell_status,pell,2,3.33,3.69,95,49,2,58,30,1
 TR,Riverside,2017,pell_status,pell,3,3.69,4.0,38,11,3,63,18,5
 TR,Riverside,2018,ethnicity,aian,1,0.32,3.34,2,1,0,50,25,0
@@ -5998,7 +5997,7 @@ TR,Riverside,2018,ethnicity,black,2,3.34,3.7,13,4,0,76,24,0
 TR,Riverside,2018,ethnicity,black,3,3.7,4.0,9,1,0,82,9,0
 TR,Riverside,2018,ethnicity,hispanic_latino,1,0.32,3.34,350,157,28,55,25,4
 TR,Riverside,2018,ethnicity,hispanic_latino,2,3.34,3.7,86,28,3,65,21,2
-TR,Riverside,2018,ethnicity,hispanic_latino,3,3.7,4.0,40,6,1,77,12,2
+TR,Riverside,2018,ethnicity,hispanic_latino,3,3.7,4.0,39,6,1,76,12,2
 TR,Riverside,2018,ethnicity,international,1,0.32,3.34,74,25,3,58,20,2
 TR,Riverside,2018,ethnicity,international,2,3.34,3.7,37,9,0,67,16,0
 TR,Riverside,2018,ethnicity,international,3,3.7,4.0,16,3,0,84,16,0
@@ -6007,7 +6006,7 @@ TR,Riverside,2018,ethnicity,white,2,3.34,3.7,36,21,4,53,31,6
 TR,Riverside,2018,ethnicity,white,3,3.7,4.0,29,8,1,69,19,2
 TR,Riverside,2018,first_gen_status,first_gen,1,0.32,3.34,447,209,38,52,25,4
 TR,Riverside,2018,first_gen_status,first_gen,2,3.34,3.7,125,45,6,63,23,3
-TR,Riverside,2018,first_gen_status,first_gen,3,3.7,4.0,61,13,3,71,15,3
+TR,Riverside,2018,first_gen_status,first_gen,3,3.7,4.0,60,13,3,71,15,4
 TR,Riverside,2018,first_gen_status,not_first_gen,1,0.32,3.34,269,108,16,58,23,3
 TR,Riverside,2018,first_gen_status,not_first_gen,2,3.34,3.7,79,30,4,61,23,3
 TR,Riverside,2018,first_gen_status,not_first_gen,3,3.7,4.0,55,13,0,73,17,0
@@ -6016,81 +6015,81 @@ TR,Riverside,2018,pell_status,non_pell,2,3.34,3.7,95,23,4,67,16,3
 TR,Riverside,2018,pell_status,non_pell,3,3.7,4.0,52,12,0,75,17,0
 TR,Riverside,2018,pell_status,pell,1,0.32,3.34,480,253,43,52,27,5
 TR,Riverside,2018,pell_status,pell,2,3.34,3.7,118,56,6,59,28,3
-TR,Riverside,2018,pell_status,pell,3,3.7,4.0,73,15,3,72,15,3
+TR,Riverside,2018,pell_status,pell,3,3.7,4.0,72,15,3,71,15,3
 TR,Riverside,2019,ethnicity,asian,1,0.32,3.38,161,78,10,58,28,4
-TR,Riverside,2019,ethnicity,asian,2,3.38,3.73,53,15,1,69,19,1
+TR,Riverside,2019,ethnicity,asian,2,3.38,3.73,52,15,1,68,20,1
 TR,Riverside,2019,ethnicity,asian,3,3.73,4.0,15,4,1,65,17,4
 TR,Riverside,2019,ethnicity,black,1,0.32,3.38,55,25,7,52,24,7
 TR,Riverside,2019,ethnicity,black,2,3.38,3.73,13,5,3,52,20,12
 TR,Riverside,2019,ethnicity,black,3,3.73,4.0,8,1,0,89,11,0
 TR,Riverside,2019,ethnicity,hispanic_latino,1,0.32,3.38,372,154,30,57,23,5
-TR,Riverside,2019,ethnicity,hispanic_latino,2,3.38,3.73,99,34,7,64,22,5
+TR,Riverside,2019,ethnicity,hispanic_latino,2,3.38,3.73,98,34,7,64,22,5
 TR,Riverside,2019,ethnicity,hispanic_latino,3,3.73,4.0,41,14,0,69,24,0
-TR,Riverside,2019,ethnicity,international,1,0.32,3.38,94,19,4,65,13,3
+TR,Riverside,2019,ethnicity,international,1,0.32,3.38,94,19,4,66,13,3
 TR,Riverside,2019,ethnicity,international,2,3.38,3.73,16,8,1,57,29,4
 TR,Riverside,2019,ethnicity,international,3,3.73,4.0,10,3,0,67,20,0
-TR,Riverside,2019,ethnicity,white,1,0.32,3.38,117,43,9,56,21,4
+TR,Riverside,2019,ethnicity,white,1,0.32,3.38,116,43,9,56,21,4
 TR,Riverside,2019,ethnicity,white,2,3.38,3.73,49,13,2,63,17,3
 TR,Riverside,2019,ethnicity,white,3,3.73,4.0,30,9,0,64,19,0
 TR,Riverside,2019,first_gen_status,first_gen,1,0.32,3.38,531,207,41,57,22,4
-TR,Riverside,2019,first_gen_status,first_gen,2,3.38,3.73,137,49,8,63,22,4
+TR,Riverside,2019,first_gen_status,first_gen,2,3.38,3.73,136,49,8,62,22,4
 TR,Riverside,2019,first_gen_status,first_gen,3,3.73,4.0,68,17,0,75,19,0
-TR,Riverside,2019,first_gen_status,not_first_gen,1,0.32,3.38,245,109,16,58,26,4
+TR,Riverside,2019,first_gen_status,not_first_gen,1,0.32,3.38,244,109,16,57,26,4
 TR,Riverside,2019,first_gen_status,not_first_gen,2,3.38,3.73,87,23,2,69,18,2
 TR,Riverside,2019,first_gen_status,not_first_gen,3,3.73,4.0,38,15,1,60,24,2
-TR,Riverside,2019,overall,overall,1,0.32,3.38,810,329,62,57,23,4
-TR,Riverside,2019,overall,overall,2,3.38,3.73,230,75,15,63,21,4
+TR,Riverside,2019,overall,overall,1,0.32,3.38,809,329,62,57,23,4
+TR,Riverside,2019,overall,overall,2,3.38,3.73,228,75,15,63,21,4
 TR,Riverside,2019,overall,overall,3,3.73,4.0,109,32,1,69,20,1
 TR,Riverside,2019,pell_status,non_pell,1,0.32,3.38,321,107,18,60,20,3
-TR,Riverside,2019,pell_status,non_pell,2,3.38,3.73,94,26,3,65,18,2
+TR,Riverside,2019,pell_status,non_pell,2,3.38,3.73,92,26,3,65,18,2
 TR,Riverside,2019,pell_status,non_pell,3,3.73,4.0,48,12,1,68,17,1
-TR,Riverside,2019,pell_status,pell,1,0.32,3.38,489,222,44,55,25,5
+TR,Riverside,2019,pell_status,pell,1,0.32,3.38,488,222,44,55,25,5
 TR,Riverside,2019,pell_status,pell,2,3.38,3.73,136,49,12,62,22,5
 TR,Riverside,2019,pell_status,pell,3,3.73,4.0,61,20,0,69,23,0
 TR,Riverside,2020,ethnicity,asian,1,1.25,3.39,190,71,20,57,21,6
 TR,Riverside,2020,ethnicity,asian,2,3.39,3.74,53,24,2,62,28,2
 TR,Riverside,2020,ethnicity,asian,3,3.74,4.0,32,14,2,57,25,4
-TR,Riverside,2020,ethnicity,black,1,1.25,3.39,67,32,6,47,23,4
+TR,Riverside,2020,ethnicity,black,1,1.25,3.39,67,31,6,48,22,4
 TR,Riverside,2020,ethnicity,black,2,3.39,3.74,11,6,2,46,25,8
 TR,Riverside,2020,ethnicity,black,3,3.74,4.0,7,2,0,64,18,0
-TR,Riverside,2020,ethnicity,hispanic_latino,1,1.25,3.39,365,167,40,51,23,6
+TR,Riverside,2020,ethnicity,hispanic_latino,1,1.25,3.39,362,166,40,51,23,6
 TR,Riverside,2020,ethnicity,hispanic_latino,2,3.39,3.74,81,32,6,57,23,4
-TR,Riverside,2020,ethnicity,hispanic_latino,3,3.74,4.0,32,13,4,54,22,7
+TR,Riverside,2020,ethnicity,hispanic_latino,3,3.74,4.0,32,13,4,55,22,7
 TR,Riverside,2020,ethnicity,international,1,1.25,3.39,58,20,4,52,18,4
 TR,Riverside,2020,ethnicity,international,2,3.39,3.74,8,3,0,50,19,0
 TR,Riverside,2020,ethnicity,international,3,3.74,4.0,1,2,0,17,33,0
-TR,Riverside,2020,ethnicity,white,1,1.25,3.39,106,53,11,49,25,5
+TR,Riverside,2020,ethnicity,white,1,1.25,3.39,105,53,11,49,25,5
 TR,Riverside,2020,ethnicity,white,2,3.39,3.74,37,17,4,54,25,6
 TR,Riverside,2020,ethnicity,white,3,3.74,4.0,27,9,1,66,22,2
-TR,Riverside,2020,first_gen_status,first_gen,1,1.25,3.39,523,216,53,52,21,5
+TR,Riverside,2020,first_gen_status,first_gen,1,1.25,3.39,520,215,53,52,21,5
 TR,Riverside,2020,first_gen_status,first_gen,2,3.39,3.74,130,53,8,57,23,3
 TR,Riverside,2020,first_gen_status,first_gen,3,3.74,4.0,53,18,5,58,20,5
-TR,Riverside,2020,first_gen_status,not_first_gen,1,1.25,3.39,257,126,28,52,25,6
+TR,Riverside,2020,first_gen_status,not_first_gen,1,1.25,3.39,256,125,28,52,25,6
 TR,Riverside,2020,first_gen_status,not_first_gen,2,3.39,3.74,55,33,5,52,31,5
-TR,Riverside,2020,first_gen_status,not_first_gen,3,3.74,4.0,51,22,3,58,25,3
-TR,Riverside,2020,pell_status,non_pell,1,1.25,3.39,303,117,18,55,21,3
+TR,Riverside,2020,first_gen_status,not_first_gen,3,3.74,4.0,51,21,3,59,24,3
+TR,Riverside,2020,pell_status,non_pell,1,1.25,3.39,303,115,18,55,21,3
 TR,Riverside,2020,pell_status,non_pell,2,3.39,3.74,69,34,5,53,26,4
 TR,Riverside,2020,pell_status,non_pell,3,3.74,4.0,42,20,2,57,27,3
-TR,Riverside,2020,pell_status,pell,1,1.25,3.39,504,235,65,50,23,6
+TR,Riverside,2020,pell_status,pell,1,1.25,3.39,500,235,65,50,23,6
 TR,Riverside,2020,pell_status,pell,2,3.39,3.74,125,53,9,58,24,4
-TR,Riverside,2020,pell_status,pell,3,3.74,4.0,63,21,6,58,19,6
+TR,Riverside,2020,pell_status,pell,3,3.74,4.0,63,20,6,59,19,6
 TR,Riverside,2021,ethnicity,aian,1,1.0,3.5,2,2,0,40,40,0
 TR,Riverside,2021,ethnicity,asian,1,1.0,3.5,256,82,17,62,20,4
 TR,Riverside,2021,ethnicity,asian,2,3.5,3.82,71,30,2,61,26,2
 TR,Riverside,2021,ethnicity,asian,3,3.82,4.0,33,10,0,75,23,0
-TR,Riverside,2021,ethnicity,black,1,1.0,3.5,57,22,4,56,22,4
+TR,Riverside,2021,ethnicity,black,1,1.0,3.5,57,22,4,57,22,4
 TR,Riverside,2021,ethnicity,black,2,3.5,3.82,7,5,2,41,29,12
 TR,Riverside,2021,ethnicity,black,3,3.82,4.0,6,4,0,50,33,0
-TR,Riverside,2021,ethnicity,hispanic_latino,1,1.0,3.5,367,148,28,55,22,4
+TR,Riverside,2021,ethnicity,hispanic_latino,1,1.0,3.5,367,146,28,56,22,4
 TR,Riverside,2021,ethnicity,hispanic_latino,2,3.5,3.82,78,26,6,63,21,5
 TR,Riverside,2021,ethnicity,hispanic_latino,3,3.82,4.0,49,12,1,70,17,1
-TR,Riverside,2021,ethnicity,international,1,1.0,3.5,54,14,4,65,17,5
+TR,Riverside,2021,ethnicity,international,1,1.0,3.5,54,14,4,66,17,5
 TR,Riverside,2021,ethnicity,international,2,3.5,3.82,11,5,0,61,28,0
 TR,Riverside,2021,ethnicity,international,3,3.82,4.0,3,4,0,38,50,0
 TR,Riverside,2021,ethnicity,white,1,1.0,3.5,128,56,7,56,24,3
 TR,Riverside,2021,ethnicity,white,2,3.5,3.82,53,18,4,64,22,5
 TR,Riverside,2021,ethnicity,white,3,3.82,4.0,26,10,3,63,24,7
-TR,Riverside,2021,first_gen_status,first_gen,1,1.0,3.5,571,217,40,56,21,4
+TR,Riverside,2021,first_gen_status,first_gen,1,1.0,3.5,571,215,40,56,21,4
 TR,Riverside,2021,first_gen_status,first_gen,2,3.5,3.82,136,41,9,64,19,4
 TR,Riverside,2021,first_gen_status,first_gen,3,3.82,4.0,68,23,4,66,22,4
 TR,Riverside,2021,first_gen_status,not_first_gen,1,1.0,3.5,271,109,20,59,24,4
@@ -6099,7 +6098,7 @@ TR,Riverside,2021,first_gen_status,not_first_gen,3,3.82,4.0,51,15,0,70,21,0
 TR,Riverside,2021,pell_status,non_pell,1,1.0,3.5,329,102,13,61,19,2
 TR,Riverside,2021,pell_status,non_pell,2,3.5,3.82,93,30,2,66,21,1
 TR,Riverside,2021,pell_status,non_pell,3,3.82,4.0,50,15,0,69,21,0
-TR,Riverside,2021,pell_status,pell,1,1.0,3.5,543,227,48,56,23,5
+TR,Riverside,2021,pell_status,pell,1,1.0,3.5,543,225,48,56,23,5
 TR,Riverside,2021,pell_status,pell,2,3.5,3.82,127,55,12,58,25,5
 TR,Riverside,2021,pell_status,pell,3,3.82,4.0,69,25,4,65,24,4
 TR,San Diego,2010,ethnicity,aian,1,0.33,3.25,1,2,1,20,40,20
@@ -6186,7 +6185,7 @@ TR,San Diego,2012,first_gen_status,first_gen,3,3.65,4.0,153,110,21,47,34,6
 TR,San Diego,2012,first_gen_status,not_first_gen,1,0.3,3.3,89,93,29,34,36,11
 TR,San Diego,2012,first_gen_status,not_first_gen,2,3.3,3.65,200,172,48,40,35,10
 TR,San Diego,2012,first_gen_status,not_first_gen,3,3.65,4.0,159,161,31,40,40,8
-TR,San Diego,2012,pell_status,non_pell,1,0.3,3.3,84,75,19,40,36,9
+TR,San Diego,2012,pell_status,non_pell,1,0.3,3.3,84,75,18,40,36,9
 TR,San Diego,2012,pell_status,non_pell,2,3.3,3.65,232,154,32,49,32,7
 TR,San Diego,2012,pell_status,non_pell,3,3.65,4.0,200,122,18,52,32,5
 TR,San Diego,2012,pell_status,pell,1,0.3,3.3,87,107,41,29,36,14
@@ -6519,7 +6518,7 @@ TR,Santa Barbara,2011,first_gen_status,first_gen,3,3.63,4.0,93,22,2,74,18,2
 TR,Santa Barbara,2011,first_gen_status,not_first_gen,1,0.31,3.27,196,38,4,72,14,1
 TR,Santa Barbara,2011,first_gen_status,not_first_gen,2,3.27,3.63,244,55,3,72,16,1
 TR,Santa Barbara,2011,first_gen_status,not_first_gen,3,3.63,4.0,146,26,5,73,13,3
-TR,Santa Barbara,2011,pell_status,non_pell,1,0.31,3.27,208,37,5,73,13,2
+TR,Santa Barbara,2011,pell_status,non_pell,1,0.31,3.27,208,37,5,74,13,2
 TR,Santa Barbara,2011,pell_status,non_pell,2,3.27,3.63,238,57,4,71,17,1
 TR,Santa Barbara,2011,pell_status,non_pell,3,3.63,4.0,147,27,5,74,14,3
 TR,Santa Barbara,2011,pell_status,pell,1,0.31,3.27,141,39,4,67,18,2
@@ -6609,7 +6608,7 @@ TR,Santa Barbara,2014,first_gen_status,first_gen,3,3.68,4.0,78,11,5,75,11,5
 TR,Santa Barbara,2014,first_gen_status,not_first_gen,1,0.82,3.34,223,63,11,65,18,3
 TR,Santa Barbara,2014,first_gen_status,not_first_gen,2,3.34,3.68,194,69,7,65,23,2
 TR,Santa Barbara,2014,first_gen_status,not_first_gen,3,3.68,4.0,108,31,2,68,19,1
-TR,Santa Barbara,2014,pell_status,non_pell,1,0.82,3.34,241,50,11,69,14,3
+TR,Santa Barbara,2014,pell_status,non_pell,1,0.82,3.34,241,50,11,70,14,3
 TR,Santa Barbara,2014,pell_status,non_pell,2,3.34,3.68,229,58,4,70,18,1
 TR,Santa Barbara,2014,pell_status,non_pell,3,3.68,4.0,121,30,3,70,17,2
 TR,Santa Barbara,2014,pell_status,pell,1,0.82,3.34,217,109,8,56,28,2
@@ -6633,7 +6632,7 @@ TR,Santa Barbara,2015,ethnicity,international,3,3.68,4.0,30,9,1,73,22,2
 TR,Santa Barbara,2015,ethnicity,white,1,1.4,3.34,152,38,11,68,17,5
 TR,Santa Barbara,2015,ethnicity,white,2,3.34,3.68,148,44,6,67,20,3
 TR,Santa Barbara,2015,ethnicity,white,3,3.68,4.0,86,19,3,71,16,2
-TR,Santa Barbara,2015,first_gen_status,first_gen,1,1.4,3.34,201,57,14,63,18,4
+TR,Santa Barbara,2015,first_gen_status,first_gen,1,1.4,3.34,201,57,14,64,18,4
 TR,Santa Barbara,2015,first_gen_status,first_gen,2,3.34,3.68,181,50,7,68,19,3
 TR,Santa Barbara,2015,first_gen_status,first_gen,3,3.68,4.0,78,24,3,69,21,3
 TR,Santa Barbara,2015,first_gen_status,not_first_gen,1,1.4,3.34,224,51,11,69,16,3
@@ -6719,7 +6718,7 @@ TR,Santa Barbara,2018,ethnicity,hispanic_latino,2,3.34,3.7,108,40,3,59,22,2
 TR,Santa Barbara,2018,ethnicity,hispanic_latino,3,3.7,4.0,73,18,3,68,17,3
 TR,Santa Barbara,2018,ethnicity,international,1,0.32,3.34,135,26,6,73,14,3
 TR,Santa Barbara,2018,ethnicity,international,2,3.34,3.7,158,32,2,76,15,1
-TR,Santa Barbara,2018,ethnicity,international,3,3.7,4.0,69,14,6,71,14,6
+TR,Santa Barbara,2018,ethnicity,international,3,3.7,4.0,69,14,6,72,15,6
 TR,Santa Barbara,2018,ethnicity,white,1,0.32,3.34,213,70,12,63,21,4
 TR,Santa Barbara,2018,ethnicity,white,2,3.34,3.7,217,66,8,70,21,3
 TR,Santa Barbara,2018,ethnicity,white,3,3.7,4.0,123,43,5,66,23,3
@@ -6728,7 +6727,7 @@ TR,Santa Barbara,2018,first_gen_status,first_gen,2,3.34,3.7,237,82,8,65,22,2
 TR,Santa Barbara,2018,first_gen_status,first_gen,3,3.7,4.0,126,45,5,67,24,3
 TR,Santa Barbara,2018,first_gen_status,not_first_gen,1,0.32,3.34,311,124,22,60,24,4
 TR,Santa Barbara,2018,first_gen_status,not_first_gen,2,3.34,3.7,344,111,8,69,22,2
-TR,Santa Barbara,2018,first_gen_status,not_first_gen,3,3.7,4.0,202,53,11,68,18,4
+TR,Santa Barbara,2018,first_gen_status,not_first_gen,3,3.7,4.0,202,53,11,69,18,4
 TR,Santa Barbara,2018,pell_status,non_pell,1,0.32,3.34,358,112,18,66,21,3
 TR,Santa Barbara,2018,pell_status,non_pell,2,3.34,3.7,427,98,6,74,17,1
 TR,Santa Barbara,2018,pell_status,non_pell,3,3.7,4.0,232,50,10,73,16,3
@@ -6747,22 +6746,22 @@ TR,Santa Barbara,2019,ethnicity,black,3,3.73,4.0,10,3,1,63,19,6
 TR,Santa Barbara,2019,ethnicity,hispanic_latino,1,0.32,3.38,130,59,15,55,25,6
 TR,Santa Barbara,2019,ethnicity,hispanic_latino,2,3.38,3.73,99,51,4,55,28,2
 TR,Santa Barbara,2019,ethnicity,hispanic_latino,3,3.73,4.0,58,18,2,64,20,2
-TR,Santa Barbara,2019,ethnicity,international,1,0.32,3.38,72,17,5,66,16,5
+TR,Santa Barbara,2019,ethnicity,international,1,0.32,3.38,72,17,4,67,16,4
 TR,Santa Barbara,2019,ethnicity,international,2,3.38,3.73,80,13,6,70,11,5
 TR,Santa Barbara,2019,ethnicity,international,3,3.73,4.0,48,9,1,76,14,2
 TR,Santa Barbara,2019,ethnicity,white,1,0.32,3.38,171,56,12,64,21,4
 TR,Santa Barbara,2019,ethnicity,white,2,3.38,3.73,186,76,16,61,25,5
 TR,Santa Barbara,2019,ethnicity,white,3,3.73,4.0,137,43,4,70,22,2
-TR,Santa Barbara,2019,first_gen_status,first_gen,1,0.32,3.38,212,76,21,58,21,6
+TR,Santa Barbara,2019,first_gen_status,first_gen,1,0.32,3.38,212,76,20,58,21,5
 TR,Santa Barbara,2019,first_gen_status,first_gen,2,3.38,3.73,203,68,8,63,21,2
 TR,Santa Barbara,2019,first_gen_status,first_gen,3,3.73,4.0,124,26,4,70,15,2
 TR,Santa Barbara,2019,first_gen_status,not_first_gen,1,0.32,3.38,262,105,20,60,24,5
 TR,Santa Barbara,2019,first_gen_status,not_first_gen,2,3.38,3.73,295,114,20,63,24,4
 TR,Santa Barbara,2019,first_gen_status,not_first_gen,3,3.73,4.0,187,63,10,66,22,4
-TR,Santa Barbara,2019,overall,overall,1,0.32,3.38,488,186,45,58,22,5
+TR,Santa Barbara,2019,overall,overall,1,0.32,3.38,488,186,44,59,22,5
 TR,Santa Barbara,2019,overall,overall,2,3.38,3.73,511,187,30,63,23,4
 TR,Santa Barbara,2019,overall,overall,3,3.73,4.0,318,90,14,68,19,3
-TR,Santa Barbara,2019,pell_status,non_pell,1,0.32,3.38,279,86,15,64,20,3
+TR,Santa Barbara,2019,pell_status,non_pell,1,0.32,3.38,279,86,14,64,20,3
 TR,Santa Barbara,2019,pell_status,non_pell,2,3.38,3.73,330,92,18,67,19,4
 TR,Santa Barbara,2019,pell_status,non_pell,3,3.73,4.0,218,55,8,72,18,3
 TR,Santa Barbara,2019,pell_status,pell,1,0.32,3.38,209,100,30,53,25,8
@@ -6780,9 +6779,9 @@ TR,Santa Barbara,2020,ethnicity,black,3,3.74,4.0,7,1,0,78,11,0
 TR,Santa Barbara,2020,ethnicity,hispanic_latino,1,1.25,3.39,151,76,14,50,25,5
 TR,Santa Barbara,2020,ethnicity,hispanic_latino,2,3.39,3.74,97,47,10,50,24,5
 TR,Santa Barbara,2020,ethnicity,hispanic_latino,3,3.74,4.0,69,17,1,72,18,1
-TR,Santa Barbara,2020,ethnicity,international,1,1.25,3.39,66,29,8,53,23,6
+TR,Santa Barbara,2020,ethnicity,international,1,1.25,3.39,66,29,8,55,24,7
 TR,Santa Barbara,2020,ethnicity,international,2,3.39,3.74,45,23,0,59,30,0
-TR,Santa Barbara,2020,ethnicity,international,3,3.74,4.0,23,12,1,55,29,2
+TR,Santa Barbara,2020,ethnicity,international,3,3.74,4.0,23,12,1,58,30,3
 TR,Santa Barbara,2020,ethnicity,white,1,1.25,3.39,182,83,18,54,24,5
 TR,Santa Barbara,2020,ethnicity,white,2,3.39,3.74,194,87,18,58,26,5
 TR,Santa Barbara,2020,ethnicity,white,3,3.74,4.0,114,57,11,58,29,6
@@ -6792,7 +6791,7 @@ TR,Santa Barbara,2020,first_gen_status,first_gen,3,3.74,4.0,103,30,3,66,19,2
 TR,Santa Barbara,2020,first_gen_status,not_first_gen,1,1.25,3.39,313,175,29,51,29,5
 TR,Santa Barbara,2020,first_gen_status,not_first_gen,2,3.39,3.74,291,135,22,57,27,4
 TR,Santa Barbara,2020,first_gen_status,not_first_gen,3,3.74,4.0,170,81,15,59,28,5
-TR,Santa Barbara,2020,pell_status,non_pell,1,1.25,3.39,338,147,27,55,24,4
+TR,Santa Barbara,2020,pell_status,non_pell,1,1.25,3.39,338,147,27,56,24,4
 TR,Santa Barbara,2020,pell_status,non_pell,2,3.39,3.74,313,125,18,60,24,3
 TR,Santa Barbara,2020,pell_status,non_pell,3,3.74,4.0,179,71,11,61,24,4
 TR,Santa Barbara,2020,pell_status,pell,1,1.25,3.39,222,155,32,44,31,6

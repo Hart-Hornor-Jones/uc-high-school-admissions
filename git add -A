@@ -1,0 +1,92 @@
+warning: in the working copy of 'LICENSE', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/build_cde_dir.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/build_crosswalk.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/build_history_data.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/build_school_locations.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/build_school_race_context.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/crosswalk_repair_20260729_input.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/diag.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/extract_dv.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/extract_dv_all9.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/finalize_crosswalk.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/make_figures.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/merge_panel.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/parse_ag.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/parse_caaspp.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/parse_caaspp_groups.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/parse_caaspp_year.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/parse_cupc.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/parse_grad_rates.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/refine_match.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/repair_crosswalk_20260725.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/repair_crosswalk_20260730.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/repair_denied_counts_from_dv_20260731.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/repair_gpa_offset_20260730.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/review_unmatched.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/test_history_page.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/then_vs_now.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/then_vs_now_figs.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/trends_parse_crosses.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/trends_parse_fed.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/trends_parse_gpa_api.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/trends_parse_gpa_groups.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/trends_parse_majors.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/trends_parse_schools.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/trends_parse_ucb.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/trends_parse_ucsd.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/verify_history_anchors.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build/yearly_trend.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'context/data_context.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'context/index.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'data.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'data/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'data/components/school_race_context.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'data/cross_section_all9.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'data/grad_rates_by_hs.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'data/trends/fed_qa.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'data/trends/gpa_groups_qa.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'data/trends/gpa_rates_qa.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'data/trends/majors_qa.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'data/trends/schools_qa.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'data/trends/sys_rates_qa.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'data/trends/ucb_qa.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'data/trends/ucsd_qa.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'denied/data_denied.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'denied/index.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/AG_DATA_CLEANING.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/CHANGELOG.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/CROSSWALK_REPAIR.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/DATA_DICTIONARY.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/NEIGHBORHOOD_CONTEXT.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/OUTCOMES_TRENDS.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'history/data_history.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'history/index.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'index.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'scripts/build_panel_all9.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'scripts/make_context_data.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'scripts/make_denied_data.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'scripts/make_site_data.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'scripts/make_trends_data.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'scripts/scan_local_correlation.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'trends/data_trends.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'trends/index.html', LF will be replaced by CRLF the next time Git touches it
+ data.js                         |    2 [32m+[m[31m-[m
+ data/cross_section_all9.csv     | 1062 [32m+++[m[31m---[m
+ data/grad_rates_by_hs.csv       |  755 [32m++[m[31m--[m
+ data/trends/ccc_series.csv      |  268 [32m+[m[31m-[m
+ data/trends/gpa_band_counts.csv |  405 [32m++[m[31m-[m
+ data/trends/gpa_groups_qa.json  |    2 [32m+[m[31m-[m
+ data/trends/gpa_rates.csv       | 1129 [32m+++[m[31m---[m
+ data/trends/gpa_rates_qa.json   |    4 [32m+[m[31m-[m
+ data/trends/hs_names.csv        |    1 [31m-[m
+ data/trends/hs_series.csv       |  755 [32m++[m[31m--[m
+ data/trends/schools_qa.json     |    4 [32m+[m[31m-[m
+ data/trends/sys_rates.csv       | 7618 [32m+++++++++++++++++++[m[31m--------------------[m
+ data/trends/sys_rates_qa.json   |    8 [32m+[m[31m-[m
+ docs/CHANGELOG.md               |   27 [32m+[m
+ index.html                      |    2 [32m+[m[31m-[m
+ trends/data_trends.js           |    2 [32m+[m[31m-[m
+ trends/index.html               |    2 [32m+[m[31m-[m
+ 17 files changed, 6018 insertions(+), 6028 deletions(-)

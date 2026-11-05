@@ -9,6 +9,33 @@ day of the change, not necessarily to the day of the commit that carried it.
 
 ---
 
+## 2026-10-02 — UC outcomes refreshed to UCOP's September 9, 2026 vintage
+
+**Changed**
+- The three UC-outcomes sources behind the explorer and the trends page were re-harvested after
+  UCOP's September 9, 2026 refresh of the Graduation Dashboard: freshman retention/graduation by
+  California high school, transfer retention/graduation by community college, and the systemwide
+  rate crosses (ethnicity × Pell × first-generation). Coverage is unchanged — entry cohorts 1999–2024,
+  no new rate window — but UCOP revised values in a small share of cells: 1,342 of ~44,600
+  school-cohort cells in the high-school file (270 school-cohorts, 17 rows dropped, mostly cohort
+  sizes moving by one or two students), 389 cells in the community-college file, and about 1,000
+  non-GPA cells in the systemwide crosses, almost all inside small or "unknown" demographic groups.
+  No rate on the explorer moves by more than a point or two.
+- **Graduation GPA is a different measure now.** UCOP replaced the "graduation GPA" series in the
+  Graduation rates tab (its internal name changed from "Avg. De Gpa Uc Final Grad" to "Avg. De Gpa
+  Ttd Uc Final Grad"). Systemwide freshman values fell by about 0.1 in the older cohorts (1999:
+  3.29 → 3.17; 2010: 3.30 → 3.20) and are nearly unchanged after 2018 (2022: 3.61 → 3.65), so the
+  series now rises more steeply, and is flat from 1999 to 2012 where it previously drifted. The trends
+  page shows the new series. A figure of graduation GPA taken from the site before this date is not
+  comparable to one taken after it.
+- The GPA-groups (tercile) series followed later the same day, after the harvester was fixed
+  (UCOP's republish changed the cohort filter's index domain; the filter is now sent by value).
+  Tercile cut points are unchanged in every cohort; cell counts moved by a few students and
+  rates by a median of 0.01 points (27 of ~1,300 changed cells by more than a point); one cell
+  (Riverside, 2020, American Indian freshmen) fell below the display threshold.
+- June 2026 copies of the three refreshed sources are kept beside the new ones as `*_vintage-2026-06`
+  in the data corpus.
+
 ## 2026-09-13 (later) — Figure export
 
 **Added**
